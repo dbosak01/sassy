@@ -18,10 +18,10 @@ Suggests:
     rmarkdown
 Imports: tibble,
          logr, 
-         fmtr
-Depends: libr,
+         fmtr,
+         libr,
          rptr
-Remotes: git::https://github.com/dbosak01/rptr.git,
-         git::https://github.com/dbosak01/libr.git
+Remotes: dbosak01/rptr,
+         dbosak01/libr
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
