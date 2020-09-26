@@ -9,8 +9,8 @@
 
 <!-- badges: end -->
 
-  The **sassy** package is a meta-package that aims to bring several SAS
-concepts to R.  These concepts include data sassyaries, format catalogs,
+  The **sassy** package is a meta-package that aims to bring several SAS®
+concepts to R.  These concepts include data libraries, format catalogs,
 data dictionaries,
 a traceable log, and a reporting package inspired by PROC REPORT and ODS.
 
