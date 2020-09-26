@@ -19,6 +19,7 @@ Suggests:
 Imports: tibble,
          logr, 
          fmtr,
-         libr
+         libr,
+         rptr
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr

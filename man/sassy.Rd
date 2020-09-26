@@ -21,6 +21,9 @@ as follows:
   \item {\code{\link[logr]{logr}}:}{ Write a traceable log.}
   \item {\code{\link[fmtr]{fmtr}}:}{ Create a format catalog
 and apply formats to a data frame or vector.}
+  \item {\code{\link[libr]{libr}}:}{ Define a libname and generate
+  data dictionaries.}
+  \item {\code{\link[rptr]{rptr}}:}{ Write reports and output in text and PDF.}
 }
 }
 
