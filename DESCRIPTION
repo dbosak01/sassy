@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Bring Basic SAS® Concepts to R
-Version: 0.0.9001
+Version: 0.0.9002
 Author: David Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that brings several SAS® concepts to R.

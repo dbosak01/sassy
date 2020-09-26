@@ -28,3 +28,14 @@
 #' @import libr
 #' @import rptr
 NULL
+
+
+
+.onAttach <- function(...) {
+
+  do.call("library", list("logr"))
+  do.call("library", list("fmtr"))
+  do.call("library", list("libr"))
+  do.call("library", list("rptr"))
+
+}
