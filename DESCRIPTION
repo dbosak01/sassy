@@ -18,8 +18,8 @@ Suggests:
     rmarkdown
 Imports: tibble,
          logr, 
-         fmtr,
-         libr,
+         fmtr
+Depends: libr,
          rptr
 Remotes: git::https://github.com/dbosak01/rptr.git,
          git::https://github.com/dbosak01/libr.git
