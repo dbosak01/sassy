@@ -2,9 +2,9 @@
 #'
 #' @description The \strong{sassy} package is a meta-package that
 #' installs a set of functions inspired by concepts in
-#' SAS® software.  These functions include the ability to create
+#' SAS® software.  These functions provide the ability to create
 #' data libraries, format catalogs, data dictionaries, a traceable log, and
-#' includes reporting capabilities similar to those found in SAS®.
+#' includes reporting capabilities reminiscent of those found in SAS®.
 #' These packages were written independently, and the authors have no association
 #' with, approval of, or endorsement by SAS® Institute.
 #'
