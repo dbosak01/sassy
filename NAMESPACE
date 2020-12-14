@@ -3,4 +3,4 @@
 import(fmtr)
 import(libr)
 import(logr)
-import(rptr)
+import(reporter)

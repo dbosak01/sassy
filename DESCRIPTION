@@ -20,8 +20,6 @@ Imports: tibble,
          logr, 
          fmtr,
          libr,
-         rptr
-Remotes: dbosak01/rptr,
-         dbosak01/libr
+         reporter
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
