@@ -59,8 +59,8 @@ Note the following about this example:
   SAS® `%put()` statement.
   * The `libname()` function loads an entire directory of data files in one step.
   * The `lib_load()` function loads the data into the workspace for easy access.
-  * The **reporter** package provides simple, declarative reporting and a 
-  choice of printable output formats.
+  * The **reporter** package will set columns widths, page wraps,
+  and page breaks correctly by default.  
 
 ```
 library(tidyverse)
@@ -520,7 +520,7 @@ Note the following about this example:
 * The plot is added to the report with the `add_content()` function, just
 like the tables in the previous examples.
 * The `page_by()` function on the `create_report()` statement generates the 
-paging for both the report and plots.
+paging for both the report and plot.
 * Few other R packages support this type of reporting capability.
 
 ```
@@ -603,7 +603,7 @@ options("tidylog.display" = NULL)
 
 ```
 
-Here is the log for the above report:
+Here is the log for the above program:
 
 ```
 
