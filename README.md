@@ -204,6 +204,8 @@ Note the following about this example:
   calculating and formatting summary statistics.
   * The **reporter** package supports spanning headers and 'N=' population
   counts in the header labels.
+  * The **reporter** package also allows you to define a stub column of 
+  hierarchical labels.
 
 ```
 library(tidyverse)
@@ -727,7 +729,7 @@ Log Elapsed Time: 0 00:00:04
 
 ```
 
-And here is the first three page of the report:
+And here is the first three pages of the report:
 
 <img src="./man/images/vs_pg1.png" align="center" />
 
