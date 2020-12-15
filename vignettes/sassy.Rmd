@@ -45,9 +45,9 @@ ability to write reports in TXT, RTF, and PDF file formats
 
 ## How to use **sassy**
 All combined, the above set of packages constitute a system of functions
-that make working in R much easier. With the **sassy** system, you
+that make working in R more like working in SAS®. With the **sassy** system, you
 can define a library in one step, save and re-use formats, step through
-data row-by-row, and get a report out easily, without depending on RMarkdown.
+data row-by-row, and get a report out in just a few lines of code.
 Importantly, all of the above activities can be recorded in a traceable log.
 
 ### Example #1: Listing
@@ -57,6 +57,7 @@ package, and also available for download
 <a href="https://github.com/dbosak01/sassy/tree/master/inst/extdata/sassy_data.zip">here</a>.  
 
 Note the following about this example:
+
   * The **logr** package combined with **tidylog** provides (mostly) automatic 
   logging. 
   * The `sep()` function creates a nice separator in the log to help keep it 
@@ -201,6 +202,7 @@ vs. Treated groups.  The report shows statistics for both baseline
 and after-treatment time points.   
 
 Note the following about this example:
+
   * The `datastep()` function allows for a complex conditional in the middle
   of a **dplyr** pipeline.  
   * The `%eq%` operator allows comparing of a variable that contains many NA
@@ -518,6 +520,7 @@ from the popular **ggplot2** package can be added to a report.
 The following example illustrates such a report. 
 
 Note the following about this example:
+
 * The plot is created as a single plot with no by-groups
 * The plot is added to the report with the `add_content()` function, just
 like the tables in the previous examples.
