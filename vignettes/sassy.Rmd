@@ -1,13 +1,21 @@
-# sassy <img src="./man/images/sassy.jpg" align="right" height="138" />
+---
+title: "sassy: Making R Easier for SAS® Programmers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sassy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-<!-- badges: start -->
+```{r, include = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+<img src="../man/images/sassy.jpg" align="right" height="138" />
 
-[![sassy version](https://www.r-pkg.org/badges/version/sassy)](https://cran.r-project.org/package=sassy)
-[![sassy lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://cran.r-project.org/package=sassy)
-[![sassy downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
-[![Travis build status](https://travis-ci.com/dbosak01/sassy.svg?branch=master)](https://travis-ci.com/dbosak01/sassy)
-
-<!-- badges: end -->
 
 The **sassy** package is a meta-package that aims to make R easier for SAS®
 programmers.  The package brings several familiar SAS® concepts to R, including
@@ -183,7 +191,7 @@ Log Elapsed Time: 0 00:00:23
 Here is an image of the first page of the RTF report produced by the
 above listing example:
 
-<img src="./man/images/listing.png" align="center" />
+<img src="../man/images/listing.png" align="center" />
 
 
 ### Example 2: Summary Table
@@ -501,7 +509,7 @@ Log Elapsed Time: 0 00:00:50
 
 And here is the output report:
 
-<img src="./man/images/vital_signs.png" align="center" />
+<img src="../man/images/vital_signs.png" align="center" />
 
 ### Example #3: Figure with Page By
 
@@ -714,11 +722,11 @@ Log Elapsed Time: 0 00:00:04
 
 And here is the first three page of the report:
 
-<img src="./man/images/vs_pg1.png" align="center" />
+<img src="../man/images/vs_pg1.png" align="center" />
 
-<img src="./man/images/vs_pg2.png" align="center" />
+<img src="../man/images/vs_pg2.png" align="center" />
 
-<img src="./man/images/vs_pg3.png" align="center" />
+<img src="../man/images/vs_pg3.png" align="center" />
 
 ## Package Disclaimer
 Note that the **sassy** family of packages is intended to be used with small and 
