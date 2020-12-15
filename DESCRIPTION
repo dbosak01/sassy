@@ -1,15 +1,19 @@
 Package: sassy
 Type: Package
-Title: Bring Basic SAS® Concepts to R
-Version: 0.0.9004
+Title: Makes R Easier for SAS® Programmers
+Version: 0.0.9005
 Author: David Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
-Description: A meta-package that brings several SAS® concepts to R.
-    These concepts include data libraries, format catalogs, data dictionaries,
-    a traceable log, and a reporting package inspired by PROC REPORT and ODS.
+Description: A meta-package that aims to make R easier for SAS® programmers.
+    This set of packages brings many familar concepts to R, including
+    data libraries, data dictionaries, formats 
+    and format catalogs, a data step, and a traceable log.  The flagship
+    package is a reporting package that can output in text, rich text, and 
+    PDF file formats.
 License: CC0
 Encoding: UTF-8
 LazyData: true
+Depends: R (>= 4.0.0)
 URL: https://github.com/dbosak01/sassy
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 

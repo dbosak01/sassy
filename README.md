@@ -49,10 +49,14 @@ functions.  The data used for these examples is included in the **sassy**
 package, and also available for download here.  
 
 Note the following about this example:
-  * The **logr** package combined with **tidylog** provides mostly automatic 
-  logging. The `put()` and `sep()` functions are printing information to the log.
-  * The `libname()` function loads the entire directory of data in one step.
-  * The `lib_load()` function load the data into the workspace for easy access.
+  * The **logr** package combined with **tidylog** provides (mostly) automatic 
+  logging. 
+  * The `sep()` function creates a nice separator in the log to help keep it 
+  organized and readable. 
+  * The `put()` function will write anything you want to the log, similar to a 
+  SAS® `%put()` statement.
+  * The `libname()` function loads an entire directory of data files in one step.
+  * The `lib_load()` function loads the data into the workspace for easy access.
   * The **reporter** package provides simple, declarative reporting and a 
   choice of printable output formats.
 
@@ -67,20 +71,23 @@ options("tidylog.display" = list(log_print),
 # Get path to temp directory
 tmp <- tempdir() 
 
+# Get path to sample data
+pkg <- system.file("extdata", package = "sassy")
+
 # Open log
 lgpth <- log_open(file.path(tmp, "example1.log"))
 
 sep("Get Data")
 
 # Define data library
-libname(sdtm, "data", "csv") %>% put()
+libname(sdtm, pkg, "csv") %>% put()
 
 # Load library into workspace
 lib_load(sdtm)
 
 sep("Write Report")
 
-# Define table objecvt
+# Define table object
 tbl <- create_table(sdtm.DM) %>% 
   define(USUBJID, id_var = TRUE)
   
@@ -126,7 +133,7 @@ Log Start Time: 2020-12-13 17:27:21
 Get Data
 =========================================================================
 
-# library 'sdtm': 12 items
+# library 'sdtm': 10 items
 - attributes: csv not loaded
 - path: data
 - items:
@@ -137,12 +144,10 @@ Get Data
 4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
 5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
 6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
-7      LB       csv 23607   27   5.4 Mb 2020-09-18 14:30:23
-8      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
-9      QS       csv 13316   17   1.7 Mb 2020-09-18 14:30:24
-10 SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
-11     SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
-12     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+7      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
+8  SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
+9      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
+10     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
 
 =========================================================================
 Write Report
@@ -183,9 +188,9 @@ above listing example:
 
 ### Example 2: Summary Table
 
-The second example produces a summary table of PULSE values for Placebo
-vs. Treatment groups.  The example illustrates how a `datastep()` function with
-complex conditionals can be integrated into a `dplyr` pipeline.
+The second example produces a summary table of selected Vital Signs for Placebo
+vs. Treated groups.  The report shows statistics for both baseline 
+and after-treatment time points.   
 
 Note the following about this example:
   * The `datastep()` function allows for a complex conditional in the middle
@@ -208,17 +213,21 @@ options("tidylog.display" = list(log_print),
 # Get path to temp directory
 tmp <- tempdir() 
 
+# Get path to sample data
+pkg <- system.file("extdata", package = "sassy")
+
 # Open log
 lgpth <- log_open(file.path(tmp, "example2.log"))
 
 sep("Prepare Data")
 
+# Create libname for csv data
+libname(sdtm, pkg, "csv") %>% put()
 
-
-libname(sdtm, "data", "csv") %>% put()
-
+# Load data into workspace
 lib_load(sdtm)
 
+# Join and prepare data
 prep <- sdtm.DM %>% 
   left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %>% 
   select(USUBJID, VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, VSBLFL) %>% 
@@ -229,7 +238,7 @@ prep <- sdtm.DM %>%
   datastep(retain = list(BSTRESN = 0), {
   
     # Combine treatment groups
-    # And distingish baseline values
+    # And distingish baseline time points
     if (ARM == "ARM A") {
       
       if (VSBLFL %eq% "Y") {
@@ -252,7 +261,6 @@ prep <- sdtm.DM %>%
     if (first.)
       BSTRESN = VSSTRESN
       
-  
   }) %>% 
   ungroup() %>% 
   put()
@@ -280,7 +288,6 @@ final <- prep %>%
   put()
   
 
-
 sep("Create Report")
 
 # Set up labels 
@@ -295,6 +302,7 @@ final <- final %>%
   mutate(VSTESTCD = factor(VSTESTCD, levels = names(lbls))) %>% 
   arrange(VSTESTCD)
 
+# Define table object
 tbl <- create_table(final) %>% 
   spanning_header(A_BASE, A_TRT, "Placebo", n = pop_A) %>% 
   spanning_header(O_BASE, O_TRT, "Treated", n = pop_O) %>% 
@@ -308,18 +316,26 @@ tbl <- create_table(final) %>%
   define(O_BASE, "Baseline") %>% 
   define(O_TRT, "After Treatment")
 
+# Construct output path
 pth <- file.path(tmp, "output/t_vs.rtf")
 
+# Define report object
 rpt <- create_report(pth, output_type = "RTF") %>% 
   page_header("Sponsor: Company", "Study: ABC") %>% 
   titles("Table 4.0", "Selected Vital Signs") %>% 
   add_content(tbl, align = "center") %>% 
   page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
   
+# Write report to file system  
 write_report(rpt) %>% put()
 
+# Unload data from workspace
+lib_unload(sdtm)
+
+# Close log
 log_close()
 
+# Disconnect logr from tidylog
 options("tidylog.display" = FALSE)
 
 ```
@@ -341,7 +357,7 @@ Log Start Time: 2020-12-13 22:27:46
 Prepare Data 
 ========================================================================= 
 
-# library 'sdtm': 12 items
+# library 'sdtm': 10 items
 - attributes: csv not loaded
 - path: data
 - items:
@@ -352,12 +368,10 @@ Prepare Data
 4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
 5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
 6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
-7      LB       csv 23607   27   5.4 Mb 2020-09-18 14:30:23
-8      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
-9      QS       csv 13316   17   1.7 Mb 2020-09-18 14:30:24
-10 SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
-11     SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
-12     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+7      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
+8  SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
+9      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
+10     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
 
 left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
 
@@ -493,5 +507,5 @@ And here is the output report:
 Note that the **sassy** family of packages is intended to be used with small and 
 medium-sized data sets.  It is not recommended for big data, as big data
 requires very careful control over which data is or is not loaded into memory.
-The **sassy** packages, on the other hand, tends to load all data into memory 
+The **sassy** packages, on the other hand, tend to load all data into memory 
 indiscriminately.
