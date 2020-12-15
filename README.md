@@ -46,7 +46,8 @@ Importantly, all of the above activities can be recorded in a traceable log.
 ### Example #1: Listing
 Here is an example of a simple listing using the **sassy** system of 
 functions.  The data used for these examples is included in the **sassy**
-package, and also available for download here.  
+package, and also available for download 
+<a href="https://github.com/dbosak01/sassy/tree/master/inst/extdata/sassy_data.zip">here</a>.  
 
 Note the following about this example:
   * The **logr** package combined with **tidylog** provides (mostly) automatic 
@@ -505,6 +506,17 @@ And here is the output report:
 
 ### Example #3: Figure with Page By
 
+The **sassy** system of functions also supports reports with graphics.  Plots
+from the popular **ggplot2** package can be added to a report.
+The following example illustrates such a report. 
+
+Note the following about this example:
+* The plot is created as a single plot with no by-groups
+* The plot is added to the report with the `add_content()` function, just
+like the tables in the previous examples.
+* The `page_by()` function on the `create_report()` statement generates the 
+paging for both the report and plots.
+* Few other R packages support this type of reporting capability.
 
 ```
 library(tidyverse)
