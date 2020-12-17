@@ -97,7 +97,7 @@ tbl <- create_table(sdtm.DM) %>%
 pth <- file.path(tmp, "output/l_dm.rtf") %>% put()
 
 # Define report object
-rpt <- create_report(pth, , output_type = "RTF") %>% 
+rpt <- create_report(pth, output_type = "RTF") %>% 
   page_header("Sponsor: Company", "Study: ABC") %>% 
   titles("Listing 1.0", "SDTM Demographics") %>% 
   add_content(tbl, align = "left") %>% 
@@ -202,6 +202,8 @@ Note the following about this example:
   values, without error.
   * The **fmtr** package provides several convenient functions for 
   calculating and formatting summary statistics.
+  * The **fmtr** package also provides capabilities to create a user-defined
+  format, similar to `proc format`.
   * The **reporter** package supports spanning headers and 'N=' population
   counts in the header labels.
   * The **reporter** package also allows you to define a stub column of 
@@ -232,7 +234,7 @@ libname(sdtm, pkg, "csv") %>% put()
 # Load data into workspace
 lib_load(sdtm)
 
-# Join and prepare data
+put("Join and prepare data")
 prep <- sdtm.DM %>% 
   left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %>% 
   select(USUBJID, VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, VSBLFL) %>% 
@@ -270,13 +272,13 @@ prep <- sdtm.DM %>%
   ungroup() %>% 
   put()
 
-# Get population counts
+put("Get population counts")
 pop_A <- prep %>% select(USUBJID, GRP) %>% filter(GRP == "A_BASE") %>% 
-  distinct() %>% count() %>% deframe() 
+  distinct() %>% count() %>% deframe() %>% put()
 pop_O <- prep %>% select(USUBJID, GRP) %>% filter(GRP == "O_BASE") %>% 
-  distinct() %>% count() %>% deframe() 
+  distinct() %>% count() %>% deframe() %>% put()
 
-# Prepare final data frame
+put("Prepare final data frame")
 final <- prep %>% 
   select(VSTESTCD, GRP, VSSTRESN, BSTRESN) %>% 
   group_by(VSTESTCD, GRP) %>% 
@@ -295,14 +297,15 @@ final <- prep %>%
   
 sep("Create formats")
 
-# Vital sign format 
+# Vital sign lookup format 
 vs_fmt <- c(PULSE = "Pulse", 
             TEMP = "Temperature °C", 
             RESP = "Respirations/min", 
             SYSBP = "Systolic Blood Pressure", 
             DIABP = "Diastolic Blood Pressure") %>% 
             put()
-                
+            
+# Statistics user-defined format                
 stat_fmt <- value(condition(x == "Mean", "Mean (SD)"),
                   condition(x == "Quantiles", "Q1 - Q3")) %>% 
                   put()
@@ -357,13 +360,13 @@ Here is the log from the above example:
 
 ```
 ========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/Rtmp0gWP4L/log/example2.log 
+Log Path: C:/Users/User/AppData/Local/Temp/RtmpohmQm6/log/example2.log 
 Working Directory: C:/packages/sassy 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
 Machine: ZB15-5CD00276ZY x86-64 
 Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2020-12-15 13:53:56 
+Log Start Time: 2020-12-17 16:26:30 
 ========================================================================= 
 
 ========================================================================= 
@@ -372,19 +375,21 @@ Prepare Data
 
 # library 'sdtm': 10 items
 - attributes: csv not loaded
-- path: C:/packages/sassy/inst/extdata
+- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
 - items:
      Name Extension Rows Cols     Size        LastModified
-1      AE       csv  150   27  88.1 Kb 2020-09-18 14:30:23
-2      DA       csv 3587   18 527.8 Kb 2020-09-18 14:30:23
-3      DM       csv   87   24  45.1 Kb 2020-09-18 14:30:23
-4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
-5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
-6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
-7      PE       csv 1854   17 277.8 Kb 2020-09-18 14:30:24
-8  SUPPEX       csv  639   10  63.6 Kb 2020-09-18 14:30:24
-9      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
-10     VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
+1      AE       csv  150   27  88.1 Kb 2020-12-15 14:00:42
+2      DA       csv 3587   18 527.8 Kb 2020-12-15 14:00:42
+3      DM       csv   87   24  45.2 Kb 2020-12-15 14:00:42
+4      DS       csv  174    9  33.7 Kb 2020-12-15 14:00:42
+5      EX       csv   84   11    26 Kb 2020-12-15 14:00:42
+6      IE       csv    2   14    13 Kb 2020-12-15 14:00:42
+7      PE       csv 1854   17 277.9 Kb 2020-12-15 14:00:42
+8  SUPPEX       csv  639   10  63.7 Kb 2020-12-15 14:00:42
+9      SV       csv  685   10  69.9 Kb 2020-12-15 14:00:42
+10     VS       csv 3358   17   467 Kb 2020-12-15 14:00:42
+
+Join and prepare data 
 
 left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
 
@@ -421,6 +426,8 @@ ungroup: no grouping variables
 10 ABC-01-049 PULSE    WEEK 4         4       76 ARM D <NA>        84 O_TRT 
 # ... with 2,758 more rows
 
+Get population counts 
+
 select: dropped 7 variables (VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, …)
 
 filter: removed 2,669 rows (96%), 99 rows remaining
@@ -429,6 +436,8 @@ distinct: removed 79 rows (80%), 20 rows remaining
 
 count: now one row and one column, ungrouped
 
+[1] 20
+
 select: dropped 7 variables (VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, …)
 
 filter: removed 2,435 rows (88%), 333 rows remaining
@@ -436,6 +445,10 @@ filter: removed 2,435 rows (88%), 333 rows remaining
 distinct: removed 266 rows (80%), 67 rows remaining
 
 count: now one row and one column, ungrouped
+
+[1] 67
+
+Prepare final data frame 
 
 select: dropped 5 variables (USUBJID, VISIT, VISITNUM, ARM, VSBLFL)
 
@@ -477,8 +490,8 @@ pivot_wider: reorganized (GRP, values) into (A_BASE, A_TRT, O_BASE, O_TRT) [was 
 Create formats 
 ========================================================================= 
 
-PULSE   TEMP             RESP                SYSBP                     DIABP 
-"Pulse" "Temperature °C" "Respirations/min"  "Systolic Blood Pressure" "Diastolic Blood Pressure" 
+  PULSE             TEMP               RESP                     SYSBP                      DIABP 
+"Pulse" "Temperature °C" "Respirations/min" "Systolic Blood Pressure" "Diastolic Blood Pressure" 
 
 # A user-defined format: 2 conditions
   Name Type       Expression     Label Order
@@ -492,7 +505,7 @@ Create Report
 mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmp0gWP4L/output/t_vs.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpohmQm6/output/t_vs.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -500,7 +513,7 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Table 4.0'
 - title 2: 'Selected Vital Signs'
-- page_footer: left=2020-12-15 13:55:06 center=CONFIDENTIAL right=Page [pg] of [tpg]
+- page_footer: left=2020-12-17 16:26:33 center=CONFIDENTIAL right=Page [pg] of [tpg]
 - content: 
 # A table specification:
 - data: tibble 'final' 20 rows 6 cols
@@ -517,8 +530,8 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - define: O_TRT 'After Treatment' 
 
 ========================================================================= 
-Log End Time: 2020-12-15 13:55:11 
-Log Elapsed Time: 0 00:00:01 
+Log End Time: 2020-12-17 16:26:33 
+Log Elapsed Time: 0 00:00:02 
 ========================================================================= 
 
 
