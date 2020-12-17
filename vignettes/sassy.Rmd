@@ -66,8 +66,8 @@ Note the following about this example:
   SAS® `%put()` statement.
   * The `libname()` function loads an entire directory of data files in one step.
   * The `lib_load()` function loads the data into the workspace for easy access.
-  * The **reporter** package will set columns widths, page wraps,
-  and page breaks correctly by default.  
+  * The **reporter** package will set column widths, page wraps,
+  and page breaks by default.  
 
 ```
 library(tidyverse)
@@ -299,19 +299,27 @@ final <- prep %>%
               values_from = values) %>% 
   put()
   
+  
+sep("Create formats")
+
+# Vital sign format 
+vs_fmt <- c(PULSE = "Pulse", 
+            TEMP = "Temperature °C", 
+            RESP = "Respirations/min", 
+            SYSBP = "Systolic Blood Pressure", 
+            DIABP = "Diastolic Blood Pressure") %>% 
+            put()
+                
+stat_fmt <- value(condition(x == "Mean", "Mean (SD)"),
+                  condition(x == "Quantiles", "Q1 - Q3")) %>% 
+                  put()
 
 sep("Create Report")
 
-# Set up labels 
-lbls <- c(PULSE = "Pulse", 
-          TEMP = "Temperature °C", 
-          RESP = "Respirations/min", 
-          SYSBP = "Systolic Blood Pressure", 
-          DIABP = "Diastolic Blood Pressure")
 
 # Apply sort
 final <- final %>% 
-  mutate(VSTESTCD = factor(VSTESTCD, levels = names(lbls))) %>% 
+  mutate(VSTESTCD = factor(VSTESTCD, levels = names(vs_fmt))) %>% 
   arrange(VSTESTCD)
 
 # Define table object
@@ -320,9 +328,9 @@ tbl <- create_table(final) %>%
   spanning_header(O_BASE, O_TRT, "Treated", n = pop_O) %>% 
   column_defaults(width = 1.25, align = "center") %>% 
   stub(c(VSTESTCD, stats), width = 2.5) %>% 
-  define(VSTESTCD, "Vital Sign", format = lbls, 
+  define(VSTESTCD, "Vital Sign", format = vs_fmt, 
          blank_after = TRUE, dedupe = TRUE, label_row = TRUE) %>% 
-  define(stats, indent = .25) %>% 
+  define(stats, indent = .25, format = stat_fmt) %>% 
   define(A_BASE, "Baseline") %>% 
   define(A_TRT, "After Treatment") %>% 
   define(O_BASE, "Baseline") %>% 
@@ -356,13 +364,13 @@ Here is the log from the above example:
 
 ```
 ========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/RtmpsRnVcf/log/example2.log 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmp0gWP4L/log/example2.log 
 Working Directory: C:/packages/sassy 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
 Machine: ZB15-5CD00276ZY x86-64 
 Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2020-12-13 22:27:46 
+Log Start Time: 2020-12-15 13:53:56 
 ========================================================================= 
 
 ========================================================================= 
@@ -371,19 +379,19 @@ Prepare Data
 
 # library 'sdtm': 10 items
 - attributes: csv not loaded
-- path: data
+- path: C:/packages/sassy/inst/extdata
 - items:
-     Name Extension  Rows Cols     Size        LastModified
-1      AE       csv   150   27    88 Kb 2020-09-18 14:30:23
-2      DA       csv  3587   18 527.8 Kb 2020-09-18 14:30:23
-3      DM       csv    87   24  45.1 Kb 2020-09-18 14:30:23
-4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
-5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
-6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
-7      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
-8  SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
-9      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
-10     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+     Name Extension Rows Cols     Size        LastModified
+1      AE       csv  150   27  88.1 Kb 2020-09-18 14:30:23
+2      DA       csv 3587   18 527.8 Kb 2020-09-18 14:30:23
+3      DM       csv   87   24  45.1 Kb 2020-09-18 14:30:23
+4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
+5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
+6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
+7      PE       csv 1854   17 277.8 Kb 2020-09-18 14:30:24
+8  SUPPEX       csv  639   10  63.6 Kb 2020-09-18 14:30:24
+9      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
+10     VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
 
 left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
 
@@ -473,13 +481,25 @@ pivot_wider: reorganized (GRP, values) into (A_BASE, A_TRT, O_BASE, O_TRT) [was 
 20 TEMP     Range     35.9 - 37.4   35.8 - 37.3   35.3 - 39.8   34.4 - 38.2  
 
 ========================================================================= 
+Create formats 
+========================================================================= 
+
+PULSE   TEMP             RESP                SYSBP                     DIABP 
+"Pulse" "Temperature °C" "Respirations/min"  "Systolic Blood Pressure" "Diastolic Blood Pressure" 
+
+# A user-defined format: 2 conditions
+  Name Type       Expression     Label Order
+1    x    U      x == "Mean" Mean (SD)    NA
+2    x    U x == "Quantiles"   Q1 - Q3    NA
+
+========================================================================= 
 Create Report 
 ========================================================================= 
 
 mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/t_vs.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmp0gWP4L/output/t_vs.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -487,7 +507,7 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Table 4.0'
 - title 2: 'Selected Vital Signs'
-- page_footer: left=2020-12-13 22:28:37 center=CONFIDENTIAL right=Page [pg] of [tpg]
+- page_footer: left=2020-12-15 13:55:06 center=CONFIDENTIAL right=Page [pg] of [tpg]
 - content: 
 # A table specification:
 - data: tibble 'final' 20 rows 6 cols
@@ -504,8 +524,8 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - define: O_TRT 'After Treatment' 
 
 ========================================================================= 
-Log End Time: 2020-12-13 22:28:37 
-Log Elapsed Time: 0 00:00:50 
+Log End Time: 2020-12-15 13:55:11 
+Log Elapsed Time: 0 00:00:01 
 ========================================================================= 
 
 
