@@ -103,9 +103,6 @@
 #' # Close log
 #' log_close()
 #'
-#' # Disconnect from tidylog
-#' options("tidylog.display" = NULL)
-#'
 #' # Print log to console
 #' writeLines(readLines(lgpth, encoding = "UTF-8"))
 #'
