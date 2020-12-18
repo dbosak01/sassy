@@ -35,10 +35,8 @@ and apply formats to a data frame or vector.}
 #####         Example: Simple Data Listing          #####
 #########################################################
 library(sassy)
-library(tidylog, warn.conflicts = FALSE)
 
-options("tidylog.display" = list(log_print),
-        "logr.notes" = FALSE)
+options("logr.notes" = FALSE)
 
 # Get path to temp directory
 tmp <- tempdir()
