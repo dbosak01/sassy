@@ -90,7 +90,7 @@ rpt <- create_report(pth, output_type = "RTF") \%>\%
 
 # Write report to file system
 write_report(rpt) \%>\% put()
-# A report specification: 9 pages
+# # A report specification: 9 pages
 # - file_path: 'C:\\Users\\User\\AppData\\Local\\Temp\\RtmpsRnVcf/output/l_dm.rtf'
 # - output_type: RTF
 # - units: inches
@@ -101,8 +101,8 @@ write_report(rpt) \%>\% put()
 # - title 2: 'SDTM Demographics'
 # - page_footer: left=2020-12-13 17:27:41 center=CONFIDENTIAL right=Page [pg] of [tpg]
 # - content:
-#   # A table specification:
-#   - data: tibble 'sdtm.DM' 87 rows 24 cols
+# # A table specification:
+# - data: tibble 'sdtm.DM' 87 rows 24 cols
 # - show_cols: all
 # - use_attributes: all
 # - define: USUBJID id_var='TRUE'
