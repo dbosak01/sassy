@@ -58,8 +58,7 @@ package, and also available for download
 
 Note the following about this example:
 
-  * The **logr** package combined with **tidylog** provides (mostly) automatic 
-  logging. 
+  * The **logr** package provides a simple, convenient logging mechanism. 
   * The `sep()` function creates a nice separator in the log to help keep it 
   organized and readable. 
   * The `put()` function will write anything you want to the log, similar to a 
@@ -70,12 +69,9 @@ Note the following about this example:
   and page breaks by default.  
 
 ```
-library(tidyverse)
 library(sassy)
-library(tidylog, warn.conflicts = FALSE)
 
-options("tidylog.display" = list(log_print),
-        "logr.notes" = FALSE)
+options("logr.notes" = FALSE)
 
 # Get path to temp directory
 tmp <- tempdir() 
@@ -118,9 +114,6 @@ lib_unload(sdtm)
 
 # Close log
 log_close()
-
-# Disconnect from tidylog
-options("tidylog.display" = NULL)
 
 ```
 
@@ -203,6 +196,8 @@ and after-treatment time points.
 
 Note the following about this example:
 
+  * The **logr** package combined with **tidylog** provides automatic 
+  logging for **dplyr** and **tidyr** functions.
   * The `datastep()` function allows for a complex conditional in the middle
   of a **dplyr** pipeline.  
   * The `%eq%` operator allows comparing of a variable that contains many NA
@@ -769,7 +764,7 @@ Log Elapsed Time: 0 00:00:04
 
 ```
 
-And here is the first three pages of the report:
+And here are the first three pages of the report:
 
 <img src="../man/images/vs_pg1.png" align="center" />
 
