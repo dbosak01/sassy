@@ -1,5 +1,5 @@
 #' @title sassy: Making R Easier for SAS® Programmers
-#'
+#' @encoding UTF-8
 #' @description The \strong{sassy} package is a meta-package that
 #' installs a set of functions that aim to make R easier for programmers
 #' whose primary experience is with SAS® software.
@@ -24,7 +24,7 @@
 #'
 #' @examples
 #' #########################################################
-#' #####        Example 1: Simple Data Listing         #####
+#' #####         Example: Simple Data Listing          #####
 #' #########################################################
 #' library(sassy)
 #' library(tidylog, warn.conflicts = FALSE)
@@ -82,6 +82,22 @@
 #'
 #' # Write report to file system
 #' write_report(rpt) %>% put()
+#' # A report specification: 9 pages
+#' # - file_path: 'C:\\Users\\User\\AppData\\Local\\Temp\\RtmpsRnVcf/output/l_dm.rtf'
+#' # - output_type: RTF
+#' # - units: inches
+#' # - orientation: landscape
+#' # - line size/count: 108/48
+#' # - page_header: left=Sponsor: Company right=Study: ABC
+#' # - title 1: 'Listing 1.0'
+#' # - title 2: 'SDTM Demographics'
+#' # - page_footer: left=2020-12-13 17:27:41 center=CONFIDENTIAL right=Page [pg] of [tpg]
+#' # - content:
+#' #   # A table specification:
+#' #   - data: tibble 'sdtm.DM' 87 rows 24 cols
+#' # - show_cols: all
+#' # - use_attributes: all
+#' # - define: USUBJID id_var='TRUE'
 #'
 #' # Unload data
 #' lib_unload(sdtm)
