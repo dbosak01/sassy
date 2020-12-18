@@ -19,7 +19,8 @@ BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tidylog
 Imports: logr, 
          fmtr,
          libr,
