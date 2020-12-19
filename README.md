@@ -47,7 +47,7 @@ Importantly, all of the above activities can be recorded in a traceable log.
 Here is an example of a simple listing using the **sassy** system of 
 functions.  The data used for these examples is included in the **sassy**
 package, and also available for download 
-<a href="https://github.com/dbosak01/sassy/tree/master/inst/extdata/sassy_data.zip">here</a>.  
+<a href="https://github.com/dbosak01/sassy/blob/master/inst/extdata/sassy_data.zip">here</a>.  
 
 Note the following about this example:
 
