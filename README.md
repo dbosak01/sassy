@@ -9,7 +9,7 @@
 
 <!-- badges: end -->
 
-### Introduction <img src="./man/images/cat1.png" align="right" height="138" />
+### Introduction <img src="./man/images/cat3.png" align="right" height="138" />
 
 For SAS® programmers, encountering R for the first time can be quite a shock.
 
