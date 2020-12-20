@@ -1,9 +1,9 @@
 ---
-title: "Example #2: Table"
+title: "Example 2: Table"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example #2: Table}
+  %\VignetteIndexEntry{Example 2: Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -40,7 +40,7 @@ Note the following about this example:
   * The **reporter** package also allows you to define a stub column of 
   hierarchical labels.
 
-```
+```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
 library(sassy)
 library(tidylog, warn.conflicts = FALSE)
@@ -185,7 +185,10 @@ log_close()
 # Disconnect logr from tidylog
 options("tidylog.display" = FALSE)
 
+# View report
+# file.show(pth)
 ```
+
 #### Log
 
 Here is the log from the above example:
@@ -216,10 +219,8 @@ Prepare Data
 4      DS       csv  174    9  33.7 Kb 2020-12-15 14:00:42
 5      EX       csv   84   11    26 Kb 2020-12-15 14:00:42
 6      IE       csv    2   14    13 Kb 2020-12-15 14:00:42
-7      PE       csv 1854   17 277.9 Kb 2020-12-15 14:00:42
-8  SUPPEX       csv  639   10  63.7 Kb 2020-12-15 14:00:42
-9      SV       csv  685   10  69.9 Kb 2020-12-15 14:00:42
-10     VS       csv 3358   17   467 Kb 2020-12-15 14:00:42
+7      SV       csv  685   10  69.9 Kb 2020-12-15 14:00:42
+8      VS       csv 3358   17   467 Kb 2020-12-15 14:00:42
 
 Join and prepare data 
 

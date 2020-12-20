@@ -1,9 +1,9 @@
 ---
-title: "Example #1: Listing"
+title: "Example 1: Listing"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example #1: Listing}
+  %\VignetteIndexEntry{Example 1: Listing}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -35,8 +35,9 @@ Note the following about this example:
   * The **reporter** package will set column widths, page wraps,
   and page breaks by default.  
 
-```
+```{r eval=FALSE, echo=TRUE}    
 library(sassy)
+library(magrittr)
 
 options("logr.notes" = FALSE)
 
@@ -82,7 +83,10 @@ lib_unload(sdtm)
 # Close log
 log_close()
 
+# View report
+# file.show(pth)
 ```
+
 #### Log
 
 Here is the log produced by the above listing example:
@@ -113,10 +117,8 @@ Get Data
 4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
 5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
 6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
-7      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
-8  SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
-9      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
-10     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+7      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
+8      VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
 
 =========================================================================
 Write Report

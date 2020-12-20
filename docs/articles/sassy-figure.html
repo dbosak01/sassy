@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example #3: Figure • sassy</title>
+<title>Example 3: Figure • sassy</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Example #3: Figure">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Example 3: Figure">
 <meta property="og:description" content="sassy">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -57,13 +57,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/sassy-listing.html">Example #1: Listing</a>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
     </li>
     <li>
-      <a href="../articles/sassy-table.html">Example #2: Table</a>
+      <a href="../articles/sassy-table.html">Example 2: Table</a>
     </li>
     <li>
-      <a href="../articles/sassy-figure.html">Example #3: Figure</a>
+      <a href="../articles/sassy-figure.html">Example 3: Figure</a>
     </li>
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
@@ -94,7 +94,7 @@
       </header><script src="sassy-figure_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Example #3: Figure</h1>
+      <h1 data-toc-skip>Example 3: Figure</h1>
             
             <h4 class="date">2020-12-19</h4>
       
@@ -119,83 +119,85 @@
 <li>The <code>page_by()</code> function on the <code>create_report()</code> statement generates the paging for both the report and plot.</li>
 <li>Few other R packages support this type of reporting capability.</li>
 </ul>
-<pre><code><a href="http://tidyverse.tidyverse.org">library(tidyverse)
-library(sassy)
-library(tidylog, warn.conflicts = FALSE)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dbosak01/sassy">sassy</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/elbersb/tidylog/">tidylog</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-options("tidylog.display" = list(log_print),
-        "logr.notes" = FALSE)
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"tidylog.display"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">log_print</span><span class="op">)</span>,
+        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-# Get path to temp directory
-tmp &lt;- tempdir() 
+<span class="co"># Get path to temp directory</span>
+<span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> 
 
-# Get path to sample data
-pkg &lt;- system.file("extdata", package = "sassy")
+<span class="co"># Get path to sample data</span>
+<span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
 
-# Open log
-lgpth &lt;- log_open(file.path(tmp, "example3.log"))
+<span class="co"># Open log</span>
+<span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example3.log"</span><span class="op">)</span><span class="op">)</span>
 
-sep("Prepare Data")
+<span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span>
 
-# Create libname for csv data
-libname(sdtm, pkg, "csv") %&gt;% put()
+<span class="co"># Create libname for csv data</span>
+<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
-# Load data into workspace
-lib_load(sdtm)
+<span class="co"># Load data into workspace</span>
+<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
 
-put("Perform joins and basic filters")
-prep &lt;- sdtm.DM %&gt;% 
-  left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %&gt;% 
-  select(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT) %&gt;% 
-  filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP"), 
-         ARMCD != "SCRNFAIL") %&gt;% put()
+<span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span>
+<span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/left_join.html">left_join</a></span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
+         <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
   
-put("Group and summarize")
-final &lt;- prep %&gt;% 
-  group_by(ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, VISIT) %&gt;% 
-  summarize(MEAN = mean(VSORRES, na.rm = TRUE)) %&gt;% 
-  filter(VISITNUM &gt; 0 &amp; VISITNUM &lt; 20) %&gt;% 
-  mutate(VISIT = factor(VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
-                                          "WEEK 6","WEEK 8", "WEEK 12",
-                                          "WEEK 16"))) %&gt;% 
-  ungroup() %&gt;% put()
+<span class="fu">put</span><span class="op">(</span><span class="st">"Group and summarize"</span><span class="op">)</span>
+<span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/summarize.html">summarize</a></span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/mutate.html">mutate</a></span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
+                                          <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,
+                                          <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/ungroup.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 
-sep("Create plots and print report")
+<span class="fu">sep</span><span class="op">(</span><span class="st">"Create plots and print report"</span><span class="op">)</span>
 
-# Create plot
-p &lt;- final %&gt;% 
-  ggplot(mapping = aes(y = MEAN, x = VISIT , group = ARM)) + 
-  geom_point(aes(shape = ARM, color = ARM)) + 
-  geom_line(aes(linetype = ARM, color = ARM)) +
-  scale_x_discrete(name = "Visit") +
-  scale_y_continuous(name = "Value")
+<span class="co"># Create plot</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">final</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">MEAN</span>, x <span class="op">=</span> <span class="va">VISIT</span> , group <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_x_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span>
 
-# Construct output path
-pth &lt;- file.path(tmp, "output/f_vs.rtf")
+<span class="co"># Construct output path</span>
+<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/f_vs.rtf"</span><span class="op">)</span>
 
-# Define report object
-rpt &lt;- create_report(pth, output_type = "RTF") %&gt;% 
-  set_margins(top = 1, bottom = 1) %&gt;% 
-  page_header("Sponsor: Company", "Study: ABC") %&gt;% 
-  page_by(VSTEST, "Vital Sign: ", blank_row = "none") %&gt;% 
-  titles("Figure 1.0", "Vital Signs Change from Baseline", 
-         "Safety Population") %&gt;% 
-  add_content(create_plot(p, 4.5, 9)) %&gt;% 
-  footnotes("R Program: VS_Figure.R") %&gt;% 
-  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
-              right = "Page [pg] of [tpg]")
+<span class="co"># Define report object</span>
+<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">page_by</span><span class="op">(</span><span class="va">VSTEST</span>, <span class="st">"Vital Sign: "</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.0"</span>, <span class="st">"Vital Signs Change from Baseline"</span>, 
+         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="fu">create_plot</span><span class="op">(</span><span class="va">p</span>, <span class="fl">4.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"R Program: VS_Figure.R"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, 
+              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
 
-# Write report to file system
-write_report(rpt) %&gt;% put()
+<span class="co"># Write report to file system</span>
+<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
-# Close log
-log_close()
+<span class="co"># Close log</span>
+<span class="fu">log_close</span><span class="op">(</span><span class="op">)</span>
 
-# Disconnect logr from tidylog
-options("tidylog.display" = NULL)
+<span class="co"># Disconnect logr from tidylog</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"tidylog.display"</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
-</a></code></pre>
+<span class="co"># View report</span>
+<span class="co"># file.show(pth)</span></code></pre></div>
 </div>
 <div id="log" class="section level4">
 <h4 class="hasAnchor">
@@ -227,10 +229,8 @@ Prepare Data
 4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
 5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
 6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
-7      PE       csv 1854   17 277.8 Kb 2020-09-18 14:30:24
-8  SUPPEX       csv  639   10  63.6 Kb 2020-09-18 14:30:24
-9      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
-10     VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
+7      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
+8      VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
 
 Perform joins and basic filters 
 

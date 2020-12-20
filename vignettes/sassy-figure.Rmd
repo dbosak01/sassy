@@ -1,9 +1,9 @@
 ---
-title: "Example #3: Figure"
+title: "Example 3: Figure"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example #3: Figure}
+  %\VignetteIndexEntry{Example 3: Figure}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -31,7 +31,8 @@ like the tables in the previous examples.
 * The `page_by()` function on the `create_report()` statement generates the 
 paging for both the report and plot.
 * Few other R packages support this type of reporting capability.
-```
+    
+```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
 library(sassy)
 library(tidylog, warn.conflicts = FALSE)
@@ -108,8 +109,10 @@ log_close()
 # Disconnect logr from tidylog
 options("tidylog.display" = NULL)
 
-
+# View report
+# file.show(pth)
 ```
+
 #### Log
 
 Here is the log for the above program:
@@ -141,10 +144,8 @@ Prepare Data
 4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
 5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
 6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
-7      PE       csv 1854   17 277.8 Kb 2020-09-18 14:30:24
-8  SUPPEX       csv  639   10  63.6 Kb 2020-09-18 14:30:24
-9      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
-10     VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
+7      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
+8      VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
 
 Perform joins and basic filters 
 
