@@ -114,13 +114,13 @@
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong>logr</strong> package combined with <strong>tidylog</strong> provides automatic logging for <strong>dplyr</strong> and <strong>tidyr</strong> functions.</li>
-<li>The <code>datastep()</code> function allows for a complex conditional in the middle of a <strong>dplyr</strong> pipeline.<br>
+<li>The <strong><a href="http://logr.r-sassy.org">logr</a></strong> package combined with <strong>tidylog</strong> provides automatic logging for <strong>dplyr</strong> and <strong>tidyr</strong> functions.</li>
+<li>The <code>datastep()</code> function from the <strong><a href="http://libr.r-sassy.org">libr</a></strong> package allows for a complex conditional in the middle of a <strong>dplyr</strong> pipeline.<br>
 </li>
 <li>The <code>%eq%</code> operator allows comparing of a variable that contains many NA values, without error.</li>
-<li>The <strong>fmtr</strong> package provides several convenient functions for calculating and formatting summary statistics.</li>
+<li>The <strong><a href="http://fmtr.r-sassy.org">fmtr</a></strong> package provides several convenient functions for calculating and formatting summary statistics.</li>
 <li>The <strong>fmtr</strong> package also provides capabilities to create a user-defined format, similar to <code>proc format</code>.</li>
-<li>The <strong>reporter</strong> package supports spanning headers and ‘N=’ population counts in the header labels.</li>
+<li>The <strong><a href="http://reporter.r-sassy.org">reporter</a></strong> package supports spanning headers and ‘N=’ population counts in the header labels.</li>
 <li>The <strong>reporter</strong> package also allows you to define a stub column of hierarchical labels.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -161,21 +161,17 @@
     <span class="co"># Combine treatment groups</span>
     <span class="co"># And distingish baseline time points</span>
     <span class="kw">if</span> <span class="op">(</span><span class="va">ARM</span> <span class="op">==</span> <span class="st">"ARM A"</span><span class="op">)</span> <span class="op">{</span>
-      
       <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op">%eq%</span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span>
         <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"A_BASE"</span>
       <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
         <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"A_TRT"</span>
       <span class="op">}</span>
-      
     <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-    
       <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op">%eq%</span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span>
         <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"O_BASE"</span>
       <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
         <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"O_TRT"</span>
       <span class="op">}</span>
-      
     <span class="op">}</span>
   
     <span class="co"># Populate baseline value</span>

@@ -50,11 +50,11 @@ work together.
 
 The following examples are provided on this site:
 
-* **[Example #1](http://sassy.r-sassy.org/articles/sassy-listing.html)**: 
+* **[Example 1](http://sassy.r-sassy.org/articles/sassy-listing.html)**: 
 Creates a simple data listing and log
-* **[Example #2](http://sassy.r-sassy.org/articles/sassy-table.html)**: 
+* **[Example 2](http://sassy.r-sassy.org/articles/sassy-table.html)**: 
 Creates a table of summary statistics
-* **[Example #3](http://sassy.r-sassy.org/articles/sassy-figure.html)**: 
+* **[Example 3](http://sassy.r-sassy.org/articles/sassy-figure.html)**: 
 Creates a figure with a by-group
 
 Once you review these examples, please proceed to the package links above to

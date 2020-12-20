@@ -114,12 +114,13 @@
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong>logr</strong> package provides a simple, convenient logging mechanism.</li>
+<li>The <strong><a href="http://logr.r-sassy.org">logr</a></strong> package provides a simple, convenient logging mechanism.</li>
 <li>The <code>sep()</code> function creates a nice separator in the log to help keep it organized and readable.</li>
 <li>The <code>put()</code> function will write anything you want to the log, similar to a SAS® <code>%put()</code> statement.</li>
-<li>The <code>libname()</code> function loads an entire directory of data files in one step.</li>
-<li>The <code>lib_load()</code> function loads the data into the workspace for easy access.</li>
-<li>The <strong>reporter</strong> package will set column widths, page wraps, and page breaks by default.</li>
+<li>The <code>libname()</code> function from the <strong><a href="http://libr.r-sassy.org">libr</a></strong> package loads an entire directory of data files, just like a SAS® libname statement.</li>
+<li>The <code>lib_load()</code> function loads the data into the workspace for easy access, and gives you a two-level (<library>.<dataset>) dataset reference like SAS®.</dataset></library>
+</li>
+<li>The <strong><a href="http://reporter.r-sassy.org">reporter</a></strong> package will set column widths, page wraps, and page breaks correctly by default.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dbosak01/sassy">sassy</a></span><span class="op">)</span>

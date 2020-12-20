@@ -25,18 +25,20 @@ and after-treatment time points.
 
 Note the following about this example:
 
-  * The **logr** package combined with **tidylog** provides automatic 
-  logging for **dplyr** and **tidyr** functions.
-  * The `datastep()` function allows for a complex conditional in the middle
+  * The **[logr](http://logr.r-sassy.org)** package combined with **tidylog** 
+  provides automatic logging for **dplyr** and **tidyr** functions.
+  * The `datastep()` function from the **[libr](http://libr.r-sassy.org)**
+  package allows for a complex conditional in the middle
   of a **dplyr** pipeline.  
   * The `%eq%` operator allows comparing of a variable that contains many NA
   values, without error.
-  * The **fmtr** package provides several convenient functions for 
+  * The **[fmtr](http://fmtr.r-sassy.org)** package provides several 
+  convenient functions for 
   calculating and formatting summary statistics.
   * The **fmtr** package also provides capabilities to create a user-defined
   format, similar to `proc format`.
-  * The **reporter** package supports spanning headers and 'N=' population
-  counts in the header labels.
+  * The **[reporter](http://reporter.r-sassy.org)** package supports 
+  spanning headers and 'N=' population counts in the header labels.
   * The **reporter** package also allows you to define a stub column of 
   hierarchical labels.
 
@@ -78,21 +80,17 @@ prep <- sdtm.DM %>%
     # Combine treatment groups
     # And distingish baseline time points
     if (ARM == "ARM A") {
-      
       if (VSBLFL %eq% "Y") {
         GRP <- "A_BASE"
       } else {
         GRP <- "A_TRT"
       }
-      
     } else {
-    
       if (VSBLFL %eq% "Y") {
         GRP <- "O_BASE"
       } else {
         GRP <- "O_TRT"
       }
-      
     }
   
     # Populate baseline value

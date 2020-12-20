@@ -1,4 +1,4 @@
-# sassy <img src="./man/images/sassy.jpg" align="right" height="138" />
+# sassy 
 
 <!-- badges: start -->
 
@@ -9,7 +9,7 @@
 
 <!-- badges: end -->
 
-### Introduction
+### Introduction <img src="./man/images/cat1.png" align="right" height="138" />
 
 For SAS® programmers, encountering R for the first time can be quite a shock.
 
@@ -62,7 +62,7 @@ to think about programming in R very much the same way you thought about
 programming in SAS®.  
 
 It is not *identical* to SAS®.  R is, after all, 
-a very different language than SAS®.  R is functional, vector-based, and runs
+a very different language.  R is functional, vector-based, and runs
 entirely in memory.  As a result, the syntax of **sassy** functions will be 
 different than their corresponding SAS® functions.  
 
@@ -73,7 +73,7 @@ in **Base R** or **tidyverse** alone.
 
 ### Getting Help
 
-If you need help with the **sassy** family of packages, the first best place 
+If you need help with the **sassy** family of packages, the best place 
 to turn to is the [r-sassy](http://www.r-sassy.org) web site.  
 This web site offers many examples, and full
 documentation on every function.  
