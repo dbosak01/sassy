@@ -33,11 +33,11 @@ Note the following about this example:
   SAS® `%put()` statement.
   * The `libname()` function from the **[libr](http://libr.r-sassy.org)** 
   package loads an entire directory 
-  of data files, just like a SAS® libname statement.
+  of data files, just like a SAS® `libname` statement.
   * The `lib_load()` function loads the data into the workspace for easy access,
-  and gives you a two-level (<library>.<dataset>) dataset reference like SAS®.
+  and gives you a two-level (&lt;library&gt;.&lt;dataset&gt;) dataset reference like SAS®.
   * The **[reporter](http://reporter.r-sassy.org)** package will set column 
-  widths, page wraps, and page breaks correctly by default.
+  widths, page wraps, and page breaks automatically.
 
 ```{r eval=FALSE, echo=TRUE}    
 library(sassy)

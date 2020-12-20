@@ -36,11 +36,11 @@ system you can:
 * Write a report in a few lines of code
 * And more!
 
-And all of the above activity can be recorded in a traceable log!  
+And all of the above activities can be recorded in a traceable log!  
 
 The **sassy** system totally changes the flow of the typical R script. 
 It greatly simplifies the script, significantly reduces the number of lines of code, 
-and generally makes the flow much more similar to a SAS® program. 
+and generally makes the flow more similar to a SAS® program. 
 
 ### Installation
 
