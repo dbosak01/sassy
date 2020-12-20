@@ -1,0 +1,15 @@
+url: https://sassy.r-sassy.org
+
+articles:
+- title: Examples
+  navbar: ~
+  contents:
+  - sassy-listing
+  - sassy-table
+  - sassy-figure
+  - sassy-disclaimers
+
+navbar:
+  structure:
+    left:  [home, intro, reference, articles, news]
+    right: [github]

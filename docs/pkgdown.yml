@@ -2,6 +2,13 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  sassy-disclaimers: sassy-disclaimers.html
+  sassy-figure: sassy-figure.html
+  sassy-listing: sassy-listing.html
+  sassy-table: sassy-table.html
   sassy: sassy.html
-last_built: 2020-12-19T03:14Z
+last_built: 2020-12-20T00:56Z
+urls:
+  reference: https://sassy.r-sassy.org/reference
+  article: https://sassy.r-sassy.org/articles
 

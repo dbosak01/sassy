@@ -1,0 +1,37 @@
+---
+title: "Disclaimers"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Disclaimers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Clinical Context
+
+The **sassy** system was developed in the context of, and from the perspective
+of pharmaceutical clinical programming.  The examples take this perspective
+into account.  Despite this context, there is nothing that limits use of the
+**sassy** system to the pharmaceutical industry.  The functions are 
+generalized enough that they can be used in any vertical.
+
+### Independantly Written
+
+Note that the **sassy** meta-package and sub-packages were written 
+independently, and the authors have no association
+with, approval of, or endorsement by SAS® Institute or RStudio®. 
+
+### Not for Big Data
+Also note that the **sassy** family of packages is intended to be used with small and 
+medium-sized data sets.  It is not recommended for big data, as big data
+requires very careful control over which data is or is not loaded into memory.
+The **sassy** packages, on the other hand, tend to load all data into memory 
+indiscriminately.

@@ -1,0 +1,157 @@
+---
+title: "Example #1: Listing"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example #1: Listing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Create a Listing 
+Here is an example of a simple listing using the **sassy** system of 
+functions.  The data used for these examples is included in the **sassy**
+package, and also available for download 
+<a href="https://github.com/dbosak01/sassy/tree/master/inst/extdata/sassy_data.zip">here</a>.  
+
+#### Program
+
+Note the following about this example:
+
+  * The **logr** package provides a simple, convenient logging mechanism. 
+  * The `sep()` function creates a nice separator in the log to help keep it 
+  organized and readable. 
+  * The `put()` function will write anything you want to the log, similar to a 
+  SAS® `%put()` statement.
+  * The `libname()` function loads an entire directory of data files in one step.
+  * The `lib_load()` function loads the data into the workspace for easy access.
+  * The **reporter** package will set column widths, page wraps,
+  and page breaks by default.  
+
+```
+library(sassy)
+
+options("logr.notes" = FALSE)
+
+# Get path to temp directory
+tmp <- tempdir() 
+
+# Get path to sample data
+pkg <- system.file("extdata", package = "sassy")
+
+# Open log
+lgpth <- log_open(file.path(tmp, "example1.log"))
+
+sep("Get Data")
+
+# Define data library
+libname(sdtm, pkg, "csv") %>% put()
+
+# Load library into workspace
+lib_load(sdtm)
+
+sep("Write Report")
+
+# Define table object
+tbl <- create_table(sdtm.DM) %>% 
+  define(USUBJID, id_var = TRUE)
+  
+# Construct report path
+pth <- file.path(tmp, "output/l_dm.rtf") %>% put()
+
+# Define report object
+rpt <- create_report(pth, output_type = "RTF") %>% 
+  page_header("Sponsor: Company", "Study: ABC") %>% 
+  titles("Listing 1.0", "SDTM Demographics") %>% 
+  add_content(tbl, align = "left") %>% 
+  page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
+  
+# Write report to file system
+write_report(rpt) %>% put()
+
+# Unload data
+lib_unload(sdtm)
+
+# Close log
+log_close()
+
+```
+#### Log
+
+Here is the log produced by the above listing example:
+
+```
+=========================================================================
+Log Path: C:/Users/User/AppData/Local/Temp/RtmpsRnVcf/log/example1.log
+Working Directory: C:/packages/sassy
+User Name: User
+R Version: 4.0.3 (2020-10-10)
+Machine: ZB15-5CD00276ZY x86-64
+Operating System: Windows 10 x64 build 18363
+Log Start Time: 2020-12-13 17:27:21
+=========================================================================
+
+=========================================================================
+Get Data
+=========================================================================
+
+# library 'sdtm': 10 items
+- attributes: csv not loaded
+- path: data
+- items:
+     Name Extension  Rows Cols     Size        LastModified
+1      AE       csv   150   27    88 Kb 2020-09-18 14:30:23
+2      DA       csv  3587   18 527.8 Kb 2020-09-18 14:30:23
+3      DM       csv    87   24  45.1 Kb 2020-09-18 14:30:23
+4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
+5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
+6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
+7      PE       csv  1854   17 277.7 Kb 2020-09-18 14:30:24
+8  SUPPEX       csv   639   10  63.5 Kb 2020-09-18 14:30:24
+9      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
+10     VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+
+=========================================================================
+Write Report
+=========================================================================
+
+C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf
+
+# A report specification: 9 pages
+- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- line size/count: 108/48
+- page_header: left=Sponsor: Company right=Study: ABC
+- title 1: 'Listing 1.0'
+- title 2: 'SDTM Demographics'
+- page_footer: left=2020-12-13 17:27:41 center=CONFIDENTIAL right=Page [pg] of [tpg]
+- content:
+# A table specification:
+- data: tibble 'sdtm.DM' 87 rows 24 cols
+- show_cols: all
+- use_attributes: all
+- define: USUBJID id_var='TRUE'
+
+=========================================================================
+Log End Time: 2020-12-13 17:27:45
+Log Elapsed Time: 0 00:00:23
+=========================================================================
+
+
+```
+#### Output
+
+Here is an image of the first page of the RTF report produced by the
+above listing example:
+
+<img src="../man/images/listing.png" align="center" />
+

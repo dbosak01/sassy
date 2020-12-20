@@ -35,6 +35,7 @@ and apply formats to a data frame or vector.}
 #####         Example: Simple Data Listing          #####
 #########################################################
 library(sassy)
+library(magrittr)
 
 options("logr.notes" = FALSE)
 
@@ -51,21 +52,6 @@ sep("Get Data")
 
 # Define data library
 libname(sdtm, pkg, "csv") \%>\% put()
-# # library 'sdtm': 10 items
-# - attributes: csv not loaded
-# - path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
-# - items:
-#   Name Extension Rows Cols     Size        LastModified
-# 1      AE       csv  150   27  88.1 Kb 2020-12-17 19:05:00
-# 2      DA       csv 3587   18 527.8 Kb 2020-12-17 19:05:00
-# 3      DM       csv   87   24  45.2 Kb 2020-12-17 19:05:00
-# 4      DS       csv  174    9  33.7 Kb 2020-12-17 19:05:00
-# 5      EX       csv   84   11    26 Kb 2020-12-17 19:05:00
-# 6      IE       csv    2   14    13 Kb 2020-12-17 19:05:00
-# 7      PE       csv 1854   17 277.9 Kb 2020-12-17 19:05:00
-# 8  SUPPEX       csv  639   10  63.7 Kb 2020-12-17 19:05:00
-# 9      SV       csv  685   10  69.9 Kb 2020-12-17 19:05:00
-# 10     VS       csv 3358   17   467 Kb 2020-12-17 19:05:00
 
 # Load library into workspace
 lib_load(sdtm)
@@ -88,22 +74,6 @@ rpt <- create_report(pth, output_type = "RTF") \%>\%
 
 # Write report to file system
 write_report(rpt) \%>\% put()
-# # A report specification: 9 pages
-# - file_path: 'C:\\Users\\User\\AppData\\Local\\Temp\\RtmpsRnVcf/output/l_dm.rtf'
-# - output_type: RTF
-# - units: inches
-# - orientation: landscape
-# - line size/count: 108/48
-# - page_header: left=Sponsor: Company right=Study: ABC
-# - title 1: 'Listing 1.0'
-# - title 2: 'SDTM Demographics'
-# - page_footer: left=2020-12-13 17:27:41 center=CONFIDENTIAL right=Page [pg] of [tpg]
-# - content:
-# # A table specification:
-# - data: tibble 'sdtm.DM' 87 rows 24 cols
-# - show_cols: all
-# - use_attributes: all
-# - define: USUBJID id_var='TRUE'
 
 # Unload data
 lib_unload(sdtm)
