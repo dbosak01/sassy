@@ -78,9 +78,12 @@ to turn to is the [r-sassy](http://sassy.r-sassy.org) web site.
 This web site offers many examples, and full
 documentation on every function.  
 
-If you need additional help, please turn 
+If you need additional help, please consult 
 to [stackoverflow.com](https://stackoverflow.com).  The stackoverflow 
 community will be very willing to answer your questions.  
+
+If you encounter a bug or have a feature request, please submit an issue 
+[here](https://github.com/dbosak01/sassy/issues).
 
 ### Next Steps
 
