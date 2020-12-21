@@ -44,10 +44,10 @@ and generally makes the flow more similar to a SAS® program.
 
 ### Installation
 
-The easiest way to install the **sassy** system is to run the following 
-command from your R console:
+The **sassy** meta-package has not yet been published on CRAN.  In the 
+meantime, you can install it from github with the following console command:
 
-    install.packages("sassy")
+    devtools::install_github("https://github.com/dbosak01/sassy")
 
 
 Then put the following line at the top of your script:
