@@ -74,7 +74,7 @@ in **Base R** or **tidyverse** alone.
 ### Getting Help
 
 If you need help with the **sassy** family of packages, the best place 
-to turn to is the [r-sassy](http://www.r-sassy.org) web site.  
+to turn to is the [r-sassy](http://sassy.r-sassy.org) web site.  
 This web site offers many examples, and full
 documentation on every function.  
 
