@@ -78,7 +78,7 @@ This web site offers many examples, and full
 documentation on every function.  
 
 If you need additional help, please consult 
-to [stackoverflow.com](https://stackoverflow.com).  The stackoverflow 
+[stackoverflow.com](https://stackoverflow.com).  The stackoverflow 
 community will be very willing to answer your questions.  
 
 If you encounter a bug or have a feature request, please submit an issue 
