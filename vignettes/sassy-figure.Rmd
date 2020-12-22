@@ -1,6 +1,5 @@
 ---
 title: "Example 3: Figure"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Example 3: Figure}
@@ -247,3 +246,6 @@ And here are the first three pages of the report:
 <img src="../man/images/vs_pg2.png" align="center" />
 
 <img src="../man/images/vs_pg3.png" align="center" />
+
+
+Next: [Disclaimers](https://sassy.r-sassy.org/articles/sassy-disclaimers.html)

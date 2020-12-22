@@ -1,6 +1,5 @@
 ---
 title: "Example 1: Listing"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Example 1: Listing}
@@ -161,3 +160,5 @@ above listing example:
 
 <img src="../man/images/listing.png" align="center" />
 
+
+Next: [Example 2: Table](https://sassy.r-sassy.org/articles/sassy-table.html)

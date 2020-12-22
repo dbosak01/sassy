@@ -1,6 +1,5 @@
 ---
 title: "Example 2: Table"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Example 2: Table}
@@ -372,3 +371,6 @@ Log Elapsed Time: 0 00:00:02
 And here is the output report:
 
 <img src="../man/images/vital_signs.png" align="center" />
+
+
+Next: [Example 3: Table](https://sassy.r-sassy.org/articles/sassy-figure.html)

@@ -1,6 +1,5 @@
 ---
 title: "Disclaimers"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Disclaimers}

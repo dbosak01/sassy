@@ -11,5 +11,5 @@ articles:
 
 navbar:
   structure:
-    left:  [home, intro, reference, articles, news]
+    left:  [home, intro, articles, reference, news]
     right: [github]
