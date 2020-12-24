@@ -70,6 +70,15 @@ will, however, have a similar feel.  Overall, you will find
 programming with the **sassy** system much more comfortable than programming
 in **Base R** or **tidyverse** alone.
 
+### Next Steps
+
+Next, you should read the [Get started](http://sassy.r-sassy.org/articles/sassy.html)
+page, and look at some examples.  From these pages, you will be able to 
+link into each of the packages included in the **sassy** system, and explore them
+in depth.  
+
+Have fun!
+
 ### Getting Help
 
 If you need help with the **sassy** family of packages, the best place 
@@ -81,14 +90,10 @@ If you need additional help, please consult
 [stackoverflow.com](https://stackoverflow.com).  The stackoverflow 
 community will be very willing to answer your questions.  
 
+If you want to look at the code for the **sassy** package, visit the
+github page [here](https://github.com/dbosak01/sassy).
+
 If you encounter a bug or have a feature request, please submit an issue 
 [here](https://github.com/dbosak01/sassy/issues).
 
-### Next Steps
 
-Next, you should read the [Get started](http://sassy.r-sassy.org/articles/sassy.html)
-page, and look at some examples.  From these pages, you will be able to 
-link into each of the packages included in the **sassy** system, and explore them
-in depth.  
-
-Have fun!
