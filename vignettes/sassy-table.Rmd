@@ -373,4 +373,4 @@ And here is the output report:
 <img src="../man/images/vital_signs.png" align="center" />
 
 
-Next: [Example 3: Table](https://sassy.r-sassy.org/articles/sassy-figure.html)
+Next: [Example 3: Table](sassy-figure.html)

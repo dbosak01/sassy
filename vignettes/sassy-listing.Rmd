@@ -161,4 +161,4 @@ above listing example:
 <img src="../man/images/listing.png" align="center" />
 
 
-Next: [Example 2: Table](https://sassy.r-sassy.org/articles/sassy-table.html)
+Next: [Example 2: Table](sassy-table.html)
