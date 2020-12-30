@@ -145,10 +145,10 @@
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span>
 
 <span class="co"># Create libname for csv data</span>
-<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> 
 
 <span class="co"># Load data into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
+<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span>
 <span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
@@ -225,7 +225,7 @@ Prepare Data
 ========================================================================= 
 
 # library 'sdtm': 10 items
-- attributes: csv not loaded
+- attributes: csv loaded
 - path: C:/packages/sassy/inst/extdata
 - items:
      Name Extension Rows Cols     Size        LastModified

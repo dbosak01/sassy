@@ -145,10 +145,10 @@
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Get Data"</span><span class="op">)</span>
 
 <span class="co"># Define data library</span>
-<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> 
 
 <span class="co"># Load library into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
+<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Write Report"</span><span class="op">)</span>
 
@@ -157,7 +157,7 @@
   <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
   
 <span class="co"># Construct report path</span>
-<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/l_dm.rtf"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/l_dm.rtf"</span><span class="op">)</span> 
 
 <span class="co"># Define report object</span>
 <span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -197,7 +197,7 @@ Get Data
 =========================================================================
 
 # library 'sdtm': 10 items
-- attributes: csv not loaded
+- attributes: csv loaded
 - path: data
 - items:
      Name Extension  Rows Cols     Size        LastModified
@@ -213,8 +213,6 @@ Get Data
 =========================================================================
 Write Report
 =========================================================================
-
-C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf
 
 # A report specification: 9 pages
 - file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf'

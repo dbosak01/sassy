@@ -51,10 +51,10 @@ lgpth <- log_open(file.path(tmp, "example3.log"))
 sep("Prepare Data")
 
 # Create libname for csv data
-libname(sdtm, pkg, "csv") %>% put()
+libname(sdtm, pkg, "csv") 
 
 # Load data into workspace
-lib_load(sdtm)
+lib_load(sdtm) %>% put()
 
 put("Perform joins and basic filters")
 prep <- sdtm.DM %>% 
@@ -133,7 +133,7 @@ Prepare Data
 ========================================================================= 
 
 # library 'sdtm': 10 items
-- attributes: csv not loaded
+- attributes: csv loaded
 - path: C:/packages/sassy/inst/extdata
 - items:
      Name Extension Rows Cols     Size        LastModified

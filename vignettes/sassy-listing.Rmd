@@ -56,10 +56,10 @@ lgpth <- log_open(file.path(tmp, "example1.log"))
 sep("Get Data")
 
 # Define data library
-libname(sdtm, pkg, "csv") %>% put()
+libname(sdtm, pkg, "csv") 
 
 # Load library into workspace
-lib_load(sdtm)
+lib_load(sdtm) %>% put()
 
 sep("Write Report")
 
@@ -68,7 +68,7 @@ tbl <- create_table(sdtm.DM) %>%
   define(USUBJID, id_var = TRUE)
   
 # Construct report path
-pth <- file.path(tmp, "output/l_dm.rtf") %>% put()
+pth <- file.path(tmp, "output/l_dm.rtf") 
 
 # Define report object
 rpt <- create_report(pth, output_type = "RTF") %>% 
@@ -110,7 +110,7 @@ Get Data
 =========================================================================
 
 # library 'sdtm': 10 items
-- attributes: csv not loaded
+- attributes: csv loaded
 - path: data
 - items:
      Name Extension  Rows Cols     Size        LastModified
@@ -126,8 +126,6 @@ Get Data
 =========================================================================
 Write Report
 =========================================================================
-
-C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf
 
 # A report specification: 9 pages
 - file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf'
