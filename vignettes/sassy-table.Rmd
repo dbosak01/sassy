@@ -24,19 +24,19 @@ and after-treatment time points.
 
 Note the following about this example:
 
-  * The **[logr](http://logr.r-sassy.org)** package combined with **tidylog** 
-  provides automatic logging for **dplyr** and **tidyr** functions.
-  * The `datastep()` function from the **[libr](http://libr.r-sassy.org)**
+  * The **[logr](https://logr.r-sassy.org)** package 
+  provides automatic logging for many functions.
+  * The `datastep()` function from the **[libr](https://libr.r-sassy.org)**
   package allows for a complex conditional in the middle
   of a **dplyr** pipeline.  
   * The `%eq%` operator allows comparing of a variable that contains many NA
   values, without error.
-  * The **[fmtr](http://fmtr.r-sassy.org)** package provides several 
+  * The **[fmtr](https://fmtr.r-sassy.org)** package provides several 
   convenient functions for 
   calculating and formatting summary statistics.
   * The **fmtr** package also provides capabilities to create a user-defined
   format, similar to `proc format`.
-  * The **[reporter](http://reporter.r-sassy.org)** package supports 
+  * The **[reporter](https://reporter.r-sassy.org)** package supports 
   spanning headers and 'N=' population counts in the header labels.
   * The **reporter** package also allows you to define a stub column of 
   hierarchical labels.
@@ -44,9 +44,8 @@ Note the following about this example:
 ```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
 library(sassy)
-library(tidylog, warn.conflicts = FALSE)
 
-options("tidylog.display" = list(log_print),
+options("logr.autolog" = TRUE,
         "logr.notes" = FALSE)
 
 # Get path to temp directory
@@ -64,18 +63,18 @@ sep("Prepare Data")
 libname(sdtm, pkg, "csv") 
 
 # Load data into workspace
-lib_load(sdtm) %>% put()
+lib_load(sdtm) 
 
 put("Join and prepare data")
 prep <- sdtm.DM %>% 
   left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %>% 
   select(USUBJID, VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, VSBLFL) %>% 
   filter(VSTESTCD %in% c("PULSE", "RESP", "TEMP", "DIABP", "SYSBP"), 
-    !(VISIT == "SCREENING" & VSBLFL != "Y")) %>% 
+         !(VISIT == "SCREENING" & VSBLFL != "Y")) %>% 
   arrange(USUBJID, VSTESTCD, VISITNUM) %>% 
   group_by(USUBJID, VSTESTCD) %>% 
   datastep(retain = list(BSTRESN = 0), {
-  
+    
     # Combine treatment groups
     # And distingish baseline time points
     if (ARM == "ARM A") {
@@ -91,11 +90,11 @@ prep <- sdtm.DM %>%
         GRP <- "O_TRT"
       }
     }
-  
+    
     # Populate baseline value
     if (first.)
       BSTRESN = VSSTRESN
-      
+    
   }) %>% 
   ungroup() %>% 
   put()
@@ -121,8 +120,8 @@ final <- prep %>%
   pivot_wider(names_from = GRP,
               values_from = values) %>% 
   put()
-  
-  
+
+
 sep("Create formats")
 
 # Vital sign lookup format 
@@ -131,12 +130,12 @@ vs_fmt <- c(PULSE = "Pulse",
             RESP = "Respirations/min", 
             SYSBP = "Systolic Blood Pressure", 
             DIABP = "Diastolic Blood Pressure") %>% 
-            put()
-            
+  put()
+
 # Statistics user-defined format                
 stat_fmt <- value(condition(x == "Mean", "Mean (SD)"),
                   condition(x == "Quantiles", "Q1 - Q3")) %>% 
-                  put()
+  put()
 
 sep("Create Report")
 
@@ -169,9 +168,9 @@ rpt <- create_report(pth, output_type = "RTF") %>%
   titles("Table 4.0", "Selected Vital Signs") %>% 
   add_content(tbl, align = "center") %>% 
   page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
-  
+
 # Write report to file system  
-write_report(rpt) %>% put()
+write_report(rpt) 
 
 # Unload data from workspace
 lib_unload(sdtm)
@@ -179,11 +178,9 @@ lib_unload(sdtm)
 # Close log
 log_close()
 
-# Disconnect logr from tidylog
-options("tidylog.display" = FALSE)
-
 # View report
 # file.show(pth)
+
 ```
 
 #### Log
@@ -192,32 +189,34 @@ Here is the log from the above example:
 
 ```
 ========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/RtmpohmQm6/log/example2.log 
-Working Directory: C:/packages/sassy 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example2.log 
+Working Directory: C:/packages/Testing 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
-Machine: ZB15-5CD00276ZY x86-64 
+Machine: DESKTOP-1F27OR8 x86-64 
 Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2020-12-17 16:26:30 
+Log Start Time: 2021-01-05 08:13:13 
 ========================================================================= 
 
 ========================================================================= 
 Prepare Data 
 ========================================================================= 
 
-# library 'sdtm': 10 items
-- attributes: csv loaded
+# library 'sdtm': 8 items
+- attributes: csv not loaded
 - path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
 - items:
-     Name Extension Rows Cols     Size        LastModified
-1      AE       csv  150   27  88.1 Kb 2020-12-15 14:00:42
-2      DA       csv 3587   18 527.8 Kb 2020-12-15 14:00:42
-3      DM       csv   87   24  45.2 Kb 2020-12-15 14:00:42
-4      DS       csv  174    9  33.7 Kb 2020-12-15 14:00:42
-5      EX       csv   84   11    26 Kb 2020-12-15 14:00:42
-6      IE       csv    2   14    13 Kb 2020-12-15 14:00:42
-7      SV       csv  685   10  69.9 Kb 2020-12-15 14:00:42
-8      VS       csv 3358   17   467 Kb 2020-12-15 14:00:42
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
+2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
+3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
+4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
+5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
+6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
+7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
+8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+
+lib_load: library 'sdtm' loaded 
 
 Join and prepare data 
 
@@ -238,6 +237,8 @@ select: dropped 33 variables (STUDYID.x, DOMAIN.x, SUBJID, RFSTDTC, RFENDTC, …
 filter: removed 590 rows (18%), 2,768 rows remaining
 
 group_by: 2 grouping variables (USUBJID, VSTESTCD)
+
+datastep: columns decreased from 7 to 9 
 
 ungroup: no grouping variables
 
@@ -320,8 +321,10 @@ pivot_wider: reorganized (GRP, values) into (A_BASE, A_TRT, O_BASE, O_TRT) [was 
 Create formats 
 ========================================================================= 
 
-  PULSE             TEMP               RESP                     SYSBP                      DIABP 
-"Pulse" "Temperature °C" "Respirations/min" "Systolic Blood Pressure" "Diastolic Blood Pressure" 
+PULSE                       TEMP                       RESP                      SYSBP 
+"Pulse"           "Temperature °C"         "Respirations/min"  "Systolic Blood Pressure" 
+DIABP 
+"Diastolic Blood Pressure" 
 
 # A user-defined format: 2 conditions
   Name Type       Expression     Label Order
@@ -335,7 +338,7 @@ Create Report
 mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpohmQm6/output/t_vs.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/t_vs.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -343,7 +346,7 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Table 4.0'
 - title 2: 'Selected Vital Signs'
-- page_footer: left=2020-12-17 16:26:33 center=CONFIDENTIAL right=Page [pg] of [tpg]
+- page_footer: left=2021-01-05 08:13:45 center=CONFIDENTIAL right=Page [pg] of [tpg]
 - content: 
 # A table specification:
 - data: tibble 'final' 20 rows 6 cols
@@ -359,9 +362,13 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - define: O_BASE 'Baseline' 
 - define: O_TRT 'After Treatment' 
 
+lib_sync: synchronized data in library 'sdtm' 
+
+lib_unload: library 'sdtm' unloaded 
+
 ========================================================================= 
-Log End Time: 2020-12-17 16:26:33 
-Log Elapsed Time: 0 00:00:02 
+Log End Time: 2021-01-05 08:13:49 
+Log Elapsed Time: 0 00:00:36 
 ========================================================================= 
 
 

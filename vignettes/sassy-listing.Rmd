@@ -24,25 +24,26 @@ package, and also available for download
 
 Note the following about this example:
 
-  * The **[logr](http://logr.r-sassy.org)** package provides a simple, 
+  * The **[logr](https://logr.r-sassy.org)** package provides a simple, 
   convenient logging mechanism. 
   * The `sep()` function creates a nice separator in the log to help keep it 
   organized and readable. 
   * The `put()` function will write anything you want to the log, similar to a 
   SAS® `%put()` statement.
-  * The `libname()` function from the **[libr](http://libr.r-sassy.org)** 
+  * The `libname()` function from the **[libr](https://libr.r-sassy.org)** 
   package loads an entire directory 
   of data files, just like a SAS® `libname` statement.
   * The `lib_load()` function loads the data into the workspace for easy access,
   and gives you a two-level (&lt;library&gt;.&lt;dataset&gt;) dataset reference like SAS®.
-  * The **[reporter](http://reporter.r-sassy.org)** package will set column 
+  * The **[reporter](https://reporter.r-sassy.org)** package will set column 
   widths, page wraps, and page breaks automatically.
 
 ```{r eval=FALSE, echo=TRUE}    
 library(sassy)
 library(magrittr)
 
-options("logr.notes" = FALSE)
+options("logr.autolog" = TRUE, 
+        "logr.notes" = FALSE)
 
 # Get path to temp directory
 tmp <- tempdir() 
@@ -59,14 +60,14 @@ sep("Get Data")
 libname(sdtm, pkg, "csv") 
 
 # Load library into workspace
-lib_load(sdtm) %>% put()
+lib_load(sdtm) 
 
 sep("Write Report")
 
 # Define table object
 tbl <- create_table(sdtm.DM) %>% 
   define(USUBJID, id_var = TRUE)
-  
+
 # Construct report path
 pth <- file.path(tmp, "output/l_dm.rtf") 
 
@@ -76,9 +77,9 @@ rpt <- create_report(pth, output_type = "RTF") %>%
   titles("Listing 1.0", "SDTM Demographics") %>% 
   add_content(tbl, align = "left") %>% 
   page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
-  
+
 # Write report to file system
-write_report(rpt) %>% put()
+write_report(rpt) 
 
 # Unload data
 lib_unload(sdtm)
@@ -95,40 +96,42 @@ log_close()
 Here is the log produced by the above listing example:
 
 ```
-=========================================================================
-Log Path: C:/Users/User/AppData/Local/Temp/RtmpsRnVcf/log/example1.log
-Working Directory: C:/packages/sassy
-User Name: User
-R Version: 4.0.3 (2020-10-10)
-Machine: ZB15-5CD00276ZY x86-64
-Operating System: Windows 10 x64 build 18363
-Log Start Time: 2020-12-13 17:27:21
-=========================================================================
+========================================================================= 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example1.log 
+Working Directory: C:/packages/Testing 
+User Name: User 
+R Version: 4.0.3 (2020-10-10) 
+Machine: DESKTOP-1F27OR8 x86-64 
+Operating System: Windows 10 x64 build 18363 
+Log Start Time: 2021-01-05 08:05:09 
+========================================================================= 
 
-=========================================================================
-Get Data
-=========================================================================
+========================================================================= 
+Get Data 
+========================================================================= 
 
-# library 'sdtm': 10 items
-- attributes: csv loaded
-- path: data
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
 - items:
-     Name Extension  Rows Cols     Size        LastModified
-1      AE       csv   150   27    88 Kb 2020-09-18 14:30:23
-2      DA       csv  3587   18 527.8 Kb 2020-09-18 14:30:23
-3      DM       csv    87   24  45.1 Kb 2020-09-18 14:30:23
-4      DS       csv   174    9  33.6 Kb 2020-09-18 14:30:23
-5      EX       csv    84   11  25.9 Kb 2020-09-18 14:30:23
-6      IE       csv     2   14  12.9 Kb 2020-09-18 14:30:23
-7      SV       csv   685   10  69.8 Kb 2020-09-18 14:30:24
-8      VS       csv  3358   17 466.9 Kb 2020-09-18 14:30:24
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
+2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
+3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
+4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
+5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
+6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
+7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
+8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
 
-=========================================================================
-Write Report
-=========================================================================
+lib_load: library 'sdtm' loaded 
+
+========================================================================= 
+Write Report 
+========================================================================= 
 
 # A report specification: 9 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/l_dm.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/l_dm.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -136,18 +139,22 @@ Write Report
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Listing 1.0'
 - title 2: 'SDTM Demographics'
-- page_footer: left=2020-12-13 17:27:41 center=CONFIDENTIAL right=Page [pg] of [tpg]
-- content:
+- page_footer: left=2021-01-05 08:05:14 center=CONFIDENTIAL right=Page [pg] of [tpg]
+- content: 
 # A table specification:
 - data: tibble 'sdtm.DM' 87 rows 24 cols
 - show_cols: all
 - use_attributes: all
-- define: USUBJID id_var='TRUE'
+- define: USUBJID id_var='TRUE' 
 
-=========================================================================
-Log End Time: 2020-12-13 17:27:45
-Log Elapsed Time: 0 00:00:23
-=========================================================================
+lib_sync: synchronized data in library 'sdtm' 
+
+lib_unload: library 'sdtm' unloaded 
+
+========================================================================= 
+Log End Time: 2021-01-05 08:05:17 
+Log Elapsed Time: 0 00:00:07 
+========================================================================= 
 
 
 ```

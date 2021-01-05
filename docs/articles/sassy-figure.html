@@ -128,9 +128,8 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/dbosak01/sassy">sassy</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/elbersb/tidylog/">tidylog</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"tidylog.display"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">log_print</span><span class="op">)</span>,
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,
         <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
 <span class="co"># Get path to temp directory</span>
@@ -148,24 +147,24 @@
 <span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> 
 
 <span class="co"># Load data into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> 
 
 <span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span>
 <span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/left_join.html">left_join</a></span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
          <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-  
+
 <span class="fu">put</span><span class="op">(</span><span class="st">"Group and summarize"</span><span class="op">)</span>
 <span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/summarize.html">summarize</a></span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/mutate.html">mutate</a></span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarize</span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
                                           <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,
                                           <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/pkg/tidylog/man/ungroup.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Create plots and print report"</span><span class="op">)</span>
@@ -194,13 +193,10 @@
               right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
 
 <span class="co"># Write report to file system</span>
-<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> 
 
 <span class="co"># Close log</span>
 <span class="fu">log_close</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Disconnect logr from tidylog</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"tidylog.display"</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
 
 <span class="co"># View report</span>
 <span class="co"># file.show(pth)</span></code></pre></div>
@@ -209,34 +205,35 @@
 <h4 class="hasAnchor">
 <a href="#log" class="anchor"></a>Log</h4>
 <p>Here is the log for the above program:</p>
-<pre><code>
-========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/RtmpsRnVcf/log/example3.log 
-Working Directory: C:/packages/sassy 
+<pre><code>========================================================================= 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example3.log 
+Working Directory: C:/packages/Testing 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
-Machine: ZB15-5CD00276ZY x86-64 
+Machine: DESKTOP-1F27OR8 x86-64 
 Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2020-12-14 22:43:52 
+Log Start Time: 2021-01-05 08:23:30 
 ========================================================================= 
 
 ========================================================================= 
 Prepare Data 
 ========================================================================= 
 
-# library 'sdtm': 10 items
-- attributes: csv loaded
-- path: C:/packages/sassy/inst/extdata
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
 - items:
-     Name Extension Rows Cols     Size        LastModified
-1      AE       csv  150   27  88.1 Kb 2020-09-18 14:30:23
-2      DA       csv 3587   18 527.8 Kb 2020-09-18 14:30:23
-3      DM       csv   87   24  45.1 Kb 2020-09-18 14:30:23
-4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
-5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
-6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
-7      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
-8      VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
+2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
+3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
+4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
+5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
+6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
+7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
+8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+
+lib_load: library 'sdtm' loaded 
 
 Perform joins and basic filters 
 
@@ -303,7 +300,7 @@ Create plots and print report
 ========================================================================= 
 
 # A report specification: 5 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/f_vs.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/f_vs.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -314,7 +311,7 @@ Create plots and print report
 - title 2: 'Vital Signs Change from Baseline'
 - title 3: 'Safety Population'
 - footnote 1: 'R Program: VS_Figure.R'
-- page_footer: left=Date Produced: 14Dec20 22:43 center= right=Page [pg] of [tpg]
+- page_footer: left=Date Produced: 05Jan21 08:23 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
 - data: 140 rows, 7 cols
@@ -323,10 +320,9 @@ Create plots and print report
 - width: 9
 
 ========================================================================= 
-Log End Time: 2020-12-14 22:43:56 
-Log Elapsed Time: 0 00:00:04 
+Log End Time: 2021-01-05 08:23:50 
+Log Elapsed Time: 0 00:00:19 
 ========================================================================= 
-
 </code></pre>
 </div>
 <div id="output" class="section level4">

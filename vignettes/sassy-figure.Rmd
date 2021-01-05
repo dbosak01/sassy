@@ -34,9 +34,8 @@ paging for both the report and plot.
 ```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
 library(sassy)
-library(tidylog, warn.conflicts = FALSE)
 
-options("tidylog.display" = list(log_print),
+options("logr.autolog" = TRUE,
         "logr.notes" = FALSE)
 
 # Get path to temp directory
@@ -54,7 +53,7 @@ sep("Prepare Data")
 libname(sdtm, pkg, "csv") 
 
 # Load data into workspace
-lib_load(sdtm) %>% put()
+lib_load(sdtm) 
 
 put("Perform joins and basic filters")
 prep <- sdtm.DM %>% 
@@ -62,7 +61,7 @@ prep <- sdtm.DM %>%
   select(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT) %>% 
   filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP"), 
          ARMCD != "SCRNFAIL") %>% put()
-  
+
 put("Group and summarize")
 final <- prep %>% 
   group_by(ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, VISIT) %>% 
@@ -100,13 +99,10 @@ rpt <- create_report(pth, output_type = "RTF") %>%
               right = "Page [pg] of [tpg]")
 
 # Write report to file system
-write_report(rpt) %>% put()
+write_report(rpt) 
 
 # Close log
 log_close()
-
-# Disconnect logr from tidylog
-options("tidylog.display" = NULL)
 
 # View report
 # file.show(pth)
@@ -117,34 +113,35 @@ options("tidylog.display" = NULL)
 Here is the log for the above program:
 
 ```
-
 ========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/RtmpsRnVcf/log/example3.log 
-Working Directory: C:/packages/sassy 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example3.log 
+Working Directory: C:/packages/Testing 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
-Machine: ZB15-5CD00276ZY x86-64 
+Machine: DESKTOP-1F27OR8 x86-64 
 Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2020-12-14 22:43:52 
+Log Start Time: 2021-01-05 08:23:30 
 ========================================================================= 
 
 ========================================================================= 
 Prepare Data 
 ========================================================================= 
 
-# library 'sdtm': 10 items
-- attributes: csv loaded
-- path: C:/packages/sassy/inst/extdata
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
 - items:
-     Name Extension Rows Cols     Size        LastModified
-1      AE       csv  150   27  88.1 Kb 2020-09-18 14:30:23
-2      DA       csv 3587   18 527.8 Kb 2020-09-18 14:30:23
-3      DM       csv   87   24  45.1 Kb 2020-09-18 14:30:23
-4      DS       csv  174    9  33.7 Kb 2020-09-18 14:30:23
-5      EX       csv   84   11    26 Kb 2020-09-18 14:30:23
-6      IE       csv    2   14    13 Kb 2020-09-18 14:30:23
-7      SV       csv  685   10  69.9 Kb 2020-09-18 14:30:24
-8      VS       csv 3358   17   467 Kb 2020-09-18 14:30:24
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
+2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
+3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
+4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
+5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
+6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
+7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
+8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+
+lib_load: library 'sdtm' loaded 
 
 Perform joins and basic filters 
 
@@ -211,7 +208,7 @@ Create plots and print report
 ========================================================================= 
 
 # A report specification: 5 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\RtmpsRnVcf/output/f_vs.rtf'
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/f_vs.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -222,7 +219,7 @@ Create plots and print report
 - title 2: 'Vital Signs Change from Baseline'
 - title 3: 'Safety Population'
 - footnote 1: 'R Program: VS_Figure.R'
-- page_footer: left=Date Produced: 14Dec20 22:43 center= right=Page [pg] of [tpg]
+- page_footer: left=Date Produced: 05Jan21 08:23 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
 - data: 140 rows, 7 cols
@@ -231,10 +228,9 @@ Create plots and print report
 - width: 9
 
 ========================================================================= 
-Log End Time: 2020-12-14 22:43:56 
-Log Elapsed Time: 0 00:00:04 
+Log End Time: 2021-01-05 08:23:50 
+Log Elapsed Time: 0 00:00:19 
 ========================================================================= 
-
 
 ```
 #### Output 
