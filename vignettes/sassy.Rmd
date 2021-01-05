@@ -30,12 +30,12 @@ report on their data.
 ### Included Packages
 The **sassy** meta-package contains the following packages:
 
-* **[logr](http://logr.r-sassy.org)**: Produces a traceable log
-* **[fmtr](http://fmtr.r-sassy.org)**: Provides functions for formatting 
+* **[logr](https://logr.r-sassy.org)**: Produces a traceable log
+* **[fmtr](https://fmtr.r-sassy.org)**: Provides functions for formatting 
 data and a creating a format catalog
-* **[libr](http://libr.r-sassy.org)**: Gives you the ability to define a 
+* **[libr](https://libr.r-sassy.org)**: Gives you the ability to define a 
 libname, generate a data dictionary, and simulate a data step
-* **[reporter](http://reporter.r-sassy.org)**: A reporting package with easy 
+* **[reporter](https://reporter.r-sassy.org)**: A reporting package with easy 
 layout capabilities and the 
 ability to write reports in TXT, RTF, and PDF file formats
 
