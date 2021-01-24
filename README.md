@@ -43,18 +43,16 @@ and generally makes the flow more similar to a SAS® program.
 
 ### Installation
 
-The **sassy** meta-package has not yet been published on CRAN.  In the 
-meantime, you can install it from github with the following console command:
+The **sassy** meta-package is published on CRAN.  You can install it
+with the following console command:
 
-    devtools::install_github("https://github.com/dbosak01/sassy")
+    install.packages("sassy")
 
 
 Then put the following line at the top of your script:
 
     library(sassy)
 
-
-That's it!
 
 The above commands will install and load a set of packages that will allow you
 to think about programming in R very much the same way you thought about

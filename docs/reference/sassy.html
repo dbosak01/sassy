@@ -174,18 +174,18 @@ with, approval of, or endorsement by SAS® Institute.</p>
 
 <p>The packages included in the <strong>sassy</strong> meta-package are
 as follows:</p><ul>
-<li><p><code><a href='https://rdrr.io/pkg/libr/man/libr.html'>libr</a></code>: Define a libname, view
+<li><p><code><a href='https://libr.r-sassy.org/reference/libr.html'>libr</a></code>: Define a libname, view
   data dictionaries, and simulate a data step.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/fmtr/man/fmtr.html'>fmtr</a></code>: Create a format catalog
+<li><p><code><a href='https://fmtr.r-sassy.org/reference/fmtr.html'>fmtr</a></code>: Create a format catalog
 and apply formats to a data frame or vector.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/logr/man/logr.html'>logr</a></code>: Generate a traceable log.</p></li>
-<li><p><code><a href='https://rdrr.io/pkg/reporter/man/reporter.html'>reporter</a></code>: Write reports and output
+<li><p><code><a href='https://logr.r-sassy.org/reference/logr.html'>logr</a></code>: Generate a traceable log.</p></li>
+<li><p><code><a href='https://reporter.r-sassy.org/reference/reporter.html'>reporter</a></code>: Write reports and output
   in text, RTF, and PDF.</p></li>
 </ul>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>#########################################################</span>
+    <pre class="examples"><span class='co'>#########################################################</span>
 <span class='co'>#####         Example: Simple Data Listing          #####</span>
 <span class='co'>#########################################################</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/dbosak01/sassy'>sassy</a></span><span class='op'>)</span>
@@ -203,180 +203,22 @@ and apply formats to a data frame or vector.</p></li>
 <span class='va'>lgpth</span> <span class='op'>&lt;-</span> <span class='fu'>log_open</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"example1.log"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Get Data"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "========================================================================="
-#&gt; [1] "Get Data"
-#&gt; [1] "========================================================================="</div><div class='input'>
+
 <span class='co'># Define data library</span>
 <span class='fu'>libname</span><span class='op'>(</span><span class='va'>sdtm</span>, <span class='va'>pkg</span>, <span class='st'>"csv"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>$AE</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  .default = col_character(),</span>
-#&gt; <span class='message'>  AESEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AELLT = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  AELLTCD = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  AEPTCD = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AEHLTCD = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AEHLGTCD = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AEBDSYCD = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AESOCCD = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AESTDY = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  AEENDY = </span><span style='color: #00BB00;'>col_double()</span><span></span>
-#&gt; <span class='message'>)</span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>i</span><span> Use </span><span style='color: #000000;background-color: #BBBBBB;'>`spec()`</span><span> for the full column specifications.</span></div><div class='output co'>#&gt; <span class='message'>$DA</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DASEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  DAREFID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DATESTCD = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DATEST = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DAORRES = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  DAORRESU = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DASTRESC = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  DASTRESN = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  DASTRESU = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DASTAT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DADRVFL = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VISITNUM = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VISIT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DADTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  DADY = </span><span style='color: #00BB00;'>col_double()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>$DM</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  .default = col_character(),</span>
-#&gt; <span class='message'>  RFSTDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  RFENDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  RFXSTDTC = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  RFXENDTC = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  RFICDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  RFPENDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  DTHDTC = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  DTHFL = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  BRTHDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  AGE = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  ACTARMCD = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  ACTARM = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  COUNTRY = </span><span style='color: #BBBB00;'>col_logical()</span><span></span>
-#&gt; <span class='message'>)</span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>i</span><span> Use </span><span style='color: #000000;background-color: #BBBBBB;'>`spec()`</span><span> for the full column specifications.</span></div><div class='output co'>#&gt; <span class='message'>$DS</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DSSEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  DSTERM = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DSDECOD = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DSCAT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DSSTDTC = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DSSTDY = </span><span style='color: #00BB00;'>col_double()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>$EX</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  EXSEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  EXTRT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  EXDOSE = </span><span style='color: #BBBB00;'>col_logical()</span><span>,</span>
-#&gt; <span class='message'>  EXDOSTXT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  EXDOSU = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  EXDOSFRM = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  EXSTDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  EXENDTC = </span><span style='color: #BB0000;'>col_character()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>$IE</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  IESEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  IETESTCD = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  IETEST = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  IECAT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  IEORRES = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  IESTRESC = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VISITNUM = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VISIT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VISITDY = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  IEDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  IEDY = </span><span style='color: #00BB00;'>col_double()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>$SV</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VISITNUM = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VISIT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  SVSTDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  SVENDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  SVSTDY = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  SVENDY = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  SVUPDES = </span><span style='color: #BB0000;'>col_character()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; <span class='message'>$VS</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'></span><span style='color: #00BBBB;'>--</span><span> </span><span style='font-weight: bold;'>Column specification</span><span> </span><span style='color: #00BBBB;'>--------------------------------------------------------</span><span></span>
-#&gt; <span class='message'>cols(</span>
-#&gt; <span class='message'>  STUDYID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  DOMAIN = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  USUBJID = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSSEQ = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VSTESTCD = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSTEST = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSPOS = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSORRES = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VSORRESU = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSSTRESC = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VSSTRESN = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VSSTRESU = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSBLFL = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VISITNUM = </span><span style='color: #00BB00;'>col_double()</span><span>,</span>
-#&gt; <span class='message'>  VISIT = </span><span style='color: #BB0000;'>col_character()</span><span>,</span>
-#&gt; <span class='message'>  VSDTC = </span><span style='color: #0000BB;'>col_date(format = "")</span><span>,</span>
-#&gt; <span class='message'>  VSDY = </span><span style='color: #00BB00;'>col_double()</span><span></span>
-#&gt; <span class='message'>)</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># library 'sdtm': 8 items
-#&gt; </span><span>- attributes: csv not loaded
-#&gt; - path: C:/Users/User/AppData/Local/Temp/RtmpmUMDym/temp_libpath30206bd3682e/sassy/extdata
-#&gt; - items:
-#&gt;   Name Extension Rows Cols     Size        LastModified
-#&gt; 1   AE       csv  150   27  88.2 Kb 2020-12-21 22:40:47
-#&gt; 2   DA       csv 3587   18   528 Kb 2020-12-21 22:40:47
-#&gt; 3   DM       csv   87   24  45.3 Kb 2020-12-21 22:40:47
-#&gt; 4   DS       csv  174    9  33.8 Kb 2020-12-21 22:40:47
-#&gt; 5   EX       csv   84   11  26.1 Kb 2020-12-21 22:40:47
-#&gt; 6   IE       csv    2   14  13.1 Kb 2020-12-21 22:40:47
-#&gt; 7   SV       csv  685   10  70.1 Kb 2020-12-21 22:40:47
-#&gt; 8   VS       csv 3358   17 467.2 Kb 2020-12-21 22:40:47</div><div class='input'>
+
 <span class='co'># Load library into workspace</span>
 <span class='fu'>lib_load</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># library 'sdtm': 8 items
-#&gt; </span><span>- attributes: csv loaded
-#&gt; - path: C:/Users/User/AppData/Local/Temp/RtmpmUMDym/temp_libpath30206bd3682e/sassy/extdata
-#&gt; - items:
-#&gt;   Name Extension Rows Cols     Size        LastModified
-#&gt; 1   AE       csv  150   27  88.2 Kb 2020-12-21 22:40:47
-#&gt; 2   DA       csv 3587   18   528 Kb 2020-12-21 22:40:47
-#&gt; 3   DM       csv   87   24  45.3 Kb 2020-12-21 22:40:47
-#&gt; 4   DS       csv  174    9  33.8 Kb 2020-12-21 22:40:47
-#&gt; 5   EX       csv   84   11  26.1 Kb 2020-12-21 22:40:47
-#&gt; 6   IE       csv    2   14  13.1 Kb 2020-12-21 22:40:47
-#&gt; 7   SV       csv  685   10  70.1 Kb 2020-12-21 22:40:47
-#&gt; 8   VS       csv 3358   17 467.2 Kb 2020-12-21 22:40:47</div><div class='input'>
+
 <span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Write Report"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "========================================================================="
-#&gt; [1] "Write Report"
-#&gt; [1] "========================================================================="</div><div class='input'>
+
 <span class='co'># Define table object</span>
 <span class='va'>tbl</span> <span class='op'>&lt;-</span> <span class='fu'>create_table</span><span class='op'>(</span><span class='va'>sdtm.DM</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>define</span><span class='op'>(</span><span class='va'>USUBJID</span>, id_var <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Construct report path</span>
 <span class='va'>pth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"output/l_dm.rtf"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "C:\\Users\\User\\AppData\\Local\\Temp\\RtmpCEAlw9/output/l_dm.rtf"</div><div class='input'>
+
 <span class='co'># Define report object</span>
 <span class='va'>rpt</span> <span class='op'>&lt;-</span> <span class='fu'>create_report</span><span class='op'>(</span><span class='va'>pth</span>, output_type <span class='op'>=</span> <span class='st'>"RTF"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>page_header</span><span class='op'>(</span><span class='st'>"Sponsor: Company"</span>, <span class='st'>"Study: ABC"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -386,100 +228,19 @@ and apply formats to a data frame or vector.</p></li>
 
 <span class='co'># Write report to file system</span>
 <span class='fu'>write_report</span><span class='op'>(</span><span class='va'>rpt</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A report specification: 9 pages</span><span>
-#&gt; - file_path: 'C:\Users\User\AppData\Local\Temp\RtmpCEAlw9/output/l_dm.rtf'
-#&gt; - output_type: RTF
-#&gt; - units: inches
-#&gt; - orientation: landscape
-#&gt; - line size/count: 108/48
-#&gt; - page_header: left=Sponsor: Company right=Study: ABC
-#&gt; - title 1: 'Listing 1.0'
-#&gt; - title 2: 'SDTM Demographics'
-#&gt; - page_footer: left=2020-12-21 22:40:56 center=CONFIDENTIAL right=Page [pg] of [tpg]
-#&gt; - content: 
-#&gt; </span><span style='color: #555555;'># A table specification:
-#&gt; </span><span>- data: tibble 'sdtm.DM' 87 rows 24 cols
-#&gt; - show_cols: all
-#&gt; - use_attributes: all
-#&gt; - define: USUBJID id_var='TRUE' </div><div class='input'>
+
 <span class='co'># Unload data</span>
 <span class='fu'>lib_unload</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># library 'sdtm': 8 items
-#&gt; </span><span>- attributes: csv not loaded
-#&gt; - path: C:/Users/User/AppData/Local/Temp/RtmpmUMDym/temp_libpath30206bd3682e/sassy/extdata
-#&gt; - items:
-#&gt;   Name Extension Rows Cols     Size        LastModified
-#&gt; 1   AE       csv  150   27  88.2 Kb 2020-12-21 22:40:47
-#&gt; 2   DA       csv 3587   18   528 Kb 2020-12-21 22:40:47
-#&gt; 3   DM       csv   87   24  45.3 Kb 2020-12-21 22:40:47
-#&gt; 4   DS       csv  174    9  33.8 Kb 2020-12-21 22:40:47
-#&gt; 5   EX       csv   84   11  26.1 Kb 2020-12-21 22:40:47
-#&gt; 6   IE       csv    2   14  13.1 Kb 2020-12-21 22:40:47
-#&gt; 7   SV       csv  685   10  70.1 Kb 2020-12-21 22:40:47
-#&gt; 8   VS       csv 3358   17 467.2 Kb 2020-12-21 22:40:47</div><div class='input'>
+
 <span class='co'># Close log</span>
 <span class='fu'>log_close</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Print log to console</span>
 <span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>lgpth</span>, encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ========================================================================= 
-#&gt; Log Path: C:/Users/User/AppData/Local/Temp/RtmpCEAlw9/log/example1.log 
-#&gt; Working Directory: C:/packages/sassy/docs/reference 
-#&gt; User Name: User 
-#&gt; R Version: 4.0.3 (2020-10-10) 
-#&gt; Machine: ZB15-5CD00276ZY x86-64 
-#&gt; Operating System: Windows 10 x64 build 18363 
-#&gt; Log Start Time: 2020-12-21 22:40:56 
-#&gt; ========================================================================= 
-#&gt; 
-#&gt; ========================================================================= 
-#&gt; Get Data 
-#&gt; ========================================================================= 
-#&gt; 
-#&gt; </span><span style='color: #555555;'># library 'sdtm': 8 items
-#&gt; </span><span>- attributes: csv not loaded
-#&gt; - path: C:/Users/User/AppData/Local/Temp/RtmpmUMDym/temp_libpath30206bd3682e/sassy/extdata
-#&gt; - items:
-#&gt;   Name Extension Rows Cols     Size        LastModified
-#&gt; 1   AE       csv  150   27  88.2 Kb 2020-12-21 22:40:47
-#&gt; 2   DA       csv 3587   18   528 Kb 2020-12-21 22:40:47
-#&gt; 3   DM       csv   87   24  45.3 Kb 2020-12-21 22:40:47
-#&gt; 4   DS       csv  174    9  33.8 Kb 2020-12-21 22:40:47
-#&gt; 5   EX       csv   84   11  26.1 Kb 2020-12-21 22:40:47
-#&gt; 6   IE       csv    2   14  13.1 Kb 2020-12-21 22:40:47
-#&gt; 7   SV       csv  685   10  70.1 Kb 2020-12-21 22:40:47
-#&gt; 8   VS       csv 3358   17 467.2 Kb 2020-12-21 22:40:47
-#&gt; 
-#&gt; ========================================================================= 
-#&gt; Write Report 
-#&gt; ========================================================================= 
-#&gt; 
-#&gt; C:\Users\User\AppData\Local\Temp\RtmpCEAlw9/output/l_dm.rtf 
-#&gt; 
-#&gt; </span><span style='color: #555555;'># A report specification: 9 pages</span><span>
-#&gt; - file_path: 'C:\Users\User\AppData\Local\Temp\RtmpCEAlw9/output/l_dm.rtf'
-#&gt; - output_type: RTF
-#&gt; - units: inches
-#&gt; - orientation: landscape
-#&gt; - line size/count: 108/48
-#&gt; - page_header: left=Sponsor: Company right=Study: ABC
-#&gt; - title 1: 'Listing 1.0'
-#&gt; - title 2: 'SDTM Demographics'
-#&gt; - page_footer: left=2020-12-21 22:40:56 center=CONFIDENTIAL right=Page [pg] of [tpg]
-#&gt; - content: 
-#&gt; </span><span style='color: #555555;'># A table specification:
-#&gt; </span><span>- data: tibble 'sdtm.DM' 87 rows 24 cols
-#&gt; - show_cols: all
-#&gt; - use_attributes: all
-#&gt; - define: USUBJID id_var='TRUE' 
-#&gt; 
-#&gt; ========================================================================= 
-#&gt; Log End Time: 2020-12-21 22:40:58 
-#&gt; Log Elapsed Time: 0 00:00:02 
-#&gt; ========================================================================= </div><div class='input'>
+
 <span class='co'># View report</span>
 <span class='co'># file.show(pth)</span>
-</div></span></pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

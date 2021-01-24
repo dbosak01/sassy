@@ -10,7 +10,7 @@ Description: A meta-package that aims to make R easier for SAS® programmers.
     and format catalogs, a data step, and a traceable log.  The flagship
     package is a reporting package that can output in text, rich text, and 
     PDF file formats.
-License: CC0 
+License: CC BY-NC 4.0
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0)
