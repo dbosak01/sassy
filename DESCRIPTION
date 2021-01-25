@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes R Easier for SAS® Programmers
-Version: 1.0.1
+Version: 1.0.2
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make R easier for SAS® programmers.

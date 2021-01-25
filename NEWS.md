@@ -1,4 +1,4 @@
-# sassy 1.0.1
+# sassy 1.0.2
 
 A meta-package to make R easier for SAS® programmers.  
 

@@ -70,7 +70,7 @@ in **Base R** or **tidyverse** alone.
 
 ### Next Steps
 
-Next, you should read the [Get started](http://sassy.r-sassy.org/articles/sassy.html)
+Next, you should read the [Get started](https://sassy.r-sassy.org/articles/sassy.html)
 page, and look at some examples.  From these pages, you will be able to 
 link into each of the packages included in the **sassy** system, and explore them
 in depth.  
@@ -80,7 +80,7 @@ Have fun!
 ### Getting Help
 
 If you need help with the **sassy** family of packages, the best place 
-to turn to is the [r-sassy](http://sassy.r-sassy.org) web site.  
+to turn to is the [r-sassy](https://sassy.r-sassy.org) web site.  
 This web site offers many examples, and full
 documentation on every function.  
 
