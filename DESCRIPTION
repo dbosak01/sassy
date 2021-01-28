@@ -1,15 +1,15 @@
 Package: sassy
 Type: Package
-Title: Makes R Easier for SAS® Programmers
+Title: Makes 'R' Easier for 'SAS®' Programmers
 Version: 1.0.2
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
-Description: A meta-package that aims to make R easier for SAS® programmers.
-    This set of packages brings many familiar concepts to R, including
+Description: A meta-package that aims to make 'R' easier for 'SAS®' programmers.
+    This set of packages brings many familiar concepts to 'R', including
     data libraries, data dictionaries, formats 
-    and format catalogs, a data step, and a traceable log.  The flagship
+    and format catalogs, a data step, and a traceable log.  The 'flagship'
     package is a reporting package that can output in text, rich text, and 
-    PDF file formats.
+    'PDF' file formats.
 License: CC BY-NC 4.0
 Encoding: UTF-8
 LazyData: true
