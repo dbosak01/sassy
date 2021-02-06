@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for 'SAS®' Programmers
-Version: 1.0.3
+Version: 1.0.4
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for 'SAS®' programmers.
@@ -14,7 +14,7 @@ License: CC BY-NC 4.0
 Encoding: UTF-8
 LazyData: true
 Depends: R (>= 4.0.0)
-URL: https://github.com/dbosak01/sassy
+URL: https://r-sassy.org
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 
     testthat,
