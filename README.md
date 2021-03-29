@@ -1,9 +1,8 @@
 <!-- badges: start -->
 
 [![sassy version](https://www.r-pkg.org/badges/version/sassy)](https://cran.r-project.org/package=sassy)
-[![sassy lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://cran.r-project.org/package=sassy)
+[![sassy lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://cran.r-project.org/package=sassy)
 [![sassy downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
-[![Travis build status](https://travis-ci.com/dbosak01/sassy.svg?branch=master)](https://travis-ci.com/dbosak01/sassy)
 
 <!-- badges: end -->
 

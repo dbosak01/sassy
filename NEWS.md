@@ -1,3 +1,7 @@
+# sassy 1.0.4
+
+Update R version and web site.
+
 # sassy 1.0.2
 
 A meta-package to make R easier for SAS® programmers.  
