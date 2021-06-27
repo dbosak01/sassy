@@ -3,6 +3,7 @@
 [![sassy version](https://www.r-pkg.org/badges/version/sassy)](https://cran.r-project.org/package=sassy)
 [![sassy lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://cran.r-project.org/package=sassy)
 [![sassy downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
+[![R-CMD-check](https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg)](https://github.com/dbosak01/sassy/actions)
 
 <!-- badges: end -->
 

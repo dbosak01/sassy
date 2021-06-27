@@ -1,3 +1,8 @@
+# sassy 1.0.5
+
+* Added more example programs.
+* Added GitHub Actions to test prior R versions
+
 # sassy 1.0.4
 
 Update R version and web site.

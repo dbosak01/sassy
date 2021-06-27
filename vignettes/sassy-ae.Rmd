@@ -1,0 +1,489 @@
+---
+title: "Example 4: AE Table"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 4: AE Table}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Create an Adverse Events Table
+
+The fourth example produces an Adverse Events table by severity, with
+treatment groups on separate pages. The report shows statistics for All 
+Adverse Events and System Organ Class/Preferred Term.   
+
+#### Program
+
+Note the following about this example:
+
+  * The `libname()` function from the **[libr](https://libr.r-sassy.org)** 
+  package makes it easy to load the entire data library.
+  * Functions from the **[sassy](https://sassy.r-sassy.org)**
+  system integrate nicely with those from the 
+  **[tidyverse](https://www.tidyverse.org/)**.   
+  * The **[reporter](https://reporter.r-sassy.org)** package is 
+  able to wrap treatment groups to separate pages using the _page_wrap_
+  property.  
+  * The **[reporter](https://reporter.r-sassy.org)** package is also
+  able to easily handle page breaks, while still respecting the 
+  established margins.
+
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(sassy)
+
+options("logr.autolog" = TRUE, 
+        "logr.notes" = FALSE)
+
+
+# Get Data ----------------------------------------------------------------
+
+
+# Get path to temp directory
+tmp <- tempdir() 
+
+# Get path to sample data
+pkg <- system.file("extdata", package = "sassy")
+
+# Open log
+lgpth <- log_open(file.path(tmp, "example4.log"))
+
+sep("Prepare Data")
+
+# Create libname for csv data
+libname(sdtm, pkg, "csv") 
+
+# Load data into workspace
+lib_load(sdtm) 
+
+
+sep("Prepare table data")
+dat <- sdtm.AE %>% 
+  inner_join(select(sdtm.DM, USUBJID, ARM, ARMCD),  
+             c("USUBJID" = "USUBJID"), 
+             keep = FALSE) %>% 
+  filter(ARM != "SCREEN FAILURE")
+
+put("Get population counts")
+arm_pop <- dat %>% 
+  select(USUBJID, ARM) %>%  
+  distinct() %>% 
+  count(ARM)  %>% 
+  deframe() %>% put()
+
+put ("Create lookup for AE severity")
+sevn <- c(MILD = 1, MODERATE = 2, SEVERE = 3) %>% put()
+
+put("Subset ADAE for needed rows and columns")
+df_sub <- dat %>% 
+  mutate(AESEVN = sevn[AESEV]) %>% 
+  select(USUBJID, ARM, AESEV, AESEVN, AESOC, AEDECOD) %>% 
+  distinct() %>% 
+  put()
+
+
+# Perform Calculations ----------------------------------------------------
+
+
+put("Create template for needed ARM columns")
+col_template <- paste0(c(rep("ARM A_", 3), rep("ARM B_", 3), rep("ARM C_", 3),
+                         rep("ARM D_", 3)), rep(c(1, 2, 3), 3))
+
+
+
+put("Identify and count highest severity grade for each subject")
+df1 <- df_sub %>% arrange(USUBJID, AESOC, AEDECOD, AESEVN) %>% 
+  group_by(USUBJID, ARM, AESOC, AEDECOD) %>% 
+  mutate(max_sev = ifelse(row_number() == n(), TRUE, FALSE)) %>% 
+  filter(max_sev == TRUE) %>% 
+  group_by(ARM, AESOC, AEDECOD, AESEVN) %>% 
+  summarize(cnt = n()) %>% 
+  pivot_wider(names_from = c(ARM, AESEVN),
+              values_from = cnt, 
+              values_fill = 0) %>% 
+  put()
+
+
+put("Fill in missing columns where there were no events.")
+for (nm in col_template) {
+  if (!nm %in% names(df1))
+    df1[[nm]] <- 0
+}
+put(df1)
+
+put("Format counts and percents for each column")
+df_events <- df1 %>% 
+  transmute(AESOC = AESOC, 
+            AEDECOD = str_to_title(AEDECOD),
+            `ARM A_1` = fmt_cnt_pct(`ARM A_1`, arm_pop["ARM A"]),
+            `ARM A_2` = fmt_cnt_pct(`ARM A_2`, arm_pop["ARM A"]),
+            `ARM A_3` = fmt_cnt_pct(`ARM A_3`, arm_pop["ARM A"]),
+            `ARM B_1` = fmt_cnt_pct(`ARM B_1`, arm_pop["ARM B"]),
+            `ARM B_2` = fmt_cnt_pct(`ARM B_2`, arm_pop["ARM B"]),
+            `ARM B_3` = fmt_cnt_pct(`ARM B_3`, arm_pop["ARM B"]),
+            `ARM C_1` = fmt_cnt_pct(`ARM C_1`, arm_pop["ARM C"]),
+            `ARM C_2` = fmt_cnt_pct(`ARM C_2`, arm_pop["ARM C"]),
+            `ARM C_3` = fmt_cnt_pct(`ARM C_3`, arm_pop["ARM C"]),
+            `ARM D_1` = fmt_cnt_pct(`ARM D_1`, arm_pop["ARM D"]), 
+            `ARM D_2` = fmt_cnt_pct(`ARM D_2`, arm_pop["ARM D"]), 
+            `ARM D_3` = fmt_cnt_pct(`ARM D_3`, arm_pop["ARM D"])) %>% 
+  arrange(AESOC, AEDECOD) %>% 
+  ungroup() %>% 
+  put()
+
+
+put("Get counts for All Adverse Events")
+df2 <- df_sub %>% 
+  select(USUBJID, ARM, AESEVN) %>% 
+  arrange(USUBJID, AESEVN) %>% 
+  group_by(USUBJID) %>% 
+  mutate(max_sev = ifelse(row_number() == n(), TRUE, FALSE)) %>% 
+  filter(max_sev == TRUE) %>% 
+  group_by(ARM, AESEVN) %>% 
+  summarize(cnt = n()) %>% 
+  pivot_wider(names_from = c(ARM, AESEVN),
+              values_from = cnt, 
+              values_fill = 0) %>% 
+  ungroup() %>% 
+  put()
+
+put("Fill in missing columns where there were no events.")
+for (nm in col_template) {
+  if (!nm %in% names(df2))
+    df2[[nm]] <- 0
+}
+put(df2)
+
+put("Format counts and percents for all adverse events.")
+df_all <- df2 %>% 
+  transmute(AESOC = "All System Organ Classes",
+            AEDECOD = "All Adverse Events", 
+            `ARM A_1` = fmt_cnt_pct(`ARM A_1`, arm_pop["ARM A"]),
+            `ARM A_2` = fmt_cnt_pct(`ARM A_2`, arm_pop["ARM A"]),
+            `ARM A_3` = fmt_cnt_pct(`ARM A_3`, arm_pop["ARM A"]),
+            `ARM B_1` = fmt_cnt_pct(`ARM B_1`, arm_pop["ARM B"]),
+            `ARM B_2` = fmt_cnt_pct(`ARM B_2`, arm_pop["ARM B"]),
+            `ARM B_3` = fmt_cnt_pct(`ARM B_3`, arm_pop["ARM B"]),
+            `ARM C_1` = fmt_cnt_pct(`ARM C_1`, arm_pop["ARM C"]),
+            `ARM C_2` = fmt_cnt_pct(`ARM C_2`, arm_pop["ARM C"]),
+            `ARM C_3` = fmt_cnt_pct(`ARM C_3`, arm_pop["ARM C"]),
+            `ARM D_1` = fmt_cnt_pct(`ARM D_1`, arm_pop["ARM D"]), 
+            `ARM D_2` = fmt_cnt_pct(`ARM D_2`, arm_pop["ARM D"]), 
+            `ARM D_3` = fmt_cnt_pct(`ARM D_3`, arm_pop["ARM D"])) %>% 
+  put()
+
+
+# Final Data --------------------------------------------------------------
+
+sep("Create final data frame")
+
+final <- bind_rows(df_all, df_events) %>% put()
+
+
+# Print Report ----------------------------------------------------------
+
+sep("Create and print report")
+
+put("Create table object")
+tbl <- create_table(final, first_row_blank = TRUE, width = 9) %>% 
+  column_defaults(from = `ARM A_1`, to = `ARM D_3`, width = 1) %>% 
+  spanning_header("ARM A_1", "ARM A_3", label = "ARM A", n = arm_pop["ARM A"]) %>%
+  spanning_header("ARM B_1", "ARM B_3", label = "ARM B", n = arm_pop["ARM B"]) %>%
+  spanning_header("ARM C_1", "ARM C_3", label = "ARM C", n = arm_pop["ARM C"]) %>%
+  spanning_header("ARM D_1", "ARM D_3", label = "ARM D", n = arm_pop["ARM D"]) %>%
+  stub(vars = c("AESOC", "AEDECOD"), label = "System Organ Class\n   Preferred Term", width = 5) %>% 
+  define(AESOC, blank_after = TRUE, label_row = TRUE) %>% 
+  define(AEDECOD, indent = .25) %>% 
+  define(`ARM A_1`, align = "center", label = "Mild") %>% 
+  define(`ARM A_2`, align = "center", label = "Moderate") %>% 
+  define(`ARM A_3`, align = "center", label = "Severe") %>% 
+  define(`ARM B_1`, align = "center", label = "Mild", page_wrap = TRUE) %>% 
+  define(`ARM B_2`, align = "center", label = "Moderate") %>% 
+  define(`ARM B_3`, align = "center", label = "Severe") %>% 
+  define(`ARM C_1`, align = "center", label = "Mild", page_wrap = TRUE) %>% 
+  define(`ARM C_2`, align = "center", label = "Moderate") %>% 
+  define(`ARM C_3`, align = "center", label = "Severe") %>% 
+  define(`ARM D_1`, align = "center", label = "Mild", page_wrap = TRUE) %>% 
+  define(`ARM D_2`, align = "center", label = "Moderate") %>% 
+  define(`ARM D_3`, align = "center", label = "Severe") 
+
+
+pth <- file.path(tmp, "output/example4.rtf")
+
+put("Create report object")
+rpt <- create_report(pth, output_type = "RTF") %>% 
+  options_fixed(font_size = 10) %>% 
+  page_header("Sponsor: Company", "Study: ABC") %>% 
+  titles("Table 5.0", "Adverse Events by Maximum Severity") %>% 
+  add_content(tbl) %>% 
+  footnotes("Program: AE_Table.R",
+            "Note: Adverse events were coded using MedDRA Version 9.1") %>% 
+  page_footer(Sys.time(), "Confidential", "Page [pg] of [tpg]") 
+
+put("Print report")
+write_report(rpt) %>% put()
+
+
+
+# Clean Up ----------------------------------------------------------------
+
+# Remove library from workspace
+lib_unload(sdtm)
+
+# Close log
+log_close()
+
+# View files
+# file.show(pth)
+# file.show(lgpth)
+
+```
+
+#### Log
+
+Here is part of the log from the above example:
+
+```
+========================================================================= 
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpKC93lu/log/example4.log 
+Working Directory: C:/packages/Testing 
+User Name: dbosa 
+R Version: 4.0.5 (2021-03-31) 
+Machine: SOCRATES x86-64 
+Operating System: Windows 10 x64 build 19041 
+Log Start Time: 2021-06-27 11:30:01 
+========================================================================= 
+
+========================================================================= 
+Prepare Data 
+========================================================================= 
+
+[90m# library 'sdtm': 4 items
+[39m- attributes: csv not loaded
+- path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
+- items:
+  Name Extension Rows Cols    Size        LastModified
+1   AE       csv  150   27 88.1 Kb 2021-04-04 11:55:58
+2   DM       csv   87   24 45.2 Kb 2021-04-04 11:55:58
+3   SV       csv  685   10 69.9 Kb 2021-04-04 11:55:58
+4   VS       csv 3358   17  467 Kb 2021-04-04 11:55:58
+
+lib_load: library 'sdtm' loaded 
+
+========================================================================= 
+Prepare table data 
+========================================================================= 
+
+select: dropped 21 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+
+inner_join: added 2 columns (ARM, ARMCD)
+
+            > rows only in x  (  0)
+
+            > rows only in y  ( 30)
+
+            > matched rows     150
+
+            >                 =====
+
+            > rows total       150
+
+filter: removed 5 rows (3%), 145 rows remaining
+
+Get population counts 
+
+select: dropped 27 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
+
+distinct: removed 90 rows (62%), 55 rows remaining
+
+count: now 4 rows and 2 columns, ungrouped
+
+ARM A ARM B ARM C ARM D 
+   14    14    14    13 
+
+Create lookup for AE severity 
+
+    MILD MODERATE   SEVERE 
+       1        2        3 
+
+Subset ADAE for needed rows and columns 
+
+mutate: new variable 'AESEVN' (double) with 3 unique values and 0% NA
+
+select: dropped 24 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
+
+distinct: removed 18 rows (12%), 127 rows remaining
+
+# A tibble: 127 x 6
+   USUBJID    ARM   AESEV    AESEVN AESOC                                           AEDECOD                         
+   <chr>      <chr> <chr>     <dbl> <chr>                                           <chr>                           
+ 1 ABC-01-049 ARM D MODERATE      2 Investigations                                  BLOOD GLUCOSE INCREASED         
+ 2 ABC-01-049 ARM D MODERATE      2 Investigations                                  BLOOD TRIGLYCERIDES INCREASED   
+ 3 ABC-01-049 ARM D MILD          1 Nervous system disorders                        HEADACHE                        
+ 4 ABC-01-049 ARM D MODERATE      2 Investigations                                  LABORATORY TEST ABNORMAL        
+ 5 ABC-01-049 ARM D MILD          1 Musculoskeletal and connective tissue disorders MUSCULOSKELETAL DISCOMFORT      
+ 6 ABC-01-050 ARM B MILD          1 Skin and subcutaneous tissue disorders          RASH                            
+ 7 ABC-01-050 ARM B MILD          1 Respiratory, thoracic and mediastinal disorders UPPER RESPIRATORY TRACT CONGEST~
+ 8 ABC-01-051 ARM A MILD          1 Nervous system disorders                        HEADACHE                        
+ 9 ABC-01-051 ARM A MILD          1 General disorders and administration site cond~ INFLUENZA LIKE ILLNESS          
+10 ABC-01-051 ARM A MILD          1 Respiratory, thoracic and mediastinal disorders LOWER RESPIRATORY TRACT INFLAMM~
+# ... with 117 more rows
+
+Create template for needed ARM columns 
+
+Identify and count highest severity grade for each subject 
+
+group_by: 4 grouping variables (USUBJID, ARM, AESOC, AEDECOD)
+
+mutate (grouped): new variable 'max_sev' (logical) with 2 unique values and 0% NA
+
+filter (grouped): removed one row (1%), 126 rows remaining
+
+group_by: 4 grouping variables (ARM, AESOC, AEDECOD, AESEVN)
+
+summarize: now 101 rows and 5 columns, 3 group variables remaining (ARM, AESOC, AEDECOD)
+
+pivot_wider: reorganized (ARM, AESEVN, cnt) into (ARM A_2, ARM A_1, ARM B_1, ARM B_2, ARM B_3, …) [was 101x5, now 73x11]
+
+...
+
+
+========================================================================= 
+Create final data frame 
+========================================================================= 
+
+# A tibble: 74 x 14
+   AESOC AEDECOD `ARM A_1` `ARM A_2` `ARM A_3` `ARM B_1` `ARM B_2` `ARM B_3` `ARM C_1` `ARM C_2` `ARM C_3` `ARM D_1`
+   <chr> <chr>   <chr>     <chr>     <chr>     <chr>     <chr>     <chr>     <chr>     <chr>     <chr>     <chr>    
+ 1 All ~ All Ad~ 6 ( 42.9~ 8 ( 57.1~ 0 (  0.0~ 8 ( 57.1~ 4 ( 28.6~ 2 ( 14.3~ 8 ( 57.1~ 6 ( 42.9~ 0 (  0.0~ 7 ( 53.8~
+ 2 Bloo~ Neutro~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~
+ 3 Card~ Palpit~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.7~
+ 4 Card~ Sinus ~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.7~
+ 5 Cong~ Dermoi~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
+ 6 Ear ~ Vertigo 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
+ 7 Endo~ Parath~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
+ 8 Gast~ Diarrh~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
+ 9 Gast~ Food P~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
+10 Gast~ Tootha~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 2 ( 15.4~
+# ... with 64 more rows, and 2 more variables: ARM D_2 <chr>, ARM D_3 <chr>
+
+========================================================================= 
+Create and print report 
+========================================================================= 
+
+Create table object 
+
+Create report object 
+
+Print report 
+
+[90m# A report specification: [39m[90m16 pages[39m
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 107/47
+- page_header: left=Sponsor: Company right=Study: ABC
+- title 1: 'Table 5.0'
+- title 2: 'Adverse Events by Maximum Severity'
+- footnote 1: 'Program: AE_Table.R'
+- footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
+- page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
+- content: 
+[90m# A table specification:
+[39m- data: tibble 'final' 74 rows 14 cols
+- show_cols: all
+- use_attributes: all
+- width: 9
+- spanning_header: from='ARM A_1' to='ARM A_3' 'ARM A' level=1 
+- spanning_header: from='ARM B_1' to='ARM B_3' 'ARM B' level=1 
+- spanning_header: from='ARM C_1' to='ARM C_3' 'ARM C' level=1 
+- spanning_header: from='ARM D_1' to='ARM D_3' 'ARM D' level=1 
+- stub: AESOC AEDECOD 'System Organ Class
+   Preferred Term' width=5 align='left' 
+- define: AESOC dedupe='TRUE' 
+- define: AEDECOD 
+- define: ARM A_1 'Mild' align='center' 
+- define: ARM A_2 'Moderate' align='center' 
+- define: ARM A_3 'Severe' align='center' 
+- define: ARM B_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM B_2 'Moderate' align='center' 
+- define: ARM B_3 'Severe' align='center' 
+- define: ARM C_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM C_2 'Moderate' align='center' 
+- define: ARM C_3 'Severe' align='center' 
+- define: ARM D_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM D_2 'Moderate' align='center' 
+- define: ARM D_3 'Severe' align='center' 
+
+[90m# A report specification: [39m[90m16 pages[39m
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 107/47
+- page_header: left=Sponsor: Company right=Study: ABC
+- title 1: 'Table 5.0'
+- title 2: 'Adverse Events by Maximum Severity'
+- footnote 1: 'Program: AE_Table.R'
+- footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
+- page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
+- content: 
+[90m# A table specification:
+[39m- data: tibble 'final' 74 rows 14 cols
+- show_cols: all
+- use_attributes: all
+- width: 9
+- spanning_header: from='ARM A_1' to='ARM A_3' 'ARM A' level=1 
+- spanning_header: from='ARM B_1' to='ARM B_3' 'ARM B' level=1 
+- spanning_header: from='ARM C_1' to='ARM C_3' 'ARM C' level=1 
+- spanning_header: from='ARM D_1' to='ARM D_3' 'ARM D' level=1 
+- stub: AESOC AEDECOD 'System Organ Class
+   Preferred Term' width=5 align='left' 
+- define: AESOC dedupe='TRUE' 
+- define: AEDECOD 
+- define: ARM A_1 'Mild' align='center' 
+- define: ARM A_2 'Moderate' align='center' 
+- define: ARM A_3 'Severe' align='center' 
+- define: ARM B_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM B_2 'Moderate' align='center' 
+- define: ARM B_3 'Severe' align='center' 
+- define: ARM C_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM C_2 'Moderate' align='center' 
+- define: ARM C_3 'Severe' align='center' 
+- define: ARM D_1 'Mild' align='center' page_wrap='TRUE' 
+- define: ARM D_2 'Moderate' align='center' 
+- define: ARM D_3 'Severe' align='center' 
+
+lib_sync: synchronized data in library 'sdtm' 
+
+lib_unload: library 'sdtm' unloaded 
+
+========================================================================= 
+Log End Time: 2021-06-27 11:30:04 
+Log Elapsed Time: 0 00:00:03 
+========================================================================= 
+
+
+```
+#### Output
+
+Here are the first four pages of the output report:
+
+<img src="../man/images/ae1.png" align="center" />
+<img src="../man/images/ae2.png" align="center" />
+<img src="../man/images/ae3.png" align="center" />
+<img src="../man/images/ae4.png" align="center" />
+
+
+Next: [Disclaimers](sassy-disclaimers.html)

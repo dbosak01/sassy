@@ -1,8 +1,8 @@
 ---
-title: "Example 2: Table"
+title: "Example 2: VS Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 2: Table}
+  %\VignetteIndexEntry{Example 2: VS Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -380,4 +380,4 @@ And here is the output report:
 <img src="../man/images/vital_signs.png" align="center" />
 
 
-Next: [Example 3: Table](sassy-figure.html)
+Next: [Example 3: Figure](sassy-figure.html)

@@ -244,4 +244,4 @@ And here are the first three pages of the report:
 <img src="../man/images/vs_pg3.png" align="center" />
 
 
-Next: [Disclaimers](sassy-disclaimers.html)
+Next: [Example 4: AE Table](sassy-ae.html)

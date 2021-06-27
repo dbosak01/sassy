@@ -56,6 +56,8 @@ Creates a simple data listing and log
 Creates a table of summary statistics
 * **[Example 3](sassy-figure.html)**: 
 Creates a figure with a by-group
+* **[Example 4](sassy-ae.html)**: 
+Creates an AE table with a page wrap
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!
