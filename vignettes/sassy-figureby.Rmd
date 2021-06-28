@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ### Create a Figure with a By-Group
 
 The **sassy** system gives you capabilities that few other R packages can match.  
-The system not only support reports with by-groups, you can even apply
+The system not only support reports with by-groups.  You can even apply
 a by-group to a figure.  
 
 #### Program

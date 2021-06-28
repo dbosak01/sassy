@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-### Create a Table of Summary Statistics
+### Create a Table of Vital Signs Statistics
 
-The second example produces a summary table of selected Vital Signs for Placebo
+The fifth example produces a summary table of selected Vital Signs for Placebo
 vs. Treated groups.  The report shows statistics for both baseline 
 and after-treatment time points.   
 
