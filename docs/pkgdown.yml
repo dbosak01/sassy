@@ -4,11 +4,13 @@ pkgdown_sha: ~
 articles:
   sassy-ae: sassy-ae.html
   sassy-disclaimers: sassy-disclaimers.html
+  sassy-dm: sassy-dm.html
   sassy-figure: sassy-figure.html
+  sassy-figureby: sassy-figureby.html
   sassy-listing: sassy-listing.html
-  sassy-table: sassy-table.html
+  sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2021-06-27T16:45Z
+last_built: 2021-06-28T00:02Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

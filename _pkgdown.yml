@@ -5,9 +5,11 @@ articles:
   navbar: ~
   contents:
   - sassy-listing
-  - sassy-table
+  - sassy-dm
   - sassy-figure
   - sassy-ae
+  - sassy-vs
+  - sassy-figureby
   - sassy-disclaimers
 
 navbar:

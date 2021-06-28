@@ -1,0 +1,442 @@
+---
+title: "Example 2: DM Table"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 2: DM Table}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Create a Demographics Table of Summary Statistics
+
+The second example produces a demographics summary table of selected variables. 
+The report shows statistics for each of the four treatment groups.   
+
+#### Program
+
+Note the following about this example:
+
+  * The **[logr](https://logr.r-sassy.org)** package 
+  provides automatic logging for many functions.
+  * The `datastep()` function from the **[libr](https://libr.r-sassy.org)**
+  package allows for a complex conditional in the middle
+  of a **dplyr** pipeline.  
+  * The **[fmtr](https://fmtr.r-sassy.org)** package provides several 
+  convenient functions for 
+  calculating and formatting summary statistics.
+  * The **[reporter](https://reporter.r-sassy.org)** package supports 
+  'N=' population counts in the header labels.
+  * The **reporter** package also allows you to define a stub column of 
+  hierarchical labels.
+
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(sassy)
+
+
+# Prepare Log -------------------------------------------------------------
+
+
+options("logr.autolog" = TRUE,
+        "logr.notes" = FALSE)
+
+# Get path to temp directory
+tmp <- tempdir() 
+
+# Get sample data directory
+dir <- system.file("extdata", package = "sassy")
+
+# Open log
+lgpth <- log_open(file.path(tmp, "example2.log"))
+
+
+# Load and Prepare Data ---------------------------------------------------
+
+sep("Prepare Data")
+
+# Define data library
+libname(sdtm, dir, "csv") 
+
+# Loads data into workspace
+lib_load(sdtm)
+
+# Prepare data
+dm_mod <- sdtm.DM %>% 
+  select(USUBJID, SEX, AGE, ARM) %>% 
+  filter(ARM != "SCREEN FAILURE") %>% 
+  datastep({
+                     
+     if (AGE >= 18 & AGE <= 24)
+       AGECAT = "18 to 24"
+     else if (AGE >= 25 & AGE <= 44)
+       AGECAT = "25 to 44"
+     else if (AGE >= 45 & AGE <= 64)
+       AGECAT <- "45 to 64"
+     else if (AGE >= 65)
+       AGECAT <- ">= 65"
+     
+   }) %>% put()
+
+put("Get ARM population counts")
+arm_pop <- count(dm_mod, ARM) %>% deframe() %>% put()
+                     
+
+# Age Summary Block -------------------------------------------------------
+
+sep("Create summary statistics for age")
+
+age_block <- 
+  dm_mod %>%
+  group_by(ARM) %>%
+  summarise( N = fmt_n(AGE),
+             `Mean (SD)` = fmt_mean_sd(AGE),
+             Median = fmt_median(AGE),
+             `Q1 - Q3` = fmt_quantile_range(AGE),
+             Range  = fmt_range(AGE)) %>%
+  pivot_longer(-ARM,
+               names_to  = "label",
+               values_to = "value") %>%
+  pivot_wider(names_from = ARM,
+              values_from = "value") %>% 
+  add_column(var = "AGE", .before = "label") %>% 
+  put()
+
+
+# Age Group Block ----------------------------------------------------------
+
+sep("Create frequency counts for Age Group")
+
+
+put("Create age group frequency counts")
+ageg_block <- 
+  dm_mod %>% 
+  select(ARM, AGECAT) %>% 
+  group_by(ARM, AGECAT) %>% 
+  summarize(n = n()) %>% 
+  pivot_wider(names_from = ARM,
+              values_from = n, 
+              values_fill = 0) %>% 
+  transmute(var = "AGECAT", 
+            label =  factor(AGECAT, levels = c("18 to 24", 
+                                               "25 to 44", 
+                                               "45 to 64", 
+                                               ">= 65")),
+            `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
+            `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
+            `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
+            `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) %>% 
+  arrange(label) %>% 
+  put()
+
+
+# Sex Block ---------------------------------------------------------------
+
+sep("Create frequency counts for SEX")
+
+# Create user-defined format
+fmt_sex <- value(condition(is.na(x), "Missing"),
+                 condition(x == "M", "Male"),
+                 condition(x == "F", "Female"),
+                 condition(TRUE, "Other")) %>% put()
+
+# Create sex frequency counts   
+sex_block <- 
+  dm_mod %>% 
+  select(ARM, SEX) %>% 
+  group_by(ARM, SEX) %>% 
+  summarize(n = n()) %>% 
+  pivot_wider(names_from = ARM,
+              values_from = n, 
+              values_fill = 0) %>% 
+  transmute(var = "SEX", 
+            label =   fct_relevel(SEX, "M", "F"), 
+            `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
+            `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
+            `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
+            `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) %>% 
+  arrange(label) %>% 
+  mutate(label = fapply(label, fmt_sex)) %>% 
+  put()
+
+put("Combine blocks into final data frame")
+final <- bind_rows(age_block, ageg_block, sex_block) %>% put()
+
+# Report ------------------------------------------------------------------
+
+
+sep("Create and print report")
+
+var_fmt <- c("AGE" = "Age", "AGECAT" = "Age Group", "SEX" = "Sex")
+
+# Create Table
+tbl <- create_table(final, first_row_blank = TRUE) %>% 
+  column_defaults(from = `ARM A`, to = `ARM D`, align = "center", width = 1.25) %>% 
+  stub(vars = c("var", "label"), "Variable", width = 2.5) %>% 
+  define(var, blank_after = TRUE, dedupe = TRUE, label = "Variable",
+         format = var_fmt,label_row = TRUE) %>% 
+  define(label, indent = .25, label = "Demographic Category") %>% 
+  define(`ARM A`,  n = arm_pop["ARM A"]) %>% 
+  define(`ARM B`,  n = arm_pop["ARM B"]) %>% 
+  define(`ARM C`,  n = arm_pop["ARM C"]) %>% 
+  define(`ARM D`,  n = arm_pop["ARM D"]) 
+
+pth <- file.path(tmp, "output/example2.rtf")
+
+rpt <- create_report(pth, output_type = "RTF") %>% 
+  set_margins(top = 1, bottom = 1) %>% 
+  page_header("Sponsor: Company", "Study: ABC") %>% 
+  titles("Table 1.0", "Analysis of Demographic Characteristics", 
+         "Safety Population") %>% 
+  add_content(tbl) %>% 
+  footnotes("Program: DM_Table.R",
+            "NOTE: Denominator based on number of non-missing responses.") %>% 
+  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
+              right = "Page [pg] of [tpg]")
+
+write_report(rpt)
+
+
+# Clean Up ----------------------------------------------------------------
+
+# Unload library from workspace
+lib_unload(sdtm)
+
+# Close log
+log_close()
+
+# View files
+# file.show(pth)
+# file.show(lgpth)
+
+```
+
+#### Log
+
+Here is the log from the above example:
+
+```
+========================================================================= 
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpKC93lu/log/example2.log 
+Working Directory: C:/packages/Testing 
+User Name: dbosa 
+R Version: 4.0.5 (2021-03-31) 
+Machine: SOCRATES x86-64 
+Operating System: Windows 10 x64 build 19041 
+Log Start Time: 2021-06-27 14:35:47 
+========================================================================= 
+
+========================================================================= 
+Prepare Data 
+========================================================================= 
+
+# library 'sdtm': 4 items
+- attributes: csv not loaded
+- path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
+- items:
+  Name Extension Rows Cols    Size        LastModified
+1   AE       csv  150   27 88.1 Kb 2021-04-04 11:55:58
+2   DM       csv   87   24 45.2 Kb 2021-04-04 11:55:58
+3   SV       csv  685   10 69.9 Kb 2021-04-04 11:55:58
+4   VS       csv 3358   17  467 Kb 2021-04-04 11:55:58
+
+lib_load: library 'sdtm' loaded 
+
+select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+
+filter: removed 2 rows (2%), 85 rows remaining
+
+datastep: columns decreased from 4 to 5 
+
+# A tibble: 85 x 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   <chr>      <chr> <dbl> <chr> <chr>   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D >= 65   
+10 ABC-01-114 F        72 ARM B >= 65   
+# ... with 75 more rows
+
+Get ARM population counts 
+
+count: now 4 rows and 2 columns, ungrouped
+
+ARM A ARM B ARM C ARM D 
+   20    21    21    23 
+
+========================================================================= 
+Create summary statistics for age 
+========================================================================= 
+
+group_by: one grouping variable (ARM)
+
+summarise: now 4 rows and 6 columns, ungrouped
+
+pivot_longer: reorganized (N, Mean (SD), Median, Q1 - Q3, Range) into (label, value) [was 4x6, now 20x3]
+
+pivot_wider: reorganized (ARM, value) into (ARM A, ARM B, ARM C, ARM D) [was 20x3, now 5x5]
+
+# A tibble: 5 x 6
+  var   label     `ARM A`     `ARM B`     `ARM C`     `ARM D`    
+  <chr> <chr>     <chr>       <chr>       <chr>       <chr>      
+1 AGE   N         20          21          21          23         
+2 AGE   Mean (SD) 53.1 (11.9) 47.4 (16.3) 45.7 (14.4) 49.7 (14.3)
+3 AGE   Median    52.5        46.0        46.0        48.0       
+4 AGE   Q1 - Q3   47.8 - 60.0 35.0 - 61.0 38.0 - 53.0 39.0 - 60.5
+5 AGE   Range     31 - 73     22 - 73     19 - 71     21 - 75    
+
+========================================================================= 
+Create frequency counts for Age Group 
+========================================================================= 
+
+Create age group frequency counts 
+
+select: dropped 3 variables (USUBJID, SEX, AGE)
+
+group_by: 2 grouping variables (ARM, AGECAT)
+
+summarize: now 15 rows and 3 columns, one group variable remaining (ARM)
+
+pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 15x3, now 4x5]
+
+transmute: dropped one variable (AGECAT)
+
+           new variable 'var' (character) with one unique value and 0% NA
+
+           new variable 'label' (factor) with 4 unique values and 0% NA
+
+           converted 'ARM A' from integer to character (0 new NA)
+
+           converted 'ARM B' from integer to character (0 new NA)
+
+           converted 'ARM C' from integer to character (0 new NA)
+
+           converted 'ARM D' from integer to character (0 new NA)
+
+# A tibble: 4 x 6
+  var    label    `ARM A`     `ARM B`    `ARM C`     `ARM D`    
+  <chr>  <fct>    <chr>       <chr>      <chr>       <chr>      
+1 AGECAT 18 to 24 0 (  0.0%)  1 (  4.8%) 3 ( 14.3%)  1 (  4.3%) 
+2 AGECAT 25 to 44 4 ( 20.0%)  8 ( 38.1%) 4 ( 19.0%)  7 ( 30.4%) 
+3 AGECAT 45 to 64 13 ( 65.0%) 7 ( 33.3%) 12 ( 57.1%) 12 ( 52.2%)
+4 AGECAT >= 65    3 ( 15.0%)  5 ( 23.8%) 2 (  9.5%)  3 ( 13.0%) 
+
+========================================================================= 
+Create frequency counts for SEX 
+========================================================================= 
+
+# A user-defined format: 4 conditions
+  Name Type Expression   Label Order
+1    x    U   is.na(x) Missing    NA
+2    x    U   x == "M"    Male    NA
+3    x    U   x == "F"  Female    NA
+4    x    U       TRUE   Other    NA
+
+select: dropped 3 variables (USUBJID, AGE, AGECAT)
+
+group_by: 2 grouping variables (ARM, SEX)
+
+summarize: now 8 rows and 3 columns, one group variable remaining (ARM)
+
+pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 8x3, now 2x5]
+
+transmute: dropped one variable (SEX)
+
+           new variable 'var' (character) with one unique value and 0% NA
+
+           new variable 'label' (factor) with 2 unique values and 0% NA
+
+           converted 'ARM A' from integer to character (0 new NA)
+
+           converted 'ARM B' from integer to character (0 new NA)
+
+           converted 'ARM C' from integer to character (0 new NA)
+
+           converted 'ARM D' from integer to character (0 new NA)
+
+mutate: converted 'label' from factor to character (0 new NA)
+
+# A tibble: 2 x 6
+  var   label  `ARM A`     `ARM B`     `ARM C`     `ARM D`    
+  <chr> <chr>  <chr>       <chr>       <chr>       <chr>      
+1 SEX   Male   15 ( 75.0%) 10 ( 47.6%) 12 ( 57.1%) 16 ( 69.6%)
+2 SEX   Female 5 ( 25.0%)  11 ( 52.4%) 9 ( 42.9%)  7 ( 30.4%) 
+
+Combine blocks into final data frame 
+
+# A tibble: 11 x 6
+   var    label     `ARM A`     `ARM B`     `ARM C`     `ARM D`    
+   <chr>  <chr>     <chr>       <chr>       <chr>       <chr>      
+ 1 AGE    N         20          21          21          23         
+ 2 AGE    Mean (SD) 53.1 (11.9) 47.4 (16.3) 45.7 (14.4) 49.7 (14.3)
+ 3 AGE    Median    52.5        46.0        46.0        48.0       
+ 4 AGE    Q1 - Q3   47.8 - 60.0 35.0 - 61.0 38.0 - 53.0 39.0 - 60.5
+ 5 AGE    Range     31 - 73     22 - 73     19 - 71     21 - 75    
+ 6 AGECAT 18 to 24  0 (  0.0%)  1 (  4.8%)  3 ( 14.3%)  1 (  4.3%) 
+ 7 AGECAT 25 to 44  4 ( 20.0%)  8 ( 38.1%)  4 ( 19.0%)  7 ( 30.4%) 
+ 8 AGECAT 45 to 64  13 ( 65.0%) 7 ( 33.3%)  12 ( 57.1%) 12 ( 52.2%)
+ 9 AGECAT >= 65     3 ( 15.0%)  5 ( 23.8%)  2 (  9.5%)  3 ( 13.0%) 
+10 SEX    Male      15 ( 75.0%) 10 ( 47.6%) 12 ( 57.1%) 16 ( 69.6%)
+11 SEX    Female    5 ( 25.0%)  11 ( 52.4%) 9 ( 42.9%)  7 ( 30.4%) 
+
+========================================================================= 
+Create and print report 
+========================================================================= 
+
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example2.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 107/41
+- page_header: left=Sponsor: Company right=Study: ABC
+- title 1: 'Table 1.0'
+- title 2: 'Analysis of Demographic Characteristics'
+- title 3: 'Safety Population'
+- footnote 1: 'Program: DM_Table.R'
+- footnote 2: 'NOTE: Denominator based on number of non-missing responses.'
+- page_footer: left=Date Produced: 27Jun21 14:35 center= right=Page [pg] of [tpg]
+- content: 
+# A table specification:
+- data: tibble 'final' 11 rows 6 cols
+- show_cols: all
+- use_attributes: all
+- stub: var label 'Variable' width=2.5 align='left' 
+- define: var 'Variable' dedupe='TRUE' 
+- define: label 'Demographic Category' 
+- define: ARM A 
+- define: ARM B 
+- define: ARM C 
+- define: ARM D 
+
+lib_sync: synchronized data in library 'sdtm' 
+
+lib_unload: library 'sdtm' unloaded 
+
+========================================================================= 
+Log End Time: 2021-06-27 14:35:48 
+Log Elapsed Time: 0 00:00:00 
+========================================================================= 
+
+```
+#### Output
+
+And here is the output report:
+
+<img src="../man/images/dm.png" align="center" />
+
+
+Next: [Example 3: Figures](sassy-figure.html)

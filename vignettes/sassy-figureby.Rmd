@@ -1,0 +1,246 @@
+---
+title: "Example 6: Figure with By Group"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 6: Figure with By Group}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Create a Figure with a By-Group
+
+The **sassy** system gives you capabilities that few other R packages can match.  
+The system not only support reports with by-groups, you can even apply
+a by-group to a figure.  
+
+#### Program
+
+Note the following about this example:
+
+* The plot is created as a single plot with no by-groups
+* The plot is added to the report with the `add_content()` function, just
+like the figures in the previous example.
+* The `page_by()` function on the `create_report()` statement generates the 
+paging for both the report and plot.
+    
+```{r eval=FALSE, echo=TRUE}
+library(tidyverse)
+library(sassy)
+
+options("logr.autolog" = TRUE,
+        "logr.notes" = FALSE)
+
+# Get path to temp directory
+tmp <- tempdir() 
+
+# Get path to sample data
+pkg <- system.file("extdata", package = "sassy")
+
+# Open log
+lgpth <- log_open(file.path(tmp, "example3.log"))
+
+sep("Prepare Data")
+
+# Create libname for csv data
+libname(sdtm, pkg, "csv") 
+
+# Load data into workspace
+lib_load(sdtm) 
+
+put("Perform joins and basic filters")
+prep <- sdtm.DM %>% 
+  left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) %>% 
+  select(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT) %>% 
+  filter(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP"), 
+         ARMCD != "SCRNFAIL") %>% put()
+
+put("Group and summarize")
+final <- prep %>% 
+  group_by(ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, VISIT) %>% 
+  summarize(MEAN = mean(VSORRES, na.rm = TRUE)) %>% 
+  filter(VISITNUM > 0 & VISITNUM < 20) %>% 
+  mutate(VISIT = factor(VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
+                                          "WEEK 6","WEEK 8", "WEEK 12",
+                                          "WEEK 16"))) %>% 
+  ungroup() %>% put()
+
+
+sep("Create plots and print report")
+
+# Create plot
+p <- final %>% 
+  ggplot(mapping = aes(y = MEAN, x = VISIT , group = ARM)) + 
+  geom_point(aes(shape = ARM, color = ARM)) + 
+  geom_line(aes(linetype = ARM, color = ARM)) +
+  scale_x_discrete(name = "Visit") +
+  scale_y_continuous(name = "Value")
+
+# Construct output path
+pth <- file.path(tmp, "output/f_vs.rtf")
+
+# Define report object
+rpt <- create_report(pth, output_type = "RTF") %>% 
+  set_margins(top = 1, bottom = 1) %>% 
+  page_header("Sponsor: Company", "Study: ABC") %>% 
+  page_by(VSTEST, "Vital Sign: ", blank_row = "none") %>% 
+  titles("Figure 1.0", "Vital Signs Change from Baseline", 
+         "Safety Population") %>% 
+  add_content(create_plot(p, 4.5, 9)) %>% 
+  footnotes("R Program: VS_Figure.R") %>% 
+  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
+              right = "Page [pg] of [tpg]")
+
+# Write report to file system
+write_report(rpt) 
+
+# Close log
+log_close()
+
+# View report
+# file.show(pth)
+```
+
+#### Log
+
+Here is the log for the above program:
+
+```
+========================================================================= 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example3.log 
+Working Directory: C:/packages/Testing 
+User Name: User 
+R Version: 4.0.3 (2020-10-10) 
+Machine: DESKTOP-1F27OR8 x86-64 
+Operating System: Windows 10 x64 build 18363 
+Log Start Time: 2021-01-05 08:23:30 
+========================================================================= 
+
+========================================================================= 
+Prepare Data 
+========================================================================= 
+
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
+- items:
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
+2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
+3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
+4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
+5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
+6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
+7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
+8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+
+lib_load: library 'sdtm' loaded 
+
+Perform joins and basic filters 
+
+left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
+
+           > rows only in x       0
+
+           > rows only in y  (    0)
+
+           > matched rows     3,358    (includes duplicates)
+
+           >                 =======
+
+           > rows total       3,358
+
+select: dropped 32 variables (STUDYID.x, DOMAIN.x, SUBJID, RFSTDTC, RFENDTC, …)
+
+filter: removed 246 rows (7%), 3,112 rows remaining
+
+# A tibble: 3,112 x 8
+   USUBJID    ARMCD ARM   VSTESTCD VSTEST                   VSORRES VISITNUM VISIT    
+   <chr>      <chr> <chr> <chr>    <chr>                      <dbl>    <dbl> <chr>    
+ 1 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      78        0 SCREENING
+ 2 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      76        1 DAY 1    
+ 3 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      66        2 WEEK 2   
+ 4 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      84        4 WEEK 4   
+ 5 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      68        6 WEEK 6   
+ 6 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      80        8 WEEK 8   
+ 7 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       12 WEEK 12  
+ 8 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       16 WEEK 16  
+ 9 ABC-01-049 4     ARM D PULSE    Pulse Rate                    92        0 SCREENING
+10 ABC-01-049 4     ARM D PULSE    Pulse Rate                    84        1 DAY 1    
+# ... with 3,102 more rows
+
+Group and summarize 
+
+group_by: 6 grouping variables (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, …)
+
+summarize: now 175 rows and 7 columns, 5 group variables remaining (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM)
+
+filter (grouped): removed 35 rows (20%), 140 rows remaining
+
+mutate (grouped): converted 'VISIT' from character to factor (0 new NA)
+
+ungroup: no grouping variables
+
+# A tibble: 140 x 7
+   ARMCD ARM   VSTESTCD VSTEST                   VISITNUM VISIT    MEAN
+   <chr> <chr> <chr>    <chr>                       <dbl> <fct>   <dbl>
+ 1 1     ARM A DIABP    Diastolic Blood Pressure        1 DAY 1    76.5
+ 2 1     ARM A DIABP    Diastolic Blood Pressure        2 WEEK 2   77.6
+ 3 1     ARM A DIABP    Diastolic Blood Pressure        4 WEEK 4   78.7
+ 4 1     ARM A DIABP    Diastolic Blood Pressure        6 WEEK 6   74.4
+ 5 1     ARM A DIABP    Diastolic Blood Pressure        8 WEEK 8   77.1
+ 6 1     ARM A DIABP    Diastolic Blood Pressure       12 WEEK 12  78.4
+ 7 1     ARM A DIABP    Diastolic Blood Pressure       16 WEEK 16  77.3
+ 8 1     ARM A PULSE    Pulse Rate                      1 DAY 1    72.6
+ 9 1     ARM A PULSE    Pulse Rate                      2 WEEK 2   73.4
+10 1     ARM A PULSE    Pulse Rate                      4 WEEK 4   75.8
+# ... with 130 more rows
+
+========================================================================= 
+Create plots and print report 
+========================================================================= 
+
+# A report specification: 5 pages
+- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/f_vs.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- line size/count: 108/41
+- page by: VSTEST
+- page_header: left=Sponsor: Company right=Study: ABC
+- title 1: 'Figure 1.0'
+- title 2: 'Vital Signs Change from Baseline'
+- title 3: 'Safety Population'
+- footnote 1: 'R Program: VS_Figure.R'
+- page_footer: left=Date Produced: 05Jan21 08:23 center= right=Page [pg] of [tpg]
+- content: 
+# A plot specification: 
+- data: 140 rows, 7 cols
+- layers: 2
+- height: 4.5
+- width: 9
+
+========================================================================= 
+Log End Time: 2021-01-05 08:23:50 
+Log Elapsed Time: 0 00:00:19 
+========================================================================= 
+
+```
+#### Output 
+
+And here are the first three pages of the report:
+
+<img src="../man/images/vs_pg1.png" align="center" />
+
+<img src="../man/images/vs_pg2.png" align="center" />
+
+<img src="../man/images/vs_pg3.png" align="center" />
+
+
+Next: [Disclaimers](sassy-disclaimers.html)

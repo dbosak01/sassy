@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example 2: VS Table • sassy</title>
+<title>Example 5: VS Table • sassy</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Example 2: VS Table">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Example 5: VS Table">
 <meta property="og:description" content="sassy">
 <meta property="og:image" content="https://sassy.r-sassy.org/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -65,13 +65,19 @@
       <a href="../articles/sassy-listing.html">Example 1: Listing</a>
     </li>
     <li>
-      <a href="../articles/sassy-table.html">Example 2: VS Table</a>
+      <a href="../articles/sassy-dm.html">Example 2: DM Table</a>
     </li>
     <li>
-      <a href="../articles/sassy-figure.html">Example 3: Figure</a>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
     </li>
     <li>
       <a href="../articles/sassy-ae.html">Example 4: AE Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: VS Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
     </li>
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
@@ -100,14 +106,14 @@
 
       
 
-      </header><script src="sassy-table_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-vs_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Example 2: VS Table</h1>
+      <h1 data-toc-skip>Example 5: VS Table</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-table.Rmd"><code>vignettes/sassy-table.Rmd</code></a></small>
-      <div class="hidden name"><code>sassy-table.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-vs.Rmd"><code>vignettes/sassy-vs.Rmd</code></a></small>
+      <div class="hidden name"><code>sassy-vs.Rmd</code></div>
 
     </div>
 
@@ -122,14 +128,9 @@
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong> package provides automatic logging for many functions.</li>
-<li>The <code>datastep()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package allows for a complex conditional in the middle of a <strong>dplyr</strong> pipeline.<br>
-</li>
-<li>The <code>%eq%</code> operator allows comparing of a variable that contains many NA values, without error.</li>
-<li>The <strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong> package provides several convenient functions for calculating and formatting summary statistics.</li>
-<li>The <strong>fmtr</strong> package also provides capabilities to create a user-defined format, similar to <code>proc format</code>.</li>
-<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package supports spanning headers and ‘N=’ population counts in the header labels.</li>
-<li>The <strong>reporter</strong> package also allows you to define a stub column of hierarchical labels.</li>
+<li>The <code>%eq%</code> operator from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package allows comparing of a variable that contains many NA values, without error.</li>
+<li>The <strong>fmtr</strong> package provides capabilities to create a user-defined format, similar to <code>proc format</code>.</li>
+<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package supports spanning headers in the report header.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
@@ -145,7 +146,7 @@
 <span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
 
 <span class="co"># Open log</span>
-<span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.log"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example5.log"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span>
 
@@ -276,7 +277,7 @@
 <a href="#log" class="anchor"></a>Log</h4>
 <p>Here is the log from the above example:</p>
 <pre><code>========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example2.log 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example5.log 
 Working Directory: C:/packages/Testing 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
@@ -465,7 +466,7 @@ Log Elapsed Time: 0 00:00:36
 <a href="#output" class="anchor"></a>Output</h4>
 <p>And here is the output report:</p>
 <p><img src="../man/images/vital_signs.png" align="center"></p>
-<p>Next: <a href="sassy-figure.html">Example 3: Table</a></p>
+<p>Next: <a href="sassy-figureby.html">Example 6: Figure with By Group</a></p>
 </div>
 </div>
   </div>

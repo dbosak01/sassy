@@ -65,13 +65,19 @@
       <a href="../articles/sassy-listing.html">Example 1: Listing</a>
     </li>
     <li>
-      <a href="../articles/sassy-table.html">Example 2: VS Table</a>
+      <a href="../articles/sassy-dm.html">Example 2: DM Table</a>
     </li>
     <li>
-      <a href="../articles/sassy-figure.html">Example 3: Figure</a>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
     </li>
     <li>
       <a href="../articles/sassy-ae.html">Example 4: AE Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: VS Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
     </li>
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
@@ -356,8 +362,8 @@ Log Start Time: 2021-06-27 11:30:01
 Prepare Data 
 ========================================================================= 
 
-[90m# library 'sdtm': 4 items
-[39m- attributes: csv not loaded
+# library 'sdtm': 4 items
+- attributes: csv not loaded
 - path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
 - items:
   Name Extension Rows Cols    Size        LastModified
@@ -475,7 +481,7 @@ Create report object
 
 Print report 
 
-[90m# A report specification: [39m[90m16 pages[39m
+# A report specification: 16 pages
 - file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
 - output_type: RTF
 - units: inches
@@ -489,8 +495,8 @@ Print report
 - footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
 - page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
 - content: 
-[90m# A table specification:
-[39m- data: tibble 'final' 74 rows 14 cols
+# A table specification:
+- data: tibble 'final' 74 rows 14 cols
 - show_cols: all
 - use_attributes: all
 - width: 9
@@ -515,7 +521,7 @@ Print report
 - define: ARM D_2 'Moderate' align='center' 
 - define: ARM D_3 'Severe' align='center' 
 
-[90m# A report specification: [39m[90m16 pages[39m
+# A report specification: 16 pages
 - file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
 - output_type: RTF
 - units: inches
@@ -529,8 +535,8 @@ Print report
 - footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
 - page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
 - content: 
-[90m# A table specification:
-[39m- data: tibble 'final' 74 rows 14 cols
+# A table specification:
+- data: tibble 'final' 74 rows 14 cols
 - show_cols: all
 - use_attributes: all
 - width: 9
@@ -571,7 +577,7 @@ Log Elapsed Time: 0 00:00:03
 <a href="#output" class="anchor"></a>Output</h4>
 <p>Here are the first four pages of the output report:</p>
 <p><img src="../man/images/ae1.png" align="center"><img src="../man/images/ae2.png" align="center"><img src="../man/images/ae3.png" align="center"><img src="../man/images/ae4.png" align="center"></p>
-<p>Next: <a href="sassy-disclaimers.html">Disclaimers</a></p>
+<p>Next: <a href="sassy-vs.html">Example 5: VS Table</a></p>
 </div>
 </div>
   </div>

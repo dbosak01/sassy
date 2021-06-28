@@ -1,8 +1,8 @@
 ---
-title: "Example 2: VS Table"
+title: "Example 5: VS Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 2: VS Table}
+  %\VignetteIndexEntry{Example 5: VS Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,22 +24,14 @@ and after-treatment time points.
 
 Note the following about this example:
 
-  * The **[logr](https://logr.r-sassy.org)** package 
-  provides automatic logging for many functions.
-  * The `datastep()` function from the **[libr](https://libr.r-sassy.org)**
-  package allows for a complex conditional in the middle
-  of a **dplyr** pipeline.  
-  * The `%eq%` operator allows comparing of a variable that contains many NA
+  * The `%eq%` operator from the **[libr](https://libr.r-sassy.org)** package
+  allows comparing of a variable that contains many NA
   values, without error.
-  * The **[fmtr](https://fmtr.r-sassy.org)** package provides several 
-  convenient functions for 
-  calculating and formatting summary statistics.
-  * The **fmtr** package also provides capabilities to create a user-defined
+  * The **fmtr** package provides capabilities to create a user-defined
   format, similar to `proc format`.
   * The **[reporter](https://reporter.r-sassy.org)** package supports 
-  spanning headers and 'N=' population counts in the header labels.
-  * The **reporter** package also allows you to define a stub column of 
-  hierarchical labels.
+  spanning headers in the report header.
+
 
 ```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
@@ -55,7 +47,7 @@ tmp <- tempdir()
 pkg <- system.file("extdata", package = "sassy")
 
 # Open log
-lgpth <- log_open(file.path(tmp, "example2.log"))
+lgpth <- log_open(file.path(tmp, "example5.log"))
 
 sep("Prepare Data")
 
@@ -189,7 +181,7 @@ Here is the log from the above example:
 
 ```
 ========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example2.log 
+Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example5.log 
 Working Directory: C:/packages/Testing 
 User Name: User 
 R Version: 4.0.3 (2020-10-10) 
@@ -380,4 +372,4 @@ And here is the output report:
 <img src="../man/images/vital_signs.png" align="center" />
 
 
-Next: [Example 3: Figure](sassy-figure.html)
+Next: [Example 6: Figure with By Group](sassy-figureby.html)

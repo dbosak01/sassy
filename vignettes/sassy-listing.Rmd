@@ -166,4 +166,4 @@ above listing example:
 <img src="../man/images/listing.png" align="center" />
 
 
-Next: [Example 2: Table](sassy-table.html)
+Next: [Example 2: DM Table](sassy-dm.html)

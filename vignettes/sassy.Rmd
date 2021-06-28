@@ -52,12 +52,45 @@ The following examples are provided on this site:
 
 * **[Example 1](sassy-listing.html)**: 
 Creates a simple data listing and log
-* **[Example 2](sassy-table.html)**: 
-Creates a table of summary statistics
+<a href="sassy-listing.html">
+ <img src="../man/images/listing.png" align="left" />
+ </a>
+<br>
+
+* **[Example 2](sassy-dm.html)**: 
+Creates a table of demographic characteristics  
+<a href="sassy-dm.html">
+<img src="../man/images/dm.png" align="left" />
+</a>
+<br>
+
 * **[Example 3](sassy-figure.html)**: 
-Creates a figure with a by-group
+Creates a simple figure
+<a href="sassy-figure.html">
+<img src="../man/images/dm_fig1.png" align="left" />
+</a>
+<br>
+
 * **[Example 4](sassy-ae.html)**: 
 Creates an AE table with a page wrap
+<a href="sassy-ae.html">
+<img src="../man/images/ae1.png" align="left" />
+</a>
+<br>
+
+* **[Example 5](sassy-vs.html)**: 
+Creates a table of vital signs statistics
+<a href="sassy-vs.html">
+<img src="../man/images/vital_signs.png" align="left" />
+</a>
+<br>
+
+* **[Example 6](sassy-figureby.html)**: 
+Creates a figure with a by-group
+<a href="sassy-figureby.html">
+<img src="../man/images/vs_pg1.png" align="left" />
+</a>
+<br>
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!

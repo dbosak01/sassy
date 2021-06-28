@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example 3: Figure • sassy</title>
+<title>Example 3: Figures • sassy</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Example 3: Figure">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Example 3: Figures">
 <meta property="og:description" content="sassy">
 <meta property="og:image" content="https://sassy.r-sassy.org/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -65,13 +65,19 @@
       <a href="../articles/sassy-listing.html">Example 1: Listing</a>
     </li>
     <li>
-      <a href="../articles/sassy-table.html">Example 2: VS Table</a>
+      <a href="../articles/sassy-dm.html">Example 2: DM Table</a>
     </li>
     <li>
-      <a href="../articles/sassy-figure.html">Example 3: Figure</a>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
     </li>
     <li>
       <a href="../articles/sassy-ae.html">Example 4: AE Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: VS Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
     </li>
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
@@ -103,7 +109,7 @@
       </header><script src="sassy-figure_files/header-attrs-2.8/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Example 3: Figure</h1>
+      <h1 data-toc-skip>Example 3: Figures</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-figure.Rmd"><code>vignettes/sassy-figure.Rmd</code></a></small>
@@ -113,23 +119,27 @@
 
     
     
-<div id="create-a-figure-with-a-by-group" class="section level3">
+<div id="create-a-figure" class="section level3">
 <h3 class="hasAnchor">
-<a href="#create-a-figure-with-a-by-group" class="anchor"></a>Create a Figure with a By-Group</h3>
+<a href="#create-a-figure" class="anchor"></a>Create a Figure</h3>
 <p>The <strong>sassy</strong> system of functions also supports reports with graphics. Plots from the popular <strong>ggplot2</strong> package can be added to a report. The following example illustrates such a report.</p>
 <div id="program" class="section level4">
 <h4 class="hasAnchor">
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The plot is created as a single plot with no by-groups</li>
-<li>The plot is added to the report with the <code>add_content()</code> function, just like the tables in the previous examples.</li>
-<li>The <code>page_by()</code> function on the <code>create_report()</code> statement generates the paging for both the report and plot.</li>
-<li>Few other R packages support this type of reporting capability.</li>
+<li>The plots are created using <strong>ggplot2</strong> and the <code>create_plot()</code> function.</li>
+<li>The plots are added to the report with the <code>add_content()</code> function, just like the tables in the previous examples.</li>
+<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package allows you to add multiple pieces of content to the same report.</li>
+<li>Titles, footnotes, and other report enhancements are added to the figure just like previous examples.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span>
+
+
+<span class="co"># Prepare Log -------------------------------------------------------------</span>
+
 
 <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,
         <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
@@ -137,203 +147,251 @@
 <span class="co"># Get path to temp directory</span>
 <span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> 
 
-<span class="co"># Get path to sample data</span>
-<span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
+<span class="co"># Get sample data directory</span>
+<span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
 
 <span class="co"># Open log</span>
 <span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example3.log"</span><span class="op">)</span><span class="op">)</span>
 
+
+<span class="co"># Load and Prepare Data ---------------------------------------------------</span>
+
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span>
 
-<span class="co"># Create libname for csv data</span>
-<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> 
+<span class="co"># Define data library</span>
+<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> 
 
-<span class="co"># Load data into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> 
+<span class="co"># Loads data into workspace</span>
+<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
 
-<span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span>
-<span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
-         <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="co"># Prepare data</span>
+<span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">datastep</span><span class="op">(</span><span class="op">{</span>
+                     
+     <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span>
+       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"18 to 24"</span>
+     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">44</span><span class="op">)</span>
+       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"25 to 44"</span>
+     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">64</span><span class="op">)</span>
+       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"45 to 64"</span>
+     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">65</span><span class="op">)</span>
+       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"&gt;= 65"</span>
+     
+   <span class="op">}</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
-<span class="fu">put</span><span class="op">(</span><span class="st">"Group and summarize"</span><span class="op">)</span>
-<span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">summarize</span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
-                                          <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,
-                                          <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="fu">put</span><span class="op">(</span><span class="st">"Get population counts"</span><span class="op">)</span>
+<span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu">count</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="va">sex_pop</span> <span class="op">&lt;-</span> <span class="fu">count</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="va">agecat_pop</span> <span class="op">&lt;-</span> <span class="fu">count</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+
+<span class="co"># Convert agecat to factor so rows will sort correctly</span>
+<span class="va">agecat_pop</span><span class="op">$</span><span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">agecat_pop</span><span class="op">$</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, 
+                                                          <span class="st">"25 to 44"</span>,
+                                                          <span class="st">"45 to 64"</span>,
+                                                          <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span>
+<span class="co"># Sort agecat</span>
+<span class="va">agecat_pop</span> <span class="op">&lt;-</span> <span class="va">agecat_pop</span> <span class="op">%&gt;%</span> <span class="fu">arrange</span><span class="op">(</span><span class="va">AGECAT</span><span class="op">)</span>
+                     
+
+<span class="co"># Create Plots ------------------------------------------------------------</span>
 
 
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Create plots and print report"</span><span class="op">)</span>
+<span class="va">plt1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">arm_pop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">ARM</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#0000A0"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Treatment Group"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span>
 
-<span class="co"># Create plot</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">final</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">MEAN</span>, x <span class="op">=</span> <span class="va">VISIT</span> , group <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span>
+<span class="va">plt2</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">sex_pop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">SEX</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#00A000"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Biological Sex"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span>
 
-<span class="co"># Construct output path</span>
-<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/f_vs.rtf"</span><span class="op">)</span>
+<span class="va">plt3</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">agecat_pop</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">AGECAT</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_col</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#A00000"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">geom_text</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age Categories"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span>
 
-<span class="co"># Define report object</span>
+
+<span class="co"># Report ------------------------------------------------------------------</span>
+
+
+<span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span>
+
+
+<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example3.rtf"</span><span class="op">)</span>
+
+
+<span class="va">page1</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt1</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.1"</span>, <span class="st">"Distribution of Subjects by Treatment Group"</span><span class="op">)</span>
+
+<span class="va">page2</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt2</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.2"</span>, <span class="st">"Distribution of Subjects by Biological Sex"</span><span class="op">)</span>
+
+<span class="va">page3</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt3</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.2"</span>, <span class="st">"Distribution of Subjects by Age Category"</span><span class="op">)</span>
+
 <span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">page_by</span><span class="op">(</span><span class="va">VSTEST</span>, <span class="st">"Vital Sign: "</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.0"</span>, <span class="st">"Vital Signs Change from Baseline"</span>, 
-         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">add_content</span><span class="op">(</span><span class="fu">create_plot</span><span class="op">(</span><span class="va">p</span>, <span class="fl">4.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"R Program: VS_Figure.R"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="va">page1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="va">page2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="va">page3</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Figure.R"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, 
               right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
 
-<span class="co"># Write report to file system</span>
-<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> 
+<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span>
+
+
+<span class="co"># Clean Up ----------------------------------------------------------------</span>
+
+<span class="co"># Unload library from workspace</span>
+<span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
 
 <span class="co"># Close log</span>
 <span class="fu">log_close</span><span class="op">(</span><span class="op">)</span>
 
-<span class="co"># View report</span>
-<span class="co"># file.show(pth)</span></code></pre></div>
+<span class="co"># View files</span>
+<span class="co"># file.show(pth)</span>
+<span class="co"># file.show(lgpth)</span></code></pre></div>
 </div>
 <div id="log" class="section level4">
 <h4 class="hasAnchor">
 <a href="#log" class="anchor"></a>Log</h4>
 <p>Here is the log for the above program:</p>
 <pre><code>========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example3.log 
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpqUcwY4/log/example3.log 
 Working Directory: C:/packages/Testing 
-User Name: User 
-R Version: 4.0.3 (2020-10-10) 
-Machine: DESKTOP-1F27OR8 x86-64 
-Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2021-01-05 08:23:30 
+User Name: dbosa 
+R Version: 4.0.5 (2021-03-31) 
+Machine: SOCRATES x86-64 
+Operating System: Windows 10 x64 build 19041 
+Log Start Time: 2021-06-27 19:00:45 
 ========================================================================= 
 
 ========================================================================= 
 Prepare Data 
 ========================================================================= 
 
-# library 'sdtm': 8 items
+# library 'sdtm': 4 items
 - attributes: csv not loaded
-- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
+- path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
 - items:
-  Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
-2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
-3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
-4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
-5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
-6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
-7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
-8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+  Name Extension Rows Cols    Size        LastModified
+1   AE       csv  150   27 88.1 Kb 2021-04-04 11:55:58
+2   DM       csv   87   24 45.2 Kb 2021-04-04 11:55:58
+3   SV       csv  685   10 69.9 Kb 2021-04-04 11:55:58
+4   VS       csv 3358   17  467 Kb 2021-04-04 11:55:58
 
 lib_load: library 'sdtm' loaded 
 
-Perform joins and basic filters 
+select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
 
-left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
+filter: removed 2 rows (2%), 85 rows remaining
 
-           &gt; rows only in x       0
+datastep: columns decreased from 4 to 5 
 
-           &gt; rows only in y  (    0)
+# A tibble: 85 x 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D &gt;= 65   
+10 ABC-01-114 F        72 ARM B &gt;= 65   
+# ... with 75 more rows
 
-           &gt; matched rows     3,358    (includes duplicates)
+Get population counts 
 
-           &gt;                 =======
+count: now 4 rows and 2 columns, ungrouped
 
-           &gt; rows total       3,358
+# A tibble: 4 x 2
+  ARM       n
+  &lt;chr&gt; &lt;int&gt;
+1 ARM A    20
+2 ARM B    21
+3 ARM C    21
+4 ARM D    23
 
-select: dropped 32 variables (STUDYID.x, DOMAIN.x, SUBJID, RFSTDTC, RFENDTC, …)
+count: now 2 rows and 2 columns, ungrouped
 
-filter: removed 246 rows (7%), 3,112 rows remaining
+# A tibble: 2 x 2
+  SEX       n
+  &lt;chr&gt; &lt;int&gt;
+1 F        32
+2 M        53
 
-# A tibble: 3,112 x 8
-   USUBJID    ARMCD ARM   VSTESTCD VSTEST                   VSORRES VISITNUM VISIT    
-   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    
- 1 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      78        0 SCREENING
- 2 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      76        1 DAY 1    
- 3 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      66        2 WEEK 2   
- 4 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      84        4 WEEK 4   
- 5 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      68        6 WEEK 6   
- 6 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      80        8 WEEK 8   
- 7 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       12 WEEK 12  
- 8 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       16 WEEK 16  
- 9 ABC-01-049 4     ARM D PULSE    Pulse Rate                    92        0 SCREENING
-10 ABC-01-049 4     ARM D PULSE    Pulse Rate                    84        1 DAY 1    
-# ... with 3,102 more rows
+count: now 4 rows and 2 columns, ungrouped
 
-Group and summarize 
-
-group_by: 6 grouping variables (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, …)
-
-summarize: now 175 rows and 7 columns, 5 group variables remaining (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM)
-
-filter (grouped): removed 35 rows (20%), 140 rows remaining
-
-mutate (grouped): converted 'VISIT' from character to factor (0 new NA)
-
-ungroup: no grouping variables
-
-# A tibble: 140 x 7
-   ARMCD ARM   VSTESTCD VSTEST                   VISITNUM VISIT    MEAN
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                       &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;
- 1 1     ARM A DIABP    Diastolic Blood Pressure        1 DAY 1    76.5
- 2 1     ARM A DIABP    Diastolic Blood Pressure        2 WEEK 2   77.6
- 3 1     ARM A DIABP    Diastolic Blood Pressure        4 WEEK 4   78.7
- 4 1     ARM A DIABP    Diastolic Blood Pressure        6 WEEK 6   74.4
- 5 1     ARM A DIABP    Diastolic Blood Pressure        8 WEEK 8   77.1
- 6 1     ARM A DIABP    Diastolic Blood Pressure       12 WEEK 12  78.4
- 7 1     ARM A DIABP    Diastolic Blood Pressure       16 WEEK 16  77.3
- 8 1     ARM A PULSE    Pulse Rate                      1 DAY 1    72.6
- 9 1     ARM A PULSE    Pulse Rate                      2 WEEK 2   73.4
-10 1     ARM A PULSE    Pulse Rate                      4 WEEK 4   75.8
-# ... with 130 more rows
+# A tibble: 4 x 2
+  AGECAT       n
+  &lt;chr&gt;    &lt;int&gt;
+1 &gt;= 65       13
+2 18 to 24     5
+3 25 to 44    23
+4 45 to 64    44
 
 ========================================================================= 
-Create plots and print report 
+Create and print report 
 ========================================================================= 
 
-# A report specification: 5 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/f_vs.rtf'
+# A report specification: 3 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpqUcwY4/output/example3.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
-- line size/count: 108/41
-- page by: VSTEST
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 107/41
 - page_header: left=Sponsor: Company right=Study: ABC
-- title 1: 'Figure 1.0'
-- title 2: 'Vital Signs Change from Baseline'
-- title 3: 'Safety Population'
-- footnote 1: 'R Program: VS_Figure.R'
-- page_footer: left=Date Produced: 05Jan21 08:23 center= right=Page [pg] of [tpg]
+- footnote 1: 'Program: DM_Figure.R'
+- page_footer: left=Date Produced: 27Jun21 19:00 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
-- data: 140 rows, 7 cols
+- data: 4 rows, 2 cols
 - layers: 2
 - height: 4.5
-- width: 9
+- width: 7
+- title 1: 'Figure 1.1'
+- title 2: 'Distribution of Subjects by Treatment Group'
+# A plot specification: 
+- data: 2 rows, 2 cols
+- layers: 2
+- height: 4.5
+- width: 7
+- title 1: 'Figure 1.2'
+- title 2: 'Distribution of Subjects by Biological Sex'
+# A plot specification: 
+- data: 4 rows, 2 cols
+- layers: 2
+- height: 4.5
+- width: 7
+- title 1: 'Figure 1.2'
+- title 2: 'Distribution of Subjects by Age Category'
+
+lib_sync: synchronized data in library 'sdtm' 
+
+lib_unload: library 'sdtm' unloaded 
 
 ========================================================================= 
-Log End Time: 2021-01-05 08:23:50 
-Log Elapsed Time: 0 00:00:19 
+Log End Time: 2021-06-27 19:00:46 
+Log Elapsed Time: 0 00:00:00 
 ========================================================================= 
 </code></pre>
 </div>
 <div id="output" class="section level4">
 <h4 class="hasAnchor">
 <a href="#output" class="anchor"></a>Output</h4>
-<p>And here are the first three pages of the report:</p>
-<p><img src="../man/images/vs_pg1.png" align="center"></p>
-<p><img src="../man/images/vs_pg2.png" align="center"></p>
-<p><img src="../man/images/vs_pg3.png" align="center"></p>
+<p>And here are the three pages of the report:</p>
+<p><img src="../man/images/dm_fig1.png" align="center"></p>
+<p><img src="../man/images/dm_fig2.png" align="center"></p>
+<p><img src="../man/images/dm_fig3.png" align="center"></p>
 <p>Next: <a href="sassy-ae.html">Example 4: AE Table</a></p>
 </div>
 </div>
