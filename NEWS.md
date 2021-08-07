@@ -1,7 +1,8 @@
 # sassy 1.0.5
 
-* Added more example programs.
+* Support back to R version 3.6.
 * Added GitHub Actions to test prior R versions
+* Added more vignettes and example programs.
 
 # sassy 1.0.4
 
