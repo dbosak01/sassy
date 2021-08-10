@@ -20,7 +20,8 @@ Suggests:
     knitr,
     rmarkdown,
     tidylog,
-    magrittr
+    magrittr,
+    covr
 Imports: logr, 
          fmtr,
          libr,
