@@ -5,3 +5,4 @@
 ^pkgdown$
 ^logo\.png$
 ^\.github$
+^codecov\.yml$
