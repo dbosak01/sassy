@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>sassy • sassy</title>
+<title>Frequently Asked Questions • sassy</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -17,7 +17,7 @@
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="sassy">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Frequently Asked Questions">
 <meta property="og:description" content="sassy">
 <meta property="og:image" content="https://sassy.r-sassy.org/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -109,57 +109,84 @@
 
       
 
-      </header><script src="sassy_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-faq_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>sassy</h1>
+      <h1 data-toc-skip>Frequently Asked Questions</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy.Rmd"><code>vignettes/sassy.Rmd</code></a></small>
-      <div class="hidden name"><code>sassy.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-faq.Rmd"><code>vignettes/sassy-faq.Rmd</code></a></small>
+      <div class="hidden name"><code>sassy-faq.Rmd</code></div>
 
     </div>
 
     
     
-<p>The <strong>sassy</strong> package is a meta-package that aims to make R easier for SAS® programmers. The package brings several familiar SAS® concepts to R, including data libraries, formats and format catalogs, data dictionaries, a data step, a traceable log, and a reporting package with a variety of printable report types.</p>
-<p>The <strong>sassy</strong> family of packages is meant to compliment the <strong>tidyverse</strong>. While the <strong>tidyverse</strong> focuses mainly on data manipulation and development tools, the <strong>sassy</strong> packages are focused more on formatting and reporting. For most projects, it is expected that users will load both the <strong>tidyverse</strong> and <strong>sassy</strong> meta-packages. Between these two, the user will typically have everything they need to easily manipulate and report on their data.</p>
-<div id="included-packages" class="section level3">
-<h3 class="hasAnchor">
-<a href="#included-packages" class="anchor"></a>Included Packages</h3>
-<p>The <strong>sassy</strong> meta-package contains the following packages:</p>
+<p>Below are some frequently asked questions about the <strong>sassy</strong> meta-package. Click on the links below to navigate to the full question and answer content.</p>
+<div id="top" class="section level2">
+<h2 class="hasAnchor">
+<a href="#top" class="anchor"></a>Index</h2>
 <ul>
-<li>
-<strong><a href="https://logr.r-sassy.org">logr</a></strong>: Produces a traceable log</li>
-<li>
-<strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>: Provides functions for formatting data and a creating a format catalog</li>
-<li>
-<strong><a href="https://libr.r-sassy.org">libr</a></strong>: Gives you the ability to define a libname, generate a data dictionary, and simulate a data step</li>
-<li>
-<strong><a href="https://reporter.r-sassy.org">reporter</a></strong>: A reporting package with easy layout capabilities and the ability to write reports in TXT, RTF, and PDF file formats</li>
+<li><a href="#sassy">What is the sassy system?</a></li>
+<li><a href="#why">Why did you write the sassy system?</a></li>
+<li><a href="#sas">Does the sassy system require SAS® to be installed?</a></li>
+<li><a href="#background">Do I need a background in SAS® to use the sassy system?</a></li>
+<li><a href="#packages">Can’t I just install everything individually?</a></li>
 </ul>
-<p>The above links will take you into the respective packages for a deep dive on their capabilities.</p>
 </div>
-<div id="next-steps" class="section level3">
+<div id="content" class="section level2">
+<h2 class="hasAnchor">
+<a href="#content" class="anchor"></a>Content</h2>
+<div id="sassy" class="section level3">
 <h3 class="hasAnchor">
-<a href="#next-steps" class="anchor"></a>Next Steps</h3>
-<p>Before taking a deep dive into the <strong>sassy</strong> package documentation, please look at some examples. These examples will give you a feel for the overall flow of a <strong>sassy</strong>-enhanced program, and allow you to see how the functions work together.</p>
-<p>The following examples are provided on this site:</p>
-<ul>
-<li><p><strong><a href="sassy-listing.html">Example 1</a></strong>: Creates a simple data listing and log <a href="sassy-listing.html"> <img src="../man/images/listing.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-dm.html">Example 2</a></strong>: Creates a table of demographic characteristics<br><a href="sassy-dm.html"> <img src="../man/images/dm.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-figure.html">Example 3</a></strong>: Creates a simple figure <a href="sassy-figure.html"> <img src="../man/images/dm_fig1.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-ae.html">Example 4</a></strong>: Creates an AE table with a page wrap <a href="sassy-ae.html"> <img src="../man/images/ae1.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-vs.html">Example 5</a></strong>: Creates a table of vital signs statistics <a href="sassy-vs.html"> <img src="../man/images/vital_signs.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-figureby.html">Example 6</a></strong>: Creates a figure with a by-group <a href="sassy-figureby.html"> <img src="../man/images/vs_pg1.png" align="left"></a> <br></p></li>
-</ul>
-<p>Once you review these examples, please proceed to the package links above to explore the system further!</p>
+<a href="#sassy" class="anchor"></a>What is the sassy system?</h3>
+<p><strong>Q:</strong> I don’t quite understand the concept of the <strong>sassy</strong> system. What is this set of packages?</p>
+<p><strong>A:</strong> The <strong>sassy</strong> package is a meta-package that contains four sub-packages: <a href="https://logr.r-sassy.org/"><strong>logr</strong></a>, <a href="https://fmtr.r-sassy.org/"><strong>fmtr</strong></a>, <a href="https://libr.r-sassy.org/"><strong>libr</strong></a>, and <a href="https://reporter.r-sassy.org/"><strong>reporter</strong></a>. These four packages work together as an integrated system. The system was written primarily to make regulatory reporting in R easier. The system borrows several concepts from SAS® software, and that is why it is called <strong>sassy</strong>.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div id="why" class="section level3">
+<h3 class="hasAnchor">
+<a href="#why" class="anchor"></a>Why did you write the sassy system?</h3>
+<p><strong>Q:</strong> What was the motivation behind writing the <strong>sassy</strong> packages? There are already +10,000 R packages? Was it really necessary to write more?</p>
+<p><strong>A:</strong> The <strong>sassy</strong> packages were written to fill gaps in the way R deals with accessing, formatting, and reporting data, plus the logging of those activities. Some of the functionality of the <strong>sassy</strong> system is redundant with existing packages. But these packages do not work together, or were not easy to use. The advantage of the <strong>sassy</strong> packages is that they were written as a complete ecosystem.</p>
+<p>For instance, the <strong>libr</strong> and <strong>reporter</strong> packages know about the <strong>logr</strong> package, and will log their operations automatically. Another example is the <strong>fmtr</strong> package can assign a “format” attribute that can be picked up and used during reporting with the <strong>reporter</strong> package, or when viewing a data dictionary from the <strong>libr</strong> package. There are many more ways these packages compliment with each other. This integration is something that did not exist in R previously, and makes the <strong>sassy</strong> system interesting.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div id="sas" class="section level3">
+<h3 class="hasAnchor">
+<a href="#sas" class="anchor"></a>Does the sassy system require SAS® to be installed?</h3>
+<p><strong>Q:</strong> I am interested in using the <strong>sassy</strong> system, but I don’t have SAS® installed. Is it required?</p>
+<p><strong>A:</strong> No. The <strong>sassy</strong> system is just R packages. They are written mostly in Base R, and require no other software to run.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div id="background" class="section level3">
+<h3 class="hasAnchor">
+<a href="#background" class="anchor"></a>Do I need a background in SAS® to use the sassy system?</h3>
+<p><strong>Q:</strong> I don’t have a background in SAS®. I just know R. Can I use the <strong>sassy</strong> packages?</p>
+<p><strong>A:</strong> Yes. No background in SAS® is necessary to use these packages. SAS® users will see some similarity between <strong>sassy</strong> functions and functions from SAS®. In the end, however, the <strong>sassy</strong> packages are pure R packages, and can be used effectively by any R programmer. R users will probably find the concepts introduced by the <strong>sassy</strong> system to be very useful, and more efficient than the equivalent concepts from Base R.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div id="packages" class="section level3">
+<h3 class="hasAnchor">
+<a href="#packages" class="anchor"></a>Can’t I just install everything individually?</h3>
+<p><strong>Q:</strong> Why do I need to install/load the <strong>sassy</strong> package? Can’t I just install and load each of the packages independently?</p>
+<p><strong>A:</strong> Yes, you can. The <strong>sassy</strong> package just makes it more convenient, in the same way that the <strong>tidyverse</strong> meta-package makes it more convenient to use the packages in that system.</p>
+<p><a href="#top">top</a></p>
+<hr>
+<!-- ### Question 1? {#q1} --><!-- **Q:** Question --><!-- **A:** Answer --><!-- [top](#top) --><!-- ****** -->
+</div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

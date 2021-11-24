@@ -15,4 +15,8 @@ articles:
 navbar:
   type: inverse
   structure:
-    right: [home, intro, articles, reference, news, github]
+    right: [home, intro, articles, reference, faq, news, github]
+  components:
+    faq:
+      text: FAQ
+      href: ./articles/sassy-faq.html

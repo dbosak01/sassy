@@ -1,3 +1,7 @@
+# sassy 1.0.6
+
+* Added FAQ.
+
 # sassy 1.0.5
 
 * Support back to R version 3.6.

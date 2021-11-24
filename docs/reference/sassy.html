@@ -87,7 +87,7 @@ with, approval of, or endorsement by SAS® Institute." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -137,6 +137,9 @@ with, approval of, or endorsement by SAS® Institute." />
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href=".././articles/sassy-faq.html">FAQ</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -215,7 +218,7 @@ and apply formats to a data frame or vector.</p></li>
 <span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Get Data"</span><span class='op'>)</span>
 
 <span class='co'># Define data library</span>
-<span class='fu'>libname</span><span class='op'>(</span><span class='va'>sdtm</span>, <span class='va'>pkg</span>, <span class='st'>"csv"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>libname</span><span class='op'>(</span><span class='va'>sdtm</span>, <span class='va'>pkg</span>, <span class='st'>"csv"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Load library into workspace</span>
 <span class='fu'>lib_load</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span>
@@ -223,21 +226,21 @@ and apply formats to a data frame or vector.</p></li>
 <span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Write Report"</span><span class='op'>)</span>
 
 <span class='co'># Define table object</span>
-<span class='va'>tbl</span> <span class='op'>&lt;-</span> <span class='fu'>create_table</span><span class='op'>(</span><span class='va'>sdtm.DM</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>tbl</span> <span class='op'>&lt;-</span> <span class='fu'>create_table</span><span class='op'>(</span><span class='va'>sdtm.DM</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>define</span><span class='op'>(</span><span class='va'>USUBJID</span>, id_var <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Construct report path</span>
-<span class='va'>pth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"output/l_dm.rtf"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>pth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"output/l_dm.rtf"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Define report object</span>
-<span class='va'>rpt</span> <span class='op'>&lt;-</span> <span class='fu'>create_report</span><span class='op'>(</span><span class='va'>pth</span>, output_type <span class='op'>=</span> <span class='st'>"RTF"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>page_header</span><span class='op'>(</span><span class='st'>"Sponsor: Company"</span>, <span class='st'>"Study: ABC"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>titles</span><span class='op'>(</span><span class='st'>"Listing 1.0"</span>, <span class='st'>"SDTM Demographics"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>add_content</span><span class='op'>(</span><span class='va'>tbl</span>, align <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>rpt</span> <span class='op'>&lt;-</span> <span class='fu'>create_report</span><span class='op'>(</span><span class='va'>pth</span>, output_type <span class='op'>=</span> <span class='st'>"RTF"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>page_header</span><span class='op'>(</span><span class='st'>"Sponsor: Company"</span>, <span class='st'>"Study: ABC"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>titles</span><span class='op'>(</span><span class='st'>"Listing 1.0"</span>, <span class='st'>"SDTM Demographics"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'>add_content</span><span class='op'>(</span><span class='va'>tbl</span>, align <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>page_footer</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"CONFIDENTIAL"</span>, <span class='st'>"Page [pg] of [tpg]"</span><span class='op'>)</span>
 
 <span class='co'># Write report to file system</span>
-<span class='fu'>write_report</span><span class='op'>(</span><span class='va'>rpt</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>write_report</span><span class='op'>(</span><span class='va'>rpt</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Unload data</span>
 <span class='fu'>lib_unload</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span>

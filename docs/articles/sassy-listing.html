@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -88,6 +88,9 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
+  <a href=".././articles/sassy-faq.html">FAQ</a>
+</li>
+<li>
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="sassy-listing_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-listing_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 1: Listing</h1>
@@ -162,17 +165,17 @@
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Write Report"</span><span class="op">)</span>
 
 <span class="co"># Define table object</span>
-<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># Construct report path</span>
 <span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/l_dm.rtf"</span><span class="op">)</span> 
 
 <span class="co"># Define report object</span>
-<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.0"</span>, <span class="st">"SDTM Demographics"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.0"</span>, <span class="st">"SDTM Demographics"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"CONFIDENTIAL"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
 
 <span class="co"># Write report to file system</span>

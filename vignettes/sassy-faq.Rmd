@@ -1,0 +1,130 @@
+---
+title: "Frequently Asked Questions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FAQ}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+```
+
+Below are some frequently asked questions about the **sassy** meta-package. Click
+on the links below to navigate to the full question and answer content.
+
+## Index{#top}
+
+* [What is the sassy system?](#sassy)
+* [Why did you write the sassy system?](#why)
+* [Does the sassy system require SAS® to be installed?](#sas)
+* [Do I need a background in SAS® to use the sassy system?](#background)
+* [Can't I just install everything individually?](#packages)
+
+
+## Content
+
+### What is the sassy system? {#sassy}
+
+**Q:** I don't quite understand the concept of the **sassy** system. 
+What is this set of packages?
+
+**A:** The **sassy** package is a meta-package that contains four 
+sub-packages: [**logr**](https://logr.r-sassy.org/), 
+[**fmtr**](https://fmtr.r-sassy.org/), 
+[**libr**](https://libr.r-sassy.org/), and 
+[**reporter**](https://reporter.r-sassy.org/). 
+These four 
+packages work together as an integrated system.  The system 
+was written primarily to make regulatory reporting in R easier.  The system
+borrows several concepts from SAS® software, and that is why it is called
+**sassy**.  
+
+[top](#top)
+
+******
+
+### Why did you write the sassy system? {#why}
+
+**Q:** What was the motivation behind writing the **sassy** packages?  There
+are already +10,000 R packages?  Was it really necessary to write more?
+
+**A:** The **sassy** packages were written to fill gaps in the way R 
+deals with accessing, formatting, and reporting data, plus the logging of those
+activities.  Some of the functionality of the **sassy** system is redundant
+with existing packages. But these packages do not work together, or were not
+easy to use.  The advantage
+of the **sassy** packages is that they were written as a complete ecosystem.
+
+For instance, the **libr** and **reporter** packages know about the **logr**
+package, and will log their operations automatically.  Another example is 
+the **fmtr**
+package can assign a "format" attribute that can be picked up and used
+during reporting with the **reporter** package, or when viewing a 
+data dictionary from the **libr** package.  There are many more ways these
+packages compliment with each other. 
+This integration
+is something that did not exist in R previously, and makes the **sassy**
+system interesting.
+
+[top](#top)
+
+******
+
+### Does the sassy system require SAS® to be installed? {#sas}
+
+**Q:** I am interested in using the **sassy** system, but I don't have 
+SAS® installed.  Is it required?
+
+**A:** No.  The **sassy** system is just R packages. They are written mostly in 
+Base R, and require no other software to run.
+
+[top](#top)
+
+******
+
+### Do I need a background in SAS® to use the sassy system? {#background}
+
+**Q:** I don't have a background in SAS®.  I just know R.  Can I use
+the **sassy** packages?
+
+**A:** Yes.  No background in SAS® is necessary to use these packages.
+SAS® users will see some similarity between **sassy** functions and functions
+from SAS®.  In the end, however, the **sassy** packages are pure R packages,
+and can be used effectively by any R programmer. R users will probably 
+find the concepts introduced by the **sassy** system to be very useful, and 
+more efficient than the equivalent concepts from Base R.
+
+[top](#top)
+
+******
+
+### Can't I just install everything individually? {#packages}
+
+**Q:** Why do I need to install/load the **sassy** package?  Can't I just
+install and load each of the packages independently?
+
+**A:** Yes, you can.  The **sassy** package just makes it more convenient, 
+in the same way that the **tidyverse** meta-package makes it more convenient
+to use the packages in that system.
+
+[top](#top)
+
+******
+
+<!-- ### Question 1? {#q1} -->
+
+<!-- **Q:** Question -->
+
+<!-- **A:** Answer -->
+
+<!-- [top](#top) -->
+
+<!-- ****** -->

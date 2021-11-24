@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.6</span>
       </span>
     </div>
 
@@ -88,6 +88,9 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
+  <a href=".././articles/sassy-faq.html">FAQ</a>
+</li>
+<li>
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
@@ -106,7 +109,7 @@
 
       
 
-      </header><script src="sassy-figureby_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-figureby_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 6: Figure with By Group</h1>
@@ -158,45 +161,45 @@ The system not only support reports with by-groups. You can even apply a by-grou
 <span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> 
 
 <span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span>
-<span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">%&gt;%</span> 
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
-         <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+<span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, 
+         <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu">put</span><span class="op">(</span><span class="st">"Group and summarize"</span><span class="op">)</span>
-<span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">summarize</span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
+<span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,
                                           <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,
-                                          <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
+                                          <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
 
 
 <span class="fu">sep</span><span class="op">(</span><span class="st">"Create plots and print report"</span><span class="op">)</span>
 
 <span class="co"># Create plot</span>
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">final</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">MEAN</span>, x <span class="op">=</span> <span class="va">VISIT</span> , group <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>shape <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">final</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">MEAN</span>, x <span class="op">=</span> <span class="va">VISIT</span> , group <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span>
 
 <span class="co"># Construct output path</span>
 <span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/f_vs.rtf"</span><span class="op">)</span>
 
 <span class="co"># Define report object</span>
-<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">page_by</span><span class="op">(</span><span class="va">VSTEST</span>, <span class="st">"Vital Sign: "</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">page_by</span><span class="op">(</span><span class="va">VSTEST</span>, <span class="st">"Vital Sign: "</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.0"</span>, <span class="st">"Vital Signs Change from Baseline"</span>, 
-         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">add_content</span><span class="op">(</span><span class="fu">create_plot</span><span class="op">(</span><span class="va">p</span>, <span class="fl">4.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"R Program: VS_Figure.R"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">add_content</span><span class="op">(</span><span class="fu">create_plot</span><span class="op">(</span><span class="va">p</span>, <span class="fl">4.5</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"R Program: VS_Figure.R"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, 
               right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
 
