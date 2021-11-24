@@ -69,7 +69,7 @@ the **fmtr**
 package can assign a "format" attribute that can be picked up and used
 during reporting with the **reporter** package, or when viewing a 
 data dictionary from the **libr** package.  There are many more ways these
-packages compliment with each other. 
+packages compliment each other. 
 This integration
 is something that did not exist in R previously, and makes the **sassy**
 system interesting.
