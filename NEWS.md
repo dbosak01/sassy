@@ -1,7 +1,7 @@
 # sassy 1.0.6
 
 * Added FAQ.
-* Updated icons.
+* Updated icons. 
 
 # sassy 1.0.5
 
