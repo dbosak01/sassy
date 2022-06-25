@@ -60,7 +60,7 @@
   <a href="articles/sassy.html">Get started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -123,8 +123,9 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#introduction-to-sassy" class="anchor"></a>Introduction to <strong>sassy</strong>
 </h1></div>
-<p><img src="./man/images/logo.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"></p>
-<p>For SAS® programmers, encountering R for the first time can be quite a shock.</p>
+<p><img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"></p>
+<p>For SAS® programmers, encountering R for the first time can be quite
+a shock.</p>
 <ul>
 <li>Where is the log?</li>
 <li>Where are my datasets?</li>
@@ -132,9 +133,14 @@
 <li>How do I create a format?</li>
 <li>How do I create a report?</li>
 </ul>
-<p>All these basic concepts that were so familiar and easy for you are suddenly gone. How can R possibly be a replacement for SAS®, when it can’t even create a decent log!</p>
-<p>If you are in this state of shock, or have asked yourself any of the above questions, then the <strong>sassy</strong> system is for you!</p>
-<p>The <strong>sassy</strong> system was designed to make R easier for SAS® programmers. The system brings many familiar SAS® concepts to R. With the <strong>sassy</strong> system you can:</p>
+<p>All these basic concepts that were so familiar and easy for you are
+suddenly gone. How can R possibly be a replacement for SAS®, when it
+can’t even create a decent log!</p>
+<p>If you are in this state of shock, or have asked yourself any of the
+above questions, then the <strong>sassy</strong> system is for you!</p>
+<p>The <strong>sassy</strong> system was designed to make R easier for
+SAS® programmers. The system brings many familiar SAS® concepts to R.
+With the <strong>sassy</strong> system you can:</p>
 <ul>
 <li>Create a libname</li>
 <li>Create a format catalog</li>
@@ -142,32 +148,52 @@
 <li>Write a report in a few lines of code</li>
 <li>And more!</li>
 </ul>
-<p>And all of the above activities can be recorded in a traceable log!</p>
-<p>The <strong>sassy</strong> system totally changes the flow of the typical R script. It greatly simplifies the script, significantly reduces the number of lines of code, and generally makes the flow more similar to a SAS® program.</p>
+<p>And all of the above activities can be recorded in a traceable
+log!</p>
+<p>The <strong>sassy</strong> system totally changes the flow of the
+typical R script. It greatly simplifies the script, significantly
+reduces the number of lines of code, and generally makes the flow more
+similar to a SAS® program.</p>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>The <strong>sassy</strong> meta-package is published on CRAN. You can install it with the following console command:</p>
+<p>The <strong>sassy</strong> meta-package is published on CRAN. You can
+install it with the following console command:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sassy"</span>)</span></code></pre></div>
 <p>Then put the following line at the top of your script:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sassy)</span></code></pre></div>
-<p>The above commands will install and load a set of packages that will allow you to think about programming in R very much the same way you thought about programming in SAS®.</p>
-<p>It is not <em>identical</em> to SAS®. R is, after all, a very different language. R is functional, vector-based, and runs entirely in memory. As a result, the syntax of <strong>sassy</strong> functions will be different than their corresponding SAS® functions.</p>
-<p>The <strong>sassy</strong> functions will, however, have a similar feel. Overall, you will find programming with the <strong>sassy</strong> system much more comfortable than programming in <strong>Base R</strong> or <strong>tidyverse</strong> alone.</p>
+<p>The above commands will install and load a set of packages that will
+allow you to think about programming in R very much the same way you
+thought about programming in SAS®.</p>
+<p>It is not <em>identical</em> to SAS®. R is, after all, a very
+different language. R is functional, vector-based, and runs entirely in
+memory. As a result, the syntax of <strong>sassy</strong> functions will
+be different than their corresponding SAS® functions.</p>
+<p>The <strong>sassy</strong> functions will, however, have a similar
+feel. Overall, you will find programming with the <strong>sassy</strong>
+system much more comfortable than programming in <strong>Base R</strong>
+or <strong>tidyverse</strong> alone.</p>
 </div>
 <div id="next-steps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#next-steps" class="anchor"></a>Next Steps</h3>
-<p>Next, you should read the <a href="https://sassy.r-sassy.org/articles/sassy.html">Get started</a> page, and look at some examples. From these pages, you will be able to link into each of the packages included in the <strong>sassy</strong> system, and explore them in depth.</p>
+<p>Next, you should read the <a href="https://sassy.r-sassy.org/articles/sassy.html">Get started</a>
+page, and look at some examples. From these pages, you will be able to
+link into each of the packages included in the <strong>sassy</strong>
+system, and explore them in depth.</p>
 <p>Have fun!</p>
 </div>
 <div id="getting-help" class="section level3">
 <h3 class="hasAnchor">
 <a href="#getting-help" class="anchor"></a>Getting Help</h3>
-<p>If you need help with the <strong>sassy</strong> family of packages, the best place to turn to is the <a href="https://sassy.r-sassy.org">r-sassy</a> web site.<br>
-This web site offers many examples, and full documentation on every function.</p>
-<p>If you want to look at the code for the <strong>sassy</strong> package, visit the github page <a href="https://github.com/dbosak01/sassy">here</a>.</p>
-<p>If you encounter a bug or have a feature request, please submit an issue <a href="https://github.com/dbosak01/sassy/issues">here</a>.</p>
+<p>If you need help with the <strong>sassy</strong> family of packages,
+the best place to turn to is the <a href="https://sassy.r-sassy.org">r-sassy</a> web site.<br>
+This web site offers many examples, and full documentation on every
+function.</p>
+<p>If you want to look at the code for the <strong>sassy</strong>
+package, visit the github page <a href="https://github.com/dbosak01/sassy">here</a>.</p>
+<p>If you encounter a bug or have a feature request, please submit an
+issue <a href="https://github.com/dbosak01/sassy/issues">here</a>.</p>
 </div>
 </div>
 

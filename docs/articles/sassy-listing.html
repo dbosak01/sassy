@@ -55,7 +55,7 @@
   <a href="../articles/sassy.html">Get started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -109,7 +109,7 @@
 
       
 
-      </header><script src="sassy-listing_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-listing_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 1: Listing</h1>
@@ -125,70 +125,82 @@
 <div id="create-a-listing" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-a-listing" class="anchor"></a>Create a Listing</h3>
-<p>Here is an example of a simple listing using the <strong>sassy</strong> system of functions. The data used for these examples is included in the <strong>sassy</strong> package, and also available for download <a href="https://github.com/dbosak01/sassy/blob/master/inst/extdata/sassy_data.zip">here</a>.</p>
+<p>Here is an example of a simple listing using the
+<strong>sassy</strong> system of functions. The data used for these
+examples is included in the <strong>sassy</strong> package, and also
+available for download
+<a href="https://github.com/dbosak01/sassy/blob/master/inst/extdata/sassy_data.zip">here</a>.</p>
 <div id="program" class="section level4">
 <h4 class="hasAnchor">
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong> package provides a simple, convenient logging mechanism.</li>
-<li>The <code>sep()</code> function creates a nice separator in the log to help keep it organized and readable.</li>
-<li>The <code>put()</code> function will write anything you want to the log, similar to a SAS® <code>%put()</code> statement.</li>
-<li>The <code>libname()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package loads an entire directory of data files, just like a SAS® <code>libname</code> statement.</li>
-<li>The <code>lib_load()</code> function loads the data into the workspace for easy access, and gives you a two-level (&lt;library&gt;.&lt;dataset&gt;) dataset reference like SAS®.</li>
-<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package will set column widths, page wraps, and page breaks automatically.</li>
+<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong>
+package provides a simple, convenient logging mechanism.</li>
+<li>The <code>sep()</code> function creates a nice separator in the log
+to help keep it organized and readable.</li>
+<li>The <code>put()</code> function will write anything you want to the
+log, similar to a SAS® <code>%put()</code> statement.</li>
+<li>The <code>libname()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package loads an
+entire directory of data files, just like a SAS® <code>libname</code>
+statement.</li>
+<li>The <code>lib_load()</code> function loads the data into the
+workspace for easy access, and gives you a two-level
+(&lt;library&gt;.&lt;dataset&gt;) dataset reference like SAS®.</li>
+<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package will
+set column widths, page wraps, and page breaks automatically.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>, 
-        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># Get path to temp directory</span>
-<span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> 
-
-<span class="co"># Get path to sample data</span>
-<span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
-
-<span class="co"># Open log</span>
-<span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example1.log"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Get Data"</span><span class="op">)</span>
-
-<span class="co"># Define data library</span>
-<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> 
-
-<span class="co"># Load library into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> 
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Write Report"</span><span class="op">)</span>
-
-<span class="co"># Define table object</span>
-<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co"># Construct report path</span>
-<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/l_dm.rtf"</span><span class="op">)</span> 
-
-<span class="co"># Define report object</span>
-<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.0"</span>, <span class="st">"SDTM Demographics"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"CONFIDENTIAL"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
-
-<span class="co"># Write report to file system</span>
-<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> 
-
-<span class="co"># Unload data</span>
-<span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
-
-<span class="co"># Close log</span>
-<span class="fu">log_close</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># View report</span>
-<span class="co"># file.show(pth)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get path to temp directory</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Get path to sample data</span></span>
+<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open log</span></span>
+<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example1.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Get Data"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define data library</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Load library into workspace</span></span>
+<span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Write Report"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define table object</span></span>
+<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Construct report path</span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/l_dm.rtf"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Define report object</span></span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.0"</span>, <span class="st">"SDTM Demographics"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"CONFIDENTIAL"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Write report to file system</span></span>
+<span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Unload data</span></span>
+<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Close log</span></span>
+<span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View report</span></span>
+<span><span class="co"># file.show(pth)</span></span></code></pre></div>
 </div>
 <div id="log" class="section level4">
 <h4 class="hasAnchor">
@@ -259,7 +271,8 @@ Log Elapsed Time: 0 00:00:07
 <div id="output" class="section level4">
 <h4 class="hasAnchor">
 <a href="#output" class="anchor"></a>Output</h4>
-<p>Here is an image of the first page of the RTF report produced by the above listing example:</p>
+<p>Here is an image of the first page of the RTF report produced by the
+above listing example:</p>
 <p><img src="../man/images/listing.png" align="center"></p>
 <p>Next: <a href="sassy-dm.html">Example 2: DM Table</a></p>
 </div>

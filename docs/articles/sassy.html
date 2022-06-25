@@ -55,7 +55,7 @@
   <a href="../articles/sassy.html">Get started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -109,7 +109,7 @@
 
       
 
-      </header><script src="sassy_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sassy_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>sassy</h1>
@@ -122,38 +122,74 @@
 
     
     
-<p>The <strong>sassy</strong> package is a meta-package that aims to make R easier for SAS® programmers. The package brings several familiar SAS® concepts to R, including data libraries, formats and format catalogs, data dictionaries, a data step, a traceable log, and a reporting package with a variety of printable report types.</p>
-<p>The <strong>sassy</strong> family of packages is meant to compliment the <strong>tidyverse</strong>. While the <strong>tidyverse</strong> focuses mainly on data manipulation and development tools, the <strong>sassy</strong> packages are focused more on formatting and reporting. For most projects, it is expected that users will load both the <strong>tidyverse</strong> and <strong>sassy</strong> meta-packages. Between these two, the user will typically have everything they need to easily manipulate and report on their data.</p>
+<p>The <strong>sassy</strong> package is a meta-package that aims to
+make R easier for SAS® programmers. The package brings several familiar
+SAS® concepts to R, including data libraries, formats and format
+catalogs, data dictionaries, a data step, a traceable log, and a
+reporting package with a variety of printable report types.</p>
+<p>The <strong>sassy</strong> family of packages is meant to compliment
+the <strong>tidyverse</strong>. While the <strong>tidyverse</strong>
+focuses mainly on data manipulation and development tools, the
+<strong>sassy</strong> packages are focused more on formatting and
+reporting. For most projects, it is expected that users will load both
+the <strong>tidyverse</strong> and <strong>sassy</strong> meta-packages.
+Between these two, the user will typically have everything they need to
+easily manipulate and report on their data.</p>
 <div id="included-packages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#included-packages" class="anchor"></a>Included Packages</h3>
-<p>The <strong>sassy</strong> meta-package contains the following packages:</p>
+<p>The <strong>sassy</strong> meta-package contains the following
+packages:</p>
 <ul>
 <li>
-<strong><a href="https://logr.r-sassy.org">logr</a></strong>: Produces a traceable log</li>
+<strong><a href="https://logr.r-sassy.org">logr</a></strong>:
+Produces a traceable log</li>
 <li>
-<strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>: Provides functions for formatting data and a creating a format catalog</li>
+<strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>:
+Provides functions for formatting data and a creating a format
+catalog</li>
 <li>
-<strong><a href="https://libr.r-sassy.org">libr</a></strong>: Gives you the ability to define a libname, generate a data dictionary, and simulate a data step</li>
+<strong><a href="https://libr.r-sassy.org">libr</a></strong>: Gives
+you the ability to define a libname, generate a data dictionary, and
+simulate a data step</li>
 <li>
-<strong><a href="https://reporter.r-sassy.org">reporter</a></strong>: A reporting package with easy layout capabilities and the ability to write reports in TXT, RTF, and PDF file formats</li>
+<strong><a href="https://reporter.r-sassy.org">reporter</a></strong>: A reporting
+package with easy layout capabilities and the ability to write reports
+in TXT, RTF, and PDF file formats</li>
 </ul>
-<p>The above links will take you into the respective packages for a deep dive on their capabilities.</p>
+<p>The above links will take you into the respective packages for a deep
+dive on their capabilities.</p>
 </div>
 <div id="next-steps" class="section level3">
 <h3 class="hasAnchor">
 <a href="#next-steps" class="anchor"></a>Next Steps</h3>
-<p>Before taking a deep dive into the <strong>sassy</strong> package documentation, please look at some examples. These examples will give you a feel for the overall flow of a <strong>sassy</strong>-enhanced program, and allow you to see how the functions work together.</p>
+<p>Before taking a deep dive into the <strong>sassy</strong> package
+documentation, please look at some examples. These examples will give
+you a feel for the overall flow of a <strong>sassy</strong>-enhanced
+program, and allow you to see how the functions work together.</p>
 <p>The following examples are provided on this site:</p>
 <ul>
-<li><p><strong><a href="sassy-listing.html">Example 1</a></strong>: Creates a simple data listing and log <a href="sassy-listing.html"> <img src="../man/images/listing.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-dm.html">Example 2</a></strong>: Creates a table of demographic characteristics<br><a href="sassy-dm.html"> <img src="../man/images/dm.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-figure.html">Example 3</a></strong>: Creates a simple figure <a href="sassy-figure.html"> <img src="../man/images/dm_fig1.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-ae.html">Example 4</a></strong>: Creates an AE table with a page wrap <a href="sassy-ae.html"> <img src="../man/images/ae1.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-vs.html">Example 5</a></strong>: Creates a table of vital signs statistics <a href="sassy-vs.html"> <img src="../man/images/vital_signs.png" align="left"></a> <br></p></li>
-<li><p><strong><a href="sassy-figureby.html">Example 6</a></strong>: Creates a figure with a by-group <a href="sassy-figureby.html"> <img src="../man/images/vs_pg1.png" align="left"></a> <br></p></li>
+<li><p><strong><a href="sassy-listing.html">Example 1</a></strong>:
+Creates a simple data listing and log <a href="sassy-listing.html">
+<img src="../man/images/listing.png" align="left"></a> <br></p></li>
+<li><p><strong><a href="sassy-dm.html">Example 2</a></strong>: Creates a
+table of demographic characteristics<br><a href="sassy-dm.html"> <img src="../man/images/dm.png" align="left"></a> <br></p></li>
+<li><p><strong><a href="sassy-figure.html">Example 3</a></strong>:
+Creates a simple figure <a href="sassy-figure.html">
+<img src="../man/images/dm_fig1.png" align="left"></a> <br></p></li>
+<li><p><strong><a href="sassy-ae.html">Example 4</a></strong>: Creates
+an AE table with a page wrap <a href="sassy-ae.html">
+<img src="../man/images/ae1.png" align="left"></a> <br></p></li>
+<li><p><strong><a href="sassy-vs.html">Example 5</a></strong>: Creates a
+table of vital signs statistics <a href="sassy-vs.html">
+<img src="../man/images/vital_signs.png" align="left"></a>
+<br></p></li>
+<li><p><strong><a href="sassy-figureby.html">Example 6</a></strong>:
+Creates a figure with a by-group <a href="sassy-figureby.html">
+<img src="../man/images/vs_pg1.png" align="left"></a> <br></p></li>
 </ul>
-<p>Once you review these examples, please proceed to the package links above to explore the system further!</p>
+<p>Once you review these examples, please proceed to the package links
+above to explore the system further!</p>
 </div>
   </div>
 

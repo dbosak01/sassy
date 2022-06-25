@@ -55,7 +55,7 @@
   <a href="../articles/sassy.html">Get started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -109,7 +109,7 @@
 
       
 
-      </header><script src="sassy-dm_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-dm_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 2: DM Table</h1>
@@ -125,197 +125,206 @@
 <div id="create-a-demographics-table-of-summary-statistics" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-a-demographics-table-of-summary-statistics" class="anchor"></a>Create a Demographics Table of Summary Statistics</h3>
-<p>The second example produces a demographics summary table of selected variables. The report shows statistics for each of the four treatment groups.</p>
+<p>The second example produces a demographics summary table of selected
+variables. The report shows statistics for each of the four treatment
+groups.</p>
 <div id="program" class="section level4">
 <h4 class="hasAnchor">
 <a href="#program" class="anchor"></a>Program</h4>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong> package provides automatic logging for many functions.</li>
-<li>The <code>datastep()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package allows for a complex conditional in the middle of a <strong>dplyr</strong> pipeline.<br>
+<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong>
+package provides automatic logging for many functions.</li>
+<li>The <code>datastep()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package allows for a
+complex conditional in the middle of a <strong>dplyr</strong>
+pipeline.<br>
 </li>
-<li>The <strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong> package provides several convenient functions for calculating and formatting summary statistics.</li>
-<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package supports ‘N=’ population counts in the header labels.</li>
-<li>The <strong>reporter</strong> package also allows you to define a stub column of hierarchical labels.</li>
+<li>The <strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>
+package provides several convenient functions for calculating and
+formatting summary statistics.</li>
+<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package
+supports ‘N=’ population counts in the header labels.</li>
+<li>The <strong>reporter</strong> package also allows you to define a
+stub column of hierarchical labels.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span>
-
-
-<span class="co"># Prepare Log -------------------------------------------------------------</span>
-
-
-<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,
-        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-
-<span class="co"># Get path to temp directory</span>
-<span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> 
-
-<span class="co"># Get sample data directory</span>
-<span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span>
-
-<span class="co"># Open log</span>
-<span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.log"</span><span class="op">)</span><span class="op">)</span>
-
-
-<span class="co"># Load and Prepare Data ---------------------------------------------------</span>
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span>
-
-<span class="co"># Define data library</span>
-<span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> 
-
-<span class="co"># Loads data into workspace</span>
-<span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
-
-<span class="co"># Prepare data</span>
-<span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">datastep</span><span class="op">(</span><span class="op">{</span>
-                     
-     <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span>
-       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"18 to 24"</span>
-     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">44</span><span class="op">)</span>
-       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"25 to 44"</span>
-     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">64</span><span class="op">)</span>
-       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"45 to 64"</span>
-     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">65</span><span class="op">)</span>
-       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"&gt;= 65"</span>
-     
-   <span class="op">}</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span>
-<span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html">deframe</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-                     
-
-<span class="co"># Age Summary Block -------------------------------------------------------</span>
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Create summary statistics for age"</span><span class="op">)</span>
-
-<span class="va">age_block</span> <span class="op">&lt;-</span> 
-  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span> N <span class="op">=</span> <span class="fu">fmt_n</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,
-             `Mean (SD)` <span class="op">=</span> <span class="fu">fmt_mean_sd</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,
-             Median <span class="op">=</span> <span class="fu">fmt_median</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,
-             `Q1 - Q3` <span class="op">=</span> <span class="fu">fmt_quantile_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,
-             Range  <span class="op">=</span> <span class="fu">fmt_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">ARM</span>,
-               names_to  <span class="op">=</span> <span class="st">"label"</span>,
-               values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,
-              values_from <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_column.html">add_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGE"</span>, .before <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-
-<span class="co"># Age Group Block ----------------------------------------------------------</span>
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for Age Group"</span><span class="op">)</span>
-
-
-<span class="fu">put</span><span class="op">(</span><span class="st">"Create age group frequency counts"</span><span class="op">)</span>
-<span class="va">ageg_block</span> <span class="op">&lt;-</span> 
-  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,
-              values_from <span class="op">=</span> <span class="va">n</span>, 
-              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGECAT"</span>, 
-            label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, 
-                                               <span class="st">"25 to 44"</span>, 
-                                               <span class="st">"45 to 64"</span>, 
-                                               <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span>,
-            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-
-<span class="co"># Sex Block ---------------------------------------------------------------</span>
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for SEX"</span><span class="op">)</span>
-
-<span class="co"># Create user-defined format</span>
-<span class="va">fmt_sex</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/conditions.html">condition</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"Missing"</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">condition</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">condition</a></span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"F"</span>, <span class="st">"Female"</span><span class="op">)</span>,
-                 <span class="fu"><a href="https://rdrr.io/r/base/conditions.html">condition</a></span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Create sex frequency counts   </span>
-<span class="va">sex_block</span> <span class="op">&lt;-</span> 
-  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,
-              values_from <span class="op">=</span> <span class="va">n</span>, 
-              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"SEX"</span>, 
-            label <span class="op">=</span>   <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">SEX</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>, 
-            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,
-            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">label</span>, <span class="va">fmt_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">put</span><span class="op">(</span><span class="st">"Combine blocks into final data frame"</span><span class="op">)</span>
-<span class="va">final</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">age_block</span>, <span class="va">ageg_block</span>, <span class="va">sex_block</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># Report ------------------------------------------------------------------</span>
-
-
-<span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span>
-
-<span class="va">var_fmt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AGE"</span> <span class="op">=</span> <span class="st">"Age"</span>, <span class="st">"AGECAT"</span> <span class="op">=</span> <span class="st">"Age Group"</span>, <span class="st">"SEX"</span> <span class="op">=</span> <span class="st">"Sex"</span><span class="op">)</span>
-
-<span class="co"># Create Table</span>
-<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">final</span>, first_row_blank <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A`</span>, to <span class="op">=</span> <span class="va">`ARM D`</span>, align <span class="op">=</span> <span class="st">"center"</span>, width <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"label"</span><span class="op">)</span>, <span class="st">"Variable"</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">var</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>, label <span class="op">=</span> <span class="st">"Variable"</span>,
-         format <span class="op">=</span> <span class="va">var_fmt</span>,label_row <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">label</span>, indent <span class="op">=</span> <span class="fl">.25</span>, label <span class="op">=</span> <span class="st">"Demographic Category"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> 
-
-<span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example2.rtf"</span><span class="op">)</span>
-
-<span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">titles</span><span class="op">(</span><span class="st">"Table 1.0"</span>, <span class="st">"Analysis of Demographic Characteristics"</span>, 
-         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Table.R"</span>,
-            <span class="st">"NOTE: Denominator based on number of non-missing responses."</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
-  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, 
-              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span>
-
-<span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span>
-
-
-<span class="co"># Clean Up ----------------------------------------------------------------</span>
-
-<span class="co"># Unload library from workspace</span>
-<span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span>
-
-<span class="co"># Close log</span>
-<span class="fu">log_close</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># View files</span>
-<span class="co"># file.show(pth)</span>
-<span class="co"># file.show(lgpth)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get path to temp directory</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Get sample data directory</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open log</span></span>
+<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Load and Prepare Data ---------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define data library</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Loads data into workspace</span></span>
+<span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Prepare data</span></span>
+<span><span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span><span class="op">{</span></span>
+<span>                     </span>
+<span>     <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span></span>
+<span>       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"18 to 24"</span></span>
+<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">44</span><span class="op">)</span></span>
+<span>       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"25 to 44"</span></span>
+<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">64</span><span class="op">)</span></span>
+<span>       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"45 to 64"</span></span>
+<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">65</span><span class="op">)</span></span>
+<span>       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"&gt;= 65"</span></span>
+<span>     </span>
+<span>   <span class="op">}</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span></span>
+<span><span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html">deframe</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                     </span>
+<span></span>
+<span><span class="co"># Age Summary Block -------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create summary statistics for age"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">age_block</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span> N <span class="op">=</span> <span class="fu">fmt_n</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
+<span>             `Mean (SD)` <span class="op">=</span> <span class="fu">fmt_mean_sd</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
+<span>             Median <span class="op">=</span> <span class="fu">fmt_median</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
+<span>             `Q1 - Q3` <span class="op">=</span> <span class="fu">fmt_quantile_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
+<span>             Range  <span class="op">=</span> <span class="fu">fmt_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">ARM</span>,</span>
+<span>               names_to  <span class="op">=</span> <span class="st">"label"</span>,</span>
+<span>               values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>              values_from <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_column.html">add_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGE"</span>, .before <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Age Group Block ----------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for Age Group"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create age group frequency counts"</span><span class="op">)</span></span>
+<span><span class="va">ageg_block</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>              values_from <span class="op">=</span> <span class="va">n</span>, </span>
+<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGECAT"</span>, </span>
+<span>            label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, </span>
+<span>                                               <span class="st">"25 to 44"</span>, </span>
+<span>                                               <span class="st">"45 to 64"</span>, </span>
+<span>                                               <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Sex Block ---------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for SEX"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create user-defined format</span></span>
+<span><span class="va">fmt_sex</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"Missing"</span><span class="op">)</span>,</span>
+<span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span><span class="op">)</span>,</span>
+<span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"F"</span>, <span class="st">"Female"</span><span class="op">)</span>,</span>
+<span>                 <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create sex frequency counts   </span></span>
+<span><span class="va">sex_block</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="va">dm_mod</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>              values_from <span class="op">=</span> <span class="va">n</span>, </span>
+<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"SEX"</span>, </span>
+<span>            label <span class="op">=</span>   <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">SEX</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>, </span>
+<span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">label</span>, <span class="va">fmt_sex</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine blocks into final data frame"</span><span class="op">)</span></span>
+<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">age_block</span>, <span class="va">ageg_block</span>, <span class="va">sex_block</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Report ------------------------------------------------------------------</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">var_fmt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AGE"</span> <span class="op">=</span> <span class="st">"Age"</span>, <span class="st">"AGECAT"</span> <span class="op">=</span> <span class="st">"Age Group"</span>, <span class="st">"SEX"</span> <span class="op">=</span> <span class="st">"Sex"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create Table</span></span>
+<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">final</span>, first_row_blank <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A`</span>, to <span class="op">=</span> <span class="va">`ARM D`</span>, align <span class="op">=</span> <span class="st">"center"</span>, width <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"label"</span><span class="op">)</span>, <span class="st">"Variable"</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">var</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>, label <span class="op">=</span> <span class="st">"Variable"</span>,</span>
+<span>         format <span class="op">=</span> <span class="va">var_fmt</span>,label_row <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">label</span>, indent <span class="op">=</span> <span class="fl">.25</span>, label <span class="op">=</span> <span class="st">"Demographic Category"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D`</span>,  n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example2.rtf"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Table 1.0"</span>, <span class="st">"Analysis of Demographic Characteristics"</span>, </span>
+<span>         <span class="st">"Safety Population"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Table.R"</span>,</span>
+<span>            <span class="st">"NOTE: Denominator based on number of non-missing responses."</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
+<span></span>
+<span><span class="co"># Unload library from workspace</span></span>
+<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Close log</span></span>
+<span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View files</span></span>
+<span><span class="co"># file.show(pth)</span></span>
+<span><span class="co"># file.show(lgpth)</span></span></code></pre></div>
 </div>
 <div id="log" class="section level4">
 <h4 class="hasAnchor">

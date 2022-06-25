@@ -55,7 +55,7 @@
   <a href="../articles/sassy.html">Get started</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -109,7 +109,7 @@
 
       
 
-      </header><script src="sassy-faq_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-faq_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Frequently Asked Questions</h1>
@@ -122,16 +122,21 @@
 
     
     
-<p>Below are some frequently asked questions about the <strong>sassy</strong> meta-package. Click on the links below to navigate to the full question and answer content.</p>
+<p>Below are some frequently asked questions about the
+<strong>sassy</strong> meta-package. Click on the links below to
+navigate to the full question and answer content.</p>
 <div id="top" class="section level2">
 <h2 class="hasAnchor">
 <a href="#top" class="anchor"></a>Index</h2>
 <ul>
 <li><a href="#sassy">What is the sassy system?</a></li>
 <li><a href="#why">Why did you write the sassy system?</a></li>
-<li><a href="#sas">Does the sassy system require SAS® to be installed?</a></li>
-<li><a href="#background">Do I need a background in SAS® to use the sassy system?</a></li>
-<li><a href="#packages">Can’t I just install everything individually?</a></li>
+<li><a href="#sas">Does the sassy system require SAS® to be
+installed?</a></li>
+<li><a href="#background">Do I need a background in SAS® to use the
+sassy system?</a></li>
+<li><a href="#packages">Can’t I just install everything
+individually?</a></li>
 </ul>
 </div>
 <div id="content" class="section level2">
@@ -140,41 +145,80 @@
 <div id="sassy" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sassy" class="anchor"></a>What is the sassy system?</h3>
-<p><strong>Q:</strong> I don’t quite understand the concept of the <strong>sassy</strong> system. What is this set of packages?</p>
-<p><strong>A:</strong> The <strong>sassy</strong> package is a meta-package that contains four sub-packages: <a href="https://logr.r-sassy.org/"><strong>logr</strong></a>, <a href="https://fmtr.r-sassy.org/"><strong>fmtr</strong></a>, <a href="https://libr.r-sassy.org/"><strong>libr</strong></a>, and <a href="https://reporter.r-sassy.org/"><strong>reporter</strong></a>. These four packages work together as an integrated system. The system was written primarily to make regulatory reporting in R easier. The system borrows several concepts from SAS® software, and that is why it is called <strong>sassy</strong>.</p>
+<p><strong>Q:</strong> I don’t quite understand the concept of the
+<strong>sassy</strong> system. What is this set of packages?</p>
+<p><strong>A:</strong> The <strong>sassy</strong> package is a
+meta-package that contains four sub-packages: <a href="https://logr.r-sassy.org/"><strong>logr</strong></a>, <a href="https://fmtr.r-sassy.org/"><strong>fmtr</strong></a>, <a href="https://libr.r-sassy.org/"><strong>libr</strong></a>, and <a href="https://reporter.r-sassy.org/"><strong>reporter</strong></a>.
+These four packages work together as an integrated system. The system
+was written primarily to make regulatory reporting in R easier. The
+system borrows several concepts from SAS® software, and that is why it
+is called <strong>sassy</strong>.</p>
 <p><a href="#top">top</a></p>
 <hr>
 </div>
 <div id="why" class="section level3">
 <h3 class="hasAnchor">
 <a href="#why" class="anchor"></a>Why did you write the sassy system?</h3>
-<p><strong>Q:</strong> What was the motivation behind writing the <strong>sassy</strong> packages? There are already +10,000 R packages? Was it really necessary to write more?</p>
-<p><strong>A:</strong> The <strong>sassy</strong> packages were written to fill gaps in the way R deals with accessing, formatting, and reporting data, plus the logging of those activities. Some of the functionality of the <strong>sassy</strong> system is redundant with existing packages. But these packages do not work together, or were not easy to use. The advantage of the <strong>sassy</strong> packages is that they were written as a complete ecosystem.</p>
-<p>For instance, the <strong>libr</strong> and <strong>reporter</strong> packages know about the <strong>logr</strong> package, and will log their operations automatically. Another example is the <strong>fmtr</strong> package can assign a “format” attribute that can be picked up and used during reporting with the <strong>reporter</strong> package, or when viewing a data dictionary from the <strong>libr</strong> package. There are many more ways these packages compliment each other. This integration is something that did not exist in R previously, and makes the <strong>sassy</strong> system interesting.</p>
+<p><strong>Q:</strong> What was the motivation behind writing the
+<strong>sassy</strong> packages? There are already +10,000 R packages?
+Was it really necessary to write more?</p>
+<p><strong>A:</strong> The <strong>sassy</strong> packages were written
+to fill gaps in the way R deals with accessing, formatting, and
+reporting data, plus the logging of those activities. Some of the
+functionality of the <strong>sassy</strong> system is redundant with
+existing packages. But these packages do not work together, or were not
+easy to use. The advantage of the <strong>sassy</strong> packages is
+that they were written as a complete ecosystem.</p>
+<p>For instance, the <strong>libr</strong> and <strong>reporter</strong>
+packages know about the <strong>logr</strong> package, and will log
+their operations automatically. Another example is the
+<strong>fmtr</strong> package can assign a “format” attribute that can
+be picked up and used during reporting with the
+<strong>reporter</strong> package, or when viewing a data dictionary
+from the <strong>libr</strong> package. There are many more ways these
+packages compliment each other. This integration is something that did
+not exist in R previously, and makes the <strong>sassy</strong> system
+interesting.</p>
 <p><a href="#top">top</a></p>
 <hr>
 </div>
 <div id="sas" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sas" class="anchor"></a>Does the sassy system require SAS® to be installed?</h3>
-<p><strong>Q:</strong> I am interested in using the <strong>sassy</strong> system, but I don’t have SAS® installed. Is it required?</p>
-<p><strong>A:</strong> No. The <strong>sassy</strong> system is just R packages. They are written mostly in Base R, and require no other software to run.</p>
+<p><strong>Q:</strong> I am interested in using the
+<strong>sassy</strong> system, but I don’t have SAS® installed. Is it
+required?</p>
+<p><strong>A:</strong> No. The <strong>sassy</strong> system is just R
+packages. They are written mostly in Base R, and require no other
+software to run.</p>
 <p><a href="#top">top</a></p>
 <hr>
 </div>
 <div id="background" class="section level3">
 <h3 class="hasAnchor">
 <a href="#background" class="anchor"></a>Do I need a background in SAS® to use the sassy system?</h3>
-<p><strong>Q:</strong> I don’t have a background in SAS®. I just know R. Can I use the <strong>sassy</strong> packages?</p>
-<p><strong>A:</strong> Yes. No background in SAS® is necessary to use these packages. SAS® users will see some similarity between <strong>sassy</strong> functions and functions from SAS®. In the end, however, the <strong>sassy</strong> packages are pure R packages, and can be used effectively by any R programmer. R users will probably find the concepts introduced by the <strong>sassy</strong> system to be very useful, and more efficient than the equivalent concepts from Base R.</p>
+<p><strong>Q:</strong> I don’t have a background in SAS®. I just know R.
+Can I use the <strong>sassy</strong> packages?</p>
+<p><strong>A:</strong> Yes. No background in SAS® is necessary to use
+these packages. SAS® users will see some similarity between
+<strong>sassy</strong> functions and functions from SAS®. In the end,
+however, the <strong>sassy</strong> packages are pure R packages, and
+can be used effectively by any R programmer. R users will probably find
+the concepts introduced by the <strong>sassy</strong> system to be very
+useful, and more efficient than the equivalent concepts from Base R.</p>
 <p><a href="#top">top</a></p>
 <hr>
 </div>
 <div id="packages" class="section level3">
 <h3 class="hasAnchor">
 <a href="#packages" class="anchor"></a>Can’t I just install everything individually?</h3>
-<p><strong>Q:</strong> Why do I need to install/load the <strong>sassy</strong> package? Can’t I just install and load each of the packages independently?</p>
-<p><strong>A:</strong> Yes, you can. The <strong>sassy</strong> package just makes it more convenient, in the same way that the <strong>tidyverse</strong> meta-package makes it more convenient to use the packages in that system.</p>
+<p><strong>Q:</strong> Why do I need to install/load the
+<strong>sassy</strong> package? Can’t I just install and load each of
+the packages independently?</p>
+<p><strong>A:</strong> Yes, you can. The <strong>sassy</strong> package
+just makes it more convenient, in the same way that the
+<strong>tidyverse</strong> meta-package makes it more convenient to use
+the packages in that system.</p>
 <p><a href="#top">top</a></p>
 <hr>
 <!-- ### Question 1? {#q1} --><!-- **Q:** Question --><!-- **A:** Answer --><!-- [top](#top) --><!-- ****** -->
