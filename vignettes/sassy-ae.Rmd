@@ -247,6 +247,16 @@ log_close()
 
 ```
 
+#### Output
+
+Here are the first four pages of the output report:
+
+<img src="../man/images/ae1.png" align="center" />
+<img src="../man/images/ae2.png" align="center" />
+<img src="../man/images/ae3.png" align="center" />
+<img src="../man/images/ae4.png" align="center" />
+
+
 #### Log
 
 Here is part of the log from the above example:
@@ -476,14 +486,5 @@ Log Elapsed Time: 0 00:00:03
 
 
 ```
-#### Output
-
-Here are the first four pages of the output report:
-
-<img src="../man/images/ae1.png" align="center" />
-<img src="../man/images/ae2.png" align="center" />
-<img src="../man/images/ae3.png" align="center" />
-<img src="../man/images/ae4.png" align="center" />
-
 
 Next: [Example 5: VS Table](sassy-vs.html)

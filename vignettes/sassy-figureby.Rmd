@@ -107,6 +107,18 @@ log_close()
 # file.show(pth)
 ```
 
+
+#### Output 
+
+And here are the first three pages of the report:
+
+<img src="../man/images/vs_pg1.png" align="center" />
+
+<img src="../man/images/vs_pg2.png" align="center" />
+
+<img src="../man/images/vs_pg3.png" align="center" />
+
+
 #### Log
 
 Here is the log for the above program:
@@ -232,15 +244,5 @@ Log Elapsed Time: 0 00:00:19
 ========================================================================= 
 
 ```
-#### Output 
-
-And here are the first three pages of the report:
-
-<img src="../man/images/vs_pg1.png" align="center" />
-
-<img src="../man/images/vs_pg2.png" align="center" />
-
-<img src="../man/images/vs_pg3.png" align="center" />
-
 
 Next: [Disclaimers](sassy-disclaimers.html)

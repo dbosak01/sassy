@@ -91,6 +91,14 @@ log_close()
 # file.show(pth)
 ```
 
+#### Output
+
+Here is an image of the first page of the RTF report produced by the
+above listing example:
+
+<img src="../man/images/listing.png" align="center" />
+
+
 #### Log
 
 Here is the log produced by the above listing example:
@@ -158,12 +166,6 @@ Log Elapsed Time: 0 00:00:07
 
 
 ```
-#### Output
-
-Here is an image of the first page of the RTF report produced by the
-above listing example:
-
-<img src="../man/images/listing.png" align="center" />
 
 
 Next: [Example 2: DM Table](sassy-dm.html)

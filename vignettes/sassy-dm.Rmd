@@ -217,9 +217,16 @@ log_close()
 
 ```
 
+#### Output
+
+Here is the output report:
+
+<img src="../man/images/dm.png" align="center" />
+
+
 #### Log
 
-Here is the log from the above example:
+And here is the log:
 
 ```
 ========================================================================= 
@@ -432,11 +439,5 @@ Log Elapsed Time: 0 00:00:00
 ========================================================================= 
 
 ```
-#### Output
-
-And here is the output report:
-
-<img src="../man/images/dm.png" align="center" />
-
 
 Next: [Example 3: Figures](sassy-figure.html)
