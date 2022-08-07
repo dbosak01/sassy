@@ -14,8 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **sassy** package is a meta-package that aims to make R easier for SAS®
-programmers.  The package brings several familiar SAS® concepts to R, including
+The **sassy** package is a meta-package that aims to make R easier for
+everyone, especially people with a background in SAS®.
+The package brings several familiar SAS® concepts to R, including
 data libraries, formats and format catalogs, data dictionaries, a data step,
 a traceable log, and a reporting package with a variety of printable report types.
 
@@ -24,7 +25,7 @@ The **sassy** family of packages is meant to compliment the
 and development tools, the **sassy** packages are focused more on 
 formatting and reporting. For most projects, it is expected that users will 
 load both the **tidyverse** and **sassy** meta-packages.  Between these two, 
-the user will typically have everything they need to easily manipulate and 
+the user will typically have everything they need to easily prepare and 
 report on their data.  
 
 ### Included Packages
@@ -38,6 +39,9 @@ libname, generate a data dictionary, and simulate a data step
 * **[reporter](https://reporter.r-sassy.org)**: A reporting package with easy 
 layout capabilities and the 
 ability to write reports in TXT, RTF, and PDF file formats
+* **[common](https://common.r-sassy.org)**: A set of utility functions
+shared across the **sassy** family of packages, and often 
+useful in their own right. 
 
 The above links will take you into the respective packages for a deep
 dive on their capabilities.  
@@ -89,6 +93,20 @@ Creates a table of vital signs statistics
 Creates a figure with a by-group
 <a href="sassy-figureby.html">
 <img src="../man/images/vs_pg1.png" align="left" />
+</a>
+<br>
+
+* **[Example 7](sassy-survival.html)**: 
+Perform survival analysis.
+<a href="sassy-survival.html">
+<img src="../man/images/survival2.png" align="left" />
+</a>
+<br>
+
+* **[Example 8](sassy-profile.html)**: 
+Create a patient profile report.
+<a href="sassy-profile.html">
+<img src="../man/images/profile.png" align="left" />
 </a>
 <br>
 

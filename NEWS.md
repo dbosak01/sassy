@@ -1,3 +1,9 @@
+# sassy 1.0.8
+
+* Added common package.
+* Updated documentation.
+* Added and updated vignettes.
+
 # sassy 1.0.7
 
 * Update documentation.

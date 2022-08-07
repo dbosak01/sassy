@@ -1,4 +1,4 @@
-pandoc: 2.17.1.1
+pandoc: '2.18'
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
@@ -9,9 +9,11 @@ articles:
   sassy-figure: sassy-figure.html
   sassy-figureby: sassy-figureby.html
   sassy-listing: sassy-listing.html
+  sassy-profile: sassy-profile.html
+  sassy-survival: sassy-survival.html
   sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2022-07-05T23:33Z
+last_built: 2022-08-07T23:15Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

@@ -27,7 +27,8 @@ create a decent log!
 If you are in this state of shock, or have asked yourself any of the 
 above questions, then the **sassy** system is for you!
 
-The **sassy** system was designed to make R easier for SAS® programmers.
+The **sassy** system was designed to make data preparation and reporting in R 
+easier for everyone, but especially for SAS® programmers.
 The system brings many familiar SAS® concepts to R.  With the **sassy**
 system you can:
 

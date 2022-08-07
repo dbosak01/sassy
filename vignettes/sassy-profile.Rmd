@@ -1,0 +1,478 @@
+---
+title: "Example 8: Patient Profile"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 8: Patient Profile}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+options(rmarkdown.html_vignette.check_title = FALSE)
+
+```
+## Program
+
+Below is complete example showing a patient profile report.  This example
+uses a loop to append separate tables for each patient.  The profile for 
+each patient is shown on a separate page.  This example also makes
+extensive use of user-defined formats from the **fmtr** package.
+
+
+```{r eval=FALSE, echo=TRUE}
+library(dplyr)
+library(sassy)
+library(magrittr)
+
+options("logr.notes" = FALSE,
+        "logr.autolog" = TRUE)
+
+# Get temp location for log and report output
+tmp <- tempdir()
+
+lf <- log_open(file.path(tmp, "example8.log"))
+
+
+# Get data ----------------------------------------------------------------
+sep("Get data")
+
+
+# Get sample data path
+pth <- system.file("extdata", package = "sassy")
+
+
+libname(sdtm, pth, "csv")
+
+
+lib_load(sdtm)
+
+
+
+# Set labels --------------------------------------------------------------
+sep("Set labels")
+
+put("DM labels")
+labels(sdtm.DM) <- list(ARM = "Treatment Group",
+                        SITEID = "Centre",
+                        SUBJID = "Subject", 
+                        SEX = "Sex", 
+                        AGE = "Age (yrs)",
+                        RACE = "Race", 
+                        BRTHDTC = "Birth Date",
+                        ARMCD = "Treatment Code"
+                        ) |> put()
+put("AE labels")
+labels(sdtm.AE) <- list(AESTDTC = "Event Start Date",
+                        AEENDTC = "Event Stop Date",
+                        AESTDY = "Start",
+                        AEENDY = "End",
+                        AESOC = "System Organ Class",
+                        AESEV = "Severityᵃ",
+                        AESER = "Serious",
+                        AEREL = "Related") |> put()
+
+
+# Apply formats ----------------------------------------------------------
+sep("Apply formats")
+
+sevfmt <- value(condition(x == "MODERATE", "Moderate"),
+                condition(x == "SEVERE", "Severe"),
+                condition(x == "MILD", "Mild")) |> put()
+
+
+relfmt <- value(condition(x == "RELATED", "Yes"),
+                condition(x == "NOT RELATED", "No"),
+                condition(x == "PROBABLY RELATED", "Probably"),
+                condition(x == "POSSIBLY RELATED", "Possibly")) |> put()
+
+serfmt <- value(condition(x == "N", "No"),
+                condition(x == "Y", "Yes")) |> put()
+
+
+sexfmt <- value(condition(x == "M", "Male"),
+                condition(x == "F", "Female"),
+                condition(TRUE, "Unknown")) |> put()
+
+racefmt <- value(condition(x == "WHITE", "White"),
+                 condition(x == "BLACK OR AFRICAN AMERICAN", "Black"),
+                 condition(x == "UNKNOWN", "Unknown"),
+                 condition(x == "ASIAN", "Asian")) |> put()
+
+armfmt <- value(condition(x == "ARM A", "Placebo"),
+                condition(x == "ARM B", "Dose 50mg"),
+                condition(x == "ARM C", "Dose 100mg"),
+                condition(x == "ARM D", "Competitor")) |> put()
+                 
+
+formats(sdtm.DM) <- list(SEX = sexfmt, 
+                         RACE = racefmt,
+                         ARM = armfmt)
+
+formats(sdtm.AE) <- list(AESEV = sevfmt,
+                         AEREL = relfmt, 
+                         AESER = serfmt) 
+
+
+# Prepare data ------------------------------------------------------------
+
+sep("Prepare data")
+
+dm <- sdtm.DM |> 
+  select(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC) |> put()
+
+# Split dm data by subject id
+dmlst <- split(dm, factor(dm$USUBJID))
+
+
+ae <- sdtm.AE |> 
+  select(USUBJID, AESTDTC, AEENDTC, AESTDY, 
+         AEENDY, AESOC, AESEV, AESER, AEREL) |> put() 
+
+# Split ae data by subject id
+aelst <- split(ae, factor(ae$USUBJID))
+
+
+# Create report -----------------------------------------------------------
+sep("Create report")
+
+# Create report first, outside loop
+rpt <- create_report(file.path(tmp, "output/example8.docx"), 
+                     font = "Arial", output_type = "DOCX")
+
+# Loop on subjects
+for (id in names(dmlst)) {
+  
+  dm_sub <- dmlst[[id]]
+  ae_sub <- aelst[[id]]
+  
+  tb1 <- create_table(dm_sub, width = 8, borders = "outside") |> 
+    titles("Listing 1.1 Subjects Narratives of Adverse Events",
+           paste0("Subject: ", dm_sub[[1, 1]]), bold = TRUE) |> 
+    define(AGE, align = "left")
+  
+  if (!is.null(ae_sub)) {
+    tb2 <- create_table(ae_sub, borders = "outside", width = 8) |> 
+      spanning_header("AESTDY", "AEENDY", label ="Study Day") |> 
+      define(USUBJID, visible = FALSE) |> 
+      define(AESOC, width = 2) |> 
+      define(AESTDY, align = "left") |> 
+      define(AEENDY, align = "left") |> 
+      footnotes("ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal",
+                paste0("ᵇAction Taken: 01=None, 02=Investigational product dose altered, ",
+                       "03=Medication taken, 04=Hospitalized, 05=Removed from study, ",
+                       "06=Investigational product discontinued, 07=Transfusion performed,",
+                       "88=Other"))
+  }
+
+  # Append table content
+  rpt <- rpt |>  add_content(tb1, page_break = FALSE) |> 
+          add_content(tb2)
+
+}
+
+put("Write out report")
+res <- write_report(rpt)
+
+
+# Clean Up ----------------------------------------------------------------
+
+
+sep("Clean up")
+
+lib_unload(sdtm)
+
+log_close()
+
+
+# View log
+# file.show(lf)
+
+# View report
+# file.show(res$modified_path)
+
+```
+
+## Output
+
+Here is page 11 out of 87 pages in the output report:
+
+<img src="../man/images/profile.png"/>
+
+
+## Log
+
+Here is most of the log from the above program:
+```
+=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp8cFaMB/log/example8.log
+Program Path: C:/packages/Testing/Example8.R
+Working Directory: C:/packages/Testing
+User Name: dbosa
+R Version: 4.2.0 (2022-04-22 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 19044
+Base Packages: stats graphics grDevices utils datasets methods base
+Other Packages: tidylog_1.0.2 magrittr_2.0.3 reporter_1.3.3 libr_1.2.3 fmtr_1.5.8
+                common_1.0.1 logr_1.3.1 sassy_1.0.7 forcats_0.5.1 stringr_1.4.0
+                dplyr_1.0.9 purrr_0.3.4 readr_2.1.2 tidyr_1.2.0 tibble_3.1.7
+                ggplot2_3.3.6 tidyverse_1.3.1 cranlogs_2.1.1 
+Log Start Time: 2022-07-21 22:31:09
+=========================================================================
+
+=========================================================================
+Get data
+=========================================================================
+
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/reporter/extdata
+- items:
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.5 Kb 2022-07-10 08:49:03
+2   DA       csv 3587   18 528.2 Kb 2022-07-10 08:49:03
+3   DM       csv   87   24  45.5 Kb 2022-07-10 08:49:03
+4   DS       csv  174    9  34.1 Kb 2022-07-10 08:49:03
+5   EX       csv   84   11  26.4 Kb 2022-07-10 08:49:03
+6   IE       csv    2   14  13.4 Kb 2022-07-10 08:49:03
+7   SV       csv  685   10  70.3 Kb 2022-07-10 08:49:03
+8   VS       csv 3358   17 467.4 Kb 2022-07-10 08:49:03
+
+lib_load: library 'sdtm' loaded
+
+=========================================================================
+Set labels
+=========================================================================
+
+DM labels
+
+$ARM
+[1] "Treatment Group"
+
+$SITEID
+[1] "Centre"
+
+$SUBJID
+[1] "Subject"
+
+$SEX
+[1] "Sex"
+
+$AGE
+[1] "Age (yrs)"
+
+$RACE
+[1] "Race"
+
+$BRTHDTC
+[1] "Birth Date"
+
+$ARMCD
+[1] "Treatment Code"
+
+
+AE labels
+
+$AESTDTC
+[1] "Event Start Date"
+
+$AEENDTC
+[1] "Event Stop Date"
+
+$AESTDY
+[1] "Start"
+
+$AEENDY
+[1] "End"
+
+$AESOC
+[1] "System Organ Class"
+
+$AESEV
+[1] "Severityᵃ"
+
+$AESER
+[1] "Serious"
+
+$AEREL
+[1] "Related"
+
+
+=========================================================================
+Apply formats
+=========================================================================
+
+# A user-defined format: 3 conditions
+  Name Type      Expression    Label Order
+1  obj    U x == "MODERATE" Moderate    NA
+2  obj    U   x == "SEVERE"   Severe    NA
+3  obj    U     x == "MILD"     Mild    NA
+
+# A user-defined format: 4 conditions
+  Name Type              Expression    Label Order
+1  obj    U          x == "RELATED"      Yes    NA
+2  obj    U      x == "NOT RELATED"       No    NA
+3  obj    U x == "PROBABLY RELATED" Probably    NA
+4  obj    U x == "POSSIBLY RELATED" Possibly    NA
+
+# A user-defined format: 2 conditions
+  Name Type Expression Label Order
+1  obj    U   x == "N"    No    NA
+2  obj    U   x == "Y"   Yes    NA
+
+# A user-defined format: 3 conditions
+  Name Type Expression   Label Order
+1  obj    U   x == "M"    Male    NA
+2  obj    U   x == "F"  Female    NA
+3  obj    U       TRUE Unknown    NA
+
+# A user-defined format: 4 conditions
+  Name Type                       Expression   Label Order
+1  obj    U                     x == "WHITE"   White    NA
+2  obj    U x == "BLACK OR AFRICAN AMERICAN"   Black    NA
+3  obj    U                   x == "UNKNOWN" Unknown    NA
+4  obj    U                     x == "ASIAN"   Asian    NA
+
+# A user-defined format: 4 conditions
+  Name Type   Expression      Label Order
+1  obj    U x == "ARM A"    Placebo    NA
+2  obj    U x == "ARM B"  Dose 50mg    NA
+3  obj    U x == "ARM C" Dose 100mg    NA
+4  obj    U x == "ARM D" Competitor    NA
+
+=========================================================================
+Prepare data
+=========================================================================
+
+select: dropped 16 variables (STUDYID, DOMAIN, RFSTDTC, RFENDTC, RFXSTDTC, …)
+
+# A tibble: 87 × 8
+   USUBJID    ARM   SITEID SUBJID SEX     AGE RACE                      BRTHDTC   
+   <chr>      <chr> <chr>  <chr>  <chr> <dbl> <chr>                     <date>    
+ 1 ABC-01-049 ARM D 01     049    M        39 WHITE                     1966-11-12
+ 2 ABC-01-050 ARM B 01     050    M        47 WHITE                     1958-12-19
+ 3 ABC-01-051 ARM A 01     051    M        34 WHITE                     1972-05-02
+ 4 ABC-01-052 ARM C 01     052    F        45 WHITE                     1961-06-27
+ 5 ABC-01-053 ARM B 01     053    F        26 WHITE                     1980-04-07
+ 6 ABC-01-054 ARM D 01     054    M        44 WHITE                     1962-09-13
+ 7 ABC-01-055 ARM C 01     055    F        47 BLACK OR AFRICAN AMERICAN 1959-06-11
+ 8 ABC-01-056 ARM A 01     056    M        31 WHITE                     1975-05-02
+ 9 ABC-01-113 ARM D 01     113    M        74 WHITE                     1932-02-08
+10 ABC-01-114 ARM B 01     114    F        72 WHITE                     1934-07-09
+# … with 77 more rows
+
+select: dropped 18 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
+
+# A tibble: 150 × 9
+   USUBJID    AESTDTC    AEENDTC    AESTDY AEENDY AESOC                                           AESEV    AESER AEREL      
+   <chr>      <chr>      <chr>       <dbl>  <dbl> <chr>                                           <chr>    <chr> <chr>      
+ 1 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations                                  MODERATE N     NOT RELATED
+ 2 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations                                  MODERATE N     NOT RELATED
+ 3 ABC-01-049 2007       2007           NA     NA Nervous system disorders                        MILD     N     NOT RELATED
+ 4 ABC-01-049 2007-01-11 2007-03-13     66    127 Investigations                                  MODERATE N     NOT RELATED
+ 5 ABC-01-049 2007       2007           NA     NA Musculoskeletal and connective tissue disorders MILD     N     NOT RELATED
+ 6 ABC-01-050 2006-11-08 2006-11-15      7     14 Skin and subcutaneous tissue disorders          MILD     N     NOT RELATED
+ 7 ABC-01-050 2006-12-17 2006-12-17     46     46 Respiratory, thoracic and mediastinal disorders MILD     N     NOT RELATED
+ 8 ABC-01-051 2007-01-01 2007-01-01     61     61 Nervous system disorders                        MILD     N     NOT RELATED
+ 9 ABC-01-051 2007-03-06 2007-03-09    125    128 Nervous system disorders                        MILD     N     NOT RELATED
+10 ABC-01-051 2007-11-12 2007-11-14    376    378 Nervous system disorders                        MILD     N     NOT RELATED
+# … with 140 more rows
+
+=========================================================================
+Create report
+=========================================================================
+
+Write out report
+
+# A report specification: 87 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp8cFaMB/output/example6.docx'
+- output_type: DOCX
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/42
+- content: 
+# A table specification:
+- data: tibble 'dm_sub' 1 rows 8 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- title 1: 'Listing 1.1 Subjects Narratives of Adverse Events'
+- title 2: 'Subject: ABC-01-049'
+- define: AGE align='left' 
+# A table specification:
+- data: tibble 'ae_sub' 5 rows 9 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- footnote 1: 'ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal'
+- footnote 2: 'ᵇAction Taken: 01=None, 02=Investigational product dose altered, 03=Medication taken, 04=Hospitalized, 05=Removed from study, 06=Investigational product discontinued, 07=Transfusion performed,88=Other'
+- spanning_header: from='AESTDY' to='AEENDY' 'Study Day' level=1 
+- define: USUBJID visible='FALSE' 
+- define: AESOC width=2 
+- define: AESTDY align='left' 
+- define: AEENDY align='left' 
+# A table specification:
+- data: tibble 'dm_sub' 1 rows 8 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- title 1: 'Listing 1.1 Subjects Narratives of Adverse Events'
+- title 2: 'Subject: ABC-01-050'
+- define: AGE align='left' 
+# A table specification:
+- data: tibble 'ae_sub' 2 rows 9 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- footnote 1: 'ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal'
+- footnote 2: 'ᵇAction Taken: 01=None, 02=Investigational product dose altered, 03=Medication taken, 04=Hospitalized, 05=Removed from study, 06=Investigational product discontinued, 07=Transfusion performed,88=Other'
+- spanning_header: from='AESTDY' to='AEENDY' 'Study Day' level=1 
+- define: USUBJID visible='FALSE' 
+- define: AESOC width=2 
+- define: AESTDY align='left' 
+- define: AEENDY align='left' 
+ 
+...
+
+# A table specification:
+- data: tibble 'dm_sub' 1 rows 8 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- title 1: 'Listing 1.1 Subjects Narratives of Adverse Events'
+- title 2: 'Subject: ABC-09-140'
+- define: AGE align='left' 
+# A table specification:
+- data: tibble 'ae_sub' 2 rows 9 cols
+- show_cols: all
+- use_attributes: all
+- width: 8
+- footnote 1: 'ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal'
+- footnote 2: 'ᵇAction Taken: 01=None, 02=Investigational product dose altered, 03=Medication taken, 04=Hospitalized, 05=Removed from study, 06=Investigational product discontinued, 07=Transfusion performed,88=Other'
+- spanning_header: from='AESTDY' to='AEENDY' 'Study Day' level=1 
+- define: USUBJID visible='FALSE' 
+- define: AESOC width=2 
+- define: AESTDY align='left' 
+- define: AEENDY align='left' 
+
+=========================================================================
+Clean up
+=========================================================================
+
+lib_sync: synchronized data in library 'sdtm'
+
+lib_unload: library 'sdtm' unloaded
+
+=========================================================================
+Log End Time: 2022-07-21 22:31:15
+Log Elapsed Time: 0 00:00:05
+=========================================================================
+
+```
+
+
