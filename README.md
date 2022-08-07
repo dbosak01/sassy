@@ -29,7 +29,7 @@ above questions, then the **sassy** system is for you!
 
 The **sassy** system was designed to make data preparation and reporting in R 
 easier for everyone, but especially for SAS® programmers.
-The system brings many familiar SAS® concepts to R.  With the **sassy**
+The system brings many useful SAS® concepts to R.  With the **sassy**
 system you can:
 
 * Create a libname
