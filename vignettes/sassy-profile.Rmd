@@ -27,7 +27,6 @@ extensive use of user-defined formats from the **fmtr** package.
 ```{r eval=FALSE, echo=TRUE}
 library(dplyr)
 library(sassy)
-library(magrittr)
 
 options("logr.notes" = FALSE,
         "logr.autolog" = TRUE)
