@@ -4,10 +4,11 @@
 \encoding{UTF-8}
 \name{sassy}
 \alias{sassy}
-\title{sassy: Making R Easier for SAS® Programmers}
+\title{sassy: Making R Easier for Everyone}
 \description{
 The \strong{sassy} package is a meta-package that
-installs a set of functions that aim to make R easier for programmers
+installs a set of functions that aim to make R easier for everyone,
+especially programmers
 whose primary experience is with SAS® software.
 These functions provide the ability to create
 data libraries, format catalogs, data dictionaries, a traceable log, and
