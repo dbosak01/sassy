@@ -212,6 +212,7 @@ and apply formats to a data frame or vector.</p></li>
 <span><span class='co'>#####         Example: Simple Data Listing          #####</span></span>
 <span><span class='co'>#########################################################</span></span>
 <span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-sassy.org'>sassy</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span></span>
 <span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span><span class='op'>(</span><span class='st'>"logr.notes"</span> <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
 <span></span>
@@ -227,7 +228,7 @@ and apply formats to a data frame or vector.</p></li>
 <span><span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Get Data"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Define data library</span></span>
-<span><span class='fu'>libname</span><span class='op'>(</span><span class='va'>sdtm</span>, <span class='va'>pkg</span>, <span class='st'>"csv"</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>libname</span><span class='op'>(</span><span class='va'>sdtm</span>, <span class='va'>pkg</span>, <span class='st'>"csv"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Load library into workspace</span></span>
 <span><span class='fu'>lib_load</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span></span>
@@ -235,21 +236,21 @@ and apply formats to a data frame or vector.</p></li>
 <span><span class='fu'>sep</span><span class='op'>(</span><span class='st'>"Write Report"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Define table object</span></span>
-<span><span class='va'>tbl</span> <span class='op'>&lt;-</span> <span class='fu'>create_table</span><span class='op'>(</span><span class='va'>sdtm.DM</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>tbl</span> <span class='op'>&lt;-</span> <span class='fu'>create_table</span><span class='op'>(</span><span class='va'>sdtm.DM</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'>define</span><span class='op'>(</span><span class='va'>USUBJID</span>, id_var <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Construct report path</span></span>
-<span><span class='va'>pth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"output/l_dm.rtf"</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='va'>pth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>tmp</span>, <span class='st'>"output/l_dm.rtf"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Define report object</span></span>
-<span><span class='va'>rpt</span> <span class='op'>&lt;-</span> <span class='fu'>create_report</span><span class='op'>(</span><span class='va'>pth</span>, output_type <span class='op'>=</span> <span class='st'>"RTF"</span>, font <span class='op'>=</span> <span class='st'>"Courier"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>page_header</span><span class='op'>(</span><span class='st'>"Sponsor: Company"</span>, <span class='st'>"Study: ABC"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>titles</span><span class='op'>(</span><span class='st'>"Listing 1.0"</span>, <span class='st'>"SDTM Demographics"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'>add_content</span><span class='op'>(</span><span class='va'>tbl</span>, align <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span><span class='va'>rpt</span> <span class='op'>&lt;-</span> <span class='fu'>create_report</span><span class='op'>(</span><span class='va'>pth</span>, output_type <span class='op'>=</span> <span class='st'>"RTF"</span>, font <span class='op'>=</span> <span class='st'>"Courier"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>page_header</span><span class='op'>(</span><span class='st'>"Sponsor: Company"</span>, <span class='st'>"Study: ABC"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>titles</span><span class='op'>(</span><span class='st'>"Listing 1.0"</span>, <span class='st'>"SDTM Demographics"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span>  <span class='fu'>add_content</span><span class='op'>(</span><span class='va'>tbl</span>, align <span class='op'>=</span> <span class='st'>"left"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
 <span>  <span class='fu'>page_footer</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"CONFIDENTIAL"</span>, <span class='st'>"Page [pg] of [tpg]"</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Write report to file system</span></span>
-<span><span class='fu'>write_report</span><span class='op'>(</span><span class='va'>rpt</span><span class='op'>)</span> <span class='op'>|&gt;</span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
+<span><span class='fu'>write_report</span><span class='op'>(</span><span class='va'>rpt</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>put</span><span class='op'>(</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># Unload data</span></span>
 <span><span class='fu'>lib_unload</span><span class='op'>(</span><span class='va'>sdtm</span><span class='op'>)</span></span>
@@ -261,7 +262,10 @@ and apply formats to a data frame or vector.</p></li>
 <span><span class='fu'><a href='https://rdrr.io/r/base/writeLines.html'>writeLines</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='va'>lgpth</span>, encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span><span class='op'>)</span><span class='op'>)</span></span>
 <span></span>
 <span><span class='co'># View report</span></span>
-<span><span class='co'># file.show(pth)</span></span></pre>
+<span><span class='co'># file.show(pth)</span></span>
+<span></span>
+<span><span class='co'># View log</span></span>
+<span><span class='co'># file.show(lgpth)</span></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

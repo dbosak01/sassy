@@ -38,6 +38,7 @@ and apply formats to a data frame or vector.}
 #####         Example: Simple Data Listing          #####
 #########################################################
 library(sassy)
+library(magrittr)
 
 options("logr.notes" = FALSE)
 
@@ -53,7 +54,7 @@ lgpth <- log_open(file.path(tmp, "example1.log"))
 sep("Get Data")
 
 # Define data library
-libname(sdtm, pkg, "csv") |> put()
+libname(sdtm, pkg, "csv") \%>\% put()
 
 # Load library into workspace
 lib_load(sdtm)
@@ -61,21 +62,21 @@ lib_load(sdtm)
 sep("Write Report")
 
 # Define table object
-tbl <- create_table(sdtm.DM) |>
+tbl <- create_table(sdtm.DM) \%>\%
   define(USUBJID, id_var = TRUE)
 
 # Construct report path
-pth <- file.path(tmp, "output/l_dm.rtf") |> put()
+pth <- file.path(tmp, "output/l_dm.rtf") \%>\% put()
 
 # Define report object
-rpt <- create_report(pth, output_type = "RTF", font = "Courier") |>
-  page_header("Sponsor: Company", "Study: ABC") |>
-  titles("Listing 1.0", "SDTM Demographics") |>
-  add_content(tbl, align = "left") |>
+rpt <- create_report(pth, output_type = "RTF", font = "Courier") \%>\%
+  page_header("Sponsor: Company", "Study: ABC") \%>\%
+  titles("Listing 1.0", "SDTM Demographics") \%>\%
+  add_content(tbl, align = "left") \%>\%
   page_footer(Sys.time(), "CONFIDENTIAL", "Page [pg] of [tpg]")
 
 # Write report to file system
-write_report(rpt) |> put()
+write_report(rpt) \%>\% put()
 
 # Unload data
 lib_unload(sdtm)
@@ -88,4 +89,7 @@ writeLines(readLines(lgpth, encoding = "UTF-8"))
 
 # View report
 # file.show(pth)
+
+# View log
+# file.show(lgpth)
 }
