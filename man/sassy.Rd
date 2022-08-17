@@ -27,7 +27,7 @@ as follows:
 and apply formats to a data frame or vector.}
   \item {\code{\link[logr]{logr}}:}{ Generate a traceable log.}
   \item {\code{\link[reporter]{reporter}}:}{ Write reports and output
-  in text, RTF, and PDF.}
+  in TXT, RTF, PDF, HTML, and DOCX.}
   \item {\code{common}:}{ A set of utility functions
   shared across the \strong{sassy} family of packages.}
 }
