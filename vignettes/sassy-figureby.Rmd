@@ -251,4 +251,4 @@ Log Elapsed Time: 0 00:00:19
 
 ```
 
-Next: [Example 7](sassy-survival.html)
+Next: [Example 7: Survival Analysis](sassy-survival.html)

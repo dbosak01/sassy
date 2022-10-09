@@ -302,4 +302,4 @@ Log Elapsed Time: 0 00:00:00
 
 ```
 
-Next: [Example 4: AE Table](sassy-ae.html)
+Next: [Example 4: Adverse Events Table](sassy-ae.html)

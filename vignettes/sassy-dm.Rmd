@@ -1,8 +1,8 @@
 ---
-title: "Example 2: DM Table"
+title: "Example 2: Demographics Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 2: DM Table}
+  %\VignetteIndexEntry{Example 2: Demographics Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -191,7 +191,7 @@ tbl <- create_table(final, first_row_blank = TRUE,
 
 pth <- file.path(tmp, "output/example2.rtf")
 
-rpt <- create_report(pth, output_type = "DOCX", font = "Arial") |> 
+rpt <- create_report(pth, output_type = "RTF", font = "Arial") |> 
   set_margins(top = 1, bottom = 1) |> 
   page_header("Sponsor: Company", "Study: ABC") |> 
   titles("Table 1.0", "Analysis of Demographic Characteristics", 

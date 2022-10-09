@@ -170,4 +170,4 @@ Log Elapsed Time: 0 00:00:07
 ```
 
 
-Next: [Example 2: DM Table](sassy-dm.html)
+Next: [Example 2: Demographics Table](sassy-dm.html)

@@ -117,6 +117,14 @@ Create a figure with a forest plot.
 </a>
 <br>
 
+* **[Example 10](sassy-ds.html)**: 
+Create a subject disposition table.
+<a href="sassy-ds.html">
+<img src="../man/images/disposition.png" align="left" />
+</a>
+<br>
+
+
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!

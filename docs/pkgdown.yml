@@ -5,6 +5,7 @@ articles:
   sassy-ae: sassy-ae.html
   sassy-disclaimers: sassy-disclaimers.html
   sassy-dm: sassy-dm.html
+  sassy-ds: sassy-ds.html
   sassy-faq: sassy-faq.html
   sassy-figure: sassy-figure.html
   sassy-figureby: sassy-figureby.html
@@ -14,7 +15,7 @@ articles:
   sassy-survival: sassy-survival.html
   sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2022-10-09T03:27Z
+last_built: 2022-10-09T19:56Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

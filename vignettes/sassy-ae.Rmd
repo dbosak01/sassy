@@ -1,8 +1,8 @@
 ---
-title: "Example 4: AE Table"
+title: "Example 4: Adverse Events Table"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 4: AE Table}
+  %\VignetteIndexEntry{Example 4: Adverse Events Table}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -489,4 +489,4 @@ Log Elapsed Time: 0 00:00:03
 
 ```
 
-Next: [Example 5: VS Table](sassy-vs.html)
+Next: [Example 5: Vital Signs Table](sassy-vs.html)
