@@ -1,3 +1,7 @@
+# sassy 1.0.9
+
+* Added forest plot example.
+
 # sassy 1.0.8
 
 * Added common package.

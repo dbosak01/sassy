@@ -110,6 +110,14 @@ Create a patient profile report.
 </a>
 <br>
 
+* **[Example 9](sassy-forest.html)**: 
+Create a figure with a forest plot.
+<a href="sassy-forest.html">
+<img src="../man/images/forest.png" align="left" />
+</a>
+<br>
+
+
 Once you review these examples, please proceed to the package links above to
 explore the system further!
 
