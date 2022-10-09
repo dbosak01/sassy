@@ -124,6 +124,12 @@ Create a subject disposition table.
 </a>
 <br>
 
+* **[Example 11](sassy-plisting.html)**: 
+Create a subject listing with vital signs by visit.
+<a href="sassy-plisting.html">
+<img src="../man/images/plisting.png" align="left" />
+</a>
+<br>
 
 
 Once you review these examples, please proceed to the package links above to
