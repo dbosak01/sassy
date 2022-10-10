@@ -74,13 +74,13 @@ arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
 
 # Completed Study
 complete_fmt <- value(condition(x == "SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS",
-                        str_to_title("SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS")),
+                                str_to_title("SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS")),
                       condition(x == "SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS",
-                        str_to_title("SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS")))
+                                str_to_title("SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS")))
 
 # Subject Non-compliance
 noncomp_fmt <- value(condition(x == "NON-COMPLIANCE WITH STUDY DRUG",
-                       str_to_title("NON-COMPLIANCE WITH STUDY DRUG")))
+                               str_to_title("NON-COMPLIANCE WITH STUDY DRUG")))
 
 # Early Termination
 term_fmt <- value(condition(x == "LACK OF EFFICACY",
@@ -112,7 +112,7 @@ grps <- dmds |> select(ARM, DSDECOD) |>
             `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
             `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
             `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> put()
-            
+
 
 
 # Disposition Subgroups ----------------------------------------------------
@@ -151,10 +151,10 @@ noncompl2 <- noncompl1 |>
   transmute(group = "NONCOMPLIANCE",
             cat = TERMDECOD,
             catseq = 2,
-           `ARM A` = ifelse("ARM A" %in% nms, fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]), "0 (  0.0%)"),
-           `ARM B` = ifelse("ARM B" %in% nms, fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]), "0 (  0.0%)"),
-           `ARM C` = ifelse("ARM C" %in% nms, fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]), "0 (  0.0%)"),
-           `ARM D` = ifelse("ARM D" %in% nms, fmt_cnt_pct(`ARM D`, arm_pop["ARM D"]), "0 (  0.0%)")) |> put()
+            `ARM A` = ifelse("ARM A" %in% nms, fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]), "0 (  0.0%)"),
+            `ARM B` = ifelse("ARM B" %in% nms, fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]), "0 (  0.0%)"),
+            `ARM C` = ifelse("ARM C" %in% nms, fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]), "0 (  0.0%)"),
+            `ARM D` = ifelse("ARM D" %in% nms, fmt_cnt_pct(`ARM D`, arm_pop["ARM D"]), "0 (  0.0%)")) |> put()
 
 put("Pull out subject who terminated early")
 earlyterm <- dmds |> filter(DSDECOD == "OTHER") |> 
@@ -183,7 +183,7 @@ sep("Create and print report")
 
 # Create Table
 tbl <- create_table(final, first_row_blank = TRUE, 
-                    borders = c("top", "bottom"), width = 9) |> 
+                    borders = "all", width = 8.5) |> 
   column_defaults(from = `ARM A`, to = `ARM D`, 
                   align = "center", width = 1) |> 
   stub(vars = v(group, cat), "Completion Status") |> 
@@ -194,20 +194,20 @@ tbl <- create_table(final, first_row_blank = TRUE,
   define(`ARM A`, label = "Placebo", n = arm_pop["ARM A"]) |> 
   define(`ARM B`, label = "Drug 50mg", n = arm_pop["ARM B"]) |> 
   define(`ARM C`, label = "Drug 100mg", n = arm_pop["ARM C"]) |> 
-  define(`ARM D`, label = "Competitor", n = arm_pop["ARM D"]) 
-
-pth <- file.path(tmp, "output/example10.docx")
-
-rpt <- create_report(pth, output_type = "DOCX", font = "Arial") |> 
-  set_margins(top = 1, bottom = 1) |> 
-  page_header("Sponsor: Company", "Study: ABC") |> 
-  titles("Table 5.2.3", "Subject Disposition by Category and Treatment Group", 
-         "Safety Population", bold = TRUE, font_size = 11) |> 
-  add_content(tbl) |> 
+  define(`ARM D`, label = "Competitor", n = arm_pop["ARM D"]) |> 
+  titles("Table 5.2.3", "Subject Disposition by Category and Treatment Group",                                                                      
+         "Safety Population", bold = TRUE, font_size = 11,
+         borders = "outside", blank_row = "none") |> 
   footnotes("Program: DS_Table.R",
-            "NOTE: Denominator based on number of non-missing responses.") |> 
-  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
-              right = "Page [pg] of [tpg]")
+          "NOTE: Denominator based on number of non-missing responses.",
+          borders = "outside", blank_row = "none") 
+
+pth <- file.path(tmp, "example10.pdf")
+
+rpt <- create_report(pth, output_type = "PDF", font = "Arial") |> 
+  set_margins(top = 1, bottom = 1) |> 
+  add_content(tbl) 
+
 
 write_report(rpt)
 
@@ -220,7 +220,7 @@ lib_unload(sdtm)
 # Close log
 log_close()
 
-# View files
+# Uncomment to view files
 # file.show(pth)
 # file.show(lgpth)
 ```
@@ -238,19 +238,19 @@ Here is the log:
 
 ```
 =========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpo9snyA/log/example10.log
-Program Path: C:/Projects/Testing/Demo/Disposition.R
-Working Directory: C:/Projects/Testing/Demo
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpeYEHwE/log/example10.log
+Program Path: C:/packages/Testing/Disposition.R
+Working Directory: C:/packages/Testing
 User Name: dbosa
 R Version: 4.2.1 (2022-06-23 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 19044
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 forcats_0.5.2 stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4
-readr_2.1.2 tidyr_1.2.0 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.1
-procs_0.0.9006 reporter_1.3.7 libr_1.2.6 fmtr_1.5.9 logr_1.3.3 common_1.0.5
-sassy_1.0.8
-Log Start Time: 2022-10-09 15:26:30
+Packages: tidylog_1.0.2 reporter_1.3.7 libr_1.2.6 fmtr_1.5.9 logr_1.3.3
+sassy_1.0.8 forcats_0.5.2 stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4 readr_2.1.2
+tidyr_1.2.0 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.1 cranlogs_2.1.1
+common_1.0.5
+Log Start Time: 2022-10-09 20:51:10
 =========================================================================
 
 =========================================================================
@@ -408,10 +408,10 @@ transmute: dropped 2 variables (DSDECOD, TERMDECOD)
            converted 'ARM D' from integer to character (0 new NA)
 
 # A tibble: 2 × 7
-  group     cat                                                     catseq `ARM A` `ARM B` `ARM C` `ARM D`
-  <chr>     <chr>                                                    <dbl> <chr>   <chr>   <chr>   <chr>  
-1 COMPLETED Subject Completed All Visits And Protocol Requirements       2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
-2 COMPLETED Subject Completed All Visits But With Major Protocol V…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+  group     cat                                                           catseq `ARM A` `ARM B` `ARM C` `ARM D`
+  <chr>     <chr>                                                          <dbl> <chr>   <chr>   <chr>   <chr>  
+1 COMPLETED Subject Completed All Visits And Protocol Requirements             2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
+2 COMPLETED Subject Completed All Visits But With Major Protocol Violati…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
 
 Pull out subjects who were non-compliant
 
@@ -487,41 +487,39 @@ transmute: dropped 2 variables (DSDECOD, TERMDECOD)
 Combine blocks into final data frame
 
 # A tibble: 8 × 7
-  group         cat                                                 catseq `ARM A` `ARM B` `ARM C` `ARM D`
-  <chr>         <chr>                                                <dbl> <chr>   <chr>   <chr>   <chr>  
-1 COMPLETED     <NA>                                                     1 19 ( 9… 17 ( 8… 16 ( 7… 20 ( 8…
-2 COMPLETED     Subject Completed All Visits And Protocol Requirem…      2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
-3 COMPLETED     Subject Completed All Visits But With Major Protoc…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-4 NONCOMPLIANCE <NA>                                                     1 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-5 NONCOMPLIANCE Non-Compliance With Study Drug                           2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-6 OTHER         <NA>                                                     1 1 (  5… 3 ( 14… 5 ( 23… 3 ( 13…
-7 OTHER         Lack Of Efficacy                                         2 1 (  5… 0 (  0… 3 ( 14… 2 (  8…
-8 OTHER         Lost To Follow Up                                        2 0 (  0… 3 ( 14… 2 (  9… 1 (  4…
+  group         cat                                                       catseq `ARM A` `ARM B` `ARM C` `ARM D`
+  <chr>         <chr>                                                      <dbl> <chr>   <chr>   <chr>   <chr>  
+1 COMPLETED     <NA>                                                           1 19 ( 9… 17 ( 8… 16 ( 7… 20 ( 8…
+2 COMPLETED     Subject Completed All Visits And Protocol Requirements         2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
+3 COMPLETED     Subject Completed All Visits But With Major Protocol Vio…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+4 NONCOMPLIANCE <NA>                                                           1 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+5 NONCOMPLIANCE Non-Compliance With Study Drug                                 2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+6 OTHER         <NA>                                                           1 1 (  5… 3 ( 14… 5 ( 23… 3 ( 13…
+7 OTHER         Lack Of Efficacy                                               2 1 (  5… 0 (  0… 3 ( 14… 2 (  8…
+8 OTHER         Lost To Follow Up                                              2 0 (  0… 3 ( 14… 2 (  9… 1 (  4…
 
 =========================================================================
 Create and print report
 =========================================================================
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo9snyA/output/example10.docx'
-- output_type: DOCX
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpeYEHwE/example10.pdf'
+- output_type: PDF
 - units: inches
 - orientation: landscape
 - margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/37
-- page_header: left=Sponsor: Company right=Study: ABC
-- title 1: 'Table 5.2.3'
-- title 2: 'Subject Disposition by Category and Treatment Group'
-- title 3: 'Safety Population'
-- footnote 1: 'Program: DS_Table.R'
-- footnote 2: 'NOTE: Denominator based on number of non-missing responses.'
-- page_footer: left=Date Produced: 09Oct22 15:26 center= right=Page [pg] of [tpg]
+- line size/count: 9/41
 - content: 
 # A table specification:
 - data: tibble 'final' 8 rows 7 cols
 - show_cols: all
 - use_attributes: all
-- width: 9
+- width: 8.5
+- title 1: 'Table 5.2.3'
+- title 2: 'Subject Disposition by Category and Treatment Group'
+- title 3: 'Safety Population'
+- footnote 1: 'Program: DS_Table.R'
+- footnote 2: 'NOTE: Denominator based on number of non-missing responses.'
 - stub: group cat 'Completion Status' align='left' 
 - define: group dedupe='TRUE' 
 - define: cat 
@@ -536,7 +534,7 @@ lib_sync: synchronized data in library 'sdtm'
 lib_unload: library 'sdtm' unloaded
 
 =========================================================================
-Log End Time: 2022-10-09 15:26:33
+Log End Time: 2022-10-09 20:51:13
 Log Elapsed Time: 0 00:00:02
 =========================================================================
 
