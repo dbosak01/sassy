@@ -137,14 +137,19 @@
 
     
     
+<p>Below is an example showing a patient profile report. Every
+organization has their own way of presenting patient profiles. This is
+an example of a “master and detail” type of report.</p>
 <div id="program" class="section level2">
 <h2 class="hasAnchor">
 <a href="#program" class="anchor"></a>Program</h2>
-<p>Below is complete example showing a patient profile report. This
-example uses a loop to append separate tables for each patient. The
-profile for each patient is shown on a separate page. This example also
-makes extensive use of user-defined formats from the
-<strong>fmtr</strong> package.</p>
+<p>Note the following about this example:</p>
+<ul>
+<li>A loop is used to append separate tables for each patient.</li>
+<li>The profile for each patient is shown on a separate page.</li>
+<li>The program makes extensive use of user-defined formats from the
+<strong>fmtr</strong> package.</li>
+</ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>

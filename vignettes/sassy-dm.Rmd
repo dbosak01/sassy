@@ -13,13 +13,10 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Demographics Table of Summary Statistics
-
 The second example produces a demographics summary table of selected variables. 
 The report shows statistics for each of the four treatment groups.   
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -219,14 +216,14 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here is the output report:
 
 <img src="../man/images/dm.png" align="center" />
 
 
-#### Log
+## Log
 
 And here is the log:
 

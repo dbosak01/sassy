@@ -13,14 +13,12 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Forest Plot 
 The **reporter** package is able to embed JPEG images into a report.
 Here is an example using an image saved from the **forestploter** package. 
 This package creates customizable forest plots.  The technique shown here 
 can be used to embed images from any package. 
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -145,14 +143,14 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here is an image  of the RTF report produced by the above example:
 
 <img src="../man/images/forest.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is the log produced by the above forest plot example:
 
@@ -385,4 +383,4 @@ Log Elapsed Time: 0 00:00:00
 
 ```
 
-
+Next: [Example 10: Disposition Table](sassy-ds.html)

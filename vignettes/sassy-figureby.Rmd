@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Figure with a By-Group
-
 The **sassy** system gives you capabilities that few other R packages can match.
 The system not only support reports with by-groups.  You can even apply
 a by-group to a figure.  
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -114,7 +111,7 @@ log_close()
 ```
 
 
-#### Output 
+## Output 
 
 And here are the first three pages of the report:
 
@@ -125,7 +122,7 @@ And here are the first three pages of the report:
 <img src="../man/images/vs_pg3.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is the log for the above program:
 

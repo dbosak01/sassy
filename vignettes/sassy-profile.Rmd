@@ -16,14 +16,18 @@ knitr::opts_chunk$set(
 options(rmarkdown.html_vignette.check_title = FALSE)
 
 ```
+Below is an example showing a patient profile report. Every organization has
+their own way of presenting patient profiles.  This is an example of a 
+"master and detail" type of report.
+
 ## Program
 
-Below is complete example showing a patient profile report.  This example
-uses a loop to append separate tables for each patient.  The profile for 
-each patient is shown on a separate page.  This example also makes
-extensive use of user-defined formats from the **fmtr** package.
+Note the following about this example:
 
-
+  * A loop is used to append separate tables for each patient. 
+  * The profile for each patient is shown on a separate page.
+  * The program makes extensive use of user-defined formats from the **fmtr** package.
+  
 ```{r eval=FALSE, echo=TRUE}
 library(dplyr)
 library(sassy)

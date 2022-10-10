@@ -13,13 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Subject Listing with Vital Signs 
 Here is an example of a subject listing using the **sassy** system of 
 functions. The example shows demographics for each patient and vital 
 signs by visit.
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -219,7 +217,7 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here is an image of the first page of the RTF report produced by the
 above subject listing:
@@ -227,7 +225,7 @@ above subject listing:
 <img src="../man/images/plisting.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is the log produced by the above subject listing:
 
@@ -483,5 +481,3 @@ Log Elapsed Time: 0 00:00:12
 
 ```
 
-
-Next: [Example 2: Demographics Table](sassy-dm.html)

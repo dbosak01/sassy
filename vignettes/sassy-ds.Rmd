@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Disposition Table
-
 This example produces a subject disposition table.
 The report features extensive data preparation using the **dplyr** package.
 The example also shows how to create a stub column with summary rows.
 
-#### Program
+## Program
 
 ```{r eval=FALSE, echo=TRUE}
 library(tidyverse)
@@ -225,14 +222,14 @@ log_close()
 # file.show(lgpth)
 ```
 
-#### Output
+## Output
 
 Here is the output report:
 
 <img src="../man/images/disposition.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is the log:
 

@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create an Adverse Events Table
-
 The fourth example produces an Adverse Events table by severity, with
 treatment groups on separate pages. The report shows statistics for All 
 Adverse Events and System Organ Class/Preferred Term.   
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -249,7 +246,7 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here are the first four pages of the output report:
 
@@ -259,7 +256,7 @@ Here are the first four pages of the output report:
 <img src="../man/images/ae4.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is part of the log from the above example:
 

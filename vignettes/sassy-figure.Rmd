@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Figure 
-
 The **sassy** system of functions also supports reports with graphics.  Plots
 from the popular **ggplot2** package can be added to a report.
 The following example illustrates such a report. 
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -161,7 +158,7 @@ log_close()
 
 ```
 
-#### Output 
+## Output 
 
 Here are the three pages of the report:
 
@@ -172,7 +169,7 @@ Here are the three pages of the report:
 <img src="../man/images/dm_fig3.png" align="center" />
 
 
-#### Log
+## Log
 
 Here is the log for the above program:
 

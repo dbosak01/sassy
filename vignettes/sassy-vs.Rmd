@@ -13,14 +13,11 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
-### Create a Table of Vital Signs Statistics
-
 The fifth example produces a summary table of selected Vital Signs for Placebo
 vs. Treated groups.  The report shows statistics for both baseline 
 and after-treatment time points.   
 
-#### Program
+## Program
 
 Note the following about this example:
 
@@ -177,13 +174,13 @@ log_close()
 
 ```
 
-#### Output
+## Output
 
 Here is the output report:
 
 <img src="../man/images/vital_signs.png" align="center" />
 
-#### Log
+## Log
 
 Here is the log from the above example:
 

@@ -16,11 +16,11 @@ knitr::opts_chunk$set(
 options(rmarkdown.html_vignette.check_title = FALSE)
 
 ```
-## Program
-
 Below is another complete example showing how **sassy** 
 functions interact with **tidyverse** to create a survival
 analysis.  This is the most complicated example in the documentation.
+
+## Program
 
 There are several interesting aspects to this report.  The first is 
 that the **reporter** package gives you the freedom to perform any analysis
@@ -440,7 +440,7 @@ writeLines(readLines(lf, encoding = "UTF-8"))
 
 ```
 
-# Output
+## Output
 
 Here is the report produced by the sample program above:
 
@@ -448,7 +448,7 @@ Here is the report produced by the sample program above:
 <img src="../man/images/survival2.png"/>
 
 
-# Log
+## Log
 
 The above program produces the following log:
 ```
