@@ -79,7 +79,7 @@ dm_mod <- sdtm.DM |>
      else if (AGE >= 65)
        AGECAT <- ">= 65"
      
-   }) |> put()
+   }) 
 
 put("Get ARM population counts")
 arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
