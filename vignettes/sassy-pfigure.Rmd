@@ -1,0 +1,277 @@
+---
+title: "Example 12: Combined Figure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 12: Combined Figure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+There are a few packages in R that can combine multiple figures into
+a single image.  This image can then be embedded into a report
+to create a combined figure. Here is an example using the **patchwork** package. 
+
+## Program
+
+Note the following about this example:
+
+  * The **[patchwork](https://CRAN.R-project.org/package=patchwork)** 
+  package creates combined plots.   
+  * The **[reporter](https://reporter.r-sassy.org)** package can embed
+  patchwork images into any output type that accepts images.  
+
+```{r eval=FALSE, echo=TRUE}    
+library(tidyverse)
+library(sassy)
+library(patchwork)
+
+
+# Prepare Log -------------------------------------------------------------
+
+
+options("logr.autolog" = TRUE,
+        "logr.notes" = FALSE)
+
+# Get path to temp directory
+tmp <- tempdir() 
+
+# Get sample data directory
+dir <- system.file("extdata", package = "sassy")
+
+# Open log
+lgpth <- log_open(file.path(tmp, "example12.log"))
+
+
+# Load and Prepare Data ---------------------------------------------------
+
+sep("Prepare Data")
+
+# Define data library
+libname(sdtm, dir, "csv") 
+
+# Loads data into workspace
+lib_load(sdtm)
+
+# Prepare data
+dm_mod <- sdtm.DM %>% 
+  select(USUBJID, SEX, AGE, ARM) %>% 
+  filter(ARM != "SCREEN FAILURE") %>% 
+  datastep({
+                     
+     if (AGE >= 18 & AGE <= 24)
+       AGECAT = "18 to 24"
+     else if (AGE >= 25 & AGE <= 44)
+       AGECAT = "25 to 44"
+     else if (AGE >= 45 & AGE <= 64)
+       AGECAT <- "45 to 64"
+     else if (AGE >= 65)
+       AGECAT <- ">= 65"
+     
+   }) %>% put()
+
+
+put("Convert agecat to factor it will sort correctly")
+dm_mod$AGECAT <- factor(dm_mod$AGECAT, levels = c("18 to 24", 
+                                                  "25 to 44",
+                                                  "45 to 64",
+                                                  ">= 65"))
+
+put("Split by ARM")
+dm_sub <- split(dm_mod, factor(dm_mod$ARM))
+                     
+
+# Create Plots ------------------------------------------------------------
+
+sep("Create Plots")
+
+put("Create plot for ARM A")
+plt1 <- ggplot(dm_sub$`ARM A`, aes(x = AGECAT, fill = SEX)) + 
+  geom_bar(position = "dodge") + 
+  labs(x = "Age Groups", y = "Number of Subjects (n)", title = "Placebo")  
+
+put("Create plot for ARM B")
+plt2 <- ggplot(dm_sub$`ARM B`, aes(x = AGECAT, fill = SEX)) + 
+  geom_bar(position = "dodge") + 
+  labs(x = "Age Groups", y = "Number of Subjects (n)", title = "Drug 50mg")
+
+put("Create plot for ARM C")
+plt3 <- ggplot(dm_sub$`ARM C`, aes(x = AGECAT, fill = SEX)) + 
+  geom_bar(position = "dodge") + 
+  labs(x = "Age Groups", y = "Number of Subjects (n)", title = "Drug 100mg")
+
+put("Create plot for ARM D")
+plt4 <- ggplot(dm_sub$`ARM D`, aes(x = AGECAT, fill = SEX)) + 
+  geom_bar(position = "dodge") + 
+  labs(x = "Age Groups", y = "Number of Subjects (n)", title = "Competitor")
+
+
+put("Combine 4 plots into 1 using patchwork")
+plts <- (plt1 | plt2) / (plt3 | plt4)
+
+
+# Report ------------------------------------------------------------------
+
+
+sep("Create and print report")
+
+
+pth <- file.path(tmp, "output/example12.rtf")
+
+
+plt <- create_plot(plts, 4.5, 7) %>% 
+  titles("Figure 3.2", "Distribution of Subjects by Treatment Group", 
+         font_size = 11, bold = TRUE)
+
+
+rpt <- create_report(pth, output_type = "RTF", font = "Arial") %>% 
+  set_margins(top = 1, bottom = 1) %>% 
+  page_header("Sponsor: Company", "Study: ABC") %>% 
+  add_content(plt) %>% 
+  footnotes("Program: DM_Figure.R") %>% 
+  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
+              right = "Page [pg] of [tpg]")
+
+# Write report to file
+res <- write_report(rpt, log = FALSE)
+
+
+# Clean Up ----------------------------------------------------------------
+
+# Unload library from workspace
+lib_unload(sdtm)
+
+# Close log
+log_close()
+
+# Uncomment to view files
+# file.show(pth)
+# file.show(lgpth)
+```
+
+## Output
+
+Here is an image  of the RTF report produced by the above example:
+
+<img src="../man/images/pfigure.png" align="center" />
+
+
+## Log
+
+Here is the log produced by the above combined plot example:
+
+```
+=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp6rBaZY/log/example12.log
+Program Path: C:/packages/Testing/example12.R
+Working Directory: C:/packages/Testing
+User Name: dbosa
+R Version: 4.2.1 (2022-06-23 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 19044
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 patchwork_1.1.2 cranlogs_2.1.1 reporter_1.3.7
+libr_1.2.6 fmtr_1.5.9 logr_1.3.3 common_1.0.5 sassy_1.0.8 forcats_0.5.2
+stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4 readr_2.1.2 tidyr_1.2.0 tibble_3.1.8
+ggplot2_3.3.6 tidyverse_1.3.1
+Log Start Time: 2022-10-10 22:18:40
+=========================================================================
+
+=========================================================================
+Prepare Data
+=========================================================================
+
+# library 'sdtm': 8 items
+- attributes: csv not loaded
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/sassy/extdata
+- items:
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.5 Kb 2022-09-05 10:57:47
+2   DA       csv 3587   18 528.2 Kb 2022-09-05 10:57:47
+3   DM       csv   87   24  45.5 Kb 2022-09-05 10:57:47
+4   DS       csv  174    9  34.1 Kb 2022-09-05 10:57:47
+5   EX       csv   84   11  26.4 Kb 2022-09-05 10:57:47
+6   IE       csv    2   14  13.4 Kb 2022-09-05 10:57:47
+7   SV       csv  685   10  70.3 Kb 2022-09-05 10:57:47
+8   VS       csv 3358   17 467.4 Kb 2022-09-05 10:57:47
+
+lib_load: library 'sdtm' loaded
+
+select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+
+filter: removed 2 rows (2%), 85 rows remaining
+
+datastep: columns increased from 4 to 5
+
+# A tibble: 85 × 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   <chr>      <chr> <dbl> <chr> <chr>   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D >= 65   
+10 ABC-01-114 F        72 ARM B >= 65   
+# … with 75 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+# A tibble: 85 × 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   <chr>      <chr> <dbl> <chr> <chr>   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D >= 65   
+10 ABC-01-114 F        72 ARM B >= 65   
+# … with 75 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Convert agecat to factor it will sort correctly
+
+Split by ARM
+
+=========================================================================
+Create Plots
+=========================================================================
+
+Create plot for ARM A
+
+Create plot for ARM B
+
+Create plot for ARM C
+
+Create plot for ARM D
+
+Combine 4 plots into 1 using patchwork
+
+=========================================================================
+Create and print report
+=========================================================================
+
+lib_sync: synchronized data in library 'sdtm'
+
+lib_unload: library 'sdtm' unloaded
+
+=========================================================================
+Log End Time: 2022-10-10 22:18:43
+Log Elapsed Time: 0 00:00:03
+=========================================================================
+
+
+```
+
+

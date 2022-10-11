@@ -131,6 +131,13 @@ Create a subject listing with vital signs by visit.
 </a>
 <br>
 
+* **[Example 12](sassy-pfigure.html)**: 
+Create a combined figure of age groups by treatment.
+<a href="sassy-pfigure.html">
+<img src="../man/images/pfigure.png" align="left" />
+</a>
+<br>
+
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!

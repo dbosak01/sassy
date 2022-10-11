@@ -481,3 +481,5 @@ Log Elapsed Time: 0 00:00:12
 
 ```
 
+
+Next: [Example 12: Combined Figure](sassy-pfigure.html)

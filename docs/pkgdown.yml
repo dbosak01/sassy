@@ -11,12 +11,13 @@ articles:
   sassy-figureby: sassy-figureby.html
   sassy-forest: sassy-forest.html
   sassy-listing: sassy-listing.html
+  sassy-pfigure: sassy-pfigure.html
   sassy-plisting: sassy-plisting.html
   sassy-profile: sassy-profile.html
   sassy-survival: sassy-survival.html
   sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2022-10-10T02:27Z
+last_built: 2022-10-11T02:38Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles
