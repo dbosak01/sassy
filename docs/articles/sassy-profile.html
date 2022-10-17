@@ -127,7 +127,7 @@
 
       
 
-      </header><script src="sassy-profile_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
+      </header><script src="sassy-profile_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 8: Patient Profile</h1>
@@ -210,31 +210,31 @@ an example of a “master and detail” type of report.</p>
 <span></span>
 <span><span class="va">sevfmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"MODERATE"</span>, <span class="st">"Moderate"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"SEVERE"</span>, <span class="st">"Severe"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"MILD"</span>, <span class="st">"Mild"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"MILD"</span>, <span class="st">"Mild"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">relfmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"RELATED"</span>, <span class="st">"Yes"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"NOT RELATED"</span>, <span class="st">"No"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"PROBABLY RELATED"</span>, <span class="st">"Probably"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"POSSIBLY RELATED"</span>, <span class="st">"Possibly"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"POSSIBLY RELATED"</span>, <span class="st">"Possibly"</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">serfmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"N"</span>, <span class="st">"No"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"Y"</span>, <span class="st">"Yes"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"Y"</span>, <span class="st">"Yes"</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span></span>
 <span><span class="va">sexfmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"F"</span>, <span class="st">"Female"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Unknown"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Unknown"</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">racefmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WHITE"</span>, <span class="st">"White"</span><span class="op">)</span>,</span>
 <span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"BLACK OR AFRICAN AMERICAN"</span>, <span class="st">"Black"</span><span class="op">)</span>,</span>
 <span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"UNKNOWN"</span>, <span class="st">"Unknown"</span><span class="op">)</span>,</span>
-<span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ASIAN"</span>, <span class="st">"Asian"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ASIAN"</span>, <span class="st">"Asian"</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">armfmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM A"</span>, <span class="st">"Placebo"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM B"</span>, <span class="st">"Dose 50mg"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM C"</span>, <span class="st">"Dose 100mg"</span><span class="op">)</span>,</span>
-<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM D"</span>, <span class="st">"Competitor"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM D"</span>, <span class="st">"Competitor"</span><span class="op">)</span><span class="op">)</span> </span>
 <span>                 </span>
 <span></span>
 <span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="va">sexfmt</span>, </span>
