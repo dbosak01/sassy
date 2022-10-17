@@ -85,31 +85,31 @@ sep("Apply formats")
 
 sevfmt <- value(condition(x == "MODERATE", "Moderate"),
                 condition(x == "SEVERE", "Severe"),
-                condition(x == "MILD", "Mild")) |> put()
+                condition(x == "MILD", "Mild"))
 
 
 relfmt <- value(condition(x == "RELATED", "Yes"),
                 condition(x == "NOT RELATED", "No"),
                 condition(x == "PROBABLY RELATED", "Probably"),
-                condition(x == "POSSIBLY RELATED", "Possibly")) |> put()
+                condition(x == "POSSIBLY RELATED", "Possibly")) 
 
 serfmt <- value(condition(x == "N", "No"),
-                condition(x == "Y", "Yes")) |> put()
+                condition(x == "Y", "Yes")) 
 
 
 sexfmt <- value(condition(x == "M", "Male"),
                 condition(x == "F", "Female"),
-                condition(TRUE, "Unknown")) |> put()
+                condition(TRUE, "Unknown")) 
 
 racefmt <- value(condition(x == "WHITE", "White"),
                  condition(x == "BLACK OR AFRICAN AMERICAN", "Black"),
                  condition(x == "UNKNOWN", "Unknown"),
-                 condition(x == "ASIAN", "Asian")) |> put()
+                 condition(x == "ASIAN", "Asian")) 
 
 armfmt <- value(condition(x == "ARM A", "Placebo"),
                 condition(x == "ARM B", "Dose 50mg"),
                 condition(x == "ARM C", "Dose 100mg"),
-                condition(x == "ARM D", "Competitor")) |> put()
+                condition(x == "ARM D", "Competitor")) 
                  
 
 formats(sdtm.DM) <- list(SEX = sexfmt, 
