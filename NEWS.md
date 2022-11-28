@@ -1,6 +1,14 @@
+# sassy 1.1.0
+
+* Updated some examples.
+* Changed license to CC0.
+
 # sassy 1.0.9
 
 * Added forest plot example.
+* Added subject disposition example.
+* Added subject listing example.
+* Added patchwork example.
 
 # sassy 1.0.8
 

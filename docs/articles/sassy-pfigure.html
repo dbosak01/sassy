@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -267,7 +267,7 @@ embed patchwork images into any output type that accepts images.</li>
 <span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Write report to file</span></span>
-<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
@@ -293,19 +293,18 @@ embed patchwork images into any output type that accepts images.</li>
 <a href="#log" class="anchor"></a>Log</h2>
 <p>Here is the log produced by the above combined plot example:</p>
 <pre><code>=========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp6rBaZY/log/example12.log
-Program Path: C:/packages/Testing/example12.R
-Working Directory: C:/packages/Testing
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpqsSwWj/log/example12.log
+Program Path: C:/packages/sassy/vignettes/sassy-pfigure.Rmd
+Working Directory: C:/packages/sassy/vignettes
 User Name: dbosa
 R Version: 4.2.1 (2022-06-23 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 19044
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 patchwork_1.1.2 cranlogs_2.1.1 reporter_1.3.7
-libr_1.2.6 fmtr_1.5.9 logr_1.3.3 common_1.0.5 sassy_1.0.8 forcats_0.5.2
-stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4 readr_2.1.2 tidyr_1.2.0 tibble_3.1.8
-ggplot2_3.3.6 tidyverse_1.3.1
-Log Start Time: 2022-10-10 22:18:40
+Packages: tidylog_1.0.2 patchwork_1.1.2 reporter_1.3.8 libr_1.2.8 fmtr_1.5.9
+logr_1.3.3 common_1.0.5 sassy_1.0.8 forcats_0.5.2 stringr_1.4.1 dplyr_1.0.10
+purrr_0.3.5 readr_2.1.3 tidyr_1.2.1 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.2
+Log Start Time: 2022-11-28 17:11:15
 =========================================================================
 
 =========================================================================
@@ -316,15 +315,6 @@ Prepare Data
 - attributes: csv not loaded
 - path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/sassy/extdata
 - items:
-  Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.5 Kb 2022-09-05 10:57:47
-2   DA       csv 3587   18 528.2 Kb 2022-09-05 10:57:47
-3   DM       csv   87   24  45.5 Kb 2022-09-05 10:57:47
-4   DS       csv  174    9  34.1 Kb 2022-09-05 10:57:47
-5   EX       csv   84   11  26.4 Kb 2022-09-05 10:57:47
-6   IE       csv    2   14  13.4 Kb 2022-09-05 10:57:47
-7   SV       csv  685   10  70.3 Kb 2022-09-05 10:57:47
-8   VS       csv 3358   17 467.4 Kb 2022-09-05 10:57:47
 
 lib_load: library 'sdtm' loaded
 
@@ -333,38 +323,6 @@ select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
 filter: removed 2 rows (2%), 85 rows remaining
 
 datastep: columns increased from 4 to 5
-
-# A tibble: 85 × 5
-   USUBJID    SEX     AGE ARM   AGECAT  
-   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
- 1 ABC-01-049 M        39 ARM D 25 to 44
- 2 ABC-01-050 M        47 ARM B 45 to 64
- 3 ABC-01-051 M        34 ARM A 25 to 44
- 4 ABC-01-052 F        45 ARM C 45 to 64
- 5 ABC-01-053 F        26 ARM B 25 to 44
- 6 ABC-01-054 M        44 ARM D 25 to 44
- 7 ABC-01-055 F        47 ARM C 45 to 64
- 8 ABC-01-056 M        31 ARM A 25 to 44
- 9 ABC-01-113 M        74 ARM D &gt;= 65   
-10 ABC-01-114 F        72 ARM B &gt;= 65   
-# … with 75 more rows
-# ℹ Use `print(n = ...)` to see more rows
-
-# A tibble: 85 × 5
-   USUBJID    SEX     AGE ARM   AGECAT  
-   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
- 1 ABC-01-049 M        39 ARM D 25 to 44
- 2 ABC-01-050 M        47 ARM B 45 to 64
- 3 ABC-01-051 M        34 ARM A 25 to 44
- 4 ABC-01-052 F        45 ARM C 45 to 64
- 5 ABC-01-053 F        26 ARM B 25 to 44
- 6 ABC-01-054 M        44 ARM D 25 to 44
- 7 ABC-01-055 F        47 ARM C 45 to 64
- 8 ABC-01-056 M        31 ARM A 25 to 44
- 9 ABC-01-113 M        74 ARM D &gt;= 65   
-10 ABC-01-114 F        72 ARM B &gt;= 65   
-# … with 75 more rows
-# ℹ Use `print(n = ...)` to see more rows
 
 Convert agecat to factor it will sort correctly
 
@@ -388,13 +346,49 @@ Combine 4 plots into 1 using patchwork
 Create and print report
 =========================================================================
 
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpqsSwWj/output/example12.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 9/36
+- page_header: left=Sponsor: Company right=Study: ABC
+- footnote 1: 'Program: DM_Figure.R'
+- page_footer: left=Date Produced: 28Nov22 17:11 center= right=Page [pg] of [tpg]
+- content: 
+# A plot specification: 
+- height: 4.5
+- width: 7
+- title 1: 'Figure 3.2'
+- title 2: 'Distribution of Subjects by Treatment Group'
+
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpqsSwWj/output/example12.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 9/36
+- page_header: left=Sponsor: Company right=Study: ABC
+- footnote 1: 'Program: DM_Figure.R'
+- page_footer: left=Date Produced: 28Nov22 17:11 center= right=Page [pg] of [tpg]
+- content: 
+# A plot specification: 
+- height: 4.5
+- width: 7
+- title 1: 'Figure 3.2'
+- title 2: 'Distribution of Subjects by Treatment Group'
+
 lib_sync: synchronized data in library 'sdtm'
 
 lib_unload: library 'sdtm' unloaded
 
+lib_unload: library 'sdtm' unloaded
+
 =========================================================================
-Log End Time: 2022-10-10 22:18:43
-Log Elapsed Time: 0 00:00:03
+Log End Time: 2022-11-28 17:11:43
+Log Elapsed Time: 0 00:00:27
 =========================================================================
 
 </code></pre>

@@ -6,3 +6,4 @@
 ^logo\.png$
 ^\.github$
 ^codecov\.yml$
+^LICENSE\.md$
