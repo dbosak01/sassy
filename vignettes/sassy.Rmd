@@ -20,7 +20,7 @@ The package brings several useful SAS® concepts to R, including
 data libraries, formats and format catalogs, data dictionaries, a data step,
 a traceable log, and a reporting package with a variety of printable report types.
 
-The **sassy** family of packages is meant to compliment the 
+The **sassy** family of packages is meant to complement the 
 **tidyverse**.  While the **tidyverse** focuses mainly on data manipulation
 and development tools, the **sassy** packages are focused more on 
 formatting and reporting. For most projects, it is expected that users will 
