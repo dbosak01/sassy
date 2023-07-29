@@ -1,4 +1,5 @@
 
+utils::globalVariables(c("hello", "goodbye", "x", "tst", "mpg"))
 
 # Operational Qualification -----------------------------------------------
 
@@ -203,7 +204,7 @@ check_common <- function() {
                       stringsAsFactors = FALSE)
 
   # Check for v() function
-  res <- c(hello, goodbye)
+  res <- v(hello, goodbye)
   tmp <- tmplt
   tmp[1, "Description"] <- "v() function works as expected."
   if (any(res !=  c("hello", "goodbye"))) {
@@ -220,7 +221,7 @@ check_common <- function() {
 
 
   # Check for sort() function
-  res <- sort(mtcars[1:5, ], by = 'mpg')
+  res <- sort(datasets::mtcars[1:5, ], by = 'mpg')
   tmp <- tmplt
   tmp[1, "Description"] <- "sort() function works as expected."
   if (any(res$mpg !=  c(18.7, 21.0, 21.0, 21.4, 22.8))) {
@@ -233,11 +234,11 @@ check_common <- function() {
     put("sort() function check passed.")
   }
 
-  ret <- tmp
+  ret <- rbind(ret, tmp)
 
 
   # Check for labels() function
-  dt <- mtcars
+  dt <- datasets::mtcars
   labels(dt) <- list(mpg = "Miles", cyl = "Cylin")
   res <- labels(dt)
   tmp <- tmplt
@@ -287,7 +288,7 @@ check_common <- function() {
 
 
   # Check for find.names() function
-  res <- find.names(mtcars, pattern = "d*")
+  res <- find.names(datasets::mtcars, pattern = "d*")
   tmp <- tmplt
   tmp[1, "Description"] <- "find.names() function works as expected."
   if (any(res != c("disp", "drat"))) {
@@ -304,7 +305,7 @@ check_common <- function() {
 
 
   # Check for copy.attributes() function
-  dt2 <- mtcars
+  dt2 <- datasets::mtcars
   dt2 <- copy.attributes(dt, dt2)
   res <- labels(dt2)
   tmp <- tmplt
@@ -342,7 +343,7 @@ check_logr <- function(lpth) {
  pth <- file.path(lpth, "test.log")
  pth2 <- log_open(pth, logdir = FALSE)
  log_print("Test me")
- log_print(mtcars)
+ log_print(datasets::mtcars)
  log_close()
  tmp <- tmplt
   if (file.exists(pth) == FALSE) {
@@ -369,7 +370,7 @@ check_fmtr <- function(opth) {
                       Message = "",
                       stringsAsFactors = FALSE)
 
-  dt <- mtcars[1:5, ]
+  dt <- datasets::mtcars[1:5, ]
   put("Source dataset:")
   put(dt)
 
@@ -493,7 +494,7 @@ check_libr <- function(dpth) {
   file.copy(file.path(dir, "DM.csv"), file.path(dpth, "DM.csv"))
   file.copy(file.path(dir, "DS.csv"), file.path(dpth, "DS.csv"))
 
-  dt <- mtcars[1:5, ]
+  dt <- datasets::mtcars[1:5, ]
   put("Source dataset:")
   put(dt)
 
@@ -612,7 +613,7 @@ check_reporter<- function(opth) {
 
   pth <- file.path(opth, "test")
 
-  dt <- mtcars[1:5, ]
+  dt <- datasets::mtcars[1:5, ]
   put("Source dataset:")
   put(dt)
 
@@ -718,12 +719,12 @@ check_procs <- function(opth) {
                       Message = "",
                       stringsAsFactors = FALSE)
 
-  dt <- mtcars[1:5, ]
+  dt <- datasets::mtcars[1:5, ]
   put("Source dataset:")
   put(dt)
 
   # Check for proc_freq() function
-  res <- proc_freq(dt, tables = v(cyl, gear, comb = cyl * gear),
+  res <- proc_freq(dt, tables = c("cyl", "gear", comb = "cyl * gear"),
                    options = "noprint")
   tmp <- tmplt
   tmp[1, "Description"] <- "proc_freq() function works as expected."
@@ -741,7 +742,7 @@ check_procs <- function(opth) {
   ret <- tmp
 
   # Check for proc_means() function
-  res <- proc_means(dt, var = v(cyl, gear),
+  res <- proc_means(dt, var = c("cyl", "gear"),
                    options = "noprint")
   tmp <- tmplt
   tmp[1, "Description"] <- "proc_means() function works as expected."
