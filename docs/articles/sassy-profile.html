@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy-profile_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 8: Patient Profile</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-profile.Rmd"><code>vignettes/sassy-profile.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy-profile.Rmd" class="external-link"><code>vignettes/sassy-profile.Rmd</code></a></small>
       <div class="hidden name"><code>sassy-profile.Rmd</code></div>
 
     </div>
@@ -143,9 +203,9 @@
 <p>Below is an example showing a patient profile report. Every
 organization has their own way of presenting patient profiles. This is
 an example of a “master and detail” type of report.</p>
-<div id="program" class="section level2">
-<h2 class="hasAnchor">
-<a href="#program" class="anchor"></a>Program</h2>
+<div class="section level2">
+<h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
+</h2>
 <p>Note the following about this example:</p>
 <ul>
 <li>A loop is used to append separate tables for each patient.</li>
@@ -154,16 +214,16 @@ an example of a “master and detail” type of report.</p>
 <strong>fmtr</strong> package.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>        <span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get temp location for log and report output</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example8.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example8.log"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Get data ----------------------------------------------------------------</span></span>
@@ -171,7 +231,7 @@ an example of a “master and detail” type of report.</p>
 <span></span>
 <span></span>
 <span><span class="co"># Get sample data path</span></span>
-<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pth</span>, <span class="st">"csv"</span><span class="op">)</span></span>
@@ -185,7 +245,7 @@ an example of a “master and detail” type of report.</p>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Set labels"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"DM labels"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html">labels</a></span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>ARM <span class="op">=</span> <span class="st">"Treatment Group"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ARM <span class="op">=</span> <span class="st">"Treatment Group"</span>,</span>
 <span>                        SITEID <span class="op">=</span> <span class="st">"Centre"</span>,</span>
 <span>                        SUBJID <span class="op">=</span> <span class="st">"Subject"</span>, </span>
 <span>                        SEX <span class="op">=</span> <span class="st">"Sex"</span>, </span>
@@ -195,7 +255,7 @@ an example of a “master and detail” type of report.</p>
 <span>                        ARMCD <span class="op">=</span> <span class="st">"Treatment Code"</span></span>
 <span>                        <span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"AE labels"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html">labels</a></span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>AESTDTC <span class="op">=</span> <span class="st">"Event Start Date"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESTDTC <span class="op">=</span> <span class="st">"Event Start Date"</span>,</span>
 <span>                        AEENDTC <span class="op">=</span> <span class="st">"Event Stop Date"</span>,</span>
 <span>                        AESTDY <span class="op">=</span> <span class="st">"Start"</span>,</span>
 <span>                        AEENDY <span class="op">=</span> <span class="st">"End"</span>,</span>
@@ -237,11 +297,11 @@ an example of a “master and detail” type of report.</p>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM D"</span>, <span class="st">"Competitor"</span><span class="op">)</span><span class="op">)</span> </span>
 <span>                 </span>
 <span></span>
-<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="va">sexfmt</span>, </span>
+<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="va">sexfmt</span>, </span>
 <span>                         RACE <span class="op">=</span> <span class="va">racefmt</span>,</span>
 <span>                         ARM <span class="op">=</span> <span class="va">armfmt</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>AESEV <span class="op">=</span> <span class="va">sevfmt</span>,</span>
+<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESEV <span class="op">=</span> <span class="va">sevfmt</span>,</span>
 <span>                         AEREL <span class="op">=</span> <span class="va">relfmt</span>, </span>
 <span>                         AESER <span class="op">=</span> <span class="va">serfmt</span><span class="op">)</span> </span>
 <span></span>
@@ -251,39 +311,39 @@ an example of a “master and detail” type of report.</p>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dm</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SITEID</span>, <span class="va">SUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">RACE</span>, <span class="va">BRTHDTC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SITEID</span>, <span class="va">SUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">RACE</span>, <span class="va">BRTHDTC</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Split dm data by subject id</span></span>
-<span><span class="va">dmlst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">dm</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">dm</span><span class="op">$</span><span class="va">USUBJID</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dmlst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dm</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dm</span><span class="op">$</span><span class="va">USUBJID</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="va">ae</span> <span class="op">&lt;-</span> <span class="va">sdtm.AE</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESTDTC</span>, <span class="va">AEENDTC</span>, <span class="va">AESTDY</span>, </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESTDTC</span>, <span class="va">AEENDTC</span>, <span class="va">AESTDY</span>, </span>
 <span>         <span class="va">AEENDY</span>, <span class="va">AESOC</span>, <span class="va">AESEV</span>, <span class="va">AESER</span>, <span class="va">AEREL</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Split ae data by subject id</span></span>
-<span><span class="va">aelst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">ae</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">ae</span><span class="op">$</span><span class="va">USUBJID</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">aelst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">ae</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ae</span><span class="op">$</span><span class="va">USUBJID</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Create report -----------------------------------------------------------</span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create report"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create report first, outside loop</span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example8.docx"</span><span class="op">)</span>, </span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example8.docx"</span><span class="op">)</span>, </span>
 <span>                     font <span class="op">=</span> <span class="st">"Arial"</span>, output_type <span class="op">=</span> <span class="st">"DOCX"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Loop on subjects</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">id</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">dmlst</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">id</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">dmlst</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">dm_sub</span> <span class="op">&lt;-</span> <span class="va">dmlst</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="va">ae_sub</span> <span class="op">&lt;-</span> <span class="va">aelst</span><span class="op">[[</span><span class="va">id</span><span class="op">]</span><span class="op">]</span></span>
 <span>  </span>
 <span>  <span class="va">tb1</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">dm_sub</span>, width <span class="op">=</span> <span class="fl">8</span>, borders <span class="op">=</span> <span class="st">"outside"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.1 Subjects Narratives of Adverse Events"</span>,</span>
-<span>           <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Subject: "</span>, <span class="va">dm_sub</span><span class="op">[[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Subject: "</span>, <span class="va">dm_sub</span><span class="op">[[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu">define</span><span class="op">(</span><span class="va">AGE</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">ae_sub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">ae_sub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">tb2</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">ae_sub</span>, borders <span class="op">=</span> <span class="st">"outside"</span>, width <span class="op">=</span> <span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>      <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"AESTDY"</span>, <span class="st">"AEENDY"</span>, label <span class="op">=</span><span class="st">"Study Day"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>      <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -291,7 +351,7 @@ an example of a “master and detail” type of report.</p>
 <span>      <span class="fu">define</span><span class="op">(</span><span class="va">AESTDY</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>      <span class="fu">define</span><span class="op">(</span><span class="va">AEENDY</span>, align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>      <span class="fu">footnotes</span><span class="op">(</span><span class="st">"ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal"</span>,</span>
-<span>                <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"ᵇAction Taken: 01=None, 02=Investigational product dose altered, "</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"ᵇAction Taken: 01=None, 02=Investigational product dose altered, "</span>,</span>
 <span>                       <span class="st">"03=Medication taken, 04=Hospitalized, 05=Removed from study, "</span>,</span>
 <span>                       <span class="st">"06=Investigational product discontinued, 07=Transfusion performed,"</span>,</span>
 <span>                       <span class="st">"88=Other"</span><span class="op">)</span><span class="op">)</span></span>
@@ -323,15 +383,15 @@ an example of a “master and detail” type of report.</p>
 <span><span class="co"># View report</span></span>
 <span><span class="co"># file.show(res$modified_path)</span></span></code></pre></div>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor"></a>Output</h2>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h2>
 <p>Here is page 11 out of 87 pages in the output report:</p>
 <p><img src="../man/images/profile.png"></p>
 </div>
-<div id="log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log" class="anchor"></a>Log</h2>
+<div class="section level2">
+<h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
+</h2>
 <p>Here is most of the log from the above program:</p>
 <pre><code>=========================================================================
 Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp8cFaMB/log/example8.log
@@ -613,11 +673,13 @@ Log Elapsed Time: 0 00:00:05
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -625,6 +687,8 @@ Log Elapsed Time: 0 00:00:05
 
   
 
+
+  
 
   </body>
 </html>

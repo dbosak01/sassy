@@ -32,6 +32,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -44,19 +46,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="articles/sassy.html">Get started</a>
 </li>
@@ -106,6 +163,9 @@
     <li>
       <a href="articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -118,7 +178,7 @@
   <a href="news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -138,13 +198,12 @@
 
 
 <!-- badges: end -->
-<div id="introduction-to-sassy" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#introduction-to-sassy" class="anchor"></a>Introduction to <strong>sassy</strong>
+<div class="section level1">
+<div class="page-header"><h1 id="introduction-to-sassy">Introduction to <strong>sassy</strong>
+<a class="anchor" aria-label="anchor" href="#introduction-to-sassy"></a>
 </h1></div>
-<p><img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"></p>
-<p>For SAS® programmers, encountering R for the first time can be quite
-a shock.</p>
+<p><img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;height: 138px"></p>
+<p>For SAS® programmers, encountering R for the first time can be quite a shock.</p>
 <ul>
 <li>Where is the log?</li>
 <li>Where are my datasets?</li>
@@ -152,15 +211,9 @@ a shock.</p>
 <li>How do I create a format?</li>
 <li>How do I create a report?</li>
 </ul>
-<p>All these basic concepts that were so familiar and easy for you are
-suddenly gone. How can R possibly be a replacement for SAS®, when it
-can’t even create a decent log!</p>
-<p>If you are in this state of shock, or have asked yourself any of the
-above questions, then the <strong>sassy</strong> system is for you!</p>
-<p>The <strong>sassy</strong> system was designed to make data
-preparation and reporting in R easier for everyone, but especially for
-SAS® programmers. The system brings many useful SAS® concepts to R. With
-the <strong>sassy</strong> system you can:</p>
+<p>All these basic concepts that were so familiar and easy for you are suddenly gone. How can R possibly be a replacement for SAS®, when it can’t even create a decent log!</p>
+<p>If you are in this state of shock, or have asked yourself any of the above questions, then the <strong>sassy</strong> system is for you!</p>
+<p>The <strong>sassy</strong> system was designed to make data preparation and reporting in R easier for everyone, but especially for SAS® programmers. The system brings many useful SAS® concepts to R. With the <strong>sassy</strong> system you can:</p>
 <ul>
 <li>Create a libname</li>
 <li>Create a format catalog</li>
@@ -168,52 +221,32 @@ the <strong>sassy</strong> system you can:</p>
 <li>Write a report in a few lines of code</li>
 <li>And more!</li>
 </ul>
-<p>And all of the above activities can be recorded in a traceable
-log!</p>
-<p>The <strong>sassy</strong> system totally changes the flow of the
-typical R script. It greatly simplifies the script, significantly
-reduces the number of lines of code, and generally makes the flow more
-similar to a SAS® program.</p>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
-<p>The <strong>sassy</strong> meta-package is published on CRAN. You can
-install it with the following console command:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sassy"</span>)</span></code></pre></div>
+<p>And all of the above activities can be recorded in a traceable log!</p>
+<p>The <strong>sassy</strong> system totally changes the flow of the typical R script. It greatly simplifies the script, significantly reduces the number of lines of code, and generally makes the flow more similar to a SAS® program.</p>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
+<p>The <strong>sassy</strong> meta-package is published on CRAN. You can install it with the following console command:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sassy"</span>)</span></code></pre></div>
 <p>Then put the following line at the top of your script:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sassy)</span></code></pre></div>
-<p>The above commands will install and load a set of packages that will
-allow you to think about programming in R very much the same way you
-thought about programming in SAS®.</p>
-<p>It is not <em>identical</em> to SAS®. R is, after all, a very
-different language. R is functional, vector-based, and runs entirely in
-memory. As a result, the syntax of <strong>sassy</strong> functions will
-be different than their corresponding SAS® functions.</p>
-<p>The <strong>sassy</strong> functions will, however, have a similar
-feel. Overall, you will find programming with the <strong>sassy</strong>
-system much more comfortable than programming in <strong>Base R</strong>
-or <strong>tidyverse</strong> alone.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(sassy)</span></code></pre></div>
+<p>The above commands will install and load a set of packages that will allow you to think about programming in R very much the same way you thought about programming in SAS®.</p>
+<p>It is not <em>identical</em> to SAS®. R is, after all, a very different language. R is functional, vector-based, and runs entirely in memory. As a result, the syntax of <strong>sassy</strong> functions will be different than their corresponding SAS® functions.</p>
+<p>The <strong>sassy</strong> functions will, however, have a similar feel. Overall, you will find programming with the <strong>sassy</strong> system much more comfortable than programming in <strong>Base R</strong> or <strong>tidyverse</strong> alone.</p>
 </div>
-<div id="next-steps" class="section level3">
-<h3 class="hasAnchor">
-<a href="#next-steps" class="anchor"></a>Next Steps</h3>
-<p>Next, you should read the <a href="https://sassy.r-sassy.org/articles/sassy.html">Get started</a>
-page, and look at some examples. From these pages, you will be able to
-link into each of the packages included in the <strong>sassy</strong>
-system, and explore them in depth.</p>
+<div class="section level3">
+<h3 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h3>
+<p>Next, you should read the <a href="https://sassy.r-sassy.org/articles/sassy.html">Get started</a> page, and look at some examples. From these pages, you will be able to link into each of the packages included in the <strong>sassy</strong> system, and explore them in depth.</p>
 <p>Have fun!</p>
 </div>
-<div id="getting-help" class="section level3">
-<h3 class="hasAnchor">
-<a href="#getting-help" class="anchor"></a>Getting Help</h3>
-<p>If you need help with the <strong>sassy</strong> family of packages,
-the best place to turn to is the <a href="https://sassy.r-sassy.org">r-sassy</a> web site.<br>
-This web site offers many examples, and full documentation on every
-function.</p>
-<p>If you want to look at the code for the <strong>sassy</strong>
-package, visit the github page <a href="https://github.com/dbosak01/sassy">here</a>.</p>
-<p>If you encounter a bug or have a feature request, please submit an
-issue <a href="https://github.com/dbosak01/sassy/issues">here</a>.</p>
+<div class="section level3">
+<h3 id="getting-help">Getting Help<a class="anchor" aria-label="anchor" href="#getting-help"></a>
+</h3>
+<p>If you need help with the <strong>sassy</strong> family of packages, the best place to turn to is the <a href="https://sassy.r-sassy.org">r-sassy</a> web site.<br>
+This web site offers many examples, and full documentation on every function.</p>
+<p>If you want to look at the code for the <strong>sassy</strong> package, visit the github page <a href="https://github.com/dbosak01/sassy" class="external-link">here</a>.</p>
+<p>If you encounter a bug or have a feature request, please submit an issue <a href="https://github.com/dbosak01/sassy/issues" class="external-link">here</a>.</p>
 </div>
 </div>
 
@@ -221,51 +254,61 @@ issue <a href="https://github.com/dbosak01/sassy/issues">here</a>.</p>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=sassy">https://​cloud.r-project.org/​package=sassy</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/dbosak01/sassy/">https://​github.com/​dbosak01/​sassy/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/dbosak01/sassy/issues">https://​github.com/​dbosak01/​sassy/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=sassy" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/dbosak01/sassy/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/dbosak01/sassy/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small>CC0</small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing sassy</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>David Bosak <br><small class="roles"> Maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=sassy"><img src="https://www.r-pkg.org/badges/version/sassy" alt="sassy version"></a></li>
-<li><a href="https://cran.r-project.org/package=sassy"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="sassy lifecycle"></a></li>
-<li><a href="https://cran.r-project.org/package=sassy"><img src="https://cranlogs.r-pkg.org/badges/sassy" alt="sassy downloads"></a></li>
-<li><a href="https://cran.r-project.org/package=sassy"><img src="https://cranlogs.r-pkg.org/badges/grand-total/sassy" alt="sassy total downloads"></a></li>
-<li><a href="https://github.com/dbosak01/sassy/actions"><img src="https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/dbosak01/sassy?branch=master"><img src="https://codecov.io/gh/dbosak01/sassy/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=sassy" class="external-link"><img src="https://www.r-pkg.org/badges/version/sassy" alt="sassy version"></a></li>
+<li><a href="https://cran.r-project.org/package=sassy" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-blue.svg" alt="sassy lifecycle"></a></li>
+<li><a href="https://cran.r-project.org/package=sassy" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/sassy" alt="sassy downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=sassy" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/sassy" alt="sassy total downloads"></a></li>
+<li><a href="https://github.com/dbosak01/sassy/actions" class="external-link"><img src="https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/dbosak01/sassy?branch=master" class="external-link"><img src="https://codecov.io/gh/dbosak01/sassy/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -273,6 +316,8 @@ issue <a href="https://github.com/dbosak01/sassy/issues">here</a>.</p>
 
   
 
+
+  
 
   </body>
 </html>

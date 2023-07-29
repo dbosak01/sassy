@@ -84,12 +84,14 @@
 #' # View log
 #' # file.show(lgpth)
 #' @docType package
+#' @keywords internal
 #' @name sassy
 #' @import common
 #' @import logr
 #' @import fmtr
 #' @import libr
 #' @import reporter
+#' @import procs
 NULL
 
 
@@ -101,5 +103,13 @@ NULL
   do.call("library", list("fmtr"))
   do.call("library", list("libr"))
   do.call("library", list("reporter"))
+  do.call("library", list("procs"))
 
 }
+
+
+
+
+
+
+

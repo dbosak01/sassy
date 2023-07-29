@@ -10,7 +10,7 @@
 <!-- badges: end -->
 
 # Introduction to **sassy**
-<img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;"/>
+<img src="./man/images/logo_blue.png" align="left" height="138" style="margin-right: 20px;margin-bottom: 30px;height: 138px"/>
 
 For SAS® programmers, encountering R for the first time can be quite a shock.
 

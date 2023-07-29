@@ -42,6 +42,9 @@ ability to write reports in TXT, RTF, PDF, and DOCX file formats
 * **[common](https://common.r-sassy.org)**: A set of utility functions
 shared across the **sassy** family of packages, and often 
 useful in their own right. 
+* **[procs](https://procs.r-sassy.org)**: A set of functions that simulate
+SAS® procedures.  Package includes simulations of PROC FREQ, PROC MEANS,
+PROC TRANSPOSE, PROC SORT, and PROC PRINT.
 
 The above links will take you into the respective packages for a deep
 dive on their capabilities.  

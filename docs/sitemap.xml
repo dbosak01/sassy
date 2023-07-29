@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://sassy.r-sassy.org/index.html</loc>
+    <loc>https://sassy.r-sassy.org/404.html</loc>
   </url>
   <url>
-    <loc>https://sassy.r-sassy.org/reference/sassy.html</loc>
+    <loc>https://sassy.r-sassy.org/articles/index.html</loc>
   </url>
   <url>
     <loc>https://sassy.r-sassy.org/articles/sassy-ae.html</loc>
@@ -50,5 +50,29 @@
   </url>
   <url>
     <loc>https://sassy.r-sassy.org/articles/sassy.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/authors.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/reference/run_iq.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/reference/run_oq.html</loc>
+  </url>
+  <url>
+    <loc>https://sassy.r-sassy.org/reference/sassy.html</loc>
   </url>
 </urlset>

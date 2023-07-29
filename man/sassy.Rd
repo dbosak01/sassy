@@ -93,3 +93,4 @@ writeLines(readLines(lgpth, encoding = "UTF-8"))
 # View log
 # file.show(lgpth)
 }
+\keyword{internal}

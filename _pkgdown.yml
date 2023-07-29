@@ -17,6 +17,14 @@ articles:
   - sassy-plisting
   - sassy-pfigure
   - sassy-disclaimers
+  - sassy-faq
+
+reference:
+- title: All Functions
+  desc: Functions to validate the sassy system packages.
+  contents:
+  - run_iq
+  - run_oq
 
 navbar:
   type: inverse

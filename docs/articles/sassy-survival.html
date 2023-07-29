@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy-survival_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 7: Survival Analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-survival.Rmd"><code>vignettes/sassy-survival.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy-survival.Rmd" class="external-link"><code>vignettes/sassy-survival.Rmd</code></a></small>
       <div class="hidden name"><code>sassy-survival.Rmd</code></div>
 
     </div>
@@ -143,9 +203,9 @@
 <p>Below is another complete example showing how <strong>sassy</strong>
 functions interact with <strong>tidyverse</strong> to create a survival
 analysis. This is the most complicated example in the documentation.</p>
-<div id="program" class="section level2">
-<h2 class="hasAnchor">
-<a href="#program" class="anchor"></a>Program</h2>
+<div class="section level2">
+<h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
+</h2>
 <p>There are several interesting aspects to this report. The first is
 that the <strong>reporter</strong> package gives you the freedom to
 perform any analysis you want. Any statistics that R can produce may be
@@ -164,411 +224,411 @@ counts. The second table <code>tbl2</code> is marked as
 tables are lined up so they appear as one table. This technique of
 stacking one table on top of another allows you to create very complex
 tables in a straight-forward manner.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sassy)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="st">"logr.autolog"</span> <span class="ot">=</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"logr.notes"</span> <span class="ot">=</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Get temp location for log and report output</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Open Log</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>lf <span class="ot">&lt;-</span> <span class="fu">log_open</span>(<span class="fu">file.path</span>(tmp, <span class="st">"example7.log"</span>))</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Load and Filter Data  --------------------------------------------------</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Load and Filter Data"</span>)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Get path to sample data</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>pkg <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package =</span> <span class="st">"sassy"</span>)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Get adam data</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">libname</span>(adam, pkg, <span class="st">"sas7bdat"</span>)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data into memory</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lib_load</span>(adam)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adam.adsl <span class="sc">|&gt;</span>    </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, SEX, AGEGR1, AGE, ARM) <span class="sc">|&gt;</span> </span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ARM <span class="sc">!=</span> <span class="st">"SCREEN FAILURE"</span>) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>adpsga <span class="ot">&lt;-</span> adam.adpsga <span class="sc">|&gt;</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span><span class="st">"PSGA"</span> <span class="sc">&amp;</span> TRTA <span class="sc">!=</span> <span class="st">""</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(AVISITN)) <span class="sc">|&gt;</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTA, AVISIT, AVISITN, AVAL, CRIT1FL) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Get population counts</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>arm_pop <span class="ot">&lt;-</span> adsl <span class="sc">|&gt;</span> <span class="fu">count</span>(ARM) <span class="sc">|&gt;</span> <span class="fu">deframe</span>() <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare Data ------------------------------------------------------------</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Prepare data for analysis"</span>)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Determine minimum visit at which success was achieved"</span>)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>adpsga_minvsuccess <span class="ot">&lt;-</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>  adpsga <span class="sc">|&gt;</span> </span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CRIT1FL <span class="sc">==</span> <span class="st">'Y'</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">|&gt;</span> </span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">minvisit =</span> <span class="fu">min</span>(AVISITN)) </span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get subjects which did not achieve success"</span>)</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>adpsga_nosuccess <span class="ot">&lt;-</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(adpsga, adpsga_minvsuccess, <span class="at">by =</span> (<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">|&gt;</span> </span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">maxvisit =</span> <span class="fu">max</span>(AVISITN)) </span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Combine subjects cured with subjects not cured"</span>)</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>adslpsga_final <span class="ot">&lt;-</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(adsl, adpsga, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(adpsga_minvsuccess, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(adpsga_nosuccess, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>((AVISITN <span class="sc">==</span> minvisit <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(minvisit)) <span class="sc">|</span> </span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>           (AVISITN <span class="sc">==</span> maxvisit <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(maxvisit))) <span class="sc">|&gt;</span> </span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cured    =</span> <span class="fu">case_when</span>(CRIT1FL <span class="sc">==</span> <span class="st">"Y"</span> <span class="sc">~</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>                              <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.logical</span>(<span class="cn">FALSE</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>minvisit, <span class="sc">-</span>maxvisit)</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Counts  ---------------------------------------------------------------</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Counts and Statistical Tests"</span>)</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Count patients with PSGA &lt;= 1"</span>)</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>success_counts <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cured <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(TRTA) <span class="sc">|&gt;</span> </span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRTA, </span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">block =</span> <span class="st">"counts"</span>,</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Number of patients with PSGA &lt;= 1"</span>,</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM A"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM B"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM C"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM D"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>            <span class="fu">put</span>()</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Count patients with PSGA &gt; 1"</span>)</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>failed_counts <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cured <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(TRTA) <span class="sc">|&gt;</span> </span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRTA, </span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">block =</span> <span class="st">"counts"</span>,</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Number of Censored Subjects (PSGA &gt; 1)"</span>,</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM A"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM B"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM C"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ARM D"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>count_block <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(success_counts, failed_counts)</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="co"># Kaplan-Meier estimates ----------------------------------------------------</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Kaplan-Meier Tests"</span>)</span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create survival vector"</span>)</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>surv_vct <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> adslpsga_final<span class="sc">$</span>AVISITN, <span class="at">event =</span> adslpsga_final<span class="sc">$</span>cured) <span class="sc">|&gt;</span> </span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Fit model on survival vector"</span>)</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>stats_survfit_trta <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">survfit</span>(surv_vct <span class="sc">~</span> TRTA, <span class="at">data =</span> adslpsga_final, ) <span class="sc">|&gt;</span> </span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get model quantiles"</span>)</span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>stats_survfit_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stats_survfit_trta)</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get lower confidence intervals"</span>)</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> </span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>lower) <span class="sc">|&gt;</span> </span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get upper confidence intervals"</span>)</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> </span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>upper) <span class="sc">|&gt;</span> </span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>  rownames_to_column <span class="sc">|&gt;</span> </span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"upper"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get confidence intervals"</span>)</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">&lt;-</span></span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(ci_lower, ci_upper)  <span class="sc">|&gt;</span> </span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(lower), <span class="st">"-"</span>, lower)</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>                     , <span class="st">", "</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(upper), <span class="st">"-"</span>, upper), <span class="st">")"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"Q"</span>),</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> ci) <span class="sc">|&gt;</span> </span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order=</span><span class="dv">2</span>,</span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>         <span class="at">label1   =</span> <span class="fu">case_when</span>(Q <span class="sc">==</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"25th  percentile (weeks)"</span>,</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">"Median (weeks)"</span>,</span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"75th  percentile (weeks)"</span>),</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>         <span class="at">label2   =</span> <span class="st">"95% Confidence Interval**"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(block, Q, order, label1, label2, </span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get quantiles"</span>)</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>quants <span class="ot">&lt;-</span></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>quantile) <span class="sc">|&gt;</span> </span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a>  rownames_to_column <span class="sc">|&gt;</span> </span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"Q"</span>),</span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> value) <span class="sc">|&gt;</span> </span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order=</span><span class="dv">1</span>,</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>         <span class="at">label1   =</span> <span class="fu">case_when</span>(Q <span class="sc">==</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"25th  percentile (weeks)"</span>,</span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">"Median (weeks)"</span>,</span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"75th  percentile (weeks)"</span>),</span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>         <span class="at">label2   =</span> <span class="st">""</span>,</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(block, Q, order, label1, label2, </span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Final arrangement"</span>)</span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>kaplan_block <span class="ot">&lt;-</span></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(quants, ci) <span class="sc">|&gt;</span> </span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(block, Q, order) <span class="sc">|&gt;</span> </span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(block, </span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>            label1, </span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>            <span class="at">label2 =</span> <span class="fu">ifelse</span>(label2 <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, label2),</span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>            <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a><span class="co"># Cox Proportional Hazards  -----------------------------------------------</span></span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Cox Proportional Hazards Test"</span>)</span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Run Cox tests"</span>)</span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>stats_surv_cph   <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">coxph</span>(surv_vct <span class="sc">~</span> TRTA, <span class="at">data =</span> adslpsga_final) <span class="sc">|&gt;</span></span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create summary statistics on Cox results"</span>)</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>cph_summary <span class="ot">&lt;-</span></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>(stats_surv_cph) <span class="sc">|&gt;</span> </span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Extract coefficients"</span>)</span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>cph_coef <span class="ot">&lt;-</span> </span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(cph_summary<span class="sc">$</span>coefficients) <span class="sc">|&gt;</span> </span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">5</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Extract confidence intervals"</span>)</span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>cph_ci <span class="ot">&lt;-</span> </span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>  cph_summary<span class="sc">$</span>conf.int <span class="sc">|&gt;</span> </span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(cph_summary<span class="sc">$</span>conf) <span class="sc">|&gt;</span> </span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create cox statistics block"</span>)</span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>cox_block <span class="ot">&lt;-</span></span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(cph_coef, cph_ci) <span class="sc">|&gt;</span> </span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">hazard =</span> <span class="st">`</span><span class="at">exp(coef)...3</span><span class="st">`</span>, <span class="at">pval =</span> <span class="st">`</span><span class="at">Pr(&gt;|z|)</span><span class="st">`</span>, </span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>         <span class="at">lower =</span> <span class="st">`</span><span class="at">lower .95</span><span class="st">`</span>, <span class="at">upper =</span> <span class="st">`</span><span class="at">upper .95</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(TRTA, hazard, pval, lower, upper) <span class="sc">|&gt;</span> </span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"cox"</span>, </span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci =</span> <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(lower), <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, lower))</span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>                        , <span class="st">", "</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(upper), <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, upper)), <span class="st">")"</span>),</span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>         <span class="at">hazard =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, hazard),</span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>         <span class="at">pval   =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, pval)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"hazard"</span>, <span class="st">"pval"</span>, <span class="st">"ci"</span>),</span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"stat"</span>,</span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"stat"</span>),</span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> value) <span class="sc">|&gt;</span> </span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label1 =</span> <span class="fu">case_when</span>(stat <span class="sc">==</span> <span class="st">"hazard"</span>  </span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>                              <span class="sc">~</span> <span class="st">"Hazard Ratio (Each Treatment Group - ARM A)***"</span>,</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>                            stat <span class="sc">==</span> <span class="st">"pval"</span> <span class="sc">~</span> <span class="st">"P-value"</span>,</span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"95% CI of Hazard Ratio"</span>),</span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>         <span class="at">label2 =</span> <span class="fu">as.character</span>(<span class="cn">NA</span>),</span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(block, label1, label2, <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Combine statistics blocks"</span>)</span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>stat_block <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(kaplan_block, cox_block) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Survival Plot -------------------------------------------------------</span></span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Create survival plot"</span>)</span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create data frame with zero values for each visit"</span>)</span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>arms <span class="ot">&lt;-</span> <span class="fu">unique</span>(adslpsga_final<span class="sc">$</span>ARM)</span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>visits <span class="ot">&lt;-</span> <span class="fu">unique</span>(adslpsga_final<span class="sc">$</span>AVISITN)</span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>all_visits <span class="ot">&lt;-</span> <span class="fu">rep</span>(arms, <span class="fu">length</span>(visits))</span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>all_visits <span class="ot">&lt;-</span> all_visits[<span class="fu">order</span>(all_visits)] </span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create visit template"</span>)</span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ARM =</span> all_visits, </span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>                 <span class="at">AVISIT =</span> <span class="fu">paste</span>(<span class="st">"Week"</span>, visits), </span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>                 <span class="at">AVISITN =</span> visits,</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cured =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Calculate cummulative sum and percent"</span>)</span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>adslpsga_plot <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ARM, AVISIT, AVISITN, cured) <span class="sc">|&gt;</span> </span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df) <span class="sc">|&gt;</span> </span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ARM, AVISIT, AVISITN) <span class="sc">|&gt;</span> </span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sumc =</span> <span class="fu">sum</span>(cured)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(ARM, AVISITN) <span class="sc">|&gt;</span> </span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ARM) <span class="sc">|&gt;</span> </span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVISIT =</span> <span class="fu">ifelse</span>(AVISIT <span class="sc">==</span> <span class="st">"Week 0"</span>, <span class="st">"Day 1 Baseline"</span>, AVISIT),</span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a>         <span class="at">csumc =</span> <span class="fu">cumsum</span>(sumc)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="fu">case_when</span>(ARM <span class="sc">==</span> <span class="st">"ARM A"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM A"</span>], </span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM B"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM B"</span>],</span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM C"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM C"</span>], </span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM D"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM D"</span>])) <span class="sc">|&gt;</span> </span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>  <span class="fu">put</span>()</span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a><span class="co"># Add factor to ensure sort order is correct</span></span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>adslpsga_plot<span class="sc">$</span>AVISIT <span class="ot">&lt;-</span> <span class="fu">factor</span>(adslpsga_plot<span class="sc">$</span>AVISIT, </span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Day 1 Baseline"</span>, </span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 2"</span>, </span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 4"</span>, </span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 6"</span>, </span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 8"</span>, </span>
-<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 12"</span>,</span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a>                                          <span class="st">"Week 16"</span>))</span>
-<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Generate plot"</span>)</span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a>surv_gg <span class="ot">&lt;-</span> adslpsga_plot <span class="sc">|&gt;</span> </span>
-<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> pct, <span class="at">x =</span> AVISIT , <span class="at">group =</span> ARM)) <span class="sc">+</span> </span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> ARM, <span class="at">color =</span> ARM)) <span class="sc">+</span> </span>
-<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> ARM, <span class="at">color =</span> ARM)) <span class="sc">+</span></span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Study Week"</span>) <span class="sc">+</span></span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Proportion of Subjects with Initial Success"</span>)</span>
-<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a><span class="co"># Print Report ------------------------------------------------------------</span></span>
-<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Create and print report"</span>)</span>
-<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a><span class="co"># Create Table 1 with header</span></span>
-<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>tbl1 <span class="ot">&lt;-</span> <span class="fu">create_table</span>(count_block, <span class="at">width =</span> <span class="dv">9</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_defaults</span>(<span class="at">from =</span> <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="at">to =</span> <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>, <span class="at">align =</span> <span class="st">"center"</span>, <span class="at">width =</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(block, <span class="at">visible =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(label, <span class="at">label =</span> <span class="st">""</span>, <span class="at">width =</span> <span class="fl">4.25</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM A"</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM B"</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM C"</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM D"</span>]) <span class="sc">|&gt;</span> </span>
-<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Table 5.0"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">blank_row =</span> <span class="st">"above"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Analysis of Time to Initial PSGA Success* in Weeks"</span>, </span>
-<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Safety Population"</span>)</span>
-<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>  label_lookup <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="at">surv =</span> <span class="st">"Kaplan-Meier estimates"</span>,</span>
-<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>                     <span class="at">cox =</span> <span class="st">"Results of Proportional Hazards Regression Analysis"</span>)</span>
-<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a><span class="co"># Create table 2 for statistics with stub and without header</span></span>
-<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a>tbl2 <span class="ot">&lt;-</span> <span class="fu">create_table</span>(stat_block, <span class="at">width =</span> <span class="dv">9</span>, <span class="at">headerless =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_defaults</span>(<span class="at">from =</span> <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="at">to =</span> <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>, <span class="at">align =</span> <span class="st">"center"</span>, <span class="at">width =</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stub</span>(<span class="fu">c</span>(block, label1, label2), <span class="at">width =</span> <span class="fl">4.25</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(block, <span class="at">label_row =</span> <span class="cn">TRUE</span>, <span class="at">format =</span> label_lookup, <span class="at">blank_after =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(label1, <span class="at">indent =</span> .<span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(label2, <span class="at">indent =</span> .<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) </span>
-<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
-<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(surv_gg, <span class="fl">3.5</span>, <span class="dv">9</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Figure 5.0"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">blank_row =</span> <span class="st">"above"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Kaplan-Meier Plot for Time to Initial PSGA Success (PSGA &lt;= 1)"</span>,</span>
-<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Safety Population"</span>, <span class="at">blank_row =</span> <span class="st">"none"</span>)</span>
-<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create Report"</span>)</span>
-<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a><span class="co"># Add table 1, table 2, and plot content to the same report.</span></span>
-<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot will be on a separate page with it's own title.</span></span>
-<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>rpt <span class="ot">&lt;-</span> <span class="fu">create_report</span>(<span class="fu">file.path</span>(tmp, <span class="st">"output/example7.rtf"</span>), <span class="at">output_type =</span> <span class="st">"RTF"</span>, </span>
-<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a>                     <span class="at">font =</span> <span class="st">"Arial"</span>, <span class="at">missing =</span> <span class="st">"-"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_margins</span>(<span class="at">top =</span> <span class="dv">1</span>, <span class="at">bottom =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>  <span class="fu">page_header</span>(<span class="st">"Sponsor: Client"</span>, <span class="st">"Study: ABC/BBC"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_content</span>(tbl1, <span class="at">page_break =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_content</span>(tbl2) <span class="sc">|&gt;</span> </span>
-<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_content</span>(plt) <span class="sc">|&gt;</span> </span>
-<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a>  <span class="fu">footnotes</span>(<span class="st">"Program: Surv_Table.R"</span>,</span>
-<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>            <span class="st">"* Success: PSGA &lt;= 1: PSGA &gt; 1"</span>,</span>
-<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>            <span class="st">"** Based on R survival package survfit() function"</span>,</span>
-<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"*** Based on proportional hazards model with treatment"</span>,</span>
-<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"indicator variables as explanatory variables"</span>),</span>
-<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Note: The end-point is cure of the disease (PSGA &lt;= 1)."</span>),</span>
-<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a>            <span class="st">"  The probability of remaining diseased (PSGA &gt; 1) defines the survival function"</span>,</span>
-<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Note: A subject who is not cured by the end of 12 weeks or is lost"</span>,</span>
-<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a>            <span class="st">"to follow provides a censored observation for the analysis."</span>),</span>
-<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a>            <span class="st">"</span><span class="sc">\"</span><span class="st">-</span><span class="sc">\"</span><span class="st"> = Not Applicable"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a>  <span class="fu">page_footer</span>(<span class="st">"Date Produced: "</span> <span class="sc">%p%</span> <span class="fu">fapply</span>(<span class="fu">Sys.time</span>(), <span class="st">"%d%b%y %H:%M"</span>), </span>
-<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>              <span class="at">right =</span> <span class="st">"Page [pg] of [tpg]"</span>)</span>
-<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Write out the report"</span>)</span>
-<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">write_report</span>(rpt) </span>
-<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
-<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Clean Up"</span>)</span>
-<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a><span class="fu">lib_unload</span>(adam)</span>
-<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a><span class="co"># Close log</span></span>
-<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a><span class="fu">log_close</span>()</span>
-<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a><span class="co"># View log</span></span>
-<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">readLines</span>(lf, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>))</span>
-<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a><span class="co"># View report</span></span>
-<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a><span class="co"># file.show(res$file_path)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(sassy)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">options</span>(<span class="st">"logr.autolog"</span> <span class="ot">=</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>        <span class="st">"logr.notes"</span> <span class="ot">=</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co"># Get temp location for log and report output</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">tempdir</span>()</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co"># Open Log</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>lf <span class="ot">&lt;-</span> <span class="fu">log_open</span>(<span class="fu">file.path</span>(tmp, <span class="st">"example7.log"</span>))</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co"># Load and Filter Data  --------------------------------------------------</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Load and Filter Data"</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co"># Get path to sample data</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>pkg <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package =</span> <span class="st">"sassy"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co"># Get adam data</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="fu">libname</span>(adam, pkg, <span class="st">"sas7bdat"</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co"># Load data into memory</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="fu">lib_load</span>(adam)</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co"># Filter data</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a>adsl <span class="ot">&lt;-</span> adam.adsl <span class="sc">|&gt;</span>    </span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, SEX, AGEGR1, AGE, ARM) <span class="sc">|&gt;</span> </span>
+<span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a>  <span class="fu">filter</span>(ARM <span class="sc">!=</span> <span class="st">"SCREEN FAILURE"</span>) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a>adpsga <span class="ot">&lt;-</span> adam.adpsga <span class="sc">|&gt;</span></span>
+<span id="cb1-37"><a href="#cb1-37" tabindex="-1"></a>  <span class="fu">filter</span>(PARAMCD <span class="sc">==</span><span class="st">"PSGA"</span> <span class="sc">&amp;</span> TRTA <span class="sc">!=</span> <span class="st">""</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(AVISITN)) <span class="sc">|&gt;</span></span>
+<span id="cb1-38"><a href="#cb1-38" tabindex="-1"></a>  <span class="fu">select</span>(USUBJID, TRTA, AVISIT, AVISITN, AVAL, CRIT1FL) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-39"><a href="#cb1-39" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" tabindex="-1"></a><span class="co"># Get population counts</span></span>
+<span id="cb1-41"><a href="#cb1-41" tabindex="-1"></a>arm_pop <span class="ot">&lt;-</span> adsl <span class="sc">|&gt;</span> <span class="fu">count</span>(ARM) <span class="sc">|&gt;</span> <span class="fu">deframe</span>() <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-42"><a href="#cb1-42" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" tabindex="-1"></a><span class="co"># Prepare Data ------------------------------------------------------------</span></span>
+<span id="cb1-45"><a href="#cb1-45" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Prepare data for analysis"</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Determine minimum visit at which success was achieved"</span>)</span>
+<span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a>adpsga_minvsuccess <span class="ot">&lt;-</span></span>
+<span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a>  adpsga <span class="sc">|&gt;</span> </span>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a>  <span class="fu">filter</span>(CRIT1FL <span class="sc">==</span> <span class="st">'Y'</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">|&gt;</span> </span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">minvisit =</span> <span class="fu">min</span>(AVISITN)) </span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a></span>
+<span id="cb1-55"><a href="#cb1-55" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get subjects which did not achieve success"</span>)</span>
+<span id="cb1-56"><a href="#cb1-56" tabindex="-1"></a>adpsga_nosuccess <span class="ot">&lt;-</span></span>
+<span id="cb1-57"><a href="#cb1-57" tabindex="-1"></a>  <span class="fu">anti_join</span>(adpsga, adpsga_minvsuccess, <span class="at">by =</span> (<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-58"><a href="#cb1-58" tabindex="-1"></a>  <span class="fu">group_by</span>(USUBJID) <span class="sc">|&gt;</span> </span>
+<span id="cb1-59"><a href="#cb1-59" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">maxvisit =</span> <span class="fu">max</span>(AVISITN)) </span>
+<span id="cb1-60"><a href="#cb1-60" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Combine subjects cured with subjects not cured"</span>)</span>
+<span id="cb1-62"><a href="#cb1-62" tabindex="-1"></a>adslpsga_final <span class="ot">&lt;-</span></span>
+<span id="cb1-63"><a href="#cb1-63" tabindex="-1"></a>  <span class="fu">inner_join</span>(adsl, adpsga, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-64"><a href="#cb1-64" tabindex="-1"></a>  <span class="fu">left_join</span>(adpsga_minvsuccess, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-65"><a href="#cb1-65" tabindex="-1"></a>  <span class="fu">left_join</span>(adpsga_nosuccess, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'USUBJID'</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-66"><a href="#cb1-66" tabindex="-1"></a>  <span class="fu">filter</span>((AVISITN <span class="sc">==</span> minvisit <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(minvisit)) <span class="sc">|</span> </span>
+<span id="cb1-67"><a href="#cb1-67" tabindex="-1"></a>           (AVISITN <span class="sc">==</span> maxvisit <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(maxvisit))) <span class="sc">|&gt;</span> </span>
+<span id="cb1-68"><a href="#cb1-68" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cured    =</span> <span class="fu">case_when</span>(CRIT1FL <span class="sc">==</span> <span class="st">"Y"</span> <span class="sc">~</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-69"><a href="#cb1-69" tabindex="-1"></a>                              <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.logical</span>(<span class="cn">FALSE</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb1-70"><a href="#cb1-70" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>minvisit, <span class="sc">-</span>maxvisit)</span>
+<span id="cb1-71"><a href="#cb1-71" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" tabindex="-1"></a><span class="co"># Counts  ---------------------------------------------------------------</span></span>
+<span id="cb1-74"><a href="#cb1-74" tabindex="-1"></a></span>
+<span id="cb1-75"><a href="#cb1-75" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Counts and Statistical Tests"</span>)</span>
+<span id="cb1-76"><a href="#cb1-76" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Count patients with PSGA &lt;= 1"</span>)</span>
+<span id="cb1-78"><a href="#cb1-78" tabindex="-1"></a>success_counts <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
+<span id="cb1-79"><a href="#cb1-79" tabindex="-1"></a>  <span class="fu">filter</span>(cured <span class="sc">==</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-80"><a href="#cb1-80" tabindex="-1"></a>  <span class="fu">count</span>(TRTA) <span class="sc">|&gt;</span> </span>
+<span id="cb1-81"><a href="#cb1-81" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRTA, </span>
+<span id="cb1-82"><a href="#cb1-82" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
+<span id="cb1-83"><a href="#cb1-83" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">block =</span> <span class="st">"counts"</span>,</span>
+<span id="cb1-84"><a href="#cb1-84" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Number of patients with PSGA &lt;= 1"</span>,</span>
+<span id="cb1-85"><a href="#cb1-85" tabindex="-1"></a>            <span class="st">"ARM A"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
+<span id="cb1-86"><a href="#cb1-86" tabindex="-1"></a>            <span class="st">"ARM B"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
+<span id="cb1-87"><a href="#cb1-87" tabindex="-1"></a>            <span class="st">"ARM C"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
+<span id="cb1-88"><a href="#cb1-88" tabindex="-1"></a>            <span class="st">"ARM D"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-89"><a href="#cb1-89" tabindex="-1"></a>            <span class="fu">put</span>()</span>
+<span id="cb1-90"><a href="#cb1-90" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Count patients with PSGA &gt; 1"</span>)</span>
+<span id="cb1-92"><a href="#cb1-92" tabindex="-1"></a>failed_counts <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
+<span id="cb1-93"><a href="#cb1-93" tabindex="-1"></a>  <span class="fu">filter</span>(cured <span class="sc">==</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-94"><a href="#cb1-94" tabindex="-1"></a>  <span class="fu">count</span>(TRTA) <span class="sc">|&gt;</span> </span>
+<span id="cb1-95"><a href="#cb1-95" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRTA, </span>
+<span id="cb1-96"><a href="#cb1-96" tabindex="-1"></a>              <span class="at">values_from =</span> n) <span class="sc">|&gt;</span></span>
+<span id="cb1-97"><a href="#cb1-97" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">block =</span> <span class="st">"counts"</span>,</span>
+<span id="cb1-98"><a href="#cb1-98" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Number of Censored Subjects (PSGA &gt; 1)"</span>,</span>
+<span id="cb1-99"><a href="#cb1-99" tabindex="-1"></a>            <span class="st">"ARM A"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
+<span id="cb1-100"><a href="#cb1-100" tabindex="-1"></a>            <span class="st">"ARM B"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
+<span id="cb1-101"><a href="#cb1-101" tabindex="-1"></a>            <span class="st">"ARM C"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
+<span id="cb1-102"><a href="#cb1-102" tabindex="-1"></a>            <span class="st">"ARM D"</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-103"><a href="#cb1-103" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-104"><a href="#cb1-104" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" tabindex="-1"></a>count_block <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(success_counts, failed_counts)</span>
+<span id="cb1-106"><a href="#cb1-106" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" tabindex="-1"></a><span class="co"># Kaplan-Meier estimates ----------------------------------------------------</span></span>
+<span id="cb1-109"><a href="#cb1-109" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Kaplan-Meier Tests"</span>)</span>
+<span id="cb1-112"><a href="#cb1-112" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create survival vector"</span>)</span>
+<span id="cb1-114"><a href="#cb1-114" tabindex="-1"></a>surv_vct <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> adslpsga_final<span class="sc">$</span>AVISITN, <span class="at">event =</span> adslpsga_final<span class="sc">$</span>cured) <span class="sc">|&gt;</span> </span>
+<span id="cb1-115"><a href="#cb1-115" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-116"><a href="#cb1-116" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Fit model on survival vector"</span>)</span>
+<span id="cb1-118"><a href="#cb1-118" tabindex="-1"></a>stats_survfit_trta <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">survfit</span>(surv_vct <span class="sc">~</span> TRTA, <span class="at">data =</span> adslpsga_final, ) <span class="sc">|&gt;</span> </span>
+<span id="cb1-119"><a href="#cb1-119" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-120"><a href="#cb1-120" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get model quantiles"</span>)</span>
+<span id="cb1-122"><a href="#cb1-122" tabindex="-1"></a>stats_survfit_quantiles <span class="ot">&lt;-</span> <span class="fu">quantile</span>(stats_survfit_trta)</span>
+<span id="cb1-123"><a href="#cb1-123" tabindex="-1"></a></span>
+<span id="cb1-124"><a href="#cb1-124" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get lower confidence intervals"</span>)</span>
+<span id="cb1-125"><a href="#cb1-125" tabindex="-1"></a>ci_lower <span class="ot">&lt;-</span> </span>
+<span id="cb1-126"><a href="#cb1-126" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>lower) <span class="sc">|&gt;</span> </span>
+<span id="cb1-127"><a href="#cb1-127" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
+<span id="cb1-128"><a href="#cb1-128" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
+<span id="cb1-129"><a href="#cb1-129" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-130"><a href="#cb1-130" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
+<span id="cb1-131"><a href="#cb1-131" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
+<span id="cb1-132"><a href="#cb1-132" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-133"><a href="#cb1-133" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-134"><a href="#cb1-134" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get upper confidence intervals"</span>)</span>
+<span id="cb1-136"><a href="#cb1-136" tabindex="-1"></a>ci_upper <span class="ot">&lt;-</span> </span>
+<span id="cb1-137"><a href="#cb1-137" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>upper) <span class="sc">|&gt;</span> </span>
+<span id="cb1-138"><a href="#cb1-138" tabindex="-1"></a>  rownames_to_column <span class="sc">|&gt;</span> </span>
+<span id="cb1-139"><a href="#cb1-139" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
+<span id="cb1-140"><a href="#cb1-140" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-141"><a href="#cb1-141" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
+<span id="cb1-142"><a href="#cb1-142" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
+<span id="cb1-143"><a href="#cb1-143" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"upper"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-144"><a href="#cb1-144" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-145"><a href="#cb1-145" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get confidence intervals"</span>)</span>
+<span id="cb1-147"><a href="#cb1-147" tabindex="-1"></a>ci <span class="ot">&lt;-</span></span>
+<span id="cb1-148"><a href="#cb1-148" tabindex="-1"></a>  <span class="fu">inner_join</span>(ci_lower, ci_upper)  <span class="sc">|&gt;</span> </span>
+<span id="cb1-149"><a href="#cb1-149" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ci =</span> <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(lower), <span class="st">"-"</span>, lower)</span>
+<span id="cb1-150"><a href="#cb1-150" tabindex="-1"></a>                     , <span class="st">", "</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(upper), <span class="st">"-"</span>, upper), <span class="st">")"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-151"><a href="#cb1-151" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"Q"</span>),</span>
+<span id="cb1-152"><a href="#cb1-152" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
+<span id="cb1-153"><a href="#cb1-153" tabindex="-1"></a>              <span class="at">values_from =</span> ci) <span class="sc">|&gt;</span> </span>
+<span id="cb1-154"><a href="#cb1-154" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order=</span><span class="dv">2</span>,</span>
+<span id="cb1-155"><a href="#cb1-155" tabindex="-1"></a>         <span class="at">label1   =</span> <span class="fu">case_when</span>(Q <span class="sc">==</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"25th  percentile (weeks)"</span>,</span>
+<span id="cb1-156"><a href="#cb1-156" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">"Median (weeks)"</span>,</span>
+<span id="cb1-157"><a href="#cb1-157" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"75th  percentile (weeks)"</span>),</span>
+<span id="cb1-158"><a href="#cb1-158" tabindex="-1"></a>         <span class="at">label2   =</span> <span class="st">"95% Confidence Interval**"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-159"><a href="#cb1-159" tabindex="-1"></a>  <span class="fu">select</span>(block, Q, order, label1, label2, </span>
+<span id="cb1-160"><a href="#cb1-160" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-161"><a href="#cb1-161" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-162"><a href="#cb1-162" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" tabindex="-1"></a></span>
+<span id="cb1-164"><a href="#cb1-164" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Get quantiles"</span>)</span>
+<span id="cb1-165"><a href="#cb1-165" tabindex="-1"></a>quants <span class="ot">&lt;-</span></span>
+<span id="cb1-166"><a href="#cb1-166" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(stats_survfit_quantiles<span class="sc">$</span>quantile) <span class="sc">|&gt;</span> </span>
+<span id="cb1-167"><a href="#cb1-167" tabindex="-1"></a>  rownames_to_column <span class="sc">|&gt;</span> </span>
+<span id="cb1-168"><a href="#cb1-168" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
+<span id="cb1-169"><a href="#cb1-169" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">6</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-170"><a href="#cb1-170" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">25</span><span class="st">`</span>, <span class="st">`</span><span class="at">50</span><span class="st">`</span>, <span class="st">`</span><span class="at">75</span><span class="st">`</span>),</span>
+<span id="cb1-171"><a href="#cb1-171" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Q"</span>,</span>
+<span id="cb1-172"><a href="#cb1-172" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-173"><a href="#cb1-173" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"Q"</span>),</span>
+<span id="cb1-174"><a href="#cb1-174" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
+<span id="cb1-175"><a href="#cb1-175" tabindex="-1"></a>              <span class="at">values_from =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb1-176"><a href="#cb1-176" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">order=</span><span class="dv">1</span>,</span>
+<span id="cb1-177"><a href="#cb1-177" tabindex="-1"></a>         <span class="at">label1   =</span> <span class="fu">case_when</span>(Q <span class="sc">==</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"25th  percentile (weeks)"</span>,</span>
+<span id="cb1-178"><a href="#cb1-178" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">50</span> <span class="sc">~</span> <span class="st">"Median (weeks)"</span>,</span>
+<span id="cb1-179"><a href="#cb1-179" tabindex="-1"></a>                              Q <span class="sc">==</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"75th  percentile (weeks)"</span>),</span>
+<span id="cb1-180"><a href="#cb1-180" tabindex="-1"></a>         <span class="at">label2   =</span> <span class="st">""</span>,</span>
+<span id="cb1-181"><a href="#cb1-181" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>),</span>
+<span id="cb1-182"><a href="#cb1-182" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>),</span>
+<span id="cb1-183"><a href="#cb1-183" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>),</span>
+<span id="cb1-184"><a href="#cb1-184" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>  <span class="ot">=</span> <span class="fu">as.character</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-185"><a href="#cb1-185" tabindex="-1"></a>  <span class="fu">select</span>(block, Q, order, label1, label2, </span>
+<span id="cb1-186"><a href="#cb1-186" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-187"><a href="#cb1-187" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-188"><a href="#cb1-188" tabindex="-1"></a></span>
+<span id="cb1-189"><a href="#cb1-189" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Final arrangement"</span>)</span>
+<span id="cb1-190"><a href="#cb1-190" tabindex="-1"></a>kaplan_block <span class="ot">&lt;-</span></span>
+<span id="cb1-191"><a href="#cb1-191" tabindex="-1"></a>  <span class="fu">bind_rows</span>(quants, ci) <span class="sc">|&gt;</span> </span>
+<span id="cb1-192"><a href="#cb1-192" tabindex="-1"></a>  <span class="fu">arrange</span>(block, Q, order) <span class="sc">|&gt;</span> </span>
+<span id="cb1-193"><a href="#cb1-193" tabindex="-1"></a>  <span class="fu">transmute</span>(block, </span>
+<span id="cb1-194"><a href="#cb1-194" tabindex="-1"></a>            label1, </span>
+<span id="cb1-195"><a href="#cb1-195" tabindex="-1"></a>            <span class="at">label2 =</span> <span class="fu">ifelse</span>(label2 <span class="sc">==</span> <span class="st">""</span>, <span class="cn">NA</span>, label2),</span>
+<span id="cb1-196"><a href="#cb1-196" tabindex="-1"></a>            <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-197"><a href="#cb1-197" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-198"><a href="#cb1-198" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" tabindex="-1"></a></span>
+<span id="cb1-200"><a href="#cb1-200" tabindex="-1"></a><span class="co"># Cox Proportional Hazards  -----------------------------------------------</span></span>
+<span id="cb1-201"><a href="#cb1-201" tabindex="-1"></a></span>
+<span id="cb1-202"><a href="#cb1-202" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Perform Cox Proportional Hazards Test"</span>)</span>
+<span id="cb1-203"><a href="#cb1-203" tabindex="-1"></a></span>
+<span id="cb1-204"><a href="#cb1-204" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Run Cox tests"</span>)</span>
+<span id="cb1-205"><a href="#cb1-205" tabindex="-1"></a>stats_surv_cph   <span class="ot">&lt;-</span> survival<span class="sc">::</span><span class="fu">coxph</span>(surv_vct <span class="sc">~</span> TRTA, <span class="at">data =</span> adslpsga_final) <span class="sc">|&gt;</span></span>
+<span id="cb1-206"><a href="#cb1-206" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-207"><a href="#cb1-207" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create summary statistics on Cox results"</span>)</span>
+<span id="cb1-209"><a href="#cb1-209" tabindex="-1"></a>cph_summary <span class="ot">&lt;-</span></span>
+<span id="cb1-210"><a href="#cb1-210" tabindex="-1"></a>  <span class="fu">summary</span>(stats_surv_cph) <span class="sc">|&gt;</span> </span>
+<span id="cb1-211"><a href="#cb1-211" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-212"><a href="#cb1-212" tabindex="-1"></a></span>
+<span id="cb1-213"><a href="#cb1-213" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Extract coefficients"</span>)</span>
+<span id="cb1-214"><a href="#cb1-214" tabindex="-1"></a>cph_coef <span class="ot">&lt;-</span> </span>
+<span id="cb1-215"><a href="#cb1-215" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(cph_summary<span class="sc">$</span>coefficients) <span class="sc">|&gt;</span> </span>
+<span id="cb1-216"><a href="#cb1-216" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
+<span id="cb1-217"><a href="#cb1-217" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"surv"</span>,</span>
+<span id="cb1-218"><a href="#cb1-218" tabindex="-1"></a>         <span class="at">TRTA =</span> <span class="fu">substring</span>(rowname,<span class="dv">5</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-219"><a href="#cb1-219" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-220"><a href="#cb1-220" tabindex="-1"></a></span>
+<span id="cb1-221"><a href="#cb1-221" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Extract confidence intervals"</span>)</span>
+<span id="cb1-222"><a href="#cb1-222" tabindex="-1"></a>cph_ci <span class="ot">&lt;-</span> </span>
+<span id="cb1-223"><a href="#cb1-223" tabindex="-1"></a>  cph_summary<span class="sc">$</span>conf.int <span class="sc">|&gt;</span> </span>
+<span id="cb1-224"><a href="#cb1-224" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(cph_summary<span class="sc">$</span>conf) <span class="sc">|&gt;</span> </span>
+<span id="cb1-225"><a href="#cb1-225" tabindex="-1"></a>  rownames_to_column  <span class="sc">|&gt;</span> </span>
+<span id="cb1-226"><a href="#cb1-226" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-227"><a href="#cb1-227" tabindex="-1"></a>  </span>
+<span id="cb1-228"><a href="#cb1-228" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create cox statistics block"</span>)</span>
+<span id="cb1-229"><a href="#cb1-229" tabindex="-1"></a>cox_block <span class="ot">&lt;-</span></span>
+<span id="cb1-230"><a href="#cb1-230" tabindex="-1"></a>  <span class="fu">bind_cols</span>(cph_coef, cph_ci) <span class="sc">|&gt;</span> </span>
+<span id="cb1-231"><a href="#cb1-231" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">hazard =</span> <span class="st">`</span><span class="at">exp(coef)...3</span><span class="st">`</span>, <span class="at">pval =</span> <span class="st">`</span><span class="at">Pr(&gt;|z|)</span><span class="st">`</span>, </span>
+<span id="cb1-232"><a href="#cb1-232" tabindex="-1"></a>         <span class="at">lower =</span> <span class="st">`</span><span class="at">lower .95</span><span class="st">`</span>, <span class="at">upper =</span> <span class="st">`</span><span class="at">upper .95</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-233"><a href="#cb1-233" tabindex="-1"></a>  <span class="fu">select</span>(TRTA, hazard, pval, lower, upper) <span class="sc">|&gt;</span> </span>
+<span id="cb1-234"><a href="#cb1-234" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">block =</span> <span class="st">"cox"</span>, </span>
+<span id="cb1-235"><a href="#cb1-235" tabindex="-1"></a>         <span class="at">ci =</span> <span class="fu">paste0</span>(<span class="st">"("</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(lower), <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, lower))</span>
+<span id="cb1-236"><a href="#cb1-236" tabindex="-1"></a>                        , <span class="st">", "</span>, <span class="fu">ifelse</span>(<span class="fu">is.na</span>(upper), <span class="st">"-"</span>, <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, upper)), <span class="st">")"</span>),</span>
+<span id="cb1-237"><a href="#cb1-237" tabindex="-1"></a>         <span class="at">hazard =</span> <span class="fu">sprintf</span>(<span class="st">"%.2f"</span>, hazard),</span>
+<span id="cb1-238"><a href="#cb1-238" tabindex="-1"></a>         <span class="at">pval   =</span> <span class="fu">sprintf</span>(<span class="st">"%.3f"</span>, pval)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-239"><a href="#cb1-239" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(<span class="st">"hazard"</span>, <span class="st">"pval"</span>, <span class="st">"ci"</span>),</span>
+<span id="cb1-240"><a href="#cb1-240" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"stat"</span>,</span>
+<span id="cb1-241"><a href="#cb1-241" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-242"><a href="#cb1-242" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(<span class="st">"block"</span>, <span class="st">"stat"</span>),</span>
+<span id="cb1-243"><a href="#cb1-243" tabindex="-1"></a>              <span class="at">names_from =</span> TRTA,</span>
+<span id="cb1-244"><a href="#cb1-244" tabindex="-1"></a>              <span class="at">values_from =</span> value) <span class="sc">|&gt;</span> </span>
+<span id="cb1-245"><a href="#cb1-245" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">label1 =</span> <span class="fu">case_when</span>(stat <span class="sc">==</span> <span class="st">"hazard"</span>  </span>
+<span id="cb1-246"><a href="#cb1-246" tabindex="-1"></a>                              <span class="sc">~</span> <span class="st">"Hazard Ratio (Each Treatment Group - ARM A)***"</span>,</span>
+<span id="cb1-247"><a href="#cb1-247" tabindex="-1"></a>                            stat <span class="sc">==</span> <span class="st">"pval"</span> <span class="sc">~</span> <span class="st">"P-value"</span>,</span>
+<span id="cb1-248"><a href="#cb1-248" tabindex="-1"></a>                            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"95% CI of Hazard Ratio"</span>),</span>
+<span id="cb1-249"><a href="#cb1-249" tabindex="-1"></a>         <span class="at">label2 =</span> <span class="fu">as.character</span>(<span class="cn">NA</span>),</span>
+<span id="cb1-250"><a href="#cb1-250" tabindex="-1"></a>         <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.character</span>(<span class="cn">NA</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-251"><a href="#cb1-251" tabindex="-1"></a>  <span class="fu">select</span>(block, label1, label2, <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>, <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-252"><a href="#cb1-252" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-253"><a href="#cb1-253" tabindex="-1"></a>  </span>
+<span id="cb1-254"><a href="#cb1-254" tabindex="-1"></a></span>
+<span id="cb1-255"><a href="#cb1-255" tabindex="-1"></a></span>
+<span id="cb1-256"><a href="#cb1-256" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Combine statistics blocks"</span>)</span>
+<span id="cb1-257"><a href="#cb1-257" tabindex="-1"></a>stat_block <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(kaplan_block, cox_block) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-258"><a href="#cb1-258" tabindex="-1"></a></span>
+<span id="cb1-259"><a href="#cb1-259" tabindex="-1"></a><span class="co"># Create Survival Plot -------------------------------------------------------</span></span>
+<span id="cb1-260"><a href="#cb1-260" tabindex="-1"></a></span>
+<span id="cb1-261"><a href="#cb1-261" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Create survival plot"</span>)</span>
+<span id="cb1-262"><a href="#cb1-262" tabindex="-1"></a></span>
+<span id="cb1-263"><a href="#cb1-263" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create data frame with zero values for each visit"</span>)</span>
+<span id="cb1-264"><a href="#cb1-264" tabindex="-1"></a>arms <span class="ot">&lt;-</span> <span class="fu">unique</span>(adslpsga_final<span class="sc">$</span>ARM)</span>
+<span id="cb1-265"><a href="#cb1-265" tabindex="-1"></a>visits <span class="ot">&lt;-</span> <span class="fu">unique</span>(adslpsga_final<span class="sc">$</span>AVISITN)</span>
+<span id="cb1-266"><a href="#cb1-266" tabindex="-1"></a>all_visits <span class="ot">&lt;-</span> <span class="fu">rep</span>(arms, <span class="fu">length</span>(visits))</span>
+<span id="cb1-267"><a href="#cb1-267" tabindex="-1"></a>all_visits <span class="ot">&lt;-</span> all_visits[<span class="fu">order</span>(all_visits)] </span>
+<span id="cb1-268"><a href="#cb1-268" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create visit template"</span>)</span>
+<span id="cb1-270"><a href="#cb1-270" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ARM =</span> all_visits, </span>
+<span id="cb1-271"><a href="#cb1-271" tabindex="-1"></a>                 <span class="at">AVISIT =</span> <span class="fu">paste</span>(<span class="st">"Week"</span>, visits), </span>
+<span id="cb1-272"><a href="#cb1-272" tabindex="-1"></a>                 <span class="at">AVISITN =</span> visits,</span>
+<span id="cb1-273"><a href="#cb1-273" tabindex="-1"></a>                 <span class="at">cured =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">put</span>()</span>
+<span id="cb1-274"><a href="#cb1-274" tabindex="-1"></a></span>
+<span id="cb1-275"><a href="#cb1-275" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Calculate cummulative sum and percent"</span>)</span>
+<span id="cb1-276"><a href="#cb1-276" tabindex="-1"></a>adslpsga_plot <span class="ot">&lt;-</span> adslpsga_final <span class="sc">|&gt;</span> </span>
+<span id="cb1-277"><a href="#cb1-277" tabindex="-1"></a>  <span class="fu">select</span>(ARM, AVISIT, AVISITN, cured) <span class="sc">|&gt;</span> </span>
+<span id="cb1-278"><a href="#cb1-278" tabindex="-1"></a>  <span class="fu">bind_rows</span>(df) <span class="sc">|&gt;</span> </span>
+<span id="cb1-279"><a href="#cb1-279" tabindex="-1"></a>  <span class="fu">group_by</span>(ARM, AVISIT, AVISITN) <span class="sc">|&gt;</span> </span>
+<span id="cb1-280"><a href="#cb1-280" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sumc =</span> <span class="fu">sum</span>(cured)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-281"><a href="#cb1-281" tabindex="-1"></a>  <span class="fu">arrange</span>(ARM, AVISITN) <span class="sc">|&gt;</span> </span>
+<span id="cb1-282"><a href="#cb1-282" tabindex="-1"></a>  <span class="fu">group_by</span>(ARM) <span class="sc">|&gt;</span> </span>
+<span id="cb1-283"><a href="#cb1-283" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AVISIT =</span> <span class="fu">ifelse</span>(AVISIT <span class="sc">==</span> <span class="st">"Week 0"</span>, <span class="st">"Day 1 Baseline"</span>, AVISIT),</span>
+<span id="cb1-284"><a href="#cb1-284" tabindex="-1"></a>         <span class="at">csumc =</span> <span class="fu">cumsum</span>(sumc)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-285"><a href="#cb1-285" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb1-286"><a href="#cb1-286" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pct =</span> <span class="fu">case_when</span>(ARM <span class="sc">==</span> <span class="st">"ARM A"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM A"</span>], </span>
+<span id="cb1-287"><a href="#cb1-287" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM B"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM B"</span>],</span>
+<span id="cb1-288"><a href="#cb1-288" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM C"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM C"</span>], </span>
+<span id="cb1-289"><a href="#cb1-289" tabindex="-1"></a>                         ARM <span class="sc">==</span> <span class="st">"ARM D"</span> <span class="sc">~</span> csumc <span class="sc">/</span> arm_pop[<span class="st">"ARM D"</span>])) <span class="sc">|&gt;</span> </span>
+<span id="cb1-290"><a href="#cb1-290" tabindex="-1"></a>  <span class="fu">put</span>()</span>
+<span id="cb1-291"><a href="#cb1-291" tabindex="-1"></a></span>
+<span id="cb1-292"><a href="#cb1-292" tabindex="-1"></a><span class="co"># Add factor to ensure sort order is correct</span></span>
+<span id="cb1-293"><a href="#cb1-293" tabindex="-1"></a>adslpsga_plot<span class="sc">$</span>AVISIT <span class="ot">&lt;-</span> <span class="fu">factor</span>(adslpsga_plot<span class="sc">$</span>AVISIT, </span>
+<span id="cb1-294"><a href="#cb1-294" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Day 1 Baseline"</span>, </span>
+<span id="cb1-295"><a href="#cb1-295" tabindex="-1"></a>                                          <span class="st">"Week 2"</span>, </span>
+<span id="cb1-296"><a href="#cb1-296" tabindex="-1"></a>                                          <span class="st">"Week 4"</span>, </span>
+<span id="cb1-297"><a href="#cb1-297" tabindex="-1"></a>                                          <span class="st">"Week 6"</span>, </span>
+<span id="cb1-298"><a href="#cb1-298" tabindex="-1"></a>                                          <span class="st">"Week 8"</span>, </span>
+<span id="cb1-299"><a href="#cb1-299" tabindex="-1"></a>                                          <span class="st">"Week 12"</span>,</span>
+<span id="cb1-300"><a href="#cb1-300" tabindex="-1"></a>                                          <span class="st">"Week 16"</span>))</span>
+<span id="cb1-301"><a href="#cb1-301" tabindex="-1"></a></span>
+<span id="cb1-302"><a href="#cb1-302" tabindex="-1"></a></span>
+<span id="cb1-303"><a href="#cb1-303" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Generate plot"</span>)</span>
+<span id="cb1-304"><a href="#cb1-304" tabindex="-1"></a>surv_gg <span class="ot">&lt;-</span> adslpsga_plot <span class="sc">|&gt;</span> </span>
+<span id="cb1-305"><a href="#cb1-305" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">y =</span> pct, <span class="at">x =</span> AVISIT , <span class="at">group =</span> ARM)) <span class="sc">+</span> </span>
+<span id="cb1-306"><a href="#cb1-306" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> ARM, <span class="at">color =</span> ARM)) <span class="sc">+</span> </span>
+<span id="cb1-307"><a href="#cb1-307" tabindex="-1"></a>  <span class="fu">geom_step</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> ARM, <span class="at">color =</span> ARM)) <span class="sc">+</span></span>
+<span id="cb1-308"><a href="#cb1-308" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">name =</span> <span class="st">"Study Week"</span>) <span class="sc">+</span></span>
+<span id="cb1-309"><a href="#cb1-309" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Proportion of Subjects with Initial Success"</span>)</span>
+<span id="cb1-310"><a href="#cb1-310" tabindex="-1"></a></span>
+<span id="cb1-311"><a href="#cb1-311" tabindex="-1"></a></span>
+<span id="cb1-312"><a href="#cb1-312" tabindex="-1"></a></span>
+<span id="cb1-313"><a href="#cb1-313" tabindex="-1"></a></span>
+<span id="cb1-314"><a href="#cb1-314" tabindex="-1"></a></span>
+<span id="cb1-315"><a href="#cb1-315" tabindex="-1"></a><span class="co"># Print Report ------------------------------------------------------------</span></span>
+<span id="cb1-316"><a href="#cb1-316" tabindex="-1"></a></span>
+<span id="cb1-317"><a href="#cb1-317" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Create and print report"</span>)</span>
+<span id="cb1-318"><a href="#cb1-318" tabindex="-1"></a></span>
+<span id="cb1-319"><a href="#cb1-319" tabindex="-1"></a></span>
+<span id="cb1-320"><a href="#cb1-320" tabindex="-1"></a><span class="co"># Create Table 1 with header</span></span>
+<span id="cb1-321"><a href="#cb1-321" tabindex="-1"></a>tbl1 <span class="ot">&lt;-</span> <span class="fu">create_table</span>(count_block, <span class="at">width =</span> <span class="dv">9</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-322"><a href="#cb1-322" tabindex="-1"></a>  <span class="fu">column_defaults</span>(<span class="at">from =</span> <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="at">to =</span> <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>, <span class="at">align =</span> <span class="st">"center"</span>, <span class="at">width =</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-323"><a href="#cb1-323" tabindex="-1"></a>  <span class="fu">define</span>(block, <span class="at">visible =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-324"><a href="#cb1-324" tabindex="-1"></a>  <span class="fu">define</span>(label, <span class="at">label =</span> <span class="st">""</span>, <span class="at">width =</span> <span class="fl">4.25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-325"><a href="#cb1-325" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM A"</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb1-326"><a href="#cb1-326" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM B"</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb1-327"><a href="#cb1-327" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM C"</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb1-328"><a href="#cb1-328" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>,  <span class="at">n =</span> arm_pop[<span class="st">"ARM D"</span>]) <span class="sc">|&gt;</span> </span>
+<span id="cb1-329"><a href="#cb1-329" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Table 5.0"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">blank_row =</span> <span class="st">"above"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-330"><a href="#cb1-330" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Analysis of Time to Initial PSGA Success* in Weeks"</span>, </span>
+<span id="cb1-331"><a href="#cb1-331" tabindex="-1"></a>         <span class="st">"Safety Population"</span>)</span>
+<span id="cb1-332"><a href="#cb1-332" tabindex="-1"></a>  </span>
+<span id="cb1-333"><a href="#cb1-333" tabindex="-1"></a>  label_lookup <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="at">surv =</span> <span class="st">"Kaplan-Meier estimates"</span>,</span>
+<span id="cb1-334"><a href="#cb1-334" tabindex="-1"></a>                     <span class="at">cox =</span> <span class="st">"Results of Proportional Hazards Regression Analysis"</span>)</span>
+<span id="cb1-335"><a href="#cb1-335" tabindex="-1"></a>  </span>
+<span id="cb1-336"><a href="#cb1-336" tabindex="-1"></a><span class="co"># Create table 2 for statistics with stub and without header</span></span>
+<span id="cb1-337"><a href="#cb1-337" tabindex="-1"></a>tbl2 <span class="ot">&lt;-</span> <span class="fu">create_table</span>(stat_block, <span class="at">width =</span> <span class="dv">9</span>, <span class="at">headerless =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-338"><a href="#cb1-338" tabindex="-1"></a>  <span class="fu">column_defaults</span>(<span class="at">from =</span> <span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>, <span class="at">to =</span> <span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>, <span class="at">align =</span> <span class="st">"center"</span>, <span class="at">width =</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-339"><a href="#cb1-339" tabindex="-1"></a>  <span class="fu">stub</span>(<span class="fu">c</span>(block, label1, label2), <span class="at">width =</span> <span class="fl">4.25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-340"><a href="#cb1-340" tabindex="-1"></a>  <span class="fu">define</span>(block, <span class="at">label_row =</span> <span class="cn">TRUE</span>, <span class="at">format =</span> label_lookup, <span class="at">blank_after =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-341"><a href="#cb1-341" tabindex="-1"></a>  <span class="fu">define</span>(label1, <span class="at">indent =</span> .<span class="dv">25</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-342"><a href="#cb1-342" tabindex="-1"></a>  <span class="fu">define</span>(label2, <span class="at">indent =</span> .<span class="dv">5</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-343"><a href="#cb1-343" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM A</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-344"><a href="#cb1-344" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM B</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-345"><a href="#cb1-345" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM C</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-346"><a href="#cb1-346" tabindex="-1"></a>  <span class="fu">define</span>(<span class="st">`</span><span class="at">ARM D</span><span class="st">`</span>) </span>
+<span id="cb1-347"><a href="#cb1-347" tabindex="-1"></a></span>
+<span id="cb1-348"><a href="#cb1-348" tabindex="-1"></a></span>
+<span id="cb1-349"><a href="#cb1-349" tabindex="-1"></a><span class="co"># Create plot</span></span>
+<span id="cb1-350"><a href="#cb1-350" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">create_plot</span>(surv_gg, <span class="fl">3.5</span>, <span class="dv">9</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-351"><a href="#cb1-351" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Figure 5.0"</span>, <span class="at">bold =</span> <span class="cn">TRUE</span>, <span class="at">blank_row =</span> <span class="st">"above"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-352"><a href="#cb1-352" tabindex="-1"></a>  <span class="fu">titles</span>(<span class="st">"Kaplan-Meier Plot for Time to Initial PSGA Success (PSGA &lt;= 1)"</span>,</span>
+<span id="cb1-353"><a href="#cb1-353" tabindex="-1"></a>         <span class="st">"Safety Population"</span>, <span class="at">blank_row =</span> <span class="st">"none"</span>)</span>
+<span id="cb1-354"><a href="#cb1-354" tabindex="-1"></a></span>
+<span id="cb1-355"><a href="#cb1-355" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Create Report"</span>)</span>
+<span id="cb1-356"><a href="#cb1-356" tabindex="-1"></a><span class="co"># Add table 1, table 2, and plot content to the same report.</span></span>
+<span id="cb1-357"><a href="#cb1-357" tabindex="-1"></a><span class="co"># Plot will be on a separate page with it's own title.</span></span>
+<span id="cb1-358"><a href="#cb1-358" tabindex="-1"></a>rpt <span class="ot">&lt;-</span> <span class="fu">create_report</span>(<span class="fu">file.path</span>(tmp, <span class="st">"output/example7.rtf"</span>), <span class="at">output_type =</span> <span class="st">"RTF"</span>, </span>
+<span id="cb1-359"><a href="#cb1-359" tabindex="-1"></a>                     <span class="at">font =</span> <span class="st">"Arial"</span>, <span class="at">missing =</span> <span class="st">"-"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-360"><a href="#cb1-360" tabindex="-1"></a>  <span class="fu">set_margins</span>(<span class="at">top =</span> <span class="dv">1</span>, <span class="at">bottom =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-361"><a href="#cb1-361" tabindex="-1"></a>  <span class="fu">page_header</span>(<span class="st">"Sponsor: Client"</span>, <span class="st">"Study: ABC/BBC"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-362"><a href="#cb1-362" tabindex="-1"></a>  <span class="fu">add_content</span>(tbl1, <span class="at">page_break =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-363"><a href="#cb1-363" tabindex="-1"></a>  <span class="fu">add_content</span>(tbl2) <span class="sc">|&gt;</span> </span>
+<span id="cb1-364"><a href="#cb1-364" tabindex="-1"></a>  <span class="fu">add_content</span>(plt) <span class="sc">|&gt;</span> </span>
+<span id="cb1-365"><a href="#cb1-365" tabindex="-1"></a>  <span class="fu">footnotes</span>(<span class="st">"Program: Surv_Table.R"</span>,</span>
+<span id="cb1-366"><a href="#cb1-366" tabindex="-1"></a>            <span class="st">"* Success: PSGA &lt;= 1: PSGA &gt; 1"</span>,</span>
+<span id="cb1-367"><a href="#cb1-367" tabindex="-1"></a>            <span class="st">"** Based on R survival package survfit() function"</span>,</span>
+<span id="cb1-368"><a href="#cb1-368" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"*** Based on proportional hazards model with treatment"</span>,</span>
+<span id="cb1-369"><a href="#cb1-369" tabindex="-1"></a>                  <span class="st">"indicator variables as explanatory variables"</span>),</span>
+<span id="cb1-370"><a href="#cb1-370" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Note: The end-point is cure of the disease (PSGA &lt;= 1)."</span>),</span>
+<span id="cb1-371"><a href="#cb1-371" tabindex="-1"></a>            <span class="st">"  The probability of remaining diseased (PSGA &gt; 1) defines the survival function"</span>,</span>
+<span id="cb1-372"><a href="#cb1-372" tabindex="-1"></a>            <span class="fu">paste</span>(<span class="st">"Note: A subject who is not cured by the end of 12 weeks or is lost"</span>,</span>
+<span id="cb1-373"><a href="#cb1-373" tabindex="-1"></a>            <span class="st">"to follow provides a censored observation for the analysis."</span>),</span>
+<span id="cb1-374"><a href="#cb1-374" tabindex="-1"></a>            <span class="st">"</span><span class="sc">\"</span><span class="st">-</span><span class="sc">\"</span><span class="st"> = Not Applicable"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-375"><a href="#cb1-375" tabindex="-1"></a>  <span class="fu">page_footer</span>(<span class="st">"Date Produced: "</span> <span class="sc">%p%</span> <span class="fu">fapply</span>(<span class="fu">Sys.time</span>(), <span class="st">"%d%b%y %H:%M"</span>), </span>
+<span id="cb1-376"><a href="#cb1-376" tabindex="-1"></a>              <span class="at">right =</span> <span class="st">"Page [pg] of [tpg]"</span>)</span>
+<span id="cb1-377"><a href="#cb1-377" tabindex="-1"></a></span>
+<span id="cb1-378"><a href="#cb1-378" tabindex="-1"></a><span class="fu">put</span>(<span class="st">"Write out the report"</span>)</span>
+<span id="cb1-379"><a href="#cb1-379" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">write_report</span>(rpt) </span>
+<span id="cb1-380"><a href="#cb1-380" tabindex="-1"></a></span>
+<span id="cb1-381"><a href="#cb1-381" tabindex="-1"></a></span>
+<span id="cb1-382"><a href="#cb1-382" tabindex="-1"></a><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
+<span id="cb1-383"><a href="#cb1-383" tabindex="-1"></a></span>
+<span id="cb1-384"><a href="#cb1-384" tabindex="-1"></a><span class="fu">sep</span>(<span class="st">"Clean Up"</span>)</span>
+<span id="cb1-385"><a href="#cb1-385" tabindex="-1"></a></span>
+<span id="cb1-386"><a href="#cb1-386" tabindex="-1"></a><span class="fu">lib_unload</span>(adam)</span>
+<span id="cb1-387"><a href="#cb1-387" tabindex="-1"></a></span>
+<span id="cb1-388"><a href="#cb1-388" tabindex="-1"></a><span class="co"># Close log</span></span>
+<span id="cb1-389"><a href="#cb1-389" tabindex="-1"></a><span class="fu">log_close</span>()</span>
+<span id="cb1-390"><a href="#cb1-390" tabindex="-1"></a></span>
+<span id="cb1-391"><a href="#cb1-391" tabindex="-1"></a><span class="co"># View log</span></span>
+<span id="cb1-392"><a href="#cb1-392" tabindex="-1"></a><span class="fu">writeLines</span>(<span class="fu">readLines</span>(lf, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>))</span>
+<span id="cb1-393"><a href="#cb1-393" tabindex="-1"></a></span>
+<span id="cb1-394"><a href="#cb1-394" tabindex="-1"></a><span class="co"># View report</span></span>
+<span id="cb1-395"><a href="#cb1-395" tabindex="-1"></a><span class="co"># file.show(res$file_path)</span></span></code></pre></div>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor"></a>Output</h2>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h2>
 <p>Here is the report produced by the sample program above:</p>
 <p><img src="../man/images/survival1.png"><img src="../man/images/survival2.png"></p>
 </div>
-<div id="log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log" class="anchor"></a>Log</h2>
+<div class="section level2">
+<h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
+</h2>
 <p>The above program produces the following log:</p>
 <pre><code>=========================================================================
 Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpgrpGQ1/log/example7.log
@@ -1246,11 +1306,13 @@ Log Elapsed Time: 0 00:00:02
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -1258,6 +1320,8 @@ Log Elapsed Time: 0 00:00:02
 
   
 
+
+  
 
   </body>
 </html>

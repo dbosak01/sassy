@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy-forest_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 9: Forest Plot</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-forest.Rmd"><code>vignettes/sassy-forest.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy-forest.Rmd" class="external-link"><code>vignettes/sassy-forest.Rmd</code></a></small>
       <div class="hidden name"><code>sassy-forest.Rmd</code></div>
 
     </div>
@@ -145,32 +205,32 @@ into a report. Here is an example using an image saved from the
 <strong>forestploter</strong> package. This package creates customizable
 forest plots. The technique shown here can be used to embed images from
 any package.</p>
-<div id="program" class="section level2">
-<h2 class="hasAnchor">
-<a href="#program" class="anchor"></a>Program</h2>
+<div class="section level2">
+<h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
+</h2>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong><a href="https://CRAN.R-project.org/package=forestploter">forestploter</a></strong>
+<li>The <strong><a href="https://CRAN.R-project.org/package=forestploter" class="external-link">forestploter</a></strong>
 package creates customizable forest plots.<br>
 </li>
-<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package can
+<li>The <strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong> package can
 embed JPEG images into any output type that accepts images.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adayim/forestploter">forestploter</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">grid</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adayim/forestploter" class="external-link">forestploter</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>        <span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Get temp directory</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example9.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example9.log"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Prepare Data ------------------------------------------------------------</span></span>
@@ -178,27 +238,27 @@ embed JPEG images into any output type that accepts images.</li>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Read example data from forestploter package"</span><span class="op">)</span></span>
-<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.csv"</span>, package <span class="op">=</span> <span class="st">"forestploter"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_data.csv"</span>, package <span class="op">=</span> <span class="st">"forestploter"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Keep needed columns"</span><span class="op">)</span></span>
-<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="va">dt</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Indent the subgroup if there is a number in the placebo column"</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">Subgroup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span>, </span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">Subgroup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span>, </span>
 <span>                      <span class="va">dt</span><span class="op">$</span><span class="va">Subgroup</span>,</span>
-<span>                      <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"   "</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Subgroup</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>                      <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"   "</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Subgroup</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"NA to blank or NA will be transformed to character."</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span>, <span class="st">""</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span>, <span class="st">""</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">se</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">hi</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">est</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">1.96</span></span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span>, <span class="st">""</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span></span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span>, <span class="st">""</span>, <span class="va">dt</span><span class="op">$</span><span class="va">Placebo</span><span class="op">)</span></span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">se</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">hi</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">est</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">1.96</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Add blank column for the forest plot to display CI."</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">` `</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">" "</span>, <span class="fl">20</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">` `</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">" "</span>, <span class="fl">20</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create confidence interval column to display"</span><span class="op">)</span></span>
-<span><span class="va">dt</span><span class="op">$</span><span class="va">`HR (95% CI)`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">se</span><span class="op">)</span>, <span class="st">""</span>,</span>
-<span>                           <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.2f (%.2f to %.2f)"</span>,</span>
+<span><span class="va">dt</span><span class="op">$</span><span class="va">`HR (95% CI)`</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">dt</span><span class="op">$</span><span class="va">se</span><span class="op">)</span>, <span class="st">""</span>,</span>
+<span>                           <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%.2f (%.2f to %.2f)"</span>,</span>
 <span>                                   <span class="va">dt</span><span class="op">$</span><span class="va">est</span>, <span class="va">dt</span><span class="op">$</span><span class="va">low</span>, <span class="va">dt</span><span class="op">$</span><span class="va">hi</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Final data frame"</span><span class="op">)</span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></span>
@@ -209,28 +269,28 @@ embed JPEG images into any output type that accepts images.</li>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create Plot"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Assign Forest Properties"</span><span class="op">)</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/forestploter/man/forest.html">forest</a></span><span class="op">(</span><span class="va">dt</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">8</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">]</span>,</span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">forest</span><span class="op">(</span><span class="va">dt</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">8</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span><span class="op">]</span>,</span>
 <span>  est <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">est</span>,</span>
 <span>  lower <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">low</span>,</span>
 <span>  upper <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">hi</span>,</span>
 <span>  sizes <span class="op">=</span> <span class="va">dt</span><span class="op">$</span><span class="va">se</span>,</span>
 <span>  ci_column <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  ref_line <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  arrow_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Placebo Better"</span>, <span class="st">"Treatment Better"</span><span class="op">)</span>,</span>
-<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span>  ticks_at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span>  arrow_lab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Placebo Better"</span>, <span class="st">"Treatment Better"</span><span class="op">)</span>,</span>
+<span>  xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>,</span>
+<span>  ticks_at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create temp file name"</span><span class="op">)</span></span>
-<span><span class="va">tmppth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".jpg"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">tmppth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempfile</a></span><span class="op">(</span>fileext <span class="op">=</span> <span class="st">".jpg"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Turn on jpeg device context"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">jpeg</a></span><span class="op">(</span><span class="va">tmppth</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">jpeg</a></span><span class="op">(</span><span class="va">tmppth</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Print plot"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Turn off device context"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Create Report -----------------------------------------------------------</span></span>
@@ -241,16 +301,16 @@ embed JPEG images into any output type that accepts images.</li>
 <span><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">tmppth</span>, <span class="fl">5.5</span>, <span class="fl">7.5</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Construct report file path"</span><span class="op">)</span></span>
-<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example9.rtf"</span><span class="op">)</span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example9.rtf"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create report"</span><span class="op">)</span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 3.1.4"</span>, <span class="st">"Forest Plot Comparison of Treated vs. Placebo"</span>,</span>
-<span>         <span class="st">"Safety Population"</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>         <span class="st">"Safety Population"</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: {Sys.path()}"</span>, </span>
-<span>           <span class="st">"Output: {basename(pth)}"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Sassy"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>           <span class="st">"Output: {basename(pth)}"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Sassy"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">page_footer</span><span class="op">(</span><span class="st">"Date: {Sys.time()}"</span>, right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Write report"</span><span class="op">)</span></span>
@@ -266,19 +326,19 @@ embed JPEG images into any output type that accepts images.</li>
 <span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
 <span></span>
 <span><span class="co"># Kill image file</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/files.html">file.remove</a></span><span class="op">(</span><span class="va">tmppth</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.remove</a></span><span class="op">(</span><span class="va">tmppth</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor"></a>Output</h2>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h2>
 <p>Here is an image of the RTF report produced by the above example:</p>
 <p><img src="../man/images/forest.png" align="center"></p>
 </div>
-<div id="log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log" class="anchor"></a>Log</h2>
+<div class="section level2">
+<h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
+</h2>
 <p>Here is the log produced by the above forest plot example:</p>
 <pre><code>=========================================================================
 Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpc54HUz/log/example9.log
@@ -521,11 +581,13 @@ Log Elapsed Time: 0 00:00:00
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -533,6 +595,8 @@ Log Elapsed Time: 0 00:00:00
 
   
 
+
+  
 
   </body>
 </html>

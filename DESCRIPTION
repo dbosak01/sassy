@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for Everyone
-Version: 1.1.0
+Version: 1.2.0
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for everyone, 
@@ -17,7 +17,7 @@ Depends: R (>= 3.6.0)
 URL: https://r-sassy.org
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown,
     tidylog,
@@ -27,6 +27,8 @@ Imports: common,
          logr, 
          fmtr,
          libr,
-         reporter
-RoxygenNote: 7.2.1
+         reporter, 
+         procs
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
+Config/testthat/edition: 3

@@ -1,3 +1,9 @@
+# sassy 1.2.0
+
+* Added IQ and OQ validation routines.
+* Added **procs** package.
+* Updated examples to use **procs** package.
+
 # sassy 1.1.0
 
 * Updated some examples.

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy-dm_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 2: Demographics Table</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-dm.Rmd"><code>vignettes/sassy-dm.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy-dm.Rmd" class="external-link"><code>vignettes/sassy-dm.Rmd</code></a></small>
       <div class="hidden name"><code>sassy-dm.Rmd</code></div>
 
     </div>
@@ -143,44 +203,44 @@
 <p>The second example produces a demographics summary table of selected
 variables. The report shows statistics for each of the four treatment
 groups.</p>
-<div id="program" class="section level2">
-<h2 class="hasAnchor">
-<a href="#program" class="anchor"></a>Program</h2>
+<div class="section level2">
+<h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
+</h2>
 <p>Note the following about this example:</p>
 <ul>
-<li>The <strong><a href="https://logr.r-sassy.org">logr</a></strong>
+<li>The <strong><a href="https://logr.r-sassy.org" class="external-link">logr</a></strong>
 package provides automatic logging for many functions.</li>
-<li>The <code>datastep()</code> function from the <strong><a href="https://libr.r-sassy.org">libr</a></strong> package allows for a
+<li>The <code>datastep()</code> function from the <strong><a href="https://libr.r-sassy.org" class="external-link">libr</a></strong> package allows for a
 complex conditional in the middle of a <strong>dplyr</strong>
 pipeline.<br>
 </li>
-<li>The <strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>
+<li>The <strong><a href="https://fmtr.r-sassy.org" class="external-link">fmtr</a></strong>
 package provides several convenient functions for calculating and
 formatting summary statistics.</li>
-<li>The <strong><a href="https://reporter.r-sassy.org">reporter</a></strong> package
+<li>The <strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong> package
 supports ‘N=’ population counts in the header labels.</li>
 <li>The <strong>reporter</strong> package also allows you to define a
 stub column of hierarchical labels.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get path to temp directory</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Get sample data directory</span></span>
-<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.log"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Load and Prepare Data ---------------------------------------------------</span></span>
@@ -195,8 +255,8 @@ stub column of hierarchical labels.</li>
 <span></span>
 <span><span class="co"># Prepare data</span></span>
 <span><span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">datastep</span><span class="op">(</span><span class="op">{</span></span>
 <span>                     </span>
 <span>     <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span></span>
@@ -211,7 +271,7 @@ stub column of hierarchical labels.</li>
 <span>   <span class="op">}</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span></span>
-<span><span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/enframe.html">deframe</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu">count</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">deframe</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span>                     </span>
 <span></span>
 <span><span class="co"># Age Summary Block -------------------------------------------------------</span></span>
@@ -220,18 +280,18 @@ stub column of hierarchical labels.</li>
 <span></span>
 <span><span class="va">age_block</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">dm_mod</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span> N <span class="op">=</span> <span class="fu">fmt_n</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">summarise</span><span class="op">(</span> N <span class="op">=</span> <span class="fu">fmt_n</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
 <span>             `Mean (SD)` <span class="op">=</span> <span class="fu">fmt_mean_sd</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
 <span>             Median <span class="op">=</span> <span class="fu">fmt_median</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
 <span>             `Q1 - Q3` <span class="op">=</span> <span class="fu">fmt_quantile_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span>,</span>
 <span>             Range  <span class="op">=</span> <span class="fu">fmt_range</span><span class="op">(</span><span class="va">AGE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">ARM</span>,</span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span><span class="op">-</span><span class="va">ARM</span>,</span>
 <span>               names_to  <span class="op">=</span> <span class="st">"label"</span>,</span>
 <span>               values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_column.html">add_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGE"</span>, .before <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_column</span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGE"</span>, .before <span class="op">=</span> <span class="st">"label"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -243,14 +303,14 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create age group frequency counts"</span><span class="op">)</span></span>
 <span><span class="va">ageg_block</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">dm_mod</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="va">n</span>, </span>
 <span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGECAT"</span>, </span>
-<span>            label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, </span>
+<span>  <span class="fu">transmute</span><span class="op">(</span>var <span class="op">=</span> <span class="st">"AGECAT"</span>, </span>
+<span>            label <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, </span>
 <span>                                               <span class="st">"25 to 44"</span>, </span>
 <span>                                               <span class="st">"45 to 64"</span>, </span>
 <span>                                               <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -258,7 +318,7 @@ stub column of hierarchical labels.</li>
 <span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -267,7 +327,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for SEX"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create user-defined format</span></span>
-<span><span class="va">fmt_sex</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"Missing"</span><span class="op">)</span>,</span>
+<span><span class="va">fmt_sex</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"Missing"</span><span class="op">)</span>,</span>
 <span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span><span class="op">)</span>,</span>
 <span>                 <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"F"</span>, <span class="st">"Female"</span><span class="op">)</span>,</span>
 <span>                 <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
@@ -275,38 +335,38 @@ stub column of hierarchical labels.</li>
 <span><span class="co"># Create sex frequency counts   </span></span>
 <span><span class="va">sex_block</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">dm_mod</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">SEX</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="va">n</span>, </span>
 <span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"SEX"</span>, </span>
-<span>            label <span class="op">=</span>   <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">SEX</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>, </span>
+<span>  <span class="fu">transmute</span><span class="op">(</span>var <span class="op">=</span> <span class="st">"SEX"</span>, </span>
+<span>            label <span class="op">=</span>   <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">SEX</span>, <span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span>, </span>
 <span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">label</span>, <span class="va">fmt_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">label</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>label <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">label</span>, <span class="va">fmt_sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine blocks into final data frame"</span><span class="op">)</span></span>
-<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">age_block</span>, <span class="va">ageg_block</span>, <span class="va">sex_block</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">age_block</span>, <span class="va">ageg_block</span>, <span class="va">sex_block</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Report ------------------------------------------------------------------</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">var_fmt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AGE"</span> <span class="op">=</span> <span class="st">"Age"</span>, <span class="st">"AGECAT"</span> <span class="op">=</span> <span class="st">"Age Group"</span>, <span class="st">"SEX"</span> <span class="op">=</span> <span class="st">"Sex"</span><span class="op">)</span></span>
+<span><span class="va">var_fmt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AGE"</span> <span class="op">=</span> <span class="st">"Age"</span>, <span class="st">"AGECAT"</span> <span class="op">=</span> <span class="st">"Age Group"</span>, <span class="st">"SEX"</span> <span class="op">=</span> <span class="st">"Sex"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create Table</span></span>
 <span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">final</span>, first_row_blank <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>                    borders <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>                    borders <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A`</span>, to <span class="op">=</span> <span class="va">`ARM D`</span>, </span>
 <span>                  align <span class="op">=</span> <span class="st">"center"</span>, width <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"label"</span><span class="op">)</span>, <span class="st">"Variable"</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"var"</span>, <span class="st">"label"</span><span class="op">)</span>, <span class="st">"Variable"</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">var</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>, label <span class="op">=</span> <span class="st">"Variable"</span>,</span>
 <span>         format <span class="op">=</span> <span class="va">var_fmt</span>,label_row <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">label</span>, indent <span class="op">=</span> <span class="fl">.25</span>, label <span class="op">=</span> <span class="st">"Demographic Category"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -315,7 +375,7 @@ stub column of hierarchical labels.</li>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C`</span>, label <span class="op">=</span> <span class="st">"Drug 100mg"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D`</span>, label <span class="op">=</span> <span class="st">"Competitor"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example2.rtf"</span><span class="op">)</span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example2.rtf"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -325,7 +385,7 @@ stub column of hierarchical labels.</li>
 <span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Table.R"</span>,</span>
 <span>            <span class="st">"NOTE: Denominator based on number of non-missing responses."</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span></span>
@@ -343,15 +403,15 @@ stub column of hierarchical labels.</li>
 <span><span class="co"># file.show(pth)</span></span>
 <span><span class="co"># file.show(lgpth)</span></span></code></pre></div>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor"></a>Output</h2>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h2>
 <p>Here is the output report:</p>
 <p><img src="../man/images/dm.png" align="center"></p>
 </div>
-<div id="log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log" class="anchor"></a>Log</h2>
+<div class="section level2">
+<h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
+</h2>
 <p>And here is the log:</p>
 <pre><code>========================================================================= 
 Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpKC93lu/log/example2.log 
@@ -577,11 +637,13 @@ Log Elapsed Time: 0 00:00:00
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -589,6 +651,8 @@ Log Elapsed Time: 0 00:00:00
 
   
 
+
+  
 
   </body>
 </html>

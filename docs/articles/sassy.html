@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>sassy</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy.Rmd"><code>vignettes/sassy.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy.Rmd" class="external-link"><code>vignettes/sassy.Rmd</code></a></small>
       <div class="hidden name"><code>sassy.Rmd</code></div>
 
     </div>
@@ -154,38 +214,43 @@ reporting. For most projects, it is expected that users will load both
 the <strong>tidyverse</strong> and <strong>sassy</strong> meta-packages.
 Between these two, the user will typically have everything they need to
 easily prepare and report on their data.</p>
-<div id="included-packages" class="section level3">
-<h3 class="hasAnchor">
-<a href="#included-packages" class="anchor"></a>Included Packages</h3>
+<div class="section level3">
+<h3 id="included-packages">Included Packages<a class="anchor" aria-label="anchor" href="#included-packages"></a>
+</h3>
 <p>The <strong>sassy</strong> meta-package contains the following
 packages:</p>
 <ul>
 <li>
-<strong><a href="https://logr.r-sassy.org">logr</a></strong>:
+<strong><a href="https://logr.r-sassy.org" class="external-link">logr</a></strong>:
 Produces a traceable log</li>
 <li>
-<strong><a href="https://fmtr.r-sassy.org">fmtr</a></strong>:
+<strong><a href="https://fmtr.r-sassy.org" class="external-link">fmtr</a></strong>:
 Provides functions for formatting data and a creating a format
 catalog</li>
 <li>
-<strong><a href="https://libr.r-sassy.org">libr</a></strong>: Gives
+<strong><a href="https://libr.r-sassy.org" class="external-link">libr</a></strong>: Gives
 you the ability to define a libname, generate a data dictionary, and
 simulate a data step</li>
 <li>
-<strong><a href="https://reporter.r-sassy.org">reporter</a></strong>: A reporting
+<strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong>: A reporting
 package with easy layout capabilities and the ability to write reports
 in TXT, RTF, PDF, and DOCX file formats</li>
 <li>
-<strong><a href="https://common.r-sassy.org">common</a></strong>: A
+<strong><a href="https://common.r-sassy.org" class="external-link">common</a></strong>: A
 set of utility functions shared across the <strong>sassy</strong> family
 of packages, and often useful in their own right.</li>
+<li>
+<strong><a href="https://procs.r-sassy.org" class="external-link">procs</a></strong>: A
+set of functions that simulate SAS® procedures. Package includes
+simulations of PROC FREQ, PROC MEANS, PROC TRANSPOSE, PROC SORT, and
+PROC PRINT.</li>
 </ul>
 <p>The above links will take you into the respective packages for a deep
 dive on their capabilities.</p>
 </div>
-<div id="next-steps" class="section level3">
-<h3 class="hasAnchor">
-<a href="#next-steps" class="anchor"></a>Next Steps</h3>
+<div class="section level3">
+<h3 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h3>
 <p>Before taking a deep dive into the <strong>sassy</strong> package
 documentation, please look at some examples. These examples will give
 you a feel for the overall flow of a <strong>sassy</strong>-enhanced
@@ -247,11 +312,13 @@ above to explore the system further!</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -259,6 +326,8 @@ above to explore the system further!</p>
 
   
 
+
+  
 
   </body>
 </html>

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,19 +40,74 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav"></ul>
-<ul class="nav navbar-nav navbar-right">
+      <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/sassy.html">Get started</a>
 </li>
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
+    </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
 <li>
   <a href="../articles/sassy.html">Get started</a>
 </li>
@@ -100,6 +157,9 @@
     <li>
       <a href="../articles/sassy-disclaimers.html">Disclaimers</a>
     </li>
+    <li>
+      <a href="../articles/sassy-faq.html">Frequently Asked Questions</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -112,7 +172,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
 <li>
-  <a href="https://github.com/dbosak01/sassy/">
+  <a href="https://github.com/dbosak01/sassy/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,13 +187,13 @@
 
       
 
-      </header><script src="sassy-plisting_files/header-attrs-2.17/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example 11: Subject Listing</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/master/vignettes/sassy-plisting.Rmd"><code>vignettes/sassy-plisting.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/dbosak01/sassy/blob/HEAD/vignettes/sassy-plisting.Rmd" class="external-link"><code>vignettes/sassy-plisting.Rmd</code></a></small>
       <div class="hidden name"><code>sassy-plisting.Rmd</code></div>
 
     </div>
@@ -143,9 +203,9 @@
 <p>Here is an example of a subject listing using the
 <strong>sassy</strong> system of functions. The example shows
 demographics for each patient and vital signs by visit.</p>
-<div id="program" class="section level2">
-<h2 class="hasAnchor">
-<a href="#program" class="anchor"></a>Program</h2>
+<div class="section level2">
+<h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
+</h2>
 <p>Note the following about this example:</p>
 <ul>
 <li>The example makes extensive use of the <code>datastep</code>
@@ -165,37 +225,37 @@ subjects.</li>
 object.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        <span class="st">"logr.on"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get path to temp directory</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Get sample data directory</span></span>
-<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11.log"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Prepare formats ---------------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare formats"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">fcat</span><span class="op">(</span>SEX <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span> <span class="op">=</span> <span class="st">"Male"</span>, <span class="st">"F"</span> <span class="op">=</span> <span class="st">"Female"</span><span class="op">)</span>,</span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">fcat</span><span class="op">(</span>SEX <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span> <span class="op">=</span> <span class="st">"Male"</span>, <span class="st">"F"</span> <span class="op">=</span> <span class="st">"Female"</span><span class="op">)</span>,</span>
 <span>           AGE <span class="op">=</span> <span class="st">"%d Years"</span>,</span>
 <span>           RACE <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WHITE"</span>, <span class="st">"White"</span><span class="op">)</span>,</span>
 <span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"BLACK OR AFRICAN AMERICAN"</span>, <span class="st">"Black or African American"</span><span class="op">)</span>,</span>
 <span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ASIAN OR PACIFIC ISLANDER"</span>, <span class="st">"Asian or Pacific Islander"</span><span class="op">)</span>,</span>
 <span>                        <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>           WEIGHT <span class="op">=</span> <span class="st">"%6.2f kg"</span>,</span>
-<span>           EAR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"L"</span> <span class="op">=</span> <span class="st">"Left"</span>, <span class="st">"R"</span> <span class="op">=</span> <span class="st">"Right"</span><span class="op">)</span>,</span>
+<span>           EAR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L"</span> <span class="op">=</span> <span class="st">"Left"</span>, <span class="st">"R"</span> <span class="op">=</span> <span class="st">"Right"</span><span class="op">)</span>,</span>
 <span>           DOSE <span class="op">=</span> <span class="st">"%4.2fug"</span>,</span>
 <span>           ETHNIC <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"NOT HISPANIC OR LATINO"</span>, <span class="st">"Not Hispanic or Latino"</span><span class="op">)</span>,</span>
 <span>                          <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"HISPANIC OR LATINO"</span>, <span class="st">"Hispanic or Latino"</span><span class="op">)</span>,</span>
@@ -230,22 +290,22 @@ object.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Format desired vital signs"</span><span class="op">)</span> </span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.VS</span>, </span>
 <span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VSTESTCD</span>, <span class="va">VSCOMB</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
-<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">!=</span> <span class="st">'HEIGHT'</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>,</span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">!=</span> <span class="st">'HEIGHT'</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>,</span>
 <span>         <span class="op">{</span></span>
 <span>           </span>
 <span>           <span class="kw">if</span> <span class="op">(</span><span class="va">VSORRESU</span> <span class="op">==</span> <span class="st">"C"</span><span class="op">)</span></span>
-<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
+<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
 <span>           <span class="kw">else</span> </span>
-<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
+<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">vso</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pivot vitals signs"</span><span class="op">)</span></span>
 <span><span class="va">vsot</span> <span class="op">&lt;-</span> <span class="va">vso</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">VSTESTCD</span>,</span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">VSTESTCD</span>,</span>
 <span>              values_from <span class="op">=</span> <span class="va">VSCOMB</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Assign and apply formats"</span><span class="op">)</span>               </span>
@@ -255,24 +315,24 @@ object.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare final data for reporting"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">dmf</span>, format <span class="op">=</span> <span class="va">fc</span>,</span>
 <span>         by <span class="op">=</span> <span class="va">USUBJID</span>,</span>
-<span>         retain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>PTCNT <span class="op">=</span> <span class="fl">0</span>, PG <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>         retain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>PTCNT <span class="op">=</span> <span class="fl">0</span>, PG <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>         merge <span class="op">=</span> <span class="va">vsot</span>, merge_by <span class="op">=</span> <span class="va">USUBJID</span>,</span>
 <span>         <span class="op">{</span></span>
 <span>           </span>
 <span>           <span class="co"># Combine subject info into label row</span></span>
-<span>           <span class="va">BASELINE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="st">", Site="</span>, <span class="va">SITEID</span>,</span>
+<span>           <span class="va">BASELINE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="st">", Site="</span>, <span class="va">SITEID</span>,</span>
 <span>                              <span class="st">", Age="</span>, <span class="va">AGE</span>, <span class="st">", Sex="</span>, <span class="va">SEX</span>, <span class="st">", Race="</span>, <span class="va">RACE</span>, </span>
 <span>                              <span class="st">", Ethnic="</span>, <span class="va">ETHNIC</span><span class="op">)</span></span>
 <span>           </span>
 <span>           <span class="co"># Deal with non-recorded blood pressure</span></span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span><span class="op">)</span></span>
+<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span><span class="op">)</span></span>
 <span>             <span class="va">DIABP</span> <span class="op">&lt;-</span> <span class="st">"-"</span></span>
 <span>           </span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span><span class="op">)</span></span>
+<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span><span class="op">)</span></span>
 <span>             <span class="va">SYSBP</span> <span class="op">&lt;-</span> <span class="st">"-"</span></span>
 <span>           </span>
 <span>           <span class="co"># Combine distolic and systolic in one column</span></span>
-<span>           <span class="va">BP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span>, <span class="st">" mmHg"</span><span class="op">)</span></span>
+<span>           <span class="va">BP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span>, <span class="st">" mmHg"</span><span class="op">)</span></span>
 <span>           </span>
 <span>           <span class="co"># Format treatment group</span></span>
 <span>           <span class="kw">if</span> <span class="op">(</span><span class="va">first.</span><span class="op">)</span></span>
@@ -314,7 +374,7 @@ object.</li>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">PG</span>, page_break <span class="op">=</span> <span class="cn">TRUE</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11"</span><span class="op">)</span>, font <span class="op">=</span> <span class="st">"Courier"</span>, font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11"</span><span class="op">)</span>, font <span class="op">=</span> <span class="st">"Courier"</span>, font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Program:"</span> <span class="op">%p%</span> <span class="fu">Sys.path</span><span class="op">(</span><span class="op">)</span>, right <span class="op">=</span> <span class="st">"Draft"</span>, width <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -326,7 +386,7 @@ object.</li>
 <span>            <span class="st">"Values flagged with {symbol('dagger')} were excluded from the by-visit "</span> <span class="op">%p%</span> </span>
 <span>              <span class="st">"analysis in tables showing the qualitative test results."</span>,</span>
 <span>            blank_row <span class="op">=</span> <span class="st">"none"</span>, footer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="st">"Date: "</span> <span class="op">%p%</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%Y %H:%M:%S"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="st">"Date: "</span> <span class="op">%p%</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%Y %H:%M:%S"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>              <span class="st">"Archytas"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Generate both RTF and PDF with same report object</span></span>
@@ -348,16 +408,16 @@ object.</li>
 <span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="output" class="section level2">
-<h2 class="hasAnchor">
-<a href="#output" class="anchor"></a>Output</h2>
+<div class="section level2">
+<h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
+</h2>
 <p>Here is an image of the first page of the RTF report produced by the
 above subject listing:</p>
 <p><img src="../man/images/plisting.png" align="center"></p>
 </div>
-<div id="log" class="section level2">
-<h2 class="hasAnchor">
-<a href="#log" class="anchor"></a>Log</h2>
+<div class="section level2">
+<h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
+</h2>
 <p>Here is the log produced by the above subject listing:</p>
 <pre><code>=========================================================================
 Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpeYEHwE/log/example11.log
@@ -624,11 +684,13 @@ Figure</a></p>
 
 
       <footer><div class="copyright">
-  <p>Developed by David Bosak.</p>
+  <p></p>
+<p>Developed by David Bosak.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -636,6 +698,8 @@ Figure</a></p>
 
   
 
+
+  
 
   </body>
 </html>
