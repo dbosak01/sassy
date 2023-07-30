@@ -1,4 +1,6 @@
 
+# Needed to get command check to pass without notes
+# Complaining about undeclared variables that are actually non-standard eval
 utils::globalVariables(c("hello", "goodbye", "x", "tst", "mpg"))
 
 # Operational Qualification -----------------------------------------------
