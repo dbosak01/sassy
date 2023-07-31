@@ -26,6 +26,10 @@ utils::globalVariables(c("hello", "goodbye", "x", "tst", "mpg"))
 #' @export
 run_oq <- function(location) {
 
+  if (!dir.exists(location)) {
+    dir.create(opth, recursive = TRUE)
+  }
+
   # Create needed folders
   dpth <- file.path(location, "data")
   if (!dir.exists(dpth))
@@ -51,7 +55,7 @@ run_oq <- function(location) {
   ret <- rbind(ret, check_packages())
 
   # Checks for logr package
-  ret <- rbind(ret, check_logr(lpth))
+  ret <- rbind(ret, check_logr(opth))
 
   # Now that log is tested and packages exist, create run log
   lg <- log_open(file.path(lpth, "runOQ.log"), logdir = FALSE,

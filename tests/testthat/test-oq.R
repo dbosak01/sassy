@@ -79,6 +79,10 @@ test_that("OQ-03: check_packages() works as expected.", {
 
 test_that("OQ-04: check_common() works as expected.", {
 
+  pth <- file.path(base_path, "OQ/log")
+
+  if (!dir.exists(pth))
+    dir.create(pth, recursive = TRUE)
 
   res <- check_common()
 
@@ -89,6 +93,12 @@ test_that("OQ-04: check_common() works as expected.", {
 
 
 test_that("OQ-05: check_fmtr() works as expected.", {
+
+
+  pth <- file.path(base_path, "OQ/log")
+
+  if (!dir.exists(pth))
+    dir.create(pth, recursive = TRUE)
 
   pth <- file.path(base_path, "OQ/output")
 

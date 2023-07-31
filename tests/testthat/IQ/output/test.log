@@ -1,6 +1,6 @@
 =========================================================================
-Log Path: c:/packages/sassy/tests/testthat/OQ/log/test.log
-Program Path: C:/packages/sassy/tests/testthat/test-oq.R
+Log Path: c:/packages/sassy/tests/testthat/IQ/output/test.log
+Program Path: C:/packages/sassy/tests/testthat/test-iq.R
 Working Directory: C:/packages/sassy
 User Name: dbosa
 R Version: 4.3.1 (2023-06-16 ucrt)
@@ -9,13 +9,13 @@ Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
 Packages: sassy_1.2.0 procs_1.0.0 reporter_1.4.1 libr_1.2.8 fmtr_1.5.9
 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-07-29 17:31:28.056548
+Log Start Time: 2023-07-31 00:47:45.270608
 =========================================================================
 
 Test me
 
-NOTE: Log Print Time:  2023-07-29 17:31:28.058788
-NOTE: Elapsed Time: 0.00102806091308594 secs
+NOTE: Log Print Time:  2023-07-31 00:47:45.272817
+NOTE: Elapsed Time: 0.00105786323547363 secs
 
                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
@@ -53,10 +53,10 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 
 NOTE: Data frame has 32 rows and 11 columns.
 
-NOTE: Log Print Time:  2023-07-29 17:31:28.070026
-NOTE: Elapsed Time: 0.0112378597259521 secs
+NOTE: Log Print Time:  2023-07-31 00:47:45.281967
+NOTE: Elapsed Time: 0.00915002822875977 secs
 
 =========================================================================
-Log End Time: 2023-07-29 17:31:28.070455
+Log End Time: 2023-07-31 00:47:45.28237
 Log Elapsed Time: 0 00:00:00
 =========================================================================
