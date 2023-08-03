@@ -9,7 +9,7 @@ Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
 Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.0 reporter_1.4.1 libr_1.2.8
 fmtr_1.5.9 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-07-31 00:48:09.332425
+Log Start Time: 2023-08-02 11:54:01.054339
 =========================================================================
 
 =========================================================================
@@ -394,10 +394,10 @@ Complete Results:
 
 Printing report
 
-Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-07-31
+Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-02
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-07-31.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-02.pdf'
 - output_type: PDF
 - units: inches
 - orientation: portrait
@@ -405,7 +405,7 @@ Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-07-31
 - line size/count: 6.5/63
 - title 1: 'Operational Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-07-31 00:48:11 AM'
+- title 3: 'Date: 2023-08-02 11:54:02 AM'
 - content: 
 # A table specification:
 - data: data.frame 'datm' 37 rows 5 cols
@@ -413,7 +413,7 @@ Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-07-31
 - use_attributes: all
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKQwX03\file30c062812d23.html'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpuoZZ82\file2db2c2372244.html'
 - output_type: HTML
 - units: inches
 - orientation: portrait
@@ -426,9 +426,9 @@ Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-07-31
 - use_attributes: all
 - title 1: 'Operational Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-07-31 00:48:12 AM'
+- title 3: 'Date: 2023-08-02 11:54:03 AM'
 
 =========================================================================
-Log End Time: 2023-07-31 00:48:12.191747
+Log End Time: 2023-08-02 11:54:03.326488
 Log Elapsed Time: 0 00:00:02
 =========================================================================
