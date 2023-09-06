@@ -9,66 +9,40 @@ Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
 Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.3 reporter_1.4.1 libr_1.2.8
 fmtr_1.5.9 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-09-06 08:59:37.916518
+Log Start Time: 2023-09-06 12:04:03.789106
 =========================================================================
 
 =========================================================================
 Initialization results
 =========================================================================
 
-  Category                              Description Pass Message
-1    sassy                    System Initialization TRUE        
-2    sassy     Check for logr package installation. TRUE        
-3    sassy     Check for fmtr package installation. TRUE        
-4    sassy   Check for common package installation. TRUE        
-5    sassy     Check for libr package installation. TRUE        
-6    sassy Check for reporter package installation. TRUE        
-7    sassy    Check for procs package installation. TRUE        
-8     logr                        Test log created. TRUE        
-
-=========================================================================
-Package File Examination
-=========================================================================
-
-=========================================================================
-Examine common package
-=========================================================================
-
-common source code found.
-
-common source code checksum passed.
-
-=========================================================================
-Examine fmtr package
-=========================================================================
-
-fmtr source code found.
-
-fmtr size check passed.
-
-=========================================================================
-Examine libr package
-=========================================================================
-
-libr source code found.
-
-libr size check passed.
-
-=========================================================================
-Examine reporter package
-=========================================================================
-
-reporter source code found.
-
-reporter source code checksum passed.
-
-=========================================================================
-Examine procs package
-=========================================================================
-
-procs source code found.
-
-procs source code checksum passed.
+  Category
+1    sassy
+2    sassy
+3    sassy
+4    sassy
+5    sassy
+6    sassy
+7    sassy
+8     logr
+                               Description Pass
+1                    System Initialization TRUE
+2     Check for logr package installation. TRUE
+3     Check for fmtr package installation. TRUE
+4   Check for common package installation. TRUE
+5     Check for libr package installation. TRUE
+6 Check for reporter package installation. TRUE
+7    Check for procs package installation. TRUE
+8                        Test log created. TRUE
+  Message
+1        
+2        
+3        
+4        
+5        
+6        
+7        
+8        
 
 =========================================================================
 Preparing Report
@@ -76,44 +50,33 @@ Preparing Report
 
 Complete Results:
 
-   Category                                   Description Pass
-1     sassy                         System Initialization TRUE
-2     sassy          Check for logr package installation. TRUE
-3     sassy          Check for fmtr package installation. TRUE
-4     sassy        Check for common package installation. TRUE
-5     sassy          Check for libr package installation. TRUE
-6     sassy      Check for reporter package installation. TRUE
-7     sassy         Check for procs package installation. TRUE
-8      logr                             Test log created. TRUE
-9    common                     common source code found. TRUE
-10   common   Compare checksum for common version v1.0.8. TRUE
-11     fmtr                       fmtr source code found. TRUE
-12     fmtr     Compare checksum for fmtr version v1.5.9. TRUE
-13     libr                       libr source code found. TRUE
-14     libr     Compare checksum for libr version v1.2.8. TRUE
-15 reporter                   reporter source code found. TRUE
-16 reporter Compare checksum for reporter version v1.4.1. TRUE
-17    procs                      procs source code found. TRUE
-18    procs    Compare checksum for procs version v1.0.3. TRUE
-                                  Message
-1                                        
-2                                        
-3                                        
-4                                        
-5                                        
-6                                        
-7                                        
-8                                        
-9                                        
-10                                       
-11                                       
-12 Checksum failed but size check passed.
-13                                       
-14 Checksum failed but size check passed.
-15                                       
-16                                       
-17                                       
-18                                       
+  Category
+1    sassy
+2    sassy
+3    sassy
+4    sassy
+5    sassy
+6    sassy
+7    sassy
+8     logr
+                               Description Pass
+1                    System Initialization TRUE
+2     Check for logr package installation. TRUE
+3     Check for fmtr package installation. TRUE
+4   Check for common package installation. TRUE
+5     Check for libr package installation. TRUE
+6 Check for reporter package installation. TRUE
+7    Check for procs package installation. TRUE
+8                        Test log created. TRUE
+  Message
+1        
+2        
+3        
+4        
+5        
+6        
+7        
+8        
 
 Printing report
 
@@ -128,15 +91,15 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-09-06
 - line size/count: 9/47
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-09-06 08:59:37 AM'
+- title 3: 'Date: 2023-09-06 12:04:03 PM'
 - content: 
 # A table specification:
-- data: data.frame 'datm' 18 rows 5 cols
+- data: data.frame 'datm' 8 rows 5 cols
 - show_cols: all
 - use_attributes: all
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpyqy93v\file2974804ba186d.html'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpyqy93v\file2974804779f6.html'
 - output_type: HTML
 - units: inches
 - orientation: portrait
@@ -144,14 +107,14 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-09-06
 - line size/count: 999999/6307685
 - content: 
 # A table specification:
-- data: data.frame 'datm' 18 rows 5 cols
+- data: data.frame 'datm' 8 rows 5 cols
 - show_cols: all
 - use_attributes: all
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-09-06 08:59:38 AM'
+- title 3: 'Date: 2023-09-06 12:04:04 PM'
 
 =========================================================================
-Log End Time: 2023-09-06 08:59:38.614088
+Log End Time: 2023-09-06 12:04:04.369478
 Log Elapsed Time: 0 00:00:00
 =========================================================================

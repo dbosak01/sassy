@@ -21,10 +21,10 @@ print_report <- function(path, dat, ttls) {
   tbl <- create_table(datm, header_bold = TRUE)
 
   rpt <- create_report(path, output_type = "PDF", font = "Arial",
-                       orientation = "landscape") |>
-    titles(ttls, bold = TRUE, font_size = 12, blank_row = "none") |>
-    titles("Date: " %p% fapply(Sys.time(), "%Y-%m-%d %H:%M:%S %p")) |>
-    add_content(tbl)
+                       orientation = "landscape")
+  rpt <-  titles(rpt, ttls, bold = TRUE, font_size = 12, blank_row = "none")
+  rpt <-  titles(rpt, "Date: " %p% fapply(Sys.time(), "%Y-%m-%d %H:%M:%S %p"))
+  rpt <-  add_content(rpt, tbl)
 
   res <- write_report(rpt)
 
@@ -47,15 +47,15 @@ view_report <- function(dat, ttls) {
 
   datm <- data.frame(ID = seq(1, nrow(dat)), dat)
 
-  tbl <- create_table(datm, header_bold = TRUE) |>
-    titles(ttls, bold = TRUE, font_size = 12, blank_row = "none") |>
-    titles("Date: " %p% fapply(Sys.time(), "%Y-%m-%d %H:%M:%S %p"))
+  tbl <- create_table(datm, header_bold = TRUE)
+  tbl <- titles(tbl, ttls, bold = TRUE, font_size = 12, blank_row = "none")
+  tbl <- titles(tbl, "Date: " %p% fapply(Sys.time(), "%Y-%m-%d %H:%M:%S %p"))
 
   rpt <- create_report(path, output_type = "HTML", font = "Arial",
                        paper_size = "none",
-                       orientation = "portrait") |>
-    set_margins(top = .5, bottom = .5, left = .5, right = .5) |>
-    add_content(tbl)
+                       orientation = "portrait")
+  rpt <-  set_margins(rpt, top = .5, bottom = .5, left = .5, right = .5)
+  rpt <-  add_content(rpt, tbl)
 
   res <- write_report(rpt)
 
