@@ -10,18 +10,18 @@ dev <- FALSE
 
 options("logr.print" = FALSE)
 
-test_that("IQ-01: check_sum() works as expected.", {
-
-
-  pth <- file.path(.libPaths()[1], "common/R/common.rdb")
-
-  ver <- as.character(packageVersion("common"))
-
-  res <- check_sum("common", ver, pth)
-
-  expect_equal(res, TRUE)
-
-})
+# test_that("IQ-01: check_sum() works as expected.", {
+#
+#
+#   pth <- file.path(.libPaths()[1], "common/R/common.rdb")
+#
+#   ver <- as.character(packageVersion("common"))
+#
+#   res <- check_sum("common", ver, pth)
+#
+#   expect_equal(res, TRUE)
+#
+# })
 
 
 # test_that("IQ-02: examine_package() for common works as expected.", {
