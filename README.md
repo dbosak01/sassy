@@ -4,7 +4,7 @@
 [![sassy lifecycle](https://img.shields.io/badge/lifecycle-stable-blue.svg)](https://cran.r-project.org/package=sassy)
 [![sassy downloads](https://cranlogs.r-pkg.org/badges/sassy)](https://cran.r-project.org/package=sassy)
 [![sassy total downloads](https://cranlogs.r-pkg.org/badges/grand-total/sassy)](https://cran.r-project.org/package=sassy)
-[![R-CMD-check](https://github.com/dbosak01/sassy/workflows/R-CMD-check/badge.svg)](https://github.com/dbosak01/sassy/actions)
+[![R-CMD-check](https://github.com/dbosak01/sassy/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dbosak01/sassy/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/dbosak01/sassy/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dbosak01/sassy?branch=master)
 
 <!-- badges: end -->
