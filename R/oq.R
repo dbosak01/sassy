@@ -664,12 +664,12 @@ check_reporter<- function(opth) {
   put("Source dataset:")
   put(dt)
 
-  tbl <- create_table(dt) |>
-    titles("Test title") |>
-    footnotes("Test footnotes")
+  tbl <- create_table(dt)
+  tbl <- titles(tbl, "Test title")
+  tbl <- footnotes(tbl, "Test footnotes")
 
-  rpt <- create_report(pth, font = "Courier") |>
-    add_content(tbl)
+  rpt <- create_report(pth, font = "Courier")
+  rpt <- add_content(rpt, tbl)
 
   res <- write_report(rpt, output_type = "TXT")
 
