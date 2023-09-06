@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 ```
 The fifth example produces a summary table of selected Vital Signs for Placebo
 vs. Treated groups.  The report shows statistics for both baseline 
-and after-treatment time points.   
+and after-treatment time points. This example also demonstrates how to use
+**tidyverse** functions for data preparation instead of **procs**.
 
 ## Program
 
@@ -28,6 +29,9 @@ Note the following about this example:
   format, similar to `proc format`.
   * The **[reporter](https://reporter.r-sassy.org)** package supports 
   spanning headers in the report header.
+  * Notice that **sassy** functions integrate nicely with **dplyr**.  You can
+  put a `datastep()` right in the middle of a **dplyr** pipeline and get the
+  best of both worlds!
 
 
 ```{r eval=FALSE, echo=TRUE}

@@ -159,13 +159,15 @@ you to add multiple pieces of content to the same report.</li>
 figure just like previous examples.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
 <span></span>
+<span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        <span class="st">"logr.on"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get path to temp directory</span></span>
@@ -175,169 +177,117 @@ figure just like previous examples.</li>
 <span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example3.log"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="co"># Prepare formats ---------------------------------------------------------</span></span>
-<span></span>
-<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare formats"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">fcat</span><span class="op">(</span>SEX <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"M"</span> <span class="op">=</span> <span class="st">"Male"</span>, <span class="st">"F"</span> <span class="op">=</span> <span class="st">"Female"</span><span class="op">)</span>,</span>
-<span>           AGE <span class="op">=</span> <span class="st">"%d Years"</span>,</span>
-<span>           RACE <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WHITE"</span>, <span class="st">"White"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"BLACK OR AFRICAN AMERICAN"</span>, <span class="st">"Black or African American"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ASIAN OR PACIFIC ISLANDER"</span>, <span class="st">"Asian or Pacific Islander"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>           WEIGHT <span class="op">=</span> <span class="st">"%6.2f kg"</span>,</span>
-<span>           EAR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"L"</span> <span class="op">=</span> <span class="st">"Left"</span>, <span class="st">"R"</span> <span class="op">=</span> <span class="st">"Right"</span><span class="op">)</span>,</span>
-<span>           DOSE <span class="op">=</span> <span class="st">"%4.2fug"</span>,</span>
-<span>           ETHNIC <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"NOT HISPANIC OR LATINO"</span>, <span class="st">"Not Hispanic or Latino"</span><span class="op">)</span>,</span>
-<span>                          <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"HISPANIC OR LATINO"</span>, <span class="st">"Hispanic or Latino"</span><span class="op">)</span>,</span>
-<span>                          <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Unknown"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>           ARMT <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM A"</span>, <span class="st">"Placebo"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM B"</span>, <span class="st">"Drug 50mg"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM C"</span>, <span class="st">"Drug 100mg"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM D"</span>, <span class="st">"Competitor"</span><span class="op">)</span>,</span>
-<span>                        <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Not Treated/Screen Failure"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>           UNITS <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span>  <span class="st">"BEATS/MIN"</span>, <span class="st">"bpm"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"BREATHS/MIN"</span>, <span class="st">"brths/min"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"C"</span>, <span class="fu"><a href="https://common.r-sassy.org/reference/symbol.html" class="external-link">symbol</a></span><span class="op">(</span><span class="st">"degC"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"mmHg"</span>, <span class="st">""</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>           VISIT <span class="op">=</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"DAY 1"</span>, <span class="st">"Day 1"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 2"</span>, <span class="st">"Week 2"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 4"</span>, <span class="st">"Week 4"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 6"</span>, <span class="st">"Week 6"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 8"</span>, <span class="st">"Week 8"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 12"</span>, <span class="st">"Week 12"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"WEEK 16"</span>, <span class="st">"Week 16"</span><span class="op">)</span>,</span>
-<span>                         <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Early Termination"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span> </span>
-<span></span>
-<span><span class="co"># Prepare Data ------------------------------------------------------------</span></span>
+<span><span class="co"># Load and Prepare Data ---------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span></span>
+<span><span class="co"># Define data library</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
+<span><span class="co"># Loads data into workspace</span></span>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Format desired vital signs"</span><span class="op">)</span> </span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.VS</span>, </span>
-<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VSTESTCD</span>, <span class="va">VSCOMB</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
-<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op">!=</span> <span class="st">'HEIGHT'</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>         <span class="op">{</span></span>
-<span>           </span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="va">VSORRESU</span> <span class="op">==</span> <span class="st">"C"</span><span class="op">)</span></span>
-<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
-<span>           <span class="kw">else</span> </span>
-<span>             <span class="va">VSCOMB</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">VSORRES</span>, <span class="fu">fapply</span><span class="op">(</span><span class="va">VSORRESU</span>, <span class="va">fc</span><span class="op">$</span><span class="va">UNITS</span><span class="op">)</span><span class="op">)</span> </span>
-<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">vso</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Pivot vitals signs"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">vso</span>, id <span class="op">=</span> <span class="va">VSTESTCD</span>, var <span class="op">=</span> <span class="va">VSCOMB</span>, </span>
-<span>               by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span>by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">vsot</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare format"</span><span class="op">)</span></span>
+<span><span class="va">agefmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">24</span>, <span class="st">"18 to 24"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">44</span>, <span class="st">"25 to 44"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">64</span>, <span class="st">"45 to 64"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">65</span>, <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Assign and apply formats"</span><span class="op">)</span>               </span>
-<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">fc</span></span>
-<span><span class="va">dmf</span> <span class="op">&lt;-</span> <span class="fu">fdata</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
+<span>    where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">AGE</span>, <span class="va">agefmt</span><span class="op">)</span></span>
+<span>      </span>
+<span>    <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm_mod</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare final data for reporting"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">dmf</span>, format <span class="op">=</span> <span class="va">fc</span>,</span>
-<span>         by <span class="op">=</span> <span class="va">USUBJID</span>,</span>
-<span>         retain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>PTCNT <span class="op">=</span> <span class="fl">0</span>, PG <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>         merge <span class="op">=</span> <span class="va">vsot</span>, merge_by <span class="op">=</span> <span class="va">USUBJID</span>,</span>
-<span>         <span class="op">{</span></span>
-<span>           </span>
-<span>           <span class="co"># Combine subject info into label row</span></span>
-<span>           <span class="va">BASELINE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="st">", Site="</span>, <span class="va">SITEID</span>,</span>
-<span>                              <span class="st">", Age="</span>, <span class="va">AGE</span>, <span class="st">", Sex="</span>, <span class="va">SEX</span>, <span class="st">", Race="</span>, <span class="va">RACE</span>, </span>
-<span>                              <span class="st">", Ethnic="</span>, <span class="va">ETHNIC</span><span class="op">)</span></span>
-<span>           </span>
-<span>           <span class="co"># Deal with non-recorded blood pressure</span></span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span><span class="op">)</span></span>
-<span>             <span class="va">DIABP</span> <span class="op">&lt;-</span> <span class="st">"-"</span></span>
-<span>           </span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span><span class="op">)</span></span>
-<span>             <span class="va">SYSBP</span> <span class="op">&lt;-</span> <span class="st">"-"</span></span>
-<span>           </span>
-<span>           <span class="co"># Combine distolic and systolic in one column</span></span>
-<span>           <span class="va">BP</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">DIABP</span><span class="op">)</span>, <span class="st">"/"</span>, <span class="fu"><a href="https://rdrr.io/r/base/trimws.html" class="external-link">trimws</a></span><span class="op">(</span><span class="va">SYSBP</span><span class="op">)</span>, <span class="st">" mmHg"</span><span class="op">)</span></span>
-<span>           </span>
-<span>           <span class="co"># Format treatment group</span></span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="va">first.</span><span class="op">)</span></span>
-<span>             <span class="va">TREATMENT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">fc</span><span class="op">$</span><span class="va">ARMT</span><span class="op">)</span></span>
-<span>           <span class="kw">else</span> </span>
-<span>             <span class="va">TREATMENT</span> <span class="op">&lt;-</span> <span class="st">""</span></span>
-<span>           </span>
-<span>           <span class="co"># Count up patients</span></span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="va">first.</span><span class="op">)</span> <span class="op">{</span></span>
-<span>             <span class="va">PTCNT</span> <span class="op">&lt;-</span> <span class="va">PTCNT</span> <span class="op">+</span> <span class="fl">1</span> </span>
-<span>           <span class="op">}</span></span>
-<span>           </span>
-<span>           <span class="co"># Create paging variable with 3 patients per page</span></span>
-<span>           <span class="kw">if</span> <span class="op">(</span><span class="va">PTCNT</span> <span class="op">==</span> <span class="fl">4</span><span class="op">)</span> <span class="op">{</span></span>
-<span>             </span>
-<span>             <span class="va">PTCNT</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
-<span>             <span class="va">PG</span> <span class="op">&lt;-</span> <span class="va">PG</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>           <span class="op">}</span></span>
-<span>           </span>
-<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">final</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get population counts"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
+<span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">SEX</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_pop</span></span>
+<span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">AGECAT</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">agecat_pop</span></span>
 <span></span>
 <span></span>
-<span><span class="co"># Create report -----------------------------------------------------------</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Convert agecat to factor so rows will sort correctly"</span><span class="op">)</span></span>
+<span><span class="va">agecat_pop</span><span class="op">$</span><span class="va">CAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">agecat_pop</span><span class="op">$</span><span class="va">CAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">agefmt</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create and Print Report"</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort agecat"</span><span class="op">)</span></span>
+<span><span class="va">agecat_pop</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">agecat_pop</span>, by <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">final</span>, show_cols <span class="op">=</span> <span class="st">"none"</span>, </span>
-<span>                    width <span class="op">=</span> <span class="fl">9</span>, first_row_blank <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                    header_bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="st">"VISIT"</span>, to <span class="op">=</span> <span class="st">"BP"</span>, width <span class="op">=</span> <span class="fl">1.25</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stub</span><span class="op">(</span><span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BASELINE</span>, <span class="va">TREATMENT</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"Subject/Treatment"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">BASELINE</span>, label_row <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">TREATMENT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">VISIT</span>, label <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">TEMP</span>, label <span class="op">=</span> <span class="st">"Temperature"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">PULSE</span>, label <span class="op">=</span> <span class="st">"Pulse"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">RESP</span>, label <span class="op">=</span> <span class="st">"Respirations"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">BP</span>, label <span class="op">=</span> <span class="st">"Blood Pressure"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">PG</span>, page_break <span class="op">=</span> <span class="cn">TRUE</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example11"</span><span class="op">)</span>, font <span class="op">=</span> <span class="st">"Courier"</span>, font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="co"># Create Plots ------------------------------------------------------------</span></span>
+<span></span>
+<span></span>
+<span><span class="va">plt1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">arm_pop</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CAT</span>, y <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#0000A0"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Treatment Group"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plt2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">sex_pop</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CAT</span>, y <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#00A000"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Biological Sex"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">plt3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">agecat_pop</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">CAT</span>, y <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#A00000"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">CNT</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="fl">1.5</span>, colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age Categories"</span>, y <span class="op">=</span> <span class="st">"Number of Subjects (n)"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Report ------------------------------------------------------------------</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example3.rtf"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">page1</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt1</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.1"</span>, <span class="st">"Distribution of Subjects by Treatment Group"</span>, </span>
+<span>         bold <span class="op">=</span> <span class="cn">TRUE</span>, font_size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">page2</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt2</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.2"</span>, <span class="st">"Distribution of Subjects by Biological Sex"</span>, </span>
+<span>         bold <span class="op">=</span> <span class="cn">TRUE</span>, font_size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">page3</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plt3</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 1.2"</span>, <span class="st">"Distribution of Subjects by Age Category"</span>, </span>
+<span>         bold <span class="op">=</span> <span class="cn">TRUE</span>, font_size <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Program:"</span> <span class="op"><a href="https://common.r-sassy.org/reference/grapes-p-grapes.html" class="external-link">%p%</a></span> <span class="fu"><a href="https://common.r-sassy.org/reference/Sys.path.html" class="external-link">Sys.path</a></span><span class="op">(</span><span class="op">)</span>, right <span class="op">=</span> <span class="st">"Draft"</span>, width <span class="op">=</span> <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">titles</span><span class="op">(</span> <span class="st">"Study: ABC"</span>, <span class="st">"Appendix 10.2.6.1.2.1"</span>, <span class="st">"Source: DM, VS"</span>,</span>
-<span>          columns <span class="op">=</span> <span class="fl">3</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Subject Listing with Vital Signs by Visit{supsc('1')}"</span>,</span>
-<span>         <span class="st">"All Randomized Patients"</span>, align <span class="op">=</span> <span class="st">"center"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, blank_row <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"{supsc('1')} Baseline through completion of study or early termination."</span>,</span>
-<span>            <span class="st">"Values flagged with {symbol('dagger')} were excluded from the by-visit "</span> <span class="op"><a href="https://common.r-sassy.org/reference/grapes-p-grapes.html" class="external-link">%p%</a></span> </span>
-<span>              <span class="st">"analysis in tables showing the qualitative test results."</span>,</span>
-<span>            blank_row <span class="op">=</span> <span class="st">"none"</span>, footer <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="st">"Date: "</span> <span class="op"><a href="https://common.r-sassy.org/reference/grapes-p-grapes.html" class="external-link">%p%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%Y %H:%M:%S"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>              <span class="st">"Archytas"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">page1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">page2</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">page3</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Figure.R"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Generate both RTF and PDF with same report object</span></span>
-<span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span><span class="op">)</span></span>
-<span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span>, output_type <span class="op">=</span> <span class="st">"PDF"</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="co"># Uncomment to show reports</span></span>
-<span><span class="co"># file.show(res1$modified_path)</span></span>
-<span><span class="co"># file.show(res2$modified_path)</span></span>
-<span></span>
-<span><span class="co"># Uncomment to show log</span></span>
-<span><span class="co"># file.show(lf)</span></span>
+<span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
 <span></span>
+<span><span class="co"># Unload library from workspace</span></span>
 <span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Close log</span></span>
+<span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View files</span></span>
+<span><span class="co"># file.show(pth)</span></span>
+<span><span class="co"># file.show(lgpth)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
@@ -352,73 +302,18 @@ figure just like previous examples.</li>
 </h2>
 <p>Here is the log for the above program:</p>
 <pre><code>=========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpo1naKK/log/example11.log
-Program Path: C:/packages/Testing/procs/ProcSubjectListing.R
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpo1naKK/log/example3.log
+Program Path: C:/packages/Testing/procs/ProcsFigs.R
 Working Directory: C:/packages/Testing/procs
 User Name: dbosa
 R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 procs_1.0.3 reporter_1.4.1 libr_1.2.8 fmtr_1.5.9
-logr_1.3.4 common_1.0.8 sassy_1.1.0
-Log Start Time: 2023-09-06 17:00:08.836902
+Packages: tidylog_1.0.2 ggplot2_3.4.2 procs_1.0.3 reporter_1.4.1 libr_1.2.8
+fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-06 18:32:28.438427
 =========================================================================
-
-=========================================================================
-Prepare formats
-=========================================================================
-
-# A user-defined format: 4 conditions
-  Name Type                       Expression                     Label Order
-1  obj    U                     x == "WHITE"                     White    NA
-2  obj    U x == "BLACK OR AFRICAN AMERICAN" Black or African American    NA
-3  obj    U x == "ASIAN OR PACIFIC ISLANDER" Asian or Pacific Islander    NA
-4  obj    U                             TRUE                     Other    NA
-
-# A user-defined format: 3 conditions
-  Name Type                    Expression                  Label Order
-1  obj    U x == "NOT HISPANIC OR LATINO" Not Hispanic or Latino    NA
-2  obj    U     x == "HISPANIC OR LATINO"     Hispanic or Latino    NA
-3  obj    U                          TRUE                Unknown    NA
-
-# A user-defined format: 5 conditions
-  Name Type   Expression                      Label Order
-1  obj    U x == "ARM A"                    Placebo    NA
-2  obj    U x == "ARM B"                  Drug 50mg    NA
-3  obj    U x == "ARM C"                 Drug 100mg    NA
-4  obj    U x == "ARM D"                 Competitor    NA
-5  obj    U         TRUE Not Treated/Screen Failure    NA
-
-# A user-defined format: 4 conditions
-  Name Type         Expression     Label Order
-1  obj    U   x == "BEATS/MIN"       bpm    NA
-2  obj    U x == "BREATHS/MIN" brths/min    NA
-3  obj    U           x == "C"        °C    NA
-4  obj    U        x == "mmHg"              NA
-
-# A user-defined format: 8 conditions
-  Name Type     Expression             Label Order
-1  obj    U   x == "DAY 1"             Day 1    NA
-2  obj    U  x == "WEEK 2"            Week 2    NA
-3  obj    U  x == "WEEK 4"            Week 4    NA
-4  obj    U  x == "WEEK 6"            Week 6    NA
-5  obj    U  x == "WEEK 8"            Week 8    NA
-6  obj    U x == "WEEK 12"           Week 12    NA
-7  obj    U x == "WEEK 16"           Week 16    NA
-8  obj    U           TRUE Early Termination    NA
-
-# A format catalog: 10 formats
-- $SEX: type V, 2 elements
-- $AGE: type S, "%d Years"
-- $RACE: type U, 4 conditions
-- $WEIGHT: type S, "%6.2f kg"
-- $EAR: type V, 2 elements
-- $DOSE: type S, "%4.2fug"
-- $ETHNIC: type U, 3 conditions
-- $ARMT: type U, 5 conditions
-- $UNITS: type U, 4 conditions
-- $VISIT: type U, 8 conditions
 
 =========================================================================
 Prepare Data
@@ -439,190 +334,136 @@ Prepare Data
 
 lib_load: library 'sdtm' loaded
 
-Format desired vital signs
+Prepare format
 
-datastep: columns decreased from 17 to 5
+# A user-defined format: 4 conditions
+  Name Type        Expression    Label Order
+1  obj    U x &gt;= 18 &amp; x &lt;= 24 18 to 24    NA
+2  obj    U x &gt;= 25 &amp; x &lt;= 44 25 to 44    NA
+3  obj    U x &gt;= 45 &amp; x &lt;= 64 45 to 64    NA
+4  obj    U           x &gt;= 65    &gt;= 65    NA
 
-# A tibble: 2,764 × 5
-   USUBJID    VSTESTCD VSCOMB   VISITNUM VISIT  
-   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  
- 1 ABC-01-049 DIABP    "76 "           1 DAY 1  
- 2 ABC-01-049 DIABP    "66 "           2 WEEK 2 
- 3 ABC-01-049 DIABP    "84 "           4 WEEK 4 
- 4 ABC-01-049 DIABP    "68 "           6 WEEK 6 
- 5 ABC-01-049 DIABP    "80 "           8 WEEK 8 
- 6 ABC-01-049 DIABP    "70 "          12 WEEK 12
- 7 ABC-01-049 DIABP    "70 "          16 WEEK 16
- 8 ABC-01-049 PULSE    "84 bpm"        1 DAY 1  
- 9 ABC-01-049 PULSE    "84 bpm"        2 WEEK 2 
-10 ABC-01-049 PULSE    "76 bpm"        4 WEEK 4 
-# ℹ 2,754 more rows
+Prepare data
+
+datastep: columns decreased from 24 to 5
+
+# A tibble: 85 × 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D &gt;= 65   
+10 ABC-01-114 F        72 ARM B &gt;= 65   
+# ℹ 75 more rows
 # ℹ Use `print(n = ...)` to see more rows
 
-Pivot vitals signs
+Get population counts
 
-proc_transpose: input data set 2764 rows and 5 columns
-                by: USUBJID VISITNUM VISIT
-                var: VSCOMB
-                id: VSTESTCD
-                name: NAME
-                output dataset 554 rows and 9 columns
+proc_freq: input data set 85 rows and 5 columns
+           tables: ARM
+           view: TRUE
+           output: 1 datasets
 
-# A tibble: 554 × 9
-   USUBJID    VISITNUM VISIT NAME   DIABP PULSE  RESP         SYSBP  TEMP  
-   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; 
- 1 ABC-01-049        1 DAY 1 VSCOMB "76 " 84 bpm 20 brths/min "120 " 36.4°C
- 2 ABC-01-050        1 DAY 1 VSCOMB "78 " 68 bpm 18 brths/min "100 " 36.7°C
- 3 ABC-01-052        1 DAY 1 VSCOMB "68 " 68 bpm 16 brths/min "100 " 36.3°C
- 4 ABC-01-053        1 DAY 1 VSCOMB "78 " 62 bpm 16 brths/min "104 " 35.7°C
- 5 ABC-01-054        1 DAY 1 VSCOMB  &lt;NA&gt; 92 bpm 16 brths/min  &lt;NA&gt;  36.6°C
- 6 ABC-01-055        1 DAY 1 VSCOMB "80 " 76 bpm 20 brths/min "140 " 36.7°C
- 7 ABC-01-056        1 DAY 1 VSCOMB "84 " 82 bpm 20 brths/min "112 " 37°C  
- 8 ABC-01-113        1 DAY 1 VSCOMB "72 " 80 bpm 20 brths/min "140 " 36.1°C
- 9 ABC-01-114        1 DAY 1 VSCOMB "88 " 68 bpm 20 brths/min "158 " 36.6°C
-10 ABC-02-033        1 DAY 1 VSCOMB "88 " 72 bpm 8 brths/min  "122 " 36.2°C
-# ℹ 544 more rows
-# ℹ Use `print(n = ...)` to see more rows
+# A tibble: 4 × 3
+  VAR   CAT     CNT
+  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+1 ARM   ARM A    20
+2 ARM   ARM B    21
+3 ARM   ARM C    21
+4 ARM   ARM D    23
 
-proc_sort: input data set 554 rows and 9 columns
-           by: USUBJID VISITNUM
-           keep: USUBJID VISITNUM VISIT NAME DIABP PULSE RESP SYSBP TEMP
-           order: a a
-           output data set 554 rows and 9 columns
+proc_freq: input data set 85 rows and 5 columns
+           tables: SEX
+           view: TRUE
+           output: 1 datasets
 
-# A tibble: 554 × 9
-   USUBJID    VISITNUM VISIT   NAME   DIABP PULSE  RESP         SYSBP  TEMP  
-   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; 
- 1 ABC-01-049        1 DAY 1   VSCOMB "76 " 84 bpm 20 brths/min "120 " 36.4°C
- 2 ABC-01-049        2 WEEK 2  VSCOMB "66 " 84 bpm 16 brths/min "128 " 36.6°C
- 3 ABC-01-049        4 WEEK 4  VSCOMB "84 " 76 bpm 16 brths/min "134 " 35.7°C
- 4 ABC-01-049        6 WEEK 6  VSCOMB "68 " 64 bpm 20 brths/min "100 " 36.5°C
- 5 ABC-01-049        8 WEEK 8  VSCOMB "80 " 84 bpm 16 brths/min "128 " 36.4°C
- 6 ABC-01-049       12 WEEK 12 VSCOMB "70 " 60 bpm 20 brths/min "120 " 36.6°C
- 7 ABC-01-049       16 WEEK 16 VSCOMB "70 " 72 bpm 18 brths/min "130 " 36.2°C
- 8 ABC-01-050        1 DAY 1   VSCOMB "78 " 68 bpm 18 brths/min "100 " 36.7°C
- 9 ABC-01-050        2 WEEK 2  VSCOMB "64 " 68 bpm 18 brths/min "110 " 36.7°C
-10 ABC-01-050        4 WEEK 4  VSCOMB "86 " 82 bpm 16 brths/min "128 " 36.6°C
-# ℹ 544 more rows
-# ℹ Use `print(n = ...)` to see more rows
+# A tibble: 2 × 3
+  VAR   CAT     CNT
+  &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+1 SEX   F        32
+2 SEX   M        53
 
-Assign and apply formats
+proc_freq: input data set 85 rows and 5 columns
+           tables: AGECAT
+           view: TRUE
+           output: 1 datasets
 
-# A tibble: 87 × 24
-   STUDYID DOMAIN USUBJID    SUBJID RFSTDTC    RFENDTC RFXSTDTC RFXENDTC RFICDTC   
-   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;date&gt;     &lt;date&gt;  &lt;lgl&gt;    &lt;lgl&gt;    &lt;date&gt;    
- 1 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 2 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25
- 3 ABC     DM     ABC-01-051 051    2006-11-02 NA      NA       NA       2006-10-25
- 4 ABC     DM     ABC-01-052 052    2006-11-06 NA      NA       NA       2006-10-31
- 5 ABC     DM     ABC-01-053 053    2006-11-08 NA      NA       NA       2006-11-01
- 6 ABC     DM     ABC-01-054 054    2006-11-16 NA      NA       NA       2006-11-07
- 7 ABC     DM     ABC-01-055 055    2006-12-06 NA      NA       NA       2006-10-31
- 8 ABC     DM     ABC-01-056 056    2006-11-28 NA      NA       NA       2006-11-21
- 9 ABC     DM     ABC-01-113 113    2006-12-05 NA      NA       NA       2006-11-28
-10 ABC     DM     ABC-01-114 114    2006-12-14 NA      NA       NA       2006-12-01
-# ℹ 77 more rows
-# ℹ 15 more variables: RFPENDTC &lt;date&gt;, DTHDTC &lt;lgl&gt;, DTHFL &lt;lgl&gt;, SITEID &lt;chr&gt;,
-#   BRTHDTC &lt;date&gt;, AGE &lt;chr&gt;, AGEU &lt;chr&gt;, SEX &lt;chr&gt;, RACE &lt;chr&gt;, ETHNIC &lt;chr&gt;,
-#   ARMCD &lt;chr&gt;, ARM &lt;chr&gt;, ACTARMCD &lt;lgl&gt;, ACTARM &lt;lgl&gt;, COUNTRY &lt;lgl&gt;
-# ℹ Use `print(n = ...)` to see more rows
+# A tibble: 4 × 3
+  VAR    CAT        CNT
+  &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt;
+1 AGECAT &gt;= 65       13
+2 AGECAT 18 to 24     5
+3 AGECAT 25 to 44    23
+4 AGECAT 45 to 64    44
 
-Prepare final data for reporting
+Convert agecat to factor so rows will sort correctly
 
-datastep: columns increased from 24 to 37
+Sort agecat
 
-# A tibble: 554 × 37
-   STUDYID DOMAIN USUBJID    SUBJID RFSTDTC    RFENDTC RFXSTDTC RFXENDTC RFICDTC   
-   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;date&gt;     &lt;date&gt;  &lt;lgl&gt;    &lt;lgl&gt;    &lt;date&gt;    
- 1 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 2 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 3 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 4 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 5 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 6 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 7 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25
- 8 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25
- 9 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25
-10 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25
-# ℹ 544 more rows
-# ℹ 28 more variables: RFPENDTC &lt;date&gt;, DTHDTC &lt;lgl&gt;, DTHFL &lt;lgl&gt;, SITEID &lt;chr&gt;,
-#   BRTHDTC &lt;date&gt;, AGE &lt;chr&gt;, AGEU &lt;chr&gt;, SEX &lt;chr&gt;, RACE &lt;chr&gt;, ETHNIC &lt;chr&gt;,
-#   ARMCD &lt;chr&gt;, ARM &lt;chr&gt;, ACTARMCD &lt;lgl&gt;, ACTARM &lt;lgl&gt;, COUNTRY &lt;lgl&gt;,
-#   VISITNUM &lt;dbl&gt;, VISIT &lt;chr&gt;, NAME &lt;chr&gt;, DIABP &lt;chr&gt;, PULSE &lt;chr&gt;, RESP &lt;chr&gt;,
-#   SYSBP &lt;chr&gt;, TEMP &lt;chr&gt;, BASELINE &lt;chr&gt;, BP &lt;chr&gt;, TREATMENT &lt;chr&gt;, PG &lt;dbl&gt;,
-#   PTCNT &lt;dbl&gt;
-# ℹ Use `print(n = ...)` to see more rows
+proc_sort: input data set 4 rows and 3 columns
+           by: CAT
+           keep: VAR CAT CNT
+           order: a
+           output data set 4 rows and 3 columns
+
+# A tibble: 4 × 3
+  VAR    CAT        CNT
+  &lt;chr&gt;  &lt;fct&gt;    &lt;dbl&gt;
+1 AGECAT 18 to 24     5
+2 AGECAT 25 to 44    23
+3 AGECAT 45 to 64    44
+4 AGECAT &gt;= 65       13
 
 =========================================================================
-Create and Print Report
+Create and print report
 =========================================================================
 
-# A report specification: 29 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo1naKK/example11.rtf'
+# A report specification: 3 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo1naKK/output/example3.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
 - margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/37
-- page_header: left=Program:C:/packages/Testing/procs/ProcSubjectListing.R right=Draft
-- page_footer: left=Date: 06SEP2023 17:00:18 center=Archytas right=Page [pg] of [tpg]
+- line size/count: 9/36
+- page_header: left=Sponsor: Company right=Study: ABC
+- footnote 1: 'Program: DM_Figure.R'
+- page_footer: left=Date Produced: 06Sep23 18:32 center= right=Page [pg] of [tpg]
 - content: 
-# A table specification:
-- data: tibble 'final' 554 rows 37 cols
-- show_cols: none
-- use_attributes: all
-- width: 9
-- stub: BASELINE TREATMENT 'Subject/Treatment' align='left' 
-- define: BASELINE dedupe='TRUE' 
-- define: TREATMENT 
-- define: VISIT 'Visit' 
-- define: TEMP 'Temperature' 
-- define: PULSE 'Pulse' 
-- define: RESP 'Respirations' 
-- define: BP 'Blood Pressure' 
-- define: USUBJID visible='FALSE' 
-- define: PG visible='FALSE' page_break='TRUE' 
-
-# A report specification: 29 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo1naKK/example11.pdf'
-- output_type: PDF
-- units: inches
-- orientation: landscape
-- margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/42
-- page_header: left=Program:C:/packages/Testing/procs/ProcSubjectListing.R right=Draft
-- title 1: 'Study: ABC'
-- title 2: 'Appendix 10.2.6.1.2.1'
-- title 3: 'Source: DM, VS'
-- title 4: 'Subject Listing with Vital Signs by Visit¹'
-- title 5: 'All Randomized Patients'
-- footnote 1: '¹ Baseline through completion of study or early termination.'
-- footnote 2: 'Values flagged with † were excluded from the by-visit analysis in tables showing the qualitative test results.'
-- page_footer: left=Date: 06SEP2023 17:00:18 center=Archytas right=Page [pg] of [tpg]
-- content: 
-# A table specification:
-- data: tibble 'final' 554 rows 37 cols
-- show_cols: none
-- use_attributes: all
-- width: 9
-- stub: BASELINE TREATMENT 'Subject/Treatment' align='left' 
-- define: BASELINE dedupe='TRUE' 
-- define: TREATMENT 
-- define: VISIT 'Visit' 
-- define: TEMP 'Temperature' 
-- define: PULSE 'Pulse' 
-- define: RESP 'Respirations' 
-- define: BP 'Blood Pressure' 
-- define: USUBJID visible='FALSE' 
-- define: PG visible='FALSE' page_break='TRUE' 
+# A plot specification: 
+- data: 4 rows, 3 cols
+- layers: 2
+- height: 4.5
+- width: 7
+- title 1: 'Figure 1.1'
+- title 2: 'Distribution of Subjects by Treatment Group'
+# A plot specification: 
+- data: 2 rows, 3 cols
+- layers: 2
+- height: 4.5
+- width: 7
+- title 1: 'Figure 1.2'
+- title 2: 'Distribution of Subjects by Biological Sex'
+# A plot specification: 
+- data: 4 rows, 3 cols
+- layers: 2
+- height: 4.5
+- width: 7
+- title 1: 'Figure 1.2'
+- title 2: 'Distribution of Subjects by Age Category'
 
 lib_sync: synchronized data in library 'sdtm'
 
 lib_unload: library 'sdtm' unloaded
 
 =========================================================================
-Log End Time: 2023-09-06 17:00:25.947649
-Log Elapsed Time: 0 00:00:17
+Log End Time: 2023-09-06 18:32:32.220485
+Log Elapsed Time: 0 00:00:03
 =========================================================================
 
 </code></pre>

@@ -141,7 +141,9 @@
     
 <p>The fifth example produces a summary table of selected Vital Signs
 for Placebo vs. Treated groups. The report shows statistics for both
-baseline and after-treatment time points.</p>
+baseline and after-treatment time points. This example also demonstrates
+how to use <strong>tidyverse</strong> functions for data preparation
+instead of <strong>procs</strong>.</p>
 <div class="section level2">
 <h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
 </h2>
@@ -154,6 +156,10 @@ error.</li>
 user-defined format, similar to <code>proc format</code>.</li>
 <li>The <strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong> package
 supports spanning headers in the report header.</li>
+<li>Notice that <strong>sassy</strong> functions integrate nicely with
+<strong>dplyr</strong>. You can put a <code>datastep()</code> right in
+the middle of a <strong>dplyr</strong> pipeline and get the best of both
+worlds!</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
