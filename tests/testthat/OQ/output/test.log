@@ -7,15 +7,15 @@ R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: sassy_1.2.0 procs_1.0.0 reporter_1.4.1 libr_1.2.8 fmtr_1.5.9
+Packages: sassy_1.2.0 procs_1.0.2 reporter_1.4.1 libr_1.2.8 fmtr_1.5.9
 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-08-02 11:54:00.728142
+Log Start Time: 2023-08-19 08:37:26.741782
 =========================================================================
 
 Test me
 
-NOTE: Log Print Time:  2023-08-02 11:54:00.730173
-NOTE: Elapsed Time: 0.000918149948120117 secs
+NOTE: Log Print Time:  2023-08-19 08:37:26.743873
+NOTE: Elapsed Time: 0.000880956649780273 secs
 
                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
@@ -53,10 +53,10 @@ Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
 
 NOTE: Data frame has 32 rows and 11 columns.
 
-NOTE: Log Print Time:  2023-08-02 11:54:00.741314
-NOTE: Elapsed Time: 0.0111408233642578 secs
+NOTE: Log Print Time:  2023-08-19 08:37:26.754117
+NOTE: Elapsed Time: 0.0102441310882568 secs
 
 =========================================================================
-Log End Time: 2023-08-02 11:54:00.741748
+Log End Time: 2023-08-19 08:37:26.754611
 Log Elapsed Time: 0 00:00:00
 =========================================================================

@@ -7,9 +7,9 @@ R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.0 reporter_1.4.1 libr_1.2.8
+Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.2 reporter_1.4.1 libr_1.2.8
 fmtr_1.5.9 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-07-31 00:47:46.16932
+Log Start Time: 2023-08-19 08:36:31.572708
 =========================================================================
 
 =========================================================================
@@ -34,41 +34,41 @@ Package File Examination
 Examine common package
 =========================================================================
 
-Common source code found.
+common source code found.
 
-Common source code checksum passed.
+common source code checksum passed.
 
 =========================================================================
 Examine fmtr package
 =========================================================================
 
-Fmtr source code found.
+fmtr source code found.
 
-Fmtr source code checksum passed.
+fmtr size check passed.
 
 =========================================================================
 Examine libr package
 =========================================================================
 
-Libr source code found.
+libr source code found.
 
-Libr source code checksum passed.
+libr size check passed.
 
 =========================================================================
 Examine reporter package
 =========================================================================
 
-Reporter source code found.
+reporter source code found.
 
-Reporter source code checksum passed.
+reporter size check passed.
 
 =========================================================================
 Examine procs package
 =========================================================================
 
-Procs source code found.
+procs source code found.
 
-Procs source code checksum passed.
+procs source code checksum passed.
 
 =========================================================================
 Preparing Report
@@ -76,40 +76,59 @@ Preparing Report
 
 Complete Results:
 
-   Category                              Description Pass Message
-1     sassy                    System Initialization TRUE        
-2     sassy     Check for logr package installation. TRUE        
-3     sassy     Check for fmtr package installation. TRUE        
-4     sassy   Check for common package installation. TRUE        
-5     sassy     Check for libr package installation. TRUE        
-6     sassy Check for reporter package installation. TRUE        
-7     sassy    Check for procs package installation. TRUE        
-8      logr                        Test log created. TRUE        
-9    common                Common source code found. TRUE        
-10   common     Examine common source code checksum. TRUE        
-11     fmtr                  fmtr source code found. TRUE        
-12     fmtr       Examine fmtr source code checksum. TRUE        
-13     libr                  libr source code found. TRUE        
-14     libr       Examine libr source code checksum. TRUE        
-15 reporter              reporter source code found. TRUE        
-16 reporter   Examine reporter source code checksum. TRUE        
-17    procs                 procs source code found. TRUE        
-18    procs      Examine procs source code checksum. TRUE        
+   Category                                   Description Pass
+1     sassy                         System Initialization TRUE
+2     sassy          Check for logr package installation. TRUE
+3     sassy          Check for fmtr package installation. TRUE
+4     sassy        Check for common package installation. TRUE
+5     sassy          Check for libr package installation. TRUE
+6     sassy      Check for reporter package installation. TRUE
+7     sassy         Check for procs package installation. TRUE
+8      logr                             Test log created. TRUE
+9    common                     common source code found. TRUE
+10   common   Compare checksum for common version v1.0.8. TRUE
+11     fmtr                       fmtr source code found. TRUE
+12     fmtr     Compare checksum for fmtr version v1.5.9. TRUE
+13     libr                       libr source code found. TRUE
+14     libr     Compare checksum for libr version v1.2.8. TRUE
+15 reporter                   reporter source code found. TRUE
+16 reporter Compare checksum for reporter version v1.4.1. TRUE
+17    procs                      procs source code found. TRUE
+18    procs    Compare checksum for procs version v1.0.2. TRUE
+                                  Message
+1                                        
+2                                        
+3                                        
+4                                        
+5                                        
+6                                        
+7                                        
+8                                        
+9                                        
+10                                       
+11                                       
+12 Checksum failed but size check passed.
+13                                       
+14 Checksum failed but size check passed.
+15                                       
+16 Checksum failed but size check passed.
+17                                       
+18                                       
 
 Printing report
 
-Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-07-31
+Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-07-31.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19.pdf'
 - output_type: PDF
 - units: inches
-- orientation: portrait
+- orientation: landscape
 - margins: top 0.5 bottom 0.5 left 1 right 1
-- line size/count: 6.5/63
+- line size/count: 9/47
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-07-31 00:47:46 AM'
+- title 3: 'Date: 2023-08-19 08:36:31 AM'
 - content: 
 # A table specification:
 - data: data.frame 'datm' 18 rows 5 cols
@@ -117,7 +136,7 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-07-31
 - use_attributes: all
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKQwX03\file30c0301f2eca.html'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpSWX9tU\file55218668018ec.html'
 - output_type: HTML
 - units: inches
 - orientation: portrait
@@ -130,9 +149,9 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-07-31
 - use_attributes: all
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-07-31 00:47:47 AM'
+- title 3: 'Date: 2023-08-19 08:36:31 AM'
 
 =========================================================================
-Log End Time: 2023-07-31 00:47:48.216874
-Log Elapsed Time: 0 00:00:02
+Log End Time: 2023-08-19 08:36:31.97226
+Log Elapsed Time: 0 00:00:00
 =========================================================================

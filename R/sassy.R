@@ -23,6 +23,7 @@
 #'   in TXT, RTF, PDF, HTML, and DOCX.}
 #'   \item {\code{common}:}{ A set of utility functions
 #'   shared across the \strong{sassy} family of packages.}
+#'   \item {\code{procs}:}{ A package to simulate frequently used SAS® procedures.}
 #' }
 #' @examples
 #' #########################################################
@@ -86,6 +87,7 @@
 #' @docType package
 #' @keywords internal
 #' @name sassy
+#' @aliases sassy-package
 #' @import common
 #' @import logr
 #' @import fmtr

@@ -149,8 +149,8 @@ Adverse Events and System Organ Class/Preferred Term.</p>
 <ul>
 <li>The <code>libname()</code> function from the <strong><a href="https://libr.r-sassy.org" class="external-link">libr</a></strong> package makes it easy
 to load the entire data library.</li>
-<li>Functions from the <strong><a href="https://sassy.r-sassy.org">sassy</a></strong> system integrate
-nicely with those from the <strong><a href="https://www.tidyverse.org/" class="external-link">tidyverse</a></strong>.<br>
+<li>Functions from the <strong><a href="https://procs.r-sassy.org" class="external-link">procs</a></strong> package make the
+code look almost like a SAS® program.<br>
 </li>
 <li>The <strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong> package is
 able to wrap treatment groups to separate pages using the
@@ -161,215 +161,237 @@ also able to easily handle page breaks, while still respecting the
 established margins.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>, </span>
-<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        <span class="st">"logr.on"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        <span class="st">"procs.print"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get temp directory</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open log</span></span>
+<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example4.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get data</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Get Data ----------------------------------------------------------------</span></span>
 <span></span>
-<span></span>
-<span><span class="co"># Get path to temp directory</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="co"># Get path to sample data</span></span>
-<span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Open log</span></span>
-<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example4.log"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Create libname for csv data</span></span>
-<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Load data into workspace</span></span>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> </span>
 <span></span>
-<span></span>
-<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare table data"</span><span class="op">)</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sdtm.AE</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">inner_join</span><span class="op">(</span><span class="fu">select</span><span class="op">(</span><span class="va">sdtm.DM</span>, <span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">ARMCD</span><span class="op">)</span>,  </span>
-<span>             <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span>, </span>
-<span>             keep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Filter DM data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, </span>
+<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">ARMCD</span><span class="op">)</span>,</span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get population counts"</span><span class="op">)</span></span>
-<span><span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
-<span>  <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">count</span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span>  <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">deframe</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
+<span>          output <span class="op">=</span> <span class="va">long</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nopercent</span>, <span class="va">nonobs</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span> </span>
 <span></span>
 <span><span class="fu">put</span> <span class="op">(</span><span class="st">"Create lookup for AE severity"</span><span class="op">)</span></span>
 <span><span class="va">sevn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MILD <span class="op">=</span> <span class="fl">1</span>, MODERATE <span class="op">=</span> <span class="fl">2</span>, SEVERE <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Subset ADAE for needed rows and columns"</span><span class="op">)</span></span>
-<span><span class="va">df_sub</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>AESEVN <span class="op">=</span> <span class="va">sevn</span><span class="op">[</span><span class="va">AESEV</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">AESEV</span>, <span class="va">AESEVN</span>, <span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare table data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.AE</span>, merge <span class="op">=</span> <span class="va">dm</span>, </span>
+<span>         merge_by <span class="op">=</span> <span class="st">"USUBJID"</span>,</span>
+<span>         merge_in <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">inA</span>, <span class="va">inB</span><span class="op">)</span>,</span>
+<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">AESEV</span>, <span class="va">AESEVN</span>, <span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span>,</span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">inB</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">inA</span> <span class="op">!=</span> <span class="fl">0</span><span class="op">)</span>, </span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">AESEVN</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">AESEV</span>, <span class="va">sevn</span><span class="op">)</span>   </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_sub</span> </span>
+<span></span>
+<span></span>
+<span><span class="co"># Prepare Formats ---------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Formats"</span><span class="op">)</span></span>
+<span><span class="va">fc</span> <span class="op">&lt;-</span> <span class="fu">fcat</span><span class="op">(</span>CNT <span class="op">=</span> <span class="st">"%3d"</span>,</span>
+<span>           PCT <span class="op">=</span> <span class="st">"(%5.1f)"</span>,</span>
+<span>           CAT2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>MILD <span class="op">=</span> <span class="st">"Mild"</span>, </span>
+<span>                    MODERATE <span class="op">=</span> <span class="st">"Moderate"</span>, </span>
+<span>                    SEVERE <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Perform Calculations ----------------------------------------------------</span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Perform Calculations"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create template for needed ARM columns"</span><span class="op">)</span></span>
-<span><span class="va">col_template</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"ARM A_"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"ARM B_"</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"ARM C_"</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                         <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"ARM D_"</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get SOC Frequencies"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">ae_sub</span>, </span>
+<span>          tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">AESOC</span> <span class="op">*</span> <span class="va">AESEV</span><span class="op">)</span>,</span>
+<span>          by <span class="op">=</span> <span class="st">"ARM"</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_soc</span> </span>
+<span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine columns for SOC"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">ae_soc</span>, </span>
+<span>         format <span class="op">=</span> <span class="va">fc</span>,</span>
+<span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VAR1 <span class="op">=</span> <span class="st">"VAR"</span>, CAT1 <span class="op">=</span> <span class="st">"CAT"</span><span class="op">)</span>,</span>
+<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">VAR2</span>, <span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">VARORD</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
+<span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
+<span>           <span class="va">CAT2</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">CAT2</span><span class="op">)</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_soc_c</span></span>
+<span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Pivot SOC frequencies"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">ae_soc_c</span>, id <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT2</span><span class="op">)</span>, </span>
+<span>               var <span class="op">=</span> <span class="va">CNTPCT</span>, </span>
+<span>               copy <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">VAR</span>, <span class="va">VARORD</span><span class="op">)</span>,</span>
+<span>               by <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_soc_t</span> </span>
+<span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get PT Frequencies"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">ae_sub</span>, </span>
+<span>          tables <span class="op">=</span> <span class="st">"AEDECOD * AESEV"</span>,</span>
+<span>          by <span class="op">=</span> <span class="st">"ARM"</span>,</span>
+<span>          options <span class="op">=</span> <span class="va">nonobs</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_pt</span> </span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get unique SOC and PT combinations"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">ae_sub</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span>, </span>
+<span>          by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span>, options <span class="op">=</span> <span class="va">nodupkey</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">evnts</span> </span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine columns for PT"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">ae_pt</span>, </span>
+<span>         format <span class="op">=</span> <span class="va">fc</span>,</span>
+<span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>VAR1 <span class="op">=</span> <span class="st">"VAR"</span>, CAT1 <span class="op">=</span> <span class="st">"CAT"</span><span class="op">)</span>,</span>
+<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">VAR2</span>, <span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">VARORD</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
+<span>           <span class="va">CAT2</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">CAT2</span><span class="op">)</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_pt_c</span> </span>
+<span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Pivot PT frequencies"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">ae_pt_c</span>, id <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT2</span><span class="op">)</span>, </span>
+<span>               var <span class="op">=</span> <span class="va">CNTPCT</span>, </span>
+<span>               copy <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">VAR</span>, <span class="va">VARORD</span><span class="op">)</span>,</span>
+<span>               by <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_pt_t</span> </span>
+<span></span>
+<span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ae_soc_t</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Join in SOC"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">ae_pt_t</span>, merge <span class="op">=</span> <span class="va">evnts</span>, rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>CAT <span class="op">=</span> <span class="st">"CAT2"</span>, AESOC <span class="op">=</span> <span class="st">"CAT"</span><span class="op">)</span>, </span>
+<span>         merge_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>CAT <span class="op">=</span> <span class="st">"AEDECOD"</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>           <span class="va">CAT</span> <span class="op">&lt;-</span> <span class="fu">toTitleCase</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="va">CAT</span><span class="op">)</span><span class="op">)</span></span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_pt_tj</span> </span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Stack SOC and PT counts"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">ae_soc_t</span>, set <span class="op">=</span> <span class="va">ae_pt_tj</span>, </span>
+<span>         keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"VAR"</span>, <span class="st">"CAT"</span>, <span class="st">"CAT2"</span>, <span class="st">"VARORD"</span>, </span>
+<span>                  <span class="fu"><a href="https://common.r-sassy.org/reference/find.names.html" class="external-link">find.names</a></span><span class="op">(</span><span class="va">ae_pt_tj</span>, <span class="st">"ARM*"</span><span class="op">)</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae_soc_pt</span> </span>
+<span></span>
+<span></span>
+<span><span class="va">aefinal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">ae_soc_pt</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span> <span class="va">CAT</span>, <span class="va">VARORD</span>, <span class="va">CAT2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Identify and count highest severity grade for each subject"</span><span class="op">)</span></span>
-<span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="va">df_sub</span> <span class="op">|&gt;</span> <span class="fu">arrange</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESOC</span>, <span class="va">AEDECOD</span>, <span class="va">AESEVN</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>max_sev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu">row_number</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">max_sev</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AESOC</span>, <span class="va">AEDECOD</span>, <span class="va">AESEVN</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>cnt <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AESEVN</span><span class="op">)</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">cnt</span>, </span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># All Adverse Events ------------------------------------------------------</span></span>
 <span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get frequencies for all events"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">ae_sub</span>, tables <span class="op">=</span> <span class="st">"AESEV"</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">allfreq</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Fill in missing columns where there were no events."</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">nm</span> <span class="kw">in</span> <span class="va">col_template</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">nm</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df1</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="va">df1</span><span class="op">[[</span><span class="va">nm</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="va">df1</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine all events."</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">allfreq</span>, format <span class="op">=</span> <span class="va">fc</span>,</span>
+<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">N</span>, <span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           </span>
+<span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
+<span>           <span class="va">CAT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">CAT</span>, <span class="va">fc</span><span class="op">$</span><span class="va">CAT2</span><span class="op">)</span></span>
+<span>           </span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">allfreqm</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Format counts and percents for each column"</span><span class="op">)</span></span>
-<span><span class="va">df_events</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>AESOC <span class="op">=</span> <span class="va">AESOC</span>, </span>
-<span>            AEDECOD <span class="op">=</span> <span class="fu">str_to_title</span><span class="op">(</span><span class="va">AEDECOD</span><span class="op">)</span>,</span>
-<span>            `ARM A_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM A_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM A_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM D_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span>, </span>
-<span>            `ARM D_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span>, </span>
-<span>            `ARM D_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">AESOC</span>, <span class="va">AEDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get counts for All Adverse Events"</span><span class="op">)</span></span>
-<span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="va">df_sub</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">AESEVN</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESEVN</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">USUBJID</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>max_sev <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu">row_number</span><span class="op">(</span><span class="op">)</span> <span class="op">==</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">max_sev</span> <span class="op">==</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AESEVN</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>cnt <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">AESEVN</span><span class="op">)</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">cnt</span>, </span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Fill in missing columns where there were no events."</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">nm</span> <span class="kw">in</span> <span class="va">col_template</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="va">nm</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">)</span></span>
-<span>    <span class="va">df2</span><span class="op">[[</span><span class="va">nm</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span><span class="op">}</span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Format counts and percents for all adverse events."</span><span class="op">)</span></span>
-<span><span class="va">df_all</span> <span class="op">&lt;-</span> <span class="va">df2</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>AESOC <span class="op">=</span> <span class="st">"All System Organ Classes"</span>,</span>
-<span>            AEDECOD <span class="op">=</span> <span class="st">"All Adverse Events"</span>, </span>
-<span>            `ARM A_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM A_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM A_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM D_1` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_1`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span>, </span>
-<span>            `ARM D_2` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_2`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span>, </span>
-<span>            `ARM D_3` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D_3`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare data for reporting"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">allfreqm</span>, id <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT</span><span class="op">)</span>, </span>
+<span>               var <span class="op">=</span> <span class="va">CNTPCT</span>, copy <span class="op">=</span> <span class="va">VAR</span>, name <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">allfreqt</span> </span>
 <span></span>
 <span></span>
 <span><span class="co"># Final Data --------------------------------------------------------------</span></span>
 <span></span>
+<span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create final data frame"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">df_all</span>, <span class="va">df_events</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">allfreqt</span>, set <span class="op">=</span> <span class="va">aefinal</span>, </span>
+<span>         keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">aefinal</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="kw">if</span> <span class="op">(</span><span class="va">VAR</span> <span class="op">==</span> <span class="st">"AESEV"</span><span class="op">)</span></span>
+<span>             <span class="va">CAT</span> <span class="op">&lt;-</span> <span class="st">"All Adverse Events"</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">allfinal</span> </span>
 <span></span>
 <span><span class="co"># Print Report ----------------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create and print report"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create table object"</span><span class="op">)</span></span>
-<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">final</span>, first_row_blank <span class="op">=</span> <span class="cn">TRUE</span>, width <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A_1`</span>, to <span class="op">=</span> <span class="va">`ARM D_3`</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM A_1"</span>, <span class="st">"ARM A_3"</span>, label <span class="op">=</span> <span class="st">"ARM A"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM B_1"</span>, <span class="st">"ARM B_3"</span>, label <span class="op">=</span> <span class="st">"ARM B"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM C_1"</span>, <span class="st">"ARM C_3"</span>, label <span class="op">=</span> <span class="st">"ARM C"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM D_1"</span>, <span class="st">"ARM D_3"</span>, label <span class="op">=</span> <span class="st">"ARM D"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"AESOC"</span>, <span class="st">"AEDECOD"</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"System Organ Class\n   Preferred Term"</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">AESOC</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, label_row <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">AEDECOD</span>, indent <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A_1`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Mild"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A_2`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A_3`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B_1`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B_2`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B_3`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C_1`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C_2`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C_3`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D_1`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D_2`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D_3`</span>, align <span class="op">=</span> <span class="st">"center"</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> </span>
+<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">allfinal</span>, first_row_blank <span class="op">=</span> <span class="cn">TRUE</span>, width <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A.Mild`</span>, to <span class="op">=</span> <span class="va">`ARM D.Severe`</span>, width <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM A.Mild"</span>, <span class="st">"ARM A.Severe"</span>, label <span class="op">=</span> <span class="st">"ARM A"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM B.Mild"</span>, <span class="st">"ARM B.Severe"</span>, label <span class="op">=</span> <span class="st">"ARM B"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM C.Mild"</span>, <span class="st">"ARM C.Severe"</span>, label <span class="op">=</span> <span class="st">"ARM C"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="st">"ARM D.Mild"</span>, <span class="st">"ARM D.Severe"</span>, label <span class="op">=</span> <span class="st">"ARM D"</span>, n <span class="op">=</span> <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CAT"</span>, <span class="st">"CAT2"</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"System Organ Class\n   Preferred Term"</span>, width <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">CAT</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">CAT2</span>, indent <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.Mild`</span>, label <span class="op">=</span> <span class="st">"Mild"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.Moderate`</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.Severe`</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B.Mild`</span>,  label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B.Moderate`</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM B.Severe`</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C.Mild`</span>, label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C.Moderate`</span>, label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM C.Severe`</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Mild`</span>, label <span class="op">=</span> <span class="st">"Mild"</span>, page_wrap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Moderate`</span>,label <span class="op">=</span> <span class="st">"Moderate"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Severe`</span>, label <span class="op">=</span> <span class="st">"Severe"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">VAR</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">VARORD</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span></span>
-<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example4.rtf"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create report object"</span><span class="op">)</span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>,</span>
-<span>                     font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example4.rtf"</span><span class="op">)</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">options_fixed</span><span class="op">(</span>font_size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Table 5.0"</span>, <span class="st">"Adverse Events by Maximum Severity"</span>,</span>
-<span>         bold <span class="op">=</span> <span class="cn">TRUE</span>, font_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Table 5.0"</span>, <span class="st">"Adverse Events by Maximum Severity"</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: AE_Table.R"</span>,</span>
 <span>            <span class="st">"Note: Adverse events were coded using MedDRA Version 9.1"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"Confidential"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Print report"</span><span class="op">)</span></span>
-<span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> </span>
 <span></span>
 <span></span>
 <span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
+<span><span class="fu">sep</span><span class="op">(</span><span class="st">"Clean Up"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Remove library from workspace</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Remove library from workspace"</span><span class="op">)</span></span>
 <span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Close log</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Close log"</span><span class="op">)</span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># View files</span></span>
-<span><span class="co"># file.show(pth)</span></span>
-<span><span class="co"># file.show(lgpth)</span></span></code></pre></div>
+<span></span>
+<span><span class="co"># Uncomment to view report</span></span>
+<span><span class="co"># file.show(res$modified_path)</span></span>
+<span></span>
+<span><span class="co"># Uncomment to view log</span></span>
+<span><span class="co"># file.show(lf)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
@@ -381,227 +403,543 @@ established margins.</li>
 <h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
 </h2>
 <p>Here is part of the log from the above example:</p>
-<pre><code>========================================================================= 
-Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpKC93lu/log/example4.log 
-Working Directory: C:/packages/Testing 
-User Name: dbosa 
-R Version: 4.0.5 (2021-03-31) 
-Machine: SOCRATES x86-64 
-Operating System: Windows 10 x64 build 19041 
-Log Start Time: 2021-06-27 11:30:01 
-========================================================================= 
+<pre><code>=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpEBPgPu/log/example4.log
+Program Path: C:/packages/Testing/procs/ProcsAE.R
+Working Directory: C:/packages/Testing/procs
+User Name: dbosa
+R Version: 4.3.1 (2023-06-16 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 stringr_1.5.0 procs_1.0.3 reporter_1.4.1 libr_1.2.8
+fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-05 22:26:16.754728
+=========================================================================
 
-========================================================================= 
-Prepare Data 
-========================================================================= 
+=========================================================================
+Prepare Data
+=========================================================================
 
-# library 'sdtm': 4 items
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
-  Name Extension Rows Cols    Size        LastModified
-1   AE       csv  150   27 88.1 Kb 2021-04-04 11:55:58
-2   DM       csv   87   24 45.2 Kb 2021-04-04 11:55:58
-3   SV       csv  685   10 69.9 Kb 2021-04-04 11:55:58
-4   VS       csv 3358   17  467 Kb 2021-04-04 11:55:58
+  Name Extension Rows Cols     Size
+1   AE       csv  150   27  88.5 Kb
+2   DM       csv   87   24  45.5 Kb
+3   DS       csv  174    9  34.1 Kb
+4   EX       csv   84   11  26.4 Kb
+5   IE       csv    2   14  13.4 Kb
+6   SV       csv  685   10  70.3 Kb
+7   VS       csv 3358   17 467.4 Kb
+         LastModified
+1 2023-08-07 17:51:40
+2 2023-08-07 17:51:40
+3 2023-08-07 17:51:40
+4 2023-08-07 17:51:40
+5 2023-08-07 17:51:40
+6 2023-08-07 17:51:40
+7 2023-08-07 17:51:40
 
-lib_load: library 'sdtm' loaded 
+lib_load: library 'sdtm' loaded
 
-========================================================================= 
-Prepare table data 
-========================================================================= 
+Filter DM data
 
-select: dropped 21 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+datastep: columns decreased from 24 to 3
 
-inner_join: added 2 columns (ARM, ARMCD)
+# A tibble: 85 × 3
+   USUBJID    ARM   ARMCD
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;
+ 1 ABC-01-049 ARM D 4    
+ 2 ABC-01-050 ARM B 2    
+ 3 ABC-01-051 ARM A 1    
+ 4 ABC-01-052 ARM C 3    
+ 5 ABC-01-053 ARM B 2    
+ 6 ABC-01-054 ARM D 4    
+ 7 ABC-01-055 ARM C 3    
+ 8 ABC-01-056 ARM A 1    
+ 9 ABC-01-113 ARM D 4    
+10 ABC-01-114 ARM B 2    
+# ℹ 75 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-            &gt; rows only in x  (  0)
+Get population counts
 
-            &gt; rows only in y  ( 30)
+proc_freq: input data set 85 rows and 3 columns
+           tables: ARM
+           output: long
+           view: TRUE
+           output: 1 datasets
 
-            &gt; matched rows     150
+# A tibble: 1 × 6
+  VAR   STAT  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 ARM   CNT        20      21      21      23
 
-            &gt;                 =====
-
-            &gt; rows total       150
-
-filter: removed 5 rows (3%), 145 rows remaining
-
-Get population counts 
-
-select: dropped 27 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
-
-distinct: removed 90 rows (62%), 55 rows remaining
-
-count: now 4 rows and 2 columns, ungrouped
-
-ARM A ARM B ARM C ARM D 
-   14    14    14    13 
-
-Create lookup for AE severity 
+Create lookup for AE severity
 
     MILD MODERATE   SEVERE 
        1        2        3 
 
-Subset ADAE for needed rows and columns 
+Prepare table data
 
-mutate: new variable 'AESEVN' (double) with 3 unique values and 0% NA
+datastep: columns decreased from 27 to 6
 
-select: dropped 24 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
+# A tibble: 145 × 6
+   USUBJID    ARM   AESEV    AESEVN AESOC   AEDECOD
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;  
+ 1 ABC-01-049 ARM D MODERATE      2 Invest… BLOOD …
+ 2 ABC-01-049 ARM D MODERATE      2 Invest… BLOOD …
+ 3 ABC-01-049 ARM D MILD          1 Muscul… MUSCUL…
+ 4 ABC-01-049 ARM D MILD          1 Nervou… HEADAC…
+ 5 ABC-01-049 ARM D MODERATE      2 Invest… LABORA…
+ 6 ABC-01-050 ARM B MILD          1 Respir… UPPER …
+ 7 ABC-01-050 ARM B MILD          1 Skin a… RASH   
+ 8 ABC-01-051 ARM A MILD          1 Nervou… HEADAC…
+ 9 ABC-01-051 ARM A MILD          1 Nervou… HEADAC…
+10 ABC-01-051 ARM A MILD          1 Genera… INFLUE…
+# ℹ 135 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-distinct: removed 18 rows (12%), 127 rows remaining
+=========================================================================
+Prepare Formats
+=========================================================================
 
-# A tibble: 127 x 6
-   USUBJID    ARM   AESEV    AESEVN AESOC                                           AEDECOD                         
-   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;                                           &lt;chr&gt;                           
- 1 ABC-01-049 ARM D MODERATE      2 Investigations                                  BLOOD GLUCOSE INCREASED         
- 2 ABC-01-049 ARM D MODERATE      2 Investigations                                  BLOOD TRIGLYCERIDES INCREASED   
- 3 ABC-01-049 ARM D MILD          1 Nervous system disorders                        HEADACHE                        
- 4 ABC-01-049 ARM D MODERATE      2 Investigations                                  LABORATORY TEST ABNORMAL        
- 5 ABC-01-049 ARM D MILD          1 Musculoskeletal and connective tissue disorders MUSCULOSKELETAL DISCOMFORT      
- 6 ABC-01-050 ARM B MILD          1 Skin and subcutaneous tissue disorders          RASH                            
- 7 ABC-01-050 ARM B MILD          1 Respiratory, thoracic and mediastinal disorders UPPER RESPIRATORY TRACT CONGEST~
- 8 ABC-01-051 ARM A MILD          1 Nervous system disorders                        HEADACHE                        
- 9 ABC-01-051 ARM A MILD          1 General disorders and administration site cond~ INFLUENZA LIKE ILLNESS          
-10 ABC-01-051 ARM A MILD          1 Respiratory, thoracic and mediastinal disorders LOWER RESPIRATORY TRACT INFLAMM~
-# ... with 117 more rows
+# A format catalog: 3 formats
+- $CNT: type S, "%3d"
+- $PCT: type S, "(%5.1f)"
+- $CAT2: type V, 3 elements
 
-Create template for needed ARM columns 
+=========================================================================
+Perform Calculations
+=========================================================================
 
-Identify and count highest severity grade for each subject 
+Get SOC Frequencies
 
-group_by: 4 grouping variables (USUBJID, ARM, AESOC, AEDECOD)
+proc_freq: input data set 145 rows and 6 columns
+           tables: AESOC * AESEV
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-mutate (grouped): new variable 'max_sev' (logical) with 2 unique values and 0% NA
+# A tibble: 240 × 8
+   BY    VAR1  VAR2  CAT1   CAT2      N   CNT   PCT
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 ARM A AESOC AESEV Blood… MILD     37     0     0
+ 2 ARM A AESOC AESEV Blood… MODE…    37     0     0
+ 3 ARM A AESOC AESEV Blood… SEVE…    37     0     0
+ 4 ARM A AESOC AESEV Cardi… MILD     37     0     0
+ 5 ARM A AESOC AESEV Cardi… MODE…    37     0     0
+ 6 ARM A AESOC AESEV Cardi… SEVE…    37     0     0
+ 7 ARM A AESOC AESEV Conge… MILD     37     0     0
+ 8 ARM A AESOC AESEV Conge… MODE…    37     0     0
+ 9 ARM A AESOC AESEV Conge… SEVE…    37     0     0
+10 ARM A AESOC AESEV Ear a… MILD     37     0     0
+# ℹ 230 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-filter (grouped): removed one row (1%), 126 rows remaining
+Combine columns for SOC
 
-group_by: 4 grouping variables (ARM, AESOC, AEDECOD, AESEVN)
+datastep: columns decreased from 8 to 7
 
-summarize: now 101 rows and 5 columns, 3 group variables remaining (ARM, AESOC, AEDECOD)
+# A tibble: 240 × 7
+   BY    VAR   CAT        CAT2      N VARORD CNTPCT
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt; 
+ 1 ARM A AESOC Blood and… Mild     37      1 "  0 …
+ 2 ARM A AESOC Blood and… Mode…    37      1 "  0 …
+ 3 ARM A AESOC Blood and… Seve…    37      1 "  0 …
+ 4 ARM A AESOC Cardiac d… Mild     37      1 "  0 …
+ 5 ARM A AESOC Cardiac d… Mode…    37      1 "  0 …
+ 6 ARM A AESOC Cardiac d… Seve…    37      1 "  0 …
+ 7 ARM A AESOC Congenita… Mild     37      1 "  0 …
+ 8 ARM A AESOC Congenita… Mode…    37      1 "  0 …
+ 9 ARM A AESOC Congenita… Seve…    37      1 "  0 …
+10 ARM A AESOC Ear and l… Mild     37      1 "  0 …
+# ℹ 230 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-pivot_wider: reorganized (ARM, AESEVN, cnt) into (ARM A_2, ARM A_1, ARM B_1, ARM B_2, ARM B_3, …) [was 101x5, now 73x11]
+Pivot SOC frequencies
 
-...
+proc_transpose: input data set 240 rows and 7 columns
+                by: CAT
+                var: CNTPCT
+                id: BY CAT2
+                copy: VAR VARORD
+                name: NAME
+                output dataset 20 rows and 16 columns
 
+# A tibble: 20 × 16
+   VAR   CAT              VARORD NAME  `ARM A.Mild`
+   &lt;chr&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       
+ 1 AESOC Blood and lymph…      1 CNTP… "  0 (  0.0…
+ 2 AESOC Cardiac disorde…      1 CNTP… "  0 (  0.0…
+ 3 AESOC Congenital, fam…      1 CNTP… "  0 (  0.0…
+ 4 AESOC Ear and labyrin…      1 CNTP… "  0 (  0.0…
+ 5 AESOC Endocrine disor…      1 CNTP… "  0 (  0.0…
+ 6 AESOC Gastrointestina…      1 CNTP… "  0 (  0.0…
+ 7 AESOC General disorde…      1 CNTP… "  2 (  5.4…
+ 8 AESOC Infections and …      1 CNTP… "  7 ( 18.9…
+ 9 AESOC Injury, poisoni…      1 CNTP… "  0 (  0.0…
+10 AESOC Investigations        1 CNTP… "  4 ( 10.8…
+11 AESOC Metabolism and …      1 CNTP… "  0 (  0.0…
+12 AESOC Musculoskeletal…      1 CNTP… "  3 (  8.1…
+13 AESOC Neoplasms benig…      1 CNTP… "  0 (  0.0…
+14 AESOC Nervous system …      1 CNTP… "  7 ( 18.9…
+15 AESOC Psychiatric dis…      1 CNTP… "  0 (  0.0…
+16 AESOC Renal and urina…      1 CNTP… "  1 (  2.7…
+17 AESOC Respiratory, th…      1 CNTP… "  2 (  5.4…
+18 AESOC Skin and subcut…      1 CNTP… "  1 (  2.7…
+19 AESOC Surgical and me…      1 CNTP… "  0 (  0.0…
+20 AESOC Vascular disord…      1 CNTP… "  0 (  0.0…
+# ℹ 11 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, `ARM D.Severe` &lt;chr&gt;
 
-========================================================================= 
-Create final data frame 
-========================================================================= 
+Get PT Frequencies
 
-# A tibble: 74 x 14
-   AESOC AEDECOD `ARM A_1` `ARM A_2` `ARM A_3` `ARM B_1` `ARM B_2` `ARM B_3` `ARM C_1` `ARM C_2` `ARM C_3` `ARM D_1`
-   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;    
- 1 All ~ All Ad~ 6 ( 42.9~ 8 ( 57.1~ 0 (  0.0~ 8 ( 57.1~ 4 ( 28.6~ 2 ( 14.3~ 8 ( 57.1~ 6 ( 42.9~ 0 (  0.0~ 7 ( 53.8~
- 2 Bloo~ Neutro~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~
- 3 Card~ Palpit~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.7~
- 4 Card~ Sinus ~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.7~
- 5 Cong~ Dermoi~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
- 6 Ear ~ Vertigo 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
- 7 Endo~ Parath~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
- 8 Gast~ Diarrh~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
- 9 Gast~ Food P~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~
-10 Gast~ Tootha~ 0 (  0.0~ 1 (  7.1~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 0 (  0.0~ 2 ( 15.4~
-# ... with 64 more rows, and 2 more variables: ARM D_2 &lt;chr&gt;, ARM D_3 &lt;chr&gt;
+proc_freq: input data set 145 rows and 6 columns
+           tables: AEDECOD * AESEV
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-========================================================================= 
-Create and print report 
-========================================================================= 
+# A tibble: 876 × 7
+   BY    VAR1    VAR2  CAT1       CAT2    CNT   PCT
+   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 ARM A AEDECOD AESEV ANXIETY    MILD      0  0   
+ 2 ARM A AEDECOD AESEV ANXIETY    MODE…     0  0   
+ 3 ARM A AEDECOD AESEV ANXIETY    SEVE…     0  0   
+ 4 ARM A AEDECOD AESEV APPLICATI… MILD      0  0   
+ 5 ARM A AEDECOD AESEV APPLICATI… MODE…     0  0   
+ 6 ARM A AEDECOD AESEV APPLICATI… SEVE…     0  0   
+ 7 ARM A AEDECOD AESEV APPLICATI… MILD      0  0   
+ 8 ARM A AEDECOD AESEV APPLICATI… MODE…     0  0   
+ 9 ARM A AEDECOD AESEV APPLICATI… SEVE…     0  0   
+10 ARM A AEDECOD AESEV BACK PAIN  MILD      2  5.41
+# ℹ 866 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-Create table object 
+Get unique SOC and PT combinations
 
-Create report object 
+proc_sort: input data set 73 rows and 6 columns
+           by: AESOC AEDECOD
+           keep: AESOC AEDECOD
+           order: a a
+           options: nodupkey
+           output data set 73 rows and 2 columns
 
-Print report 
+# A tibble: 73 × 2
+   AESOC                                    AEDECOD
+   &lt;chr&gt;                                    &lt;chr&gt;  
+ 1 Blood and lymphatic system disorders     NEUTRO…
+ 2 Cardiac disorders                        PALPIT…
+ 3 Cardiac disorders                        SINUS …
+ 4 Congenital, familial and genetic disord… DERMOI…
+ 5 Ear and labyrinth disorders              VERTIGO
+ 6 Endocrine disorders                      PARATH…
+ 7 Gastrointestinal disorders               DIARRH…
+ 8 Gastrointestinal disorders               FOOD P…
+ 9 Gastrointestinal disorders               TOOTHA…
+10 Gastrointestinal disorders               VOMITI…
+# ℹ 63 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Combine columns for PT
+
+datastep: columns decreased from 7 to 6
+
+# A tibble: 876 × 6
+   BY    VAR     CAT            CAT2  VARORD CNTPCT
+   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; 
+ 1 ARM A AEDECOD ANXIETY        Mild       2 "  0 …
+ 2 ARM A AEDECOD ANXIETY        Mode…      2 "  0 …
+ 3 ARM A AEDECOD ANXIETY        Seve…      2 "  0 …
+ 4 ARM A AEDECOD APPLICATION S… Mild       2 "  0 …
+ 5 ARM A AEDECOD APPLICATION S… Mode…      2 "  0 …
+ 6 ARM A AEDECOD APPLICATION S… Seve…      2 "  0 …
+ 7 ARM A AEDECOD APPLICATION S… Mild       2 "  0 …
+ 8 ARM A AEDECOD APPLICATION S… Mode…      2 "  0 …
+ 9 ARM A AEDECOD APPLICATION S… Seve…      2 "  0 …
+10 ARM A AEDECOD BACK PAIN      Mild       2 "  2 …
+# ℹ 866 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Pivot PT frequencies
+
+proc_transpose: input data set 876 rows and 6 columns
+                by: CAT
+                var: CNTPCT
+                id: BY CAT2
+                copy: VAR VARORD
+                name: NAME
+                output dataset 73 rows and 16 columns
+
+# A tibble: 73 × 16
+   VAR     CAT            VARORD NAME  `ARM A.Mild`
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       
+ 1 AEDECOD ANXIETY             2 CNTP… "  0 (  0.0…
+ 2 AEDECOD APPLICATION S…      2 CNTP… "  0 (  0.0…
+ 3 AEDECOD APPLICATION S…      2 CNTP… "  0 (  0.0…
+ 4 AEDECOD BACK PAIN           2 CNTP… "  2 (  5.4…
+ 5 AEDECOD BASAL CELL CA…      2 CNTP… "  0 (  0.0…
+ 6 AEDECOD BLOOD GLUCOSE…      2 CNTP… "  0 (  0.0…
+ 7 AEDECOD BLOOD PARATHY…      2 CNTP… "  0 (  0.0…
+ 8 AEDECOD BLOOD PARATHY…      2 CNTP… "  0 (  0.0…
+ 9 AEDECOD BLOOD PRESSUR…      2 CNTP… "  1 (  2.7…
+10 AEDECOD BLOOD TRIGLYC…      2 CNTP… "  0 (  0.0…
+# ℹ 63 more rows
+# ℹ 11 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, `ARM D.Severe` &lt;chr&gt;
+# ℹ Use `print(n = ...)` to see more rows
+
+Join in SOC
+
+datastep: columns increased from 16 to 17
+
+# A tibble: 73 × 17
+   VAR     CAT2           VARORD NAME  `ARM A.Mild`
+   &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;       
+ 1 AEDECOD Anxiety             2 CNTP… "  0 (  0.0…
+ 2 AEDECOD Application S…      2 CNTP… "  0 (  0.0…
+ 3 AEDECOD Application S…      2 CNTP… "  0 (  0.0…
+ 4 AEDECOD Back Pain           2 CNTP… "  2 (  5.4…
+ 5 AEDECOD Basal Cell Ca…      2 CNTP… "  0 (  0.0…
+ 6 AEDECOD Blood Glucose…      2 CNTP… "  0 (  0.0…
+ 7 AEDECOD Blood Parathy…      2 CNTP… "  0 (  0.0…
+ 8 AEDECOD Blood Parathy…      2 CNTP… "  0 (  0.0…
+ 9 AEDECOD Blood Pressur…      2 CNTP… "  1 (  2.7…
+10 AEDECOD Blood Triglyc…      2 CNTP… "  0 (  0.0…
+# ℹ 63 more rows
+# ℹ 12 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, …
+# ℹ Use `print(n = ...)` to see more rows
+
+Stack SOC and PT counts
+
+datastep: columns started with 16 and ended with 16
+
+# A tibble: 93 × 16
+   VAR   CAT              CAT2  VARORD `ARM A.Mild`
+   &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;       
+ 1 AESOC Blood and lymph… &lt;NA&gt;       1 "  0 (  0.0…
+ 2 AESOC Cardiac disorde… &lt;NA&gt;       1 "  0 (  0.0…
+ 3 AESOC Congenital, fam… &lt;NA&gt;       1 "  0 (  0.0…
+ 4 AESOC Ear and labyrin… &lt;NA&gt;       1 "  0 (  0.0…
+ 5 AESOC Endocrine disor… &lt;NA&gt;       1 "  0 (  0.0…
+ 6 AESOC Gastrointestina… &lt;NA&gt;       1 "  0 (  0.0…
+ 7 AESOC General disorde… &lt;NA&gt;       1 "  2 (  5.4…
+ 8 AESOC Infections and … &lt;NA&gt;       1 "  7 ( 18.9…
+ 9 AESOC Injury, poisoni… &lt;NA&gt;       1 "  0 (  0.0…
+10 AESOC Investigations   &lt;NA&gt;       1 "  4 ( 10.8…
+# ℹ 83 more rows
+# ℹ 11 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, `ARM D.Severe` &lt;chr&gt;
+# ℹ Use `print(n = ...)` to see more rows
+
+proc_sort: input data set 93 rows and 16 columns
+           by: CAT VARORD CAT2
+           keep: VAR CAT CAT2 VARORD ARM A.Mild ARM A.Moderate ARM A.Severe ARM B.Mild ARM B.Moderate ARM B.Severe ARM C.Mild ARM C.Moderate ARM C.Severe ARM D.Mild ARM D.Moderate ARM D.Severe
+           order: a a a
+           output data set 93 rows and 16 columns
+
+# A tibble: 93 × 16
+   VAR     CAT            CAT2  VARORD `ARM A.Mild`
+   &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;       
+ 1 AESOC   Blood and lym… &lt;NA&gt;       1 "  0 (  0.0…
+ 2 AEDECOD Blood and lym… Neut…      2 "  0 (  0.0…
+ 3 AESOC   Cardiac disor… &lt;NA&gt;       1 "  0 (  0.0…
+ 4 AEDECOD Cardiac disor… Palp…      2 "  0 (  0.0…
+ 5 AEDECOD Cardiac disor… Sinu…      2 "  0 (  0.0…
+ 6 AESOC   Congenital, f… &lt;NA&gt;       1 "  0 (  0.0…
+ 7 AEDECOD Congenital, f… Derm…      2 "  0 (  0.0…
+ 8 AESOC   Ear and labyr… &lt;NA&gt;       1 "  0 (  0.0…
+ 9 AEDECOD Ear and labyr… Vert…      2 "  0 (  0.0…
+10 AESOC   Endocrine dis… &lt;NA&gt;       1 "  0 (  0.0…
+# ℹ 83 more rows
+# ℹ 11 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, `ARM D.Severe` &lt;chr&gt;
+# ℹ Use `print(n = ...)` to see more rows
+
+Get frequencies for all events
+
+proc_freq: input data set 145 rows and 6 columns
+           tables: AESEV
+           by: ARM
+           view: TRUE
+           output: 1 datasets
+
+# A tibble: 12 × 6
+   BY    VAR   CAT          N   CNT   PCT
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 ARM A AESEV MILD        37    27 73.0 
+ 2 ARM A AESEV MODERATE    37    10 27.0 
+ 3 ARM A AESEV SEVERE      37     0  0   
+ 4 ARM B AESEV MILD        32    24 75   
+ 5 ARM B AESEV MODERATE    32     6 18.8 
+ 6 ARM B AESEV SEVERE      32     2  6.25
+ 7 ARM C AESEV MILD        36    29 80.6 
+ 8 ARM C AESEV MODERATE    36     7 19.4 
+ 9 ARM C AESEV SEVERE      36     0  0   
+10 ARM D AESEV MILD        40    31 77.5 
+11 ARM D AESEV MODERATE    40     9 22.5 
+12 ARM D AESEV SEVERE      40     0  0   
+
+Combine all events.
+
+datastep: columns decreased from 6 to 4
+
+# A tibble: 12 × 4
+   BY    VAR   CAT      CNTPCT       
+   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;        
+ 1 ARM A AESEV Mild     " 27 ( 73.0)"
+ 2 ARM A AESEV Moderate " 10 ( 27.0)"
+ 3 ARM A AESEV Severe   "  0 (  0.0)"
+ 4 ARM B AESEV Mild     " 24 ( 75.0)"
+ 5 ARM B AESEV Moderate "  6 ( 18.8)"
+ 6 ARM B AESEV Severe   "  2 (  6.2)"
+ 7 ARM C AESEV Mild     " 29 ( 80.6)"
+ 8 ARM C AESEV Moderate "  7 ( 19.4)"
+ 9 ARM C AESEV Severe   "  0 (  0.0)"
+10 ARM D AESEV Mild     " 31 ( 77.5)"
+11 ARM D AESEV Moderate "  9 ( 22.5)"
+12 ARM D AESEV Severe   "  0 (  0.0)"
+
+Prepare data for reporting
+
+proc_transpose: input data set 12 rows and 4 columns
+                var: CNTPCT
+                id: BY CAT
+                copy: VAR
+                name: CAT
+                output dataset 1 rows and 14 columns
+
+# A tibble: 1 × 14
+  VAR   CAT    `ARM A.Mild`  `ARM A.Moderate`
+  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt;           
+1 AESEV CNTPCT " 27 ( 73.0)" " 10 ( 27.0)"   
+# ℹ 10 more variables: `ARM A.Severe` &lt;chr&gt;,
+#   `ARM B.Mild` &lt;chr&gt;, `ARM B.Moderate` &lt;chr&gt;,
+#   `ARM B.Severe` &lt;chr&gt;, `ARM C.Mild` &lt;chr&gt;,
+#   `ARM C.Moderate` &lt;chr&gt;, `ARM C.Severe` &lt;chr&gt;,
+#   `ARM D.Mild` &lt;chr&gt;, `ARM D.Moderate` &lt;chr&gt;,
+#   `ARM D.Severe` &lt;chr&gt;
+
+=========================================================================
+Create final data frame
+=========================================================================
+
+datastep: columns increased from 14 to 16
+
+# A tibble: 94 × 16
+   VAR     CAT            CAT2  VARORD `ARM A.Mild`
+   &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;       
+ 1 AESEV   All Adverse E… &lt;NA&gt;      NA " 27 ( 73.0…
+ 2 AESOC   Blood and lym… &lt;NA&gt;       1 "  0 (  0.0…
+ 3 AEDECOD Blood and lym… Neut…      2 "  0 (  0.0…
+ 4 AESOC   Cardiac disor… &lt;NA&gt;       1 "  0 (  0.0…
+ 5 AEDECOD Cardiac disor… Palp…      2 "  0 (  0.0…
+ 6 AEDECOD Cardiac disor… Sinu…      2 "  0 (  0.0…
+ 7 AESOC   Congenital, f… &lt;NA&gt;       1 "  0 (  0.0…
+ 8 AEDECOD Congenital, f… Derm…      2 "  0 (  0.0…
+ 9 AESOC   Ear and labyr… &lt;NA&gt;       1 "  0 (  0.0…
+10 AEDECOD Ear and labyr… Vert…      2 "  0 (  0.0…
+# ℹ 84 more rows
+# ℹ 11 more variables: `ARM A.Moderate` &lt;chr&gt;,
+#   `ARM A.Severe` &lt;chr&gt;, `ARM B.Mild` &lt;chr&gt;,
+#   `ARM B.Moderate` &lt;chr&gt;, `ARM B.Severe` &lt;chr&gt;,
+#   `ARM C.Mild` &lt;chr&gt;, `ARM C.Moderate` &lt;chr&gt;,
+#   `ARM C.Severe` &lt;chr&gt;, `ARM D.Mild` &lt;chr&gt;,
+#   `ARM D.Moderate` &lt;chr&gt;, `ARM D.Severe` &lt;chr&gt;
+# ℹ Use `print(n = ...)` to see more rows
+
+=========================================================================
+Create and print report
+=========================================================================
+
+Create table object
+
+Create report object
+
+Print report
 
 # A report specification: 16 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpEBPgPu/example4.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
 - margins: top 0.5 bottom 0.5 left 1 right 1
-- line size/count: 107/47
+- line size/count: 9/42
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Table 5.0'
 - title 2: 'Adverse Events by Maximum Severity'
 - footnote 1: 'Program: AE_Table.R'
 - footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
-- page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
+- page_footer: left=2023-09-05 22:26:19.941609 center=Confidential right=Page [pg] of [tpg]
 - content: 
 # A table specification:
-- data: tibble 'final' 74 rows 14 cols
+- data: tibble 'allfinal' 94 rows 16 cols
 - show_cols: all
 - use_attributes: all
 - width: 9
-- spanning_header: from='ARM A_1' to='ARM A_3' 'ARM A' level=1 
-- spanning_header: from='ARM B_1' to='ARM B_3' 'ARM B' level=1 
-- spanning_header: from='ARM C_1' to='ARM C_3' 'ARM C' level=1 
-- spanning_header: from='ARM D_1' to='ARM D_3' 'ARM D' level=1 
-- stub: AESOC AEDECOD 'System Organ Class
+- spanning_header: from='ARM A.Mild' to='ARM A.Severe' 'ARM A' level=1 
+- spanning_header: from='ARM B.Mild' to='ARM B.Severe' 'ARM B' level=1 
+- spanning_header: from='ARM C.Mild' to='ARM C.Severe' 'ARM C' level=1 
+- spanning_header: from='ARM D.Mild' to='ARM D.Severe' 'ARM D' level=1 
+- stub: CAT CAT2 'System Organ Class
    Preferred Term' width=5 align='left' 
-- define: AESOC dedupe='TRUE' 
-- define: AEDECOD 
-- define: ARM A_1 'Mild' align='center' 
-- define: ARM A_2 'Moderate' align='center' 
-- define: ARM A_3 'Severe' align='center' 
-- define: ARM B_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM B_2 'Moderate' align='center' 
-- define: ARM B_3 'Severe' align='center' 
-- define: ARM C_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM C_2 'Moderate' align='center' 
-- define: ARM C_3 'Severe' align='center' 
-- define: ARM D_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM D_2 'Moderate' align='center' 
-- define: ARM D_3 'Severe' align='center' 
+- define: CAT 
+- define: CAT2 
+- define: ARM A.Mild 'Mild' 
+- define: ARM A.Moderate 'Moderate' 
+- define: ARM A.Severe 'Severe' 
+- define: ARM B.Mild 'Mild' page_wrap='TRUE' 
+- define: ARM B.Moderate 'Moderate' 
+- define: ARM B.Severe 'Severe' 
+- define: ARM C.Mild 'Mild' page_wrap='TRUE' 
+- define: ARM C.Moderate 'Moderate' 
+- define: ARM C.Severe 'Severe' 
+- define: ARM D.Mild 'Mild' page_wrap='TRUE' 
+- define: ARM D.Moderate 'Moderate' 
+- define: ARM D.Severe 'Severe' 
+- define: VAR visible='FALSE' 
+- define: VARORD visible='FALSE' 
 
-# A report specification: 16 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example4.rtf'
-- output_type: RTF
-- units: inches
-- orientation: landscape
-- margins: top 0.5 bottom 0.5 left 1 right 1
-- line size/count: 107/47
-- page_header: left=Sponsor: Company right=Study: ABC
-- title 1: 'Table 5.0'
-- title 2: 'Adverse Events by Maximum Severity'
-- footnote 1: 'Program: AE_Table.R'
-- footnote 2: 'Note: Adverse events were coded using MedDRA Version 9.1'
-- page_footer: left=2021-06-27 11:30:02 center=Confidential right=Page [pg] of [tpg]
-- content: 
-# A table specification:
-- data: tibble 'final' 74 rows 14 cols
-- show_cols: all
-- use_attributes: all
-- width: 9
-- spanning_header: from='ARM A_1' to='ARM A_3' 'ARM A' level=1 
-- spanning_header: from='ARM B_1' to='ARM B_3' 'ARM B' level=1 
-- spanning_header: from='ARM C_1' to='ARM C_3' 'ARM C' level=1 
-- spanning_header: from='ARM D_1' to='ARM D_3' 'ARM D' level=1 
-- stub: AESOC AEDECOD 'System Organ Class
-   Preferred Term' width=5 align='left' 
-- define: AESOC dedupe='TRUE' 
-- define: AEDECOD 
-- define: ARM A_1 'Mild' align='center' 
-- define: ARM A_2 'Moderate' align='center' 
-- define: ARM A_3 'Severe' align='center' 
-- define: ARM B_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM B_2 'Moderate' align='center' 
-- define: ARM B_3 'Severe' align='center' 
-- define: ARM C_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM C_2 'Moderate' align='center' 
-- define: ARM C_3 'Severe' align='center' 
-- define: ARM D_1 'Mild' align='center' page_wrap='TRUE' 
-- define: ARM D_2 'Moderate' align='center' 
-- define: ARM D_3 'Severe' align='center' 
+=========================================================================
+Clean Up
+=========================================================================
 
-lib_sync: synchronized data in library 'sdtm' 
+Remove library from workspace
 
-lib_unload: library 'sdtm' unloaded 
+lib_sync: synchronized data in library 'sdtm'
 
-========================================================================= 
-Log End Time: 2021-06-27 11:30:04 
-Log Elapsed Time: 0 00:00:03 
-========================================================================= 
+lib_unload: library 'sdtm' unloaded
+
+Close log
+
+=========================================================================
+Log End Time: 2023-09-05 22:26:20.855023
+Log Elapsed Time: 0 00:00:04
+=========================================================================
 
 </code></pre>
 <p>Next: <a href="sassy-vs.html">Example 5: Vital Signs Table</a></p>

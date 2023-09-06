@@ -35,6 +35,7 @@ system you can:
 * Create a libname
 * Create a format catalog
 * Do a data step
+* Generate frequency and summary statistics
 * Write a report in a few lines of code
 * And more!
 

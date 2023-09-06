@@ -4,6 +4,7 @@
 \encoding{UTF-8}
 \name{sassy}
 \alias{sassy}
+\alias{sassy-package}
 \title{sassy: Making R Easier for Everyone}
 \description{
 The \strong{sassy} package is a meta-package that
@@ -30,6 +31,7 @@ and apply formats to a data frame or vector.}
   in TXT, RTF, PDF, HTML, and DOCX.}
   \item {\code{common}:}{ A set of utility functions
   shared across the \strong{sassy} family of packages.}
+  \item {\code{procs}:}{ A package to simulate frequently used SAS® procedures.}
 }
 }
 

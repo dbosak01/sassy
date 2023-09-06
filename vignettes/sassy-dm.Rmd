@@ -23,87 +23,274 @@ Note the following about this example:
   * The **[logr](https://logr.r-sassy.org)** package 
   provides automatic logging for many functions.
   * The `datastep()` function from the **[libr](https://libr.r-sassy.org)**
-  package allows for a complex conditional in the middle
-  of a **dplyr** pipeline.  
+  package allows for easy data processing. 
   * The **[fmtr](https://fmtr.r-sassy.org)** package provides several 
   convenient functions for 
   calculating and formatting summary statistics.
+  * Statistics from the **[procs](https://procs.r-sassy.org)** package
+  match SAS® out of the box.
   * The **[reporter](https://reporter.r-sassy.org)** package supports 
   'N=' population counts in the header labels.
   * The **reporter** package also allows you to define a stub column of 
   hierarchical labels.
 
 ```{r eval=FALSE, echo=TRUE}
-library(tidyverse)
 library(sassy)
-
+library(procs)
 
 # Prepare Log -------------------------------------------------------------
 
 
 options("logr.autolog" = TRUE,
-        "logr.notes" = FALSE)
+        "logr.on" = TRUE,
+        "logr.notes" = FALSE,
+        "procs.print" = FALSE)
 
-# Get path to temp directory
-tmp <- tempdir() 
-
-# Get sample data directory
-dir <- system.file("extdata", package = "sassy")
+# Get temp directory
+tmp <- tempdir()
 
 # Open log
-lgpth <- log_open(file.path(tmp, "example2.log"))
+lf <- log_open(file.path(tmp, "example2.log"))
+
+
+
+# Prepare formats ---------------------------------------------------------
+
+sep("Prepare formats")
+
+put("Age categories")
+agecat <- value(condition(x >= 18 & x <= 29, "18 to 29"),
+                condition(x >=30 & x <= 39, "30 to 39"),
+                condition(x >=40 & x <=49, "40 to 49"),
+                condition(x >= 50, ">= 50"),
+                condition(TRUE, "Out of range")) 
+
+put("Sex decodes")
+fmt_sex <- value(condition(is.na(x), "Missing"),
+                 condition(x == "M", "Male"),
+                 condition(x == "F", "Female"),
+                 condition(TRUE, "Other")) 
+
+put("Race decodes")
+fmt_race <- value(condition(is.na(x), "Missing"),
+                  condition(x == "WHITE", "White"),
+                  condition(x == "BLACK", "Black or African American"),
+                  condition(TRUE, "Other"))
+
+
+put("Compile format catalog")
+fc <- fcat(MEAN = "%.1f", STD = "(%.2f)", 
+           Q1 = "%.1f", Q3 = "%.1f",
+           MIN = "%d", MAX = "%d", 
+           CNT = "%2d", PCT = "(%5.1f%%)",
+           AGECAT = agecat,
+           SEX = fmt_sex,
+           RACE = fmt_race,
+           AOV.F = "%5.3f",
+           AOV.P = "(%5.3f)",
+           CHISQ = "%5.3f",
+           CHISQ.P = "(%5.3f)") 
 
 
 # Load and Prepare Data ---------------------------------------------------
 
 sep("Prepare Data")
 
-# Define data library
-libname(sdtm, dir, "csv") 
 
-# Loads data into workspace
-lib_load(sdtm)
+put("Create sample ADSL data.")
+adsl <- read.table(header = TRUE, text = '
+  SUBJID  ARM    SEX  RACE    AGE
+  "001"   "ARM A" "F"  "WHITE" 19 
+  "002"   "ARM B" "F"  "WHITE" 21 
+  "003"   "ARM C" "F"  "WHITE" 23 
+  "004"   "ARM D" "F"  "BLACK" 28 
+  "005"   "ARM A" "M"  "WHITE" 37  
+  "006"   "ARM B" "M"  "WHITE" 34 
+  "007"   "ARM C" "M"  "WHITE" 36  
+  "008"   "ARM D" "M"  "WHITE" 30   
+  "009"   "ARM A" "F"  "WHITE" 39  
+  "010"   "ARM B" "F"  "WHITE" 31  
+  "011"   "ARM C" "F"  "BLACK" 33 
+  "012"   "ARM D" "F"  "WHITE" 38 
+  "013"   "ARM A" "M"  "BLACK" 37 
+  "014"   "ARM B" "M"  "WHITE" 34  
+  "015"   "ARM C" "M"  "WHITE" 36
+  "016"   "ARM A" "M"  "WHITE" 40')  
 
-# Prepare data
-dm_mod <- sdtm.DM |> 
-  select(USUBJID, SEX, AGE, ARM) |> 
-  filter(ARM != "SCREEN FAILURE") |> 
-  datastep({
-                     
-     if (AGE >= 18 & AGE <= 24)
-       AGECAT = "18 to 24"
-     else if (AGE >= 25 & AGE <= 44)
-       AGECAT = "25 to 44"
-     else if (AGE >= 45 & AGE <= 64)
-       AGECAT <- "45 to 64"
-     else if (AGE >= 65)
-       AGECAT <- ">= 65"
-     
-   }) 
+put("Categorize AGE")
+adsl$AGECAT <- fapply(adsl$AGE, agecat) 
+
+put("Log starting dataset")
+put(adsl)
+
 
 put("Get ARM population counts")
-arm_pop <- count(dm_mod, ARM) |> deframe() |> put()
-                     
+proc_freq(adsl, tables = ARM, 
+          output = long,
+          options = v(nopercent, nonobs)) -> arm_pop
 
 # Age Summary Block -------------------------------------------------------
 
 sep("Create summary statistics for age")
 
-age_block <- 
-  dm_mod |>
-  group_by(ARM) |>
-  summarise( N = fmt_n(AGE),
-             `Mean (SD)` = fmt_mean_sd(AGE),
-             Median = fmt_median(AGE),
-             `Q1 - Q3` = fmt_quantile_range(AGE),
-             Range  = fmt_range(AGE)) |>
-  pivot_longer(-ARM,
-               names_to  = "label",
-               values_to = "value") |>
-  pivot_wider(names_from = ARM,
-              values_from = "value") |> 
-  add_column(var = "AGE", .before = "label") |> 
-  put()
+put("Call means procedure to get summary statistics for age")
+proc_means(adsl, var = AGE,
+           stats = v(n, mean, std, median, q1, q3, min, max),
+           by = ARM, 
+           options = v(notype, nofreq)) -> age_stats 
+
+put("Combine stats")
+datastep(age_stats, 
+         format = fc,
+         drop = find.names(age_stats, start = 4), 
+         {
+           `Mean (SD)` <- fapply2(MEAN, STD)
+           Median <- MEDIAN
+           `Q1 - Q3` <- fapply2(Q1, Q3, sep = " - ")
+           `Min - Max` <- fapply2(MIN, MAX, sep = " - ")
+           
+           
+         }) -> age_comb
+
+put("Transpose ARMs into columns")
+proc_transpose(age_comb, 
+               var = names(age_comb),
+               copy = VAR, id = BY, 
+               name = LABEL) -> age_trans 
+
+put("Calculate aov")
+age_aov <- aov(AGE ~ ARM, data = adsl) |> 
+  summary() 
+
+put("Get aov into proper data frame") 
+
+age_aov <- age_aov[[1]][1, c("F value", "Pr(>F)")]
+names(age_aov) <- c("AOV.F", "AOV.P")
+age_aov <- as.data.frame(age_aov) |> put()
+
+put("Combine aov statistics")
+datastep(age_aov, 
+         keep = PVALUE,
+         format = fc,
+         {
+           PVALUE <- fapply2(AOV.F, AOV.P)
+           
+         }) -> age_aov_comb 
+
+put("Append aov")
+datastep(age_trans, merge = age_aov_comb, {}) -> age_block
+
+# Sex Block ---------------------------------------------------------------
+
+sep("Create frequency counts for SEX")
+
+put("Get sex frequency counts")
+proc_freq(adsl, tables = SEX,
+          by = ARM,
+          options = nonobs) -> sex_freq 
+
+
+put("Combine counts and percents.")
+datastep(sex_freq, 
+         format = fc, 
+         rename = list(CAT = "LABEL"),
+         drop = v(CNT, PCT), 
+         {
+           
+           CNTPCT <- fapply2(CNT, PCT)
+           
+         }) -> sex_comb 
+
+put("Transpose ARMs into columns")
+proc_transpose(sex_comb, id = BY, 
+               var = CNTPCT,
+               copy = VAR, by = LABEL) -> sex_trans
+
+put("Clean up")
+datastep(sex_trans, drop = NAME, 
+         {
+           
+           LABEL <- fapply(LABEL, fc$SEX)
+           LABEL <- factor(LABEL, levels = levels(fc$SEX))
+           
+         }) -> sex_cnts
+
+put("Sort by label")
+proc_sort(sex_cnts, by = LABEL) -> sex_cnts 
+
+put("Get sex chisq")
+proc_freq(adsl, tables = v(SEX * ARM),
+          options = v(chisq, notable)) -> sex_chisq
+
+put("Combine chisq statistics")
+datastep(sex_chisq,
+         format = fc,
+         keep = PVALUE, 
+         {
+           
+           PVALUE = fapply2(CHISQ, CHISQ.P)
+         }) -> sex_chisq_comb 
+
+put("Append chisq")
+datastep(sex_cnts, 
+         merge = sex_chisq_comb, 
+         {}) -> sex_block
+
+
+# Race block --------------------------------------------------------------
+
+
+sep("Create frequency counts for RACE")
+
+put("Get race frequency counts")
+proc_freq(adsl, tables = RACE,
+          by = ARM,
+          options = nonobs) -> race_freq 
+
+
+put("Combine counts and percents.")
+datastep(race_freq, 
+         format = fc, 
+         rename = list(CAT = "LABEL"),
+         drop = v(CNT, PCT), 
+         {
+           
+           CNTPCT <- fapply2(CNT, PCT)
+           
+         }) -> race_comb 
+
+put("Transpose ARMs into columns")
+proc_transpose(race_comb, id = BY, var = CNTPCT,
+               copy = VAR, by = LABEL) -> race_trans
+
+put("Clean up")
+
+datastep(race_trans, drop = NAME,
+         where = expression(del == FALSE),
+         {
+           LABEL <- fapply(LABEL, fc$RACE)
+           LABEL <- factor(LABEL, levels = levels(fc$RACE))
+           
+         }) -> race_cnts 
+
+put("Sort by label")
+proc_sort(race_cnts, by = LABEL) -> race_cnts 
+
+put("Get race chisq")
+proc_freq(adsl, tables = RACE * ARM,
+          options = v(chisq, notable)) -> race_chisq 
+
+put("Combine chisq statistics")
+datastep(race_chisq,
+         format = fc,
+         keep = c("PVALUE"), 
+         {
+           
+           PVALUE = fapply2(CHISQ, CHISQ.P)
+         }) -> race_chisq_comb
+
+put("Append chisq")
+datastep(race_cnts, merge = race_chisq_comb, {}) -> race_block
 
 
 # Age Group Block ----------------------------------------------------------
@@ -111,108 +298,110 @@ age_block <-
 sep("Create frequency counts for Age Group")
 
 
-put("Create age group frequency counts")
-ageg_block <- 
-  dm_mod |> 
-  select(ARM, AGECAT) |> 
-  group_by(ARM, AGECAT) |> 
-  summarize(n = n()) |> 
-  pivot_wider(names_from = ARM,
-              values_from = n, 
-              values_fill = 0) |> 
-  transmute(var = "AGECAT", 
-            label =  factor(AGECAT, levels = c("18 to 24", 
-                                               "25 to 44", 
-                                               "45 to 64", 
-                                               ">= 65")),
-            `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
-            `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
-            `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
-            `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> 
-  arrange(label) |> 
-  put()
+put("Get age group frequency counts")
+proc_freq(adsl,
+          table = AGECAT,
+          by = ARM,
+          options = nonobs) -> ageg_freq
+
+put("Combine counts and percents and assign age group factor for sorting")
+datastep(ageg_freq,
+         format = fc,
+         keep = v(VAR, LABEL, BY, CNTPCT),
+         {
+           CNTPCT <- fapply2(CNT, PCT)
+           LABEL <- factor(CAT, levels = levels(fc$AGECAT))
+         }) -> ageg_comb
 
 
-# Sex Block ---------------------------------------------------------------
+put("Sort by age group factor")
+proc_sort(ageg_comb, by = v(BY, LABEL)) -> ageg_sort 
 
-sep("Create frequency counts for SEX")
+put("Tranpose age group block")
+proc_transpose(ageg_sort,
+               var = CNTPCT,
+               copy = VAR,
+               id = BY,
+               by = LABEL) -> ageg_trans 
 
-# Create user-defined format
-fmt_sex <- value(condition(is.na(x), "Missing"),
-                 condition(x == "M", "Male"),
-                 condition(x == "F", "Female"),
-                 condition(TRUE, "Other")) |> put()
+put("Some clean up")
+datastep(ageg_trans,
+         drop = NAME,
+         {}) -> ageg_cnts 
 
-# Create sex frequency counts   
-sex_block <- 
-  dm_mod |> 
-  select(ARM, SEX) |> 
-  group_by(ARM, SEX) |> 
-  summarize(n = n()) |> 
-  pivot_wider(names_from = ARM,
-              values_from = n, 
-              values_fill = 0) |> 
-  transmute(var = "SEX", 
-            label =   fct_relevel(SEX, "M", "F"), 
-            `ARM A` = fmt_cnt_pct(`ARM A`, arm_pop["ARM A"]),
-            `ARM B` = fmt_cnt_pct(`ARM B`, arm_pop["ARM B"]),
-            `ARM C` = fmt_cnt_pct(`ARM C`, arm_pop["ARM C"]),
-            `ARM D` = fmt_cnt_pct(`ARM D`, arm_pop["ARM D"])) |> 
-  arrange(label) |> 
-  mutate(label = fapply(label, fmt_sex)) |> 
-  put()
+put("Get ageg chisq")
+proc_freq(adsl, tables = AGECAT * ARM,
+          options = v(chisq, notable)) -> ageg_chisq 
+
+put("Combine chisq statistics")
+datastep(ageg_chisq,
+         format = fc,
+         keep = c("PVALUE"), 
+         {
+           PVALUE = fapply2(CHISQ, CHISQ.P)
+         }) -> ageg_chisq_comb 
+
+put("Append chisq")
+datastep(ageg_cnts, merge = ageg_chisq_comb, 
+         {}) -> ageg_block
+
 
 put("Combine blocks into final data frame")
-final <- bind_rows(age_block, ageg_block, sex_block) |> put()
+datastep(age_block, 
+         set = list(ageg_block, sex_block, race_block),
+         {}) -> final
 
 # Report ------------------------------------------------------------------
 
 
 sep("Create and print report")
 
-var_fmt <- c("AGE" = "Age", "AGECAT" = "Age Group", "SEX" = "Sex")
+var_fmt <- c("AGE" = "Age", "AGECAT" = "Age Group", "SEX" = "Sex", "RACE" = "Race")
+
+plbl <- "Tests of Association{supsc('1')}\n Value (P-Value)"
 
 # Create Table
-tbl <- create_table(final, first_row_blank = TRUE, 
-                    borders = c("top", "bottom")) |> 
-  column_defaults(from = `ARM A`, to = `ARM D`, 
-                  align = "center", width = 1.25) |> 
-  stub(vars = c("var", "label"), "Variable", width = 2.5) |> 
-  define(var, blank_after = TRUE, dedupe = TRUE, label = "Variable",
-         format = var_fmt,label_row = TRUE) |> 
-  define(label, indent = .25, label = "Demographic Category") |> 
-  define(`ARM A`, label = "Placebo", n = arm_pop["ARM A"]) |> 
-  define(`ARM B`, label = "Drug 50mg", n = arm_pop["ARM B"]) |> 
-  define(`ARM C`, label = "Drug 100mg", n = arm_pop["ARM C"]) |> 
-  define(`ARM D`, label = "Competitor", n = arm_pop["ARM D"]) 
-
-pth <- file.path(tmp, "output/example2.rtf")
-
-rpt <- create_report(pth, output_type = "RTF", font = "Arial") |> 
-  set_margins(top = 1, bottom = 1) |> 
-  page_header("Sponsor: Company", "Study: ABC") |> 
+tbl <- create_table(final, first_row_blank = TRUE) |>  
+  column_defaults(from = `ARM A`, to = `ARM D`, align = "center", width = 1.1) |>  
+  stub(vars = c("VAR", "LABEL"), "Variable", width = 2.5) |>  
+  define(VAR, blank_after = TRUE, dedupe = TRUE, label = "Variable",
+         format = var_fmt,label_row = TRUE) |>  
+  define(LABEL, indent = .25, label = "Demographic Category") |> 
+  define(`ARM A`,  label = "Placebo", n = arm_pop["ARM A"]) |>  
+  define(`ARM B`,  label = "Drug 50mg", n = arm_pop["ARM B"]) |>  
+  define(`ARM C`,  label = "Drug 100mg", n = arm_pop["ARM C"]) |>  
+  define(`ARM D`,  label = "Competitor", n = arm_pop["ARM D"]) |>  
+  define(PVALUE, label = plbl, width = 2, dedupe = TRUE, align = "center") |> 
   titles("Table 1.0", "Analysis of Demographic Characteristics", 
-         "Safety Population", bold = TRUE, font_size = 11) |> 
-  add_content(tbl) |> 
+         "Safety Population", bold = TRUE) |> 
   footnotes("Program: DM_Table.R",
-            "NOTE: Denominator based on number of non-missing responses.") |> 
-  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
-              right = "Page [pg] of [tpg]")
+            "NOTE: Denominator based on number of non-missing responses.",
+            "{supsc('1')}Pearson's Chi-Square tests will be used for "
+            %p% "Categorical variables and ANOVA tests for continuous variables.") 
 
-write_report(rpt)
+rpt <- create_report(file.path(tmp, "example2.rtf"), 
+                     output_type = "RTF", 
+                     font = "Arial") |> 
+  page_header("Sponsor: Company", "Study: ABC") |> 
+  set_margins(top = 1, bottom = 1) |>  
+  add_content(tbl) |> 
+  page_footer("Date Produced: {Sys.Date()}", right = "Page [pg] of [tpg]")
 
+put("Write out the report")
+res <- write_report(rpt)
 
 # Clean Up ----------------------------------------------------------------
+sep("Clean Up")
 
-# Unload library from workspace
-lib_unload(sdtm)
-
-# Close log
+put("Close log")
 log_close()
 
-# View files
-# file.show(pth)
-# file.show(lgpth)
+
+# Uncomment to view report
+# file.show(res$modified_path)
+
+# Uncomment to view log
+# file.show(lf)
 
 ```
 
@@ -228,214 +417,638 @@ Here is the output report:
 And here is the log:
 
 ```
-========================================================================= 
-Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpKC93lu/log/example2.log 
-Working Directory: C:/packages/Testing 
-User Name: dbosa 
-R Version: 4.0.5 (2021-03-31) 
-Machine: SOCRATES x86-64 
-Operating System: Windows 10 x64 build 19041 
-Log Start Time: 2021-06-27 14:35:47 
-========================================================================= 
+=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpEBPgPu/log/example2.log
+Program Path: C:/packages/Testing/procs/ProcsDemog.R
+Working Directory: C:/packages/Testing/procs
+User Name: dbosa
+R Version: 4.3.1 (2023-06-16 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 stringr_1.5.0 procs_1.0.3 reporter_1.4.1 libr_1.2.8
+fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-05 22:11:55.376641
+=========================================================================
 
-========================================================================= 
-Prepare Data 
-========================================================================= 
+=========================================================================
+Prepare formats
+=========================================================================
 
-# library 'sdtm': 4 items
-- attributes: csv not loaded
-- path: C:/Users/dbosa/Documents/R/win-library/4.0/sassy/extdata
-- items:
-  Name Extension Rows Cols    Size        LastModified
-1   AE       csv  150   27 88.1 Kb 2021-04-04 11:55:58
-2   DM       csv   87   24 45.2 Kb 2021-04-04 11:55:58
-3   SV       csv  685   10 69.9 Kb 2021-04-04 11:55:58
-4   VS       csv 3358   17  467 Kb 2021-04-04 11:55:58
+Age categories
 
-lib_load: library 'sdtm' loaded 
+# A user-defined format: 5 conditions
+  Name Type        Expression        Label Order
+1  obj    U x >= 18 & x <= 29     18 to 29    NA
+2  obj    U x >= 30 & x <= 39     30 to 39    NA
+3  obj    U x >= 40 & x <= 49     40 to 49    NA
+4  obj    U           x >= 50        >= 50    NA
+5  obj    U              TRUE Out of range    NA
 
-select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
-
-filter: removed 2 rows (2%), 85 rows remaining
-
-datastep: columns decreased from 4 to 5 
-
-# A tibble: 85 x 5
-   USUBJID    SEX     AGE ARM   AGECAT  
-   <chr>      <chr> <dbl> <chr> <chr>   
- 1 ABC-01-049 M        39 ARM D 25 to 44
- 2 ABC-01-050 M        47 ARM B 45 to 64
- 3 ABC-01-051 M        34 ARM A 25 to 44
- 4 ABC-01-052 F        45 ARM C 45 to 64
- 5 ABC-01-053 F        26 ARM B 25 to 44
- 6 ABC-01-054 M        44 ARM D 25 to 44
- 7 ABC-01-055 F        47 ARM C 45 to 64
- 8 ABC-01-056 M        31 ARM A 25 to 44
- 9 ABC-01-113 M        74 ARM D >= 65   
-10 ABC-01-114 F        72 ARM B >= 65   
-# ... with 75 more rows
-
-Get ARM population counts 
-
-count: now 4 rows and 2 columns, ungrouped
-
-ARM A ARM B ARM C ARM D 
-   20    21    21    23 
-
-========================================================================= 
-Create summary statistics for age 
-========================================================================= 
-
-group_by: one grouping variable (ARM)
-
-summarise: now 4 rows and 6 columns, ungrouped
-
-pivot_longer: reorganized (N, Mean (SD), Median, Q1 - Q3, Range) into (label, value) [was 4x6, now 20x3]
-
-pivot_wider: reorganized (ARM, value) into (ARM A, ARM B, ARM C, ARM D) [was 20x3, now 5x5]
-
-# A tibble: 5 x 6
-  var   label     `ARM A`     `ARM B`     `ARM C`     `ARM D`    
-  <chr> <chr>     <chr>       <chr>       <chr>       <chr>      
-1 AGE   N         20          21          21          23         
-2 AGE   Mean (SD) 53.1 (11.9) 47.4 (16.3) 45.7 (14.4) 49.7 (14.3)
-3 AGE   Median    52.5        46.0        46.0        48.0       
-4 AGE   Q1 - Q3   47.8 - 60.0 35.0 - 61.0 38.0 - 53.0 39.0 - 60.5
-5 AGE   Range     31 - 73     22 - 73     19 - 71     21 - 75    
-
-========================================================================= 
-Create frequency counts for Age Group 
-========================================================================= 
-
-Create age group frequency counts 
-
-select: dropped 3 variables (USUBJID, SEX, AGE)
-
-group_by: 2 grouping variables (ARM, AGECAT)
-
-summarize: now 15 rows and 3 columns, one group variable remaining (ARM)
-
-pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 15x3, now 4x5]
-
-transmute: dropped one variable (AGECAT)
-
-           new variable 'var' (character) with one unique value and 0% NA
-
-           new variable 'label' (factor) with 4 unique values and 0% NA
-
-           converted 'ARM A' from integer to character (0 new NA)
-
-           converted 'ARM B' from integer to character (0 new NA)
-
-           converted 'ARM C' from integer to character (0 new NA)
-
-           converted 'ARM D' from integer to character (0 new NA)
-
-# A tibble: 4 x 6
-  var    label    `ARM A`     `ARM B`    `ARM C`     `ARM D`    
-  <chr>  <fct>    <chr>       <chr>      <chr>       <chr>      
-1 AGECAT 18 to 24 0 (  0.0%)  1 (  4.8%) 3 ( 14.3%)  1 (  4.3%) 
-2 AGECAT 25 to 44 4 ( 20.0%)  8 ( 38.1%) 4 ( 19.0%)  7 ( 30.4%) 
-3 AGECAT 45 to 64 13 ( 65.0%) 7 ( 33.3%) 12 ( 57.1%) 12 ( 52.2%)
-4 AGECAT >= 65    3 ( 15.0%)  5 ( 23.8%) 2 (  9.5%)  3 ( 13.0%) 
-
-========================================================================= 
-Create frequency counts for SEX 
-========================================================================= 
+Sex decodes
 
 # A user-defined format: 4 conditions
   Name Type Expression   Label Order
-1    x    U   is.na(x) Missing    NA
-2    x    U   x == "M"    Male    NA
-3    x    U   x == "F"  Female    NA
-4    x    U       TRUE   Other    NA
+1  obj    U   is.na(x) Missing    NA
+2  obj    U   x == "M"    Male    NA
+3  obj    U   x == "F"  Female    NA
+4  obj    U       TRUE   Other    NA
 
-select: dropped 3 variables (USUBJID, AGE, AGECAT)
+Race decodes
 
-group_by: 2 grouping variables (ARM, SEX)
+# A user-defined format: 4 conditions
+  Name Type   Expression                     Label
+1  obj    U     is.na(x)                   Missing
+2  obj    U x == "WHITE"                     White
+3  obj    U x == "BLACK" Black or African American
+4  obj    U         TRUE                     Other
+  Order
+1    NA
+2    NA
+3    NA
+4    NA
 
-summarize: now 8 rows and 3 columns, one group variable remaining (ARM)
+Compile format catalog
 
-pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 8x3, now 2x5]
+# A format catalog: 15 formats
+- $MEAN: type S, "%.1f"
+- $STD: type S, "(%.2f)"
+- $Q1: type S, "%.1f"
+- $Q3: type S, "%.1f"
+- $MIN: type S, "%d"
+- $MAX: type S, "%d"
+- $CNT: type S, "%2d"
+- $PCT: type S, "(%5.1f%%)"
+- $AGECAT: type U, 5 conditions
+- $SEX: type U, 4 conditions
+- $RACE: type U, 4 conditions
+- $AOV.F: type S, "%5.3f"
+- $AOV.P: type S, "(%5.3f)"
+- $CHISQ: type S, "%5.3f"
+- $CHISQ.P: type S, "(%5.3f)"
 
-transmute: dropped one variable (SEX)
+=========================================================================
+Prepare Data
+=========================================================================
 
-           new variable 'var' (character) with one unique value and 0% NA
+Create sample ADSL data.
 
-           new variable 'label' (factor) with 2 unique values and 0% NA
+Categorize AGE
 
-           converted 'ARM A' from integer to character (0 new NA)
+Log starting dataset
 
-           converted 'ARM B' from integer to character (0 new NA)
+   SUBJID   ARM SEX  RACE AGE   AGECAT
+1       1 ARM A   F WHITE  19 18 to 29
+2       2 ARM B   F WHITE  21 18 to 29
+3       3 ARM C   F WHITE  23 18 to 29
+4       4 ARM D   F BLACK  28 18 to 29
+5       5 ARM A   M WHITE  37 30 to 39
+6       6 ARM B   M WHITE  34 30 to 39
+7       7 ARM C   M WHITE  36 30 to 39
+8       8 ARM D   M WHITE  30 30 to 39
+9       9 ARM A   F WHITE  39 30 to 39
+10     10 ARM B   F WHITE  31 30 to 39
+11     11 ARM C   F BLACK  33 30 to 39
+12     12 ARM D   F WHITE  38 30 to 39
+13     13 ARM A   M BLACK  37 30 to 39
+14     14 ARM B   M WHITE  34 30 to 39
+15     15 ARM C   M WHITE  36 30 to 39
+16     16 ARM A   M WHITE  40 40 to 49
 
-           converted 'ARM C' from integer to character (0 new NA)
+Get ARM population counts
 
-           converted 'ARM D' from integer to character (0 new NA)
+proc_freq: input data set 16 rows and 6 columns
+           tables: ARM
+           output: long
+           view: TRUE
+           output: 1 datasets
 
-mutate: converted 'label' from factor to character (0 new NA)
+  VAR STAT ARM A ARM B ARM C ARM D
+1 ARM  CNT     5     4     4     3
 
-# A tibble: 2 x 6
-  var   label  `ARM A`     `ARM B`     `ARM C`     `ARM D`    
-  <chr> <chr>  <chr>       <chr>       <chr>       <chr>      
-1 SEX   Male   15 ( 75.0%) 10 ( 47.6%) 12 ( 57.1%) 16 ( 69.6%)
-2 SEX   Female 5 ( 25.0%)  11 ( 52.4%) 9 ( 42.9%)  7 ( 30.4%) 
+=========================================================================
+Create summary statistics for age
+=========================================================================
 
-Combine blocks into final data frame 
+Call means procedure to get summary statistics for age
 
-# A tibble: 11 x 6
-   var    label     `ARM A`     `ARM B`     `ARM C`     `ARM D`    
-   <chr>  <chr>     <chr>       <chr>       <chr>       <chr>      
- 1 AGE    N         20          21          21          23         
- 2 AGE    Mean (SD) 53.1 (11.9) 47.4 (16.3) 45.7 (14.4) 49.7 (14.3)
- 3 AGE    Median    52.5        46.0        46.0        48.0       
- 4 AGE    Q1 - Q3   47.8 - 60.0 35.0 - 61.0 38.0 - 53.0 39.0 - 60.5
- 5 AGE    Range     31 - 73     22 - 73     19 - 71     21 - 75    
- 6 AGECAT 18 to 24  0 (  0.0%)  1 (  4.8%)  3 ( 14.3%)  1 (  4.3%) 
- 7 AGECAT 25 to 44  4 ( 20.0%)  8 ( 38.1%)  4 ( 19.0%)  7 ( 30.4%) 
- 8 AGECAT 45 to 64  13 ( 65.0%) 7 ( 33.3%)  12 ( 57.1%) 12 ( 52.2%)
- 9 AGECAT >= 65     3 ( 15.0%)  5 ( 23.8%)  2 (  9.5%)  3 ( 13.0%) 
-10 SEX    Male      15 ( 75.0%) 10 ( 47.6%) 12 ( 57.1%) 16 ( 69.6%)
-11 SEX    Female    5 ( 25.0%)  11 ( 52.4%) 9 ( 42.9%)  7 ( 30.4%) 
+proc_means: input data set 16 rows and 6 columns
+            by: ARM
+            var: AGE
+            stats: n mean std median q1 q3 min max
+            view: TRUE
+            output: 1 datasets
 
-========================================================================= 
-Create and print report 
-========================================================================= 
+     BY VAR N MEAN      STD MEDIAN Q1 Q3 MIN MAX
+1 ARM A AGE 5 34.4 8.706320   37.0 37 39  19  40
+2 ARM B AGE 4 30.0 6.164414   32.5 26 34  21  34
+3 ARM C AGE 4 32.0 6.164414   34.5 28 36  23  36
+4 ARM D AGE 3 32.0 5.291503   30.0 28 38  28  38
+
+Combine stats
+
+datastep: columns decreased from 10 to 7
+
+     BY VAR N   Mean (SD) Median     Q1 - Q3
+1 ARM A AGE 5 34.4 (8.71)   37.0 37.0 - 39.0
+2 ARM B AGE 4 30.0 (6.16)   32.5 26.0 - 34.0
+3 ARM C AGE 4 32.0 (6.16)   34.5 28.0 - 36.0
+4 ARM D AGE 3 32.0 (5.29)   30.0 28.0 - 38.0
+  Min - Max
+1   19 - 40
+2   21 - 34
+3   23 - 36
+4   28 - 38
+
+Transpose ARMs into columns
+
+proc_transpose: input data set 4 rows and 7 columns
+                var: BY VAR N Mean (SD) Median Q1 - Q3 Min - Max
+                id: BY
+                copy: VAR
+                name: LABEL
+                output dataset 5 rows and 6 columns
+
+  VAR     LABEL       ARM A       ARM B
+1 AGE         N           5           4
+2 AGE Mean (SD) 34.4 (8.71) 30.0 (6.16)
+3 AGE    Median        37.0        32.5
+4 AGE   Q1 - Q3 37.0 - 39.0 26.0 - 34.0
+5 AGE Min - Max     19 - 40     21 - 34
+        ARM C       ARM D
+1           4           3
+2 32.0 (6.16) 32.0 (5.29)
+3        34.5        30.0
+4 28.0 - 36.0 28.0 - 38.0
+5     23 - 36     28 - 38
+
+Calculate aov
+
+Get aov into proper data frame
+
+                AOV.F     AOV.P
+ARM         0.2983651 0.8259486
+
+Combine aov statistics
+
+datastep: columns decreased from 2 to 1
+
+         PVALUE
+1 0.298 (0.826)
+
+Append aov
+
+datastep: columns increased from 6 to 7
+
+  VAR     LABEL       ARM A       ARM B
+1 AGE         N           5           4
+2 AGE Mean (SD) 34.4 (8.71) 30.0 (6.16)
+3 AGE    Median        37.0        32.5
+4 AGE   Q1 - Q3 37.0 - 39.0 26.0 - 34.0
+5 AGE Min - Max     19 - 40     21 - 34
+        ARM C       ARM D        PVALUE
+1           4           3 0.298 (0.826)
+2 32.0 (6.16) 32.0 (5.29)          <NA>
+3        34.5        30.0          <NA>
+4 28.0 - 36.0 28.0 - 38.0          <NA>
+5     23 - 36     28 - 38          <NA>
+
+=========================================================================
+Create frequency counts for SEX
+=========================================================================
+
+Get sex frequency counts
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: SEX
+           by: ARM
+           view: TRUE
+           output: 1 datasets
+
+     BY VAR CAT CNT      PCT
+1 ARM A SEX   F   2 40.00000
+2 ARM A SEX   M   3 60.00000
+3 ARM B SEX   F   2 50.00000
+4 ARM B SEX   M   2 50.00000
+5 ARM C SEX   F   2 50.00000
+6 ARM C SEX   M   2 50.00000
+7 ARM D SEX   F   2 66.66667
+8 ARM D SEX   M   1 33.33333
+
+Combine counts and percents.
+
+datastep: columns decreased from 5 to 4
+
+     BY VAR LABEL      CNTPCT
+1 ARM A SEX     F  2 ( 40.0%)
+2 ARM A SEX     M  3 ( 60.0%)
+3 ARM B SEX     F  2 ( 50.0%)
+4 ARM B SEX     M  2 ( 50.0%)
+5 ARM C SEX     F  2 ( 50.0%)
+6 ARM C SEX     M  2 ( 50.0%)
+7 ARM D SEX     F  2 ( 66.7%)
+8 ARM D SEX     M  1 ( 33.3%)
+
+Transpose ARMs into columns
+
+proc_transpose: input data set 8 rows and 4 columns
+                by: LABEL
+                var: CNTPCT
+                id: BY
+                copy: VAR
+                name: NAME
+                output dataset 2 rows and 7 columns
+
+  VAR LABEL   NAME       ARM A       ARM B
+1 SEX     F CNTPCT  2 ( 40.0%)  2 ( 50.0%)
+2 SEX     M CNTPCT  3 ( 60.0%)  2 ( 50.0%)
+        ARM C       ARM D
+1  2 ( 50.0%)  2 ( 66.7%)
+2  2 ( 50.0%)  1 ( 33.3%)
+
+Clean up
+
+datastep: columns decreased from 7 to 6
+
+  VAR  LABEL       ARM A       ARM B       ARM C
+1 SEX Female  2 ( 40.0%)  2 ( 50.0%)  2 ( 50.0%)
+2 SEX   Male  3 ( 60.0%)  2 ( 50.0%)  2 ( 50.0%)
+        ARM D
+1  2 ( 66.7%)
+2  1 ( 33.3%)
+
+Sort by label
+
+proc_sort: input data set 2 rows and 6 columns
+           by: LABEL
+           keep: VAR LABEL ARM A ARM B ARM C ARM D
+           order: a
+           output data set 2 rows and 6 columns
+
+  VAR  LABEL       ARM A       ARM B       ARM C
+2 SEX   Male  3 ( 60.0%)  2 ( 50.0%)  2 ( 50.0%)
+1 SEX Female  2 ( 40.0%)  2 ( 50.0%)  2 ( 50.0%)
+        ARM D
+2  1 ( 33.3%)
+1  2 ( 66.7%)
+
+Get sex chisq
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: SEX * ARM
+           view: TRUE
+           output: 1 datasets
+
+      CHISQ CHISQ.DF   CHISQ.P
+1 0.5333333        3 0.9115095
+
+Combine chisq statistics
+
+datastep: columns decreased from 3 to 1
+
+         PVALUE
+1 0.533 (0.912)
+
+Append chisq
+
+datastep: columns increased from 6 to 7
+
+  VAR  LABEL       ARM A       ARM B       ARM C
+1 SEX   Male  3 ( 60.0%)  2 ( 50.0%)  2 ( 50.0%)
+2 SEX Female  2 ( 40.0%)  2 ( 50.0%)  2 ( 50.0%)
+        ARM D        PVALUE
+1  1 ( 33.3%) 0.533 (0.912)
+2  2 ( 66.7%)          <NA>
+
+=========================================================================
+Create frequency counts for RACE
+=========================================================================
+
+Get race frequency counts
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: RACE
+           by: ARM
+           view: TRUE
+           output: 1 datasets
+
+     BY  VAR   CAT CNT       PCT
+1 ARM A RACE BLACK   1  20.00000
+2 ARM A RACE WHITE   4  80.00000
+3 ARM B RACE BLACK   0   0.00000
+4 ARM B RACE WHITE   4 100.00000
+5 ARM C RACE BLACK   1  25.00000
+6 ARM C RACE WHITE   3  75.00000
+7 ARM D RACE BLACK   1  33.33333
+8 ARM D RACE WHITE   2  66.66667
+
+Combine counts and percents.
+
+datastep: columns decreased from 5 to 4
+
+     BY  VAR LABEL      CNTPCT
+1 ARM A RACE BLACK  1 ( 20.0%)
+2 ARM A RACE WHITE  4 ( 80.0%)
+3 ARM B RACE BLACK  0 (  0.0%)
+4 ARM B RACE WHITE  4 (100.0%)
+5 ARM C RACE BLACK  1 ( 25.0%)
+6 ARM C RACE WHITE  3 ( 75.0%)
+7 ARM D RACE BLACK  1 ( 33.3%)
+8 ARM D RACE WHITE  2 ( 66.7%)
+
+Transpose ARMs into columns
+
+proc_transpose: input data set 8 rows and 4 columns
+                by: LABEL
+                var: CNTPCT
+                id: BY
+                copy: VAR
+                name: NAME
+                output dataset 2 rows and 7 columns
+
+   VAR LABEL   NAME       ARM A       ARM B
+1 RACE BLACK CNTPCT  1 ( 20.0%)  0 (  0.0%)
+2 RACE WHITE CNTPCT  4 ( 80.0%)  4 (100.0%)
+        ARM C       ARM D
+1  1 ( 25.0%)  1 ( 33.3%)
+2  3 ( 75.0%)  2 ( 66.7%)
+
+Clean up
+
+datastep: columns decreased from 7 to 6
+
+   VAR                     LABEL       ARM A
+1 RACE Black or African American  1 ( 20.0%)
+2 RACE                     White  4 ( 80.0%)
+        ARM B       ARM C       ARM D
+1  0 (  0.0%)  1 ( 25.0%)  1 ( 33.3%)
+2  4 (100.0%)  3 ( 75.0%)  2 ( 66.7%)
+
+Sort by label
+
+proc_sort: input data set 2 rows and 6 columns
+           by: LABEL
+           keep: VAR LABEL ARM A ARM B ARM C ARM D
+           order: a
+           output data set 2 rows and 6 columns
+
+   VAR                     LABEL       ARM A
+2 RACE                     White  4 ( 80.0%)
+1 RACE Black or African American  1 ( 20.0%)
+        ARM B       ARM C       ARM D
+2  4 (100.0%)  3 ( 75.0%)  2 ( 66.7%)
+1  0 (  0.0%)  1 ( 25.0%)  1 ( 33.3%)
+
+Get race chisq
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: RACE * ARM
+           view: TRUE
+           output: 1 datasets
+
+     CHISQ CHISQ.DF   CHISQ.P
+1 1.449573        3 0.6939569
+
+Combine chisq statistics
+
+datastep: columns decreased from 3 to 1
+
+         PVALUE
+1 1.450 (0.694)
+
+Append chisq
+
+datastep: columns increased from 6 to 7
+
+   VAR                     LABEL       ARM A
+1 RACE                     White  4 ( 80.0%)
+2 RACE Black or African American  1 ( 20.0%)
+        ARM B       ARM C       ARM D
+1  4 (100.0%)  3 ( 75.0%)  2 ( 66.7%)
+2  0 (  0.0%)  1 ( 25.0%)  1 ( 33.3%)
+         PVALUE
+1 1.450 (0.694)
+2          <NA>
+
+=========================================================================
+Create frequency counts for Age Group
+=========================================================================
+
+Get age group frequency counts
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: AGECAT
+           by: ARM
+           view: TRUE
+           output: 1 datasets
+
+      BY    VAR      CAT CNT      PCT
+1  ARM A AGECAT 18 to 29   1 20.00000
+2  ARM A AGECAT 30 to 39   3 60.00000
+3  ARM A AGECAT 40 to 49   1 20.00000
+4  ARM B AGECAT 18 to 29   1 25.00000
+5  ARM B AGECAT 30 to 39   3 75.00000
+6  ARM B AGECAT 40 to 49   0  0.00000
+7  ARM C AGECAT 18 to 29   1 25.00000
+8  ARM C AGECAT 30 to 39   3 75.00000
+9  ARM C AGECAT 40 to 49   0  0.00000
+10 ARM D AGECAT 18 to 29   1 33.33333
+11 ARM D AGECAT 30 to 39   2 66.66667
+12 ARM D AGECAT 40 to 49   0  0.00000
+
+Combine counts and percents and assign age group factor for sorting
+
+datastep: columns decreased from 5 to 4
+
+      VAR    LABEL    BY      CNTPCT
+1  AGECAT 18 to 29 ARM A  1 ( 20.0%)
+2  AGECAT 30 to 39 ARM A  3 ( 60.0%)
+3  AGECAT 40 to 49 ARM A  1 ( 20.0%)
+4  AGECAT 18 to 29 ARM B  1 ( 25.0%)
+5  AGECAT 30 to 39 ARM B  3 ( 75.0%)
+6  AGECAT 40 to 49 ARM B  0 (  0.0%)
+7  AGECAT 18 to 29 ARM C  1 ( 25.0%)
+8  AGECAT 30 to 39 ARM C  3 ( 75.0%)
+9  AGECAT 40 to 49 ARM C  0 (  0.0%)
+10 AGECAT 18 to 29 ARM D  1 ( 33.3%)
+11 AGECAT 30 to 39 ARM D  2 ( 66.7%)
+12 AGECAT 40 to 49 ARM D  0 (  0.0%)
+
+Sort by age group factor
+
+proc_sort: input data set 12 rows and 4 columns
+           by: BY LABEL
+           keep: VAR LABEL BY CNTPCT
+           order: a a
+           output data set 12 rows and 4 columns
+
+      VAR    LABEL    BY      CNTPCT
+1  AGECAT 18 to 29 ARM A  1 ( 20.0%)
+2  AGECAT 30 to 39 ARM A  3 ( 60.0%)
+3  AGECAT 40 to 49 ARM A  1 ( 20.0%)
+4  AGECAT 18 to 29 ARM B  1 ( 25.0%)
+5  AGECAT 30 to 39 ARM B  3 ( 75.0%)
+6  AGECAT 40 to 49 ARM B  0 (  0.0%)
+7  AGECAT 18 to 29 ARM C  1 ( 25.0%)
+8  AGECAT 30 to 39 ARM C  3 ( 75.0%)
+9  AGECAT 40 to 49 ARM C  0 (  0.0%)
+10 AGECAT 18 to 29 ARM D  1 ( 33.3%)
+11 AGECAT 30 to 39 ARM D  2 ( 66.7%)
+12 AGECAT 40 to 49 ARM D  0 (  0.0%)
+
+Tranpose age group block
+
+proc_transpose: input data set 12 rows and 4 columns
+                by: LABEL
+                var: CNTPCT
+                id: BY
+                copy: VAR
+                name: NAME
+                output dataset 3 rows and 7 columns
+
+     VAR    LABEL   NAME       ARM A       ARM B
+1 AGECAT 18 to 29 CNTPCT  1 ( 20.0%)  1 ( 25.0%)
+2 AGECAT 30 to 39 CNTPCT  3 ( 60.0%)  3 ( 75.0%)
+3 AGECAT 40 to 49 CNTPCT  1 ( 20.0%)  0 (  0.0%)
+        ARM C       ARM D
+1  1 ( 25.0%)  1 ( 33.3%)
+2  3 ( 75.0%)  2 ( 66.7%)
+3  0 (  0.0%)  0 (  0.0%)
+
+Some clean up
+
+datastep: columns decreased from 7 to 6
+
+     VAR    LABEL       ARM A       ARM B
+1 AGECAT 18 to 29  1 ( 20.0%)  1 ( 25.0%)
+2 AGECAT 30 to 39  3 ( 60.0%)  3 ( 75.0%)
+3 AGECAT 40 to 49  1 ( 20.0%)  0 (  0.0%)
+        ARM C       ARM D
+1  1 ( 25.0%)  1 ( 33.3%)
+2  3 ( 75.0%)  2 ( 66.7%)
+3  0 (  0.0%)  0 (  0.0%)
+
+Get ageg chisq
+
+proc_freq: input data set 16 rows and 6 columns
+           tables: AGECAT * ARM
+           view: TRUE
+           output: 1 datasets
+
+     CHISQ CHISQ.DF   CHISQ.P
+1 2.436364        6 0.8755205
+
+Combine chisq statistics
+
+datastep: columns decreased from 3 to 1
+
+         PVALUE
+1 2.436 (0.876)
+
+Append chisq
+
+datastep: columns increased from 6 to 7
+
+     VAR    LABEL       ARM A       ARM B
+1 AGECAT 18 to 29  1 ( 20.0%)  1 ( 25.0%)
+2 AGECAT 30 to 39  3 ( 60.0%)  3 ( 75.0%)
+3 AGECAT 40 to 49  1 ( 20.0%)  0 (  0.0%)
+        ARM C       ARM D        PVALUE
+1  1 ( 25.0%)  1 ( 33.3%) 2.436 (0.876)
+2  3 ( 75.0%)  2 ( 66.7%)          <NA>
+3  0 (  0.0%)  0 (  0.0%)          <NA>
+
+Combine blocks into final data frame
+
+datastep: columns started with 7 and ended with 7
+
+      VAR                     LABEL       ARM A
+1     AGE                         N           5
+2     AGE                 Mean (SD) 34.4 (8.71)
+3     AGE                    Median        37.0
+4     AGE                   Q1 - Q3 37.0 - 39.0
+5     AGE                 Min - Max     19 - 40
+6  AGECAT                  18 to 29  1 ( 20.0%)
+7  AGECAT                  30 to 39  3 ( 60.0%)
+8  AGECAT                  40 to 49  1 ( 20.0%)
+9     SEX                      Male  3 ( 60.0%)
+10    SEX                    Female  2 ( 40.0%)
+11   RACE                     White  4 ( 80.0%)
+12   RACE Black or African American  1 ( 20.0%)
+         ARM B       ARM C       ARM D
+1            4           4           3
+2  30.0 (6.16) 32.0 (6.16) 32.0 (5.29)
+3         32.5        34.5        30.0
+4  26.0 - 34.0 28.0 - 36.0 28.0 - 38.0
+5      21 - 34     23 - 36     28 - 38
+6   1 ( 25.0%)  1 ( 25.0%)  1 ( 33.3%)
+7   3 ( 75.0%)  3 ( 75.0%)  2 ( 66.7%)
+8   0 (  0.0%)  0 (  0.0%)  0 (  0.0%)
+9   2 ( 50.0%)  2 ( 50.0%)  1 ( 33.3%)
+10  2 ( 50.0%)  2 ( 50.0%)  2 ( 66.7%)
+11  4 (100.0%)  3 ( 75.0%)  2 ( 66.7%)
+12  0 (  0.0%)  1 ( 25.0%)  1 ( 33.3%)
+          PVALUE
+1  0.298 (0.826)
+2           <NA>
+3           <NA>
+4           <NA>
+5           <NA>
+6  2.436 (0.876)
+7           <NA>
+8           <NA>
+9  0.533 (0.912)
+10          <NA>
+11 1.450 (0.694)
+12          <NA>
+
+=========================================================================
+Create and print report
+=========================================================================
+
+Write out the report
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpKC93lu/output/example2.rtf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpEBPgPu/example2.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
 - margins: top 1 bottom 1 left 1 right 1
-- line size/count: 107/41
+- line size/count: 9/36
 - page_header: left=Sponsor: Company right=Study: ABC
+- page_footer: left=Date Produced: 2023-09-05 center= right=Page [pg] of [tpg]
+- content: 
+# A table specification:
+- data: data.frame 'final' 12 rows 7 cols
+- show_cols: all
+- use_attributes: all
 - title 1: 'Table 1.0'
 - title 2: 'Analysis of Demographic Characteristics'
 - title 3: 'Safety Population'
 - footnote 1: 'Program: DM_Table.R'
 - footnote 2: 'NOTE: Denominator based on number of non-missing responses.'
-- page_footer: left=Date Produced: 27Jun21 14:35 center= right=Page [pg] of [tpg]
-- content: 
-# A table specification:
-- data: tibble 'final' 11 rows 6 cols
-- show_cols: all
-- use_attributes: all
-- stub: var label 'Variable' width=2.5 align='left' 
-- define: var 'Variable' dedupe='TRUE' 
-- define: label 'Demographic Category' 
-- define: ARM A 
-- define: ARM B 
-- define: ARM C 
-- define: ARM D 
+- footnote 3: '¹Pearson's Chi-Square tests will be used for Categorical variables and ANOVA tests for continuous variables.'
+- stub: VAR LABEL 'Variable' width=2.5 align='left' 
+- define: VAR 'Variable' dedupe='TRUE' 
+- define: LABEL 'Demographic Category' 
+- define: ARM A 'Placebo' 
+- define: ARM B 'Drug 50mg' 
+- define: ARM C 'Drug 100mg' 
+- define: ARM D 'Competitor' 
+- define: PVALUE 'Tests of Association¹
+ Value (P-Value)' width=2 align='center' dedupe='TRUE' 
 
-lib_sync: synchronized data in library 'sdtm' 
+=========================================================================
+Clean Up
+=========================================================================
 
-lib_unload: library 'sdtm' unloaded 
+Close log
 
-========================================================================= 
-Log End Time: 2021-06-27 14:35:48 
-Log Elapsed Time: 0 00:00:00 
-========================================================================= 
+=========================================================================
+Log End Time: 2023-09-05 22:11:56.276799
+Log Elapsed Time: 0 00:00:00
+=========================================================================
+
 
 ```
 

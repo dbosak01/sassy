@@ -27,7 +27,7 @@ on the links below to navigate to the full question and answer content.
 * [Does the sassy system require SAS® to be installed?](#sas)
 * [Do I need a background in SAS® to use the sassy system?](#background)
 * [Can't I just install everything individually?](#packages)
-
+* [Is the **sassy** system validated?](#validation)
 
 ## Content
 
@@ -36,13 +36,14 @@ on the links below to navigate to the full question and answer content.
 **Q:** I don't quite understand the concept of the **sassy** system. 
 What is this set of packages?
 
-**A:** The **sassy** package is a meta-package that contains five 
+**A:** The **sassy** package is a meta-package that contains six 
 sub-packages: [**logr**](https://logr.r-sassy.org/), 
 [**fmtr**](https://fmtr.r-sassy.org/), 
 [**libr**](https://libr.r-sassy.org/), 
-[**reporter**](https://reporter.r-sassy.org/), and
-[**common**](https://common.r-sassy.org/). . 
-These five 
+[**reporter**](https://reporter.r-sassy.org/), 
+[**common**](https://common.r-sassy.org/), and 
+[**procs**](https://procs.r-sassy.org/). 
+These six  
 packages work together as an integrated system.  The system 
 was written primarily to make regulatory reporting in R easier.  The system
 borrows several concepts from SAS® software, and that is why it is called
@@ -117,6 +118,23 @@ in the same way that the **tidyverse** meta-package makes it more convenient
 to use the packages in that system.
 
 [top](#top)
+
+******
+
+### Is the **sassy** system validated? {#validation}
+
+**Q:** My company requires that all software be validated before using in 
+production. Are the **sassy** packages validated?
+
+**A:** Yes.  The statistical functions were validated by comparing to SAS®. 
+The validation
+documentation is [here](https://r-sassy.org/validation/Procs_Validation.pdf).
+In addition, there are Installation Qualification (IQ) and 
+Operational Qualification (OQ) routines included in the **sassy** package
+for all sub-packages. See the `run_iq()` and `run_oq()` documentation
+for additional information on these routines.
+
+[top](#top) 
 
 ******
 

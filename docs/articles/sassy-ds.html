@@ -140,78 +140,80 @@
     
     
 <p>This example produces a subject disposition table. The report
-features extensive data preparation using the <strong>dplyr</strong>
+features extensive data preparation using the <strong>procs</strong>
 package. The example also shows how to create a stub column with summary
 rows.</p>
 <div class="section level2">
 <h2 id="program">Program<a class="anchor" aria-label="anchor" href="#program"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>        <span class="st">"logr.on"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>        <span class="st">"procs.print"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Get path to temp directory</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span> </span>
-<span></span>
-<span><span class="co"># Get sample data directory</span></span>
-<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span><span class="co"># Get temp directory</span></span>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example10.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lf</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example10.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get data</span></span>
+<span><span class="va">dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
+<span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Load and Prepare Data ---------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define data library</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Define data library"</span><span class="op">)</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Loads data into workspace</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Loads data into workspace"</span><span class="op">)</span></span>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Prepare data</span></span>
-<span><span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare DM data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span><span class="op">)</span>, </span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm_mod</span></span>
 <span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare DS data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DS</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">DSTERM</span>, <span class="va">DSDECOD</span>, <span class="va">DSCAT</span><span class="op">)</span>, </span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">DSCAT</span> <span class="op">!=</span> <span class="st">"PROTOCOL MILESTONE"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ds_mod</span></span>
 <span></span>
-<span><span class="va">ds_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DS</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">DSTERM</span>, <span class="va">DSDECOD</span>, <span class="va">DSCAT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">DSCAT</span> <span class="op">!=</span> <span class="st">"PROTOCOL MILESTONE"</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Join DM with DS to get ARMs on DS"</span><span class="op">)</span> </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">dm_mod</span>, merge <span class="op">=</span> <span class="va">ds_mod</span>, merge_by <span class="op">=</span> <span class="va">USUBJID</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dmds</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Join DS to DM"</span><span class="op">)</span></span>
-<span><span class="va">dmds</span> <span class="op">&lt;-</span> <span class="fu">inner_join</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ds_mod</span><span class="op">)</span> </span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Change ARM to factor to assist with sparse data"</span><span class="op">)</span></span>
+<span><span class="va">dmds</span><span class="op">$</span><span class="va">ARM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dmds</span><span class="op">$</span><span class="va">ARM</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARM A"</span>, <span class="st">"ARM B"</span>, <span class="st">"ARM C"</span>, <span class="st">"ARM D"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span></span>
-<span><span class="va">arm_pop</span> <span class="op">&lt;-</span> <span class="fu">count</span><span class="op">(</span><span class="va">dm_mod</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">deframe</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, output <span class="op">=</span> <span class="va">long</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
 <span></span>
 <span><span class="co"># Prepare formats ---------------------------------------------------------</span></span>
 <span></span>
 <span><span class="co"># Completed Study</span></span>
 <span><span class="va">complete_fmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS"</span>,</span>
-<span>                                <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                                <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS"</span>,</span>
-<span>                                <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                                <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Subject Non-compliance</span></span>
 <span><span class="va">noncomp_fmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span>,</span>
-<span>                               <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                               <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Early Termination</span></span>
 <span><span class="va">term_fmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"LACK OF EFFICACY"</span>,</span>
-<span>                            <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"LACK OF EFFICACY"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                  <span class="fu">condition</span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">x</span>, <span class="st">"LOST"</span><span class="op">)</span>,</span>
-<span>                            <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"LOST TO FOLLOW UP"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                  <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fu">str_to_title</span><span class="op">(</span><span class="st">"LACK OF EFFICACY"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                            <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"LACK OF EFFICACY"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                  <span class="fu">condition</span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html" class="external-link">str_detect</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"LOST"</span><span class="op">)</span>,</span>
+<span>                            <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"LOST TO FOLLOW UP"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                  <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="st">"LACK OF EFFICACY"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Group labels</span></span>
 <span><span class="va">group_fmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"COMPLETED"</span>, <span class="st">"Subjects who Completed Study"</span><span class="op">)</span>,</span>
@@ -221,86 +223,101 @@ rows.</p>
 <span></span>
 <span><span class="co"># Disposition Groups ------------------------------------------------------</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get group counts"</span><span class="op">)</span></span>
-<span><span class="va">grps</span> <span class="op">&lt;-</span> <span class="va">dmds</span> <span class="op">|&gt;</span> <span class="fu">select</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">DSDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">DSDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">n</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span>, <span class="st">"NONCOMPLIANCE"</span>, <span class="va">DSDECOD</span><span class="op">)</span>,</span>
-<span>            cat <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>            catseq <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create vector of final dataframe columns"</span><span class="op">)</span></span>
+<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span>, <span class="va">catseq</span>, <span class="va">`ARM A`</span>, <span class="va">`ARM B`</span>, <span class="va">`ARM C`</span>, <span class="va">`ARM D`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get group counts"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dmds</span>, tables <span class="op">=</span> <span class="va">DSDECOD</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT</span>, <span class="va">CNTPCT</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>     </span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="va">CAT</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>    </span>
+<span>    <span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">CAT</span> <span class="op">==</span> <span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span>, <span class="st">"NONCOMPLIANCE"</span>, <span class="va">CAT</span><span class="op">)</span></span>
+<span>    <span class="va">cat</span> <span class="op">=</span> <span class="cn">NA</span></span>
+<span>    <span class="va">catseq</span> <span class="op">=</span> <span class="fl">1</span></span>
+<span>    </span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">grps</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Disposition Subgroups ----------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pull out subjects who completed study."</span><span class="op">)</span></span>
-<span><span class="va">cmplt</span> <span class="op">&lt;-</span> <span class="va">dmds</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"COMPLETED"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>TERMDECOD <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">complete_fmt</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">DSDECOD</span>, <span class="va">TERMDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">n</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>group <span class="op">=</span> <span class="st">"COMPLETED"</span>,</span>
-<span>            cat <span class="op">=</span> <span class="va">TERMDECOD</span>,</span>
-<span>            catseq <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">dmds</span>, where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"COMPLETED"</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">complete_fmt</span><span class="op">)</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>    </span>
+<span>      <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>    </span>
+<span>    <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="va">group</span> <span class="op">=</span> <span class="va">CAT1</span></span>
+<span>      <span class="va">cat</span> <span class="op">=</span> <span class="va">CAT2</span></span>
+<span>      <span class="va">catseq</span> <span class="op">=</span> <span class="fl">2</span></span>
+<span>    <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">cmplt</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pull out subjects who were non-compliant"</span><span class="op">)</span></span>
-<span><span class="va">noncompl1</span> <span class="op">&lt;-</span> <span class="va">dmds</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>TERMDECOD <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">noncomp_fmt</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">DSDECOD</span>, <span class="va">TERMDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">n</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">dmds</span>, where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"NON-COMPLIANCE WITH STUDY DRUG"</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">noncomp_fmt</span><span class="op">)</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>           <span class="op">{</span></span>
+<span>             </span>
+<span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>             </span>
+<span>           <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
+<span>           <span class="op">{</span></span>
+<span>             <span class="va">group</span> <span class="op">=</span> <span class="st">"NONCOMPLIANCE"</span></span>
+<span>             <span class="va">cat</span> <span class="op">=</span> <span class="va">CAT2</span></span>
+<span>             <span class="va">catseq</span> <span class="op">=</span> <span class="fl">2</span></span>
+<span>           <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">noncompl</span></span>
 <span></span>
-<span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">noncompl1</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">noncompl2</span> <span class="op">&lt;-</span> <span class="va">noncompl1</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>group <span class="op">=</span> <span class="st">"NONCOMPLIANCE"</span>,</span>
-<span>            cat <span class="op">=</span> <span class="va">TERMDECOD</span>,</span>
-<span>            catseq <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>            `ARM A` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="st">"ARM A"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nms</span>, <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"0 (  0.0%)"</span><span class="op">)</span>,</span>
-<span>            `ARM B` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="st">"ARM B"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nms</span>, <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"0 (  0.0%)"</span><span class="op">)</span>,</span>
-<span>            `ARM C` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="st">"ARM C"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nms</span>, <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"0 (  0.0%)"</span><span class="op">)</span>,</span>
-<span>            `ARM D` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="st">"ARM D"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">nms</span>, <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span>, <span class="st">"0 (  0.0%)"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pull out subjects who terminated early"</span><span class="op">)</span></span>
-<span><span class="va">earlyterm</span> <span class="op">&lt;-</span> <span class="va">dmds</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"OTHER"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>TERMDECOD <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">term_fmt</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">DSDECOD</span>, <span class="va">TERMDECOD</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">ARM</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">n</span>,</span>
-<span>              values_fill <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">transmute</span><span class="op">(</span>group <span class="op">=</span> <span class="st">"OTHER"</span>,</span>
-<span>            cat <span class="op">=</span> <span class="va">TERMDECOD</span>,</span>
-<span>            catseq <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>            `ARM A` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM A`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM A"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM B` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM B`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM C` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM C`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span>,</span>
-<span>            `ARM D` <span class="op">=</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">`ARM D`</span>, <span class="va">arm_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">dmds</span>, where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">==</span> <span class="st">"OTHER"</span><span class="op">)</span>,</span>
+<span>         <span class="op">{</span></span>
+<span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">term_fmt</span><span class="op">)</span></span>
+<span>           </span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>           <span class="op">{</span></span>
+<span>             </span>
+<span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>             </span>
+<span>           <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
+<span>           <span class="op">{</span></span>
+<span>             <span class="va">group</span> <span class="op">=</span> <span class="st">"OTHER"</span></span>
+<span>             <span class="va">cat</span> <span class="op">=</span> <span class="va">CAT2</span></span>
+<span>             <span class="va">catseq</span> <span class="op">=</span> <span class="fl">2</span></span>
+<span>           <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">earlyterm</span></span>
+<span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine blocks into final data frame"</span><span class="op">)</span></span>
-<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">grps</span>, <span class="va">cmplt</span>, <span class="va">noncompl2</span>, <span class="va">earlyterm</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">group</span>, <span class="va">catseq</span>, <span class="va">cat</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">mutate</span><span class="op">(</span>lblind <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cat</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">grps</span>, set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">cmplt</span>, <span class="va">noncompl</span>, <span class="va">earlyterm</span><span class="op">)</span>, </span>
+<span>    <span class="op">{</span></span>
+<span>      <span class="va">lblind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cat</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span>by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">catseq</span>, <span class="va">cat</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">final</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Report ------------------------------------------------------------------</span></span>
@@ -312,7 +329,7 @@ rows.</p>
 <span>                    borders <span class="op">=</span> <span class="st">"all"</span>, width <span class="op">=</span> <span class="fl">8.5</span>, header_bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A`</span>, to <span class="op">=</span> <span class="va">`ARM D`</span>, </span>
 <span>                  align <span class="op">=</span> <span class="st">"center"</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span><span class="op">)</span>, <span class="st">"Completion Status"</span>, </span>
+<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span><span class="op">)</span>, <span class="st">"Completion Status"</span>, </span>
 <span>       style <span class="op">=</span> <span class="fu">cell_style</span><span class="op">(</span>bold <span class="op">=</span> <span class="cn">TRUE</span>, indicator <span class="op">=</span> <span class="st">"lblind"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">group</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         format <span class="op">=</span> <span class="va">group_fmt</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -327,8 +344,8 @@ rows.</p>
 <span>         <span class="st">"Safety Population"</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, font_size <span class="op">=</span> <span class="fl">11</span>,</span>
 <span>         borders <span class="op">=</span> <span class="st">"outside"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DS_Table.R"</span>,</span>
-<span>          <span class="st">"NOTE: Denominator based on number of non-missing responses."</span>,</span>
-<span>          borders <span class="op">=</span> <span class="st">"outside"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> </span>
+<span>            <span class="st">"NOTE: Denominator based on number of non-missing responses."</span>,</span>
+<span>            borders <span class="op">=</span> <span class="st">"outside"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example10.pdf"</span><span class="op">)</span></span>
 <span></span>
@@ -350,7 +367,7 @@ rows.</p>
 <span></span>
 <span><span class="co"># Uncomment to view files</span></span>
 <span><span class="co"># file.show(pth)</span></span>
-<span><span class="co"># file.show(lgpth)</span></span></code></pre></div>
+<span><span class="co"># file.show(lf)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
@@ -363,44 +380,53 @@ rows.</p>
 </h2>
 <p>Here is the log:</p>
 <pre><code>=========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpeYEHwE/log/example10.log
-Program Path: C:/packages/Testing/Disposition.R
-Working Directory: C:/packages/Testing
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpEBPgPu/log/example10.log
+Program Path: C:/packages/Testing/procs/ProcsDisposition.R
+Working Directory: C:/packages/Testing/procs
 User Name: dbosa
-R Version: 4.2.1 (2022-06-23 ucrt)
+R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
-Operating System: Windows 10 x64 build 19044
+Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 reporter_1.3.7 libr_1.2.6 fmtr_1.5.9 logr_1.3.3
-sassy_1.0.8 forcats_0.5.2 stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4 readr_2.1.2
-tidyr_1.2.0 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.1 cranlogs_2.1.1
-common_1.0.5
-Log Start Time: 2022-10-09 20:51:10
+Packages: tidylog_1.0.2 stringr_1.5.0 procs_1.0.3 reporter_1.4.1 libr_1.2.8
+fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-05 22:06:05.090672
 =========================================================================
 
 =========================================================================
 Prepare Data
 =========================================================================
 
-# library 'sdtm': 8 items
+Define data library
+
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
-  Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.5 Kb 2022-09-05 10:57:47
-2   DA       csv 3587   18 528.2 Kb 2022-09-05 10:57:47
-3   DM       csv   87   24  45.5 Kb 2022-09-05 10:57:47
-4   DS       csv  174    9  34.1 Kb 2022-09-05 10:57:47
-5   EX       csv   84   11  26.4 Kb 2022-09-05 10:57:47
-6   IE       csv    2   14  13.4 Kb 2022-09-05 10:57:47
-7   SV       csv  685   10  70.3 Kb 2022-09-05 10:57:47
-8   VS       csv 3358   17 467.4 Kb 2022-09-05 10:57:47
+  Name Extension Rows Cols     Size
+1   AE       csv  150   27  88.5 Kb
+2   DM       csv   87   24  45.5 Kb
+3   DS       csv  174    9  34.1 Kb
+4   EX       csv   84   11  26.4 Kb
+5   IE       csv    2   14  13.4 Kb
+6   SV       csv  685   10  70.3 Kb
+7   VS       csv 3358   17 467.4 Kb
+         LastModified
+1 2023-08-07 17:51:40
+2 2023-08-07 17:51:40
+3 2023-08-07 17:51:40
+4 2023-08-07 17:51:40
+5 2023-08-07 17:51:40
+6 2023-08-07 17:51:40
+7 2023-08-07 17:51:40
+
+Loads data into workspace
 
 lib_load: library 'sdtm' loaded
 
-select: dropped 22 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+Prepare DM data
 
-filter: removed 2 rows (2%), 85 rows remaining
+datastep: columns decreased from 24 to 2
 
 # A tibble: 85 × 2
    USUBJID    ARM  
@@ -415,220 +441,423 @@ filter: removed 2 rows (2%), 85 rows remaining
  8 ABC-01-056 ARM A
  9 ABC-01-113 ARM D
 10 ABC-01-114 ARM B
-# … with 75 more rows
+# ℹ 75 more rows
 # ℹ Use `print(n = ...)` to see more rows
 
-select: dropped 5 variables (STUDYID, DOMAIN, DSSEQ, DSSTDTC, DSSTDY)
+Prepare DS data
 
-filter: removed 87 rows (50%), 87 rows remaining
+datastep: columns decreased from 9 to 4
 
-Join DS to DM
+# A tibble: 87 × 4
+   USUBJID    DSTERM                  DSDECOD DSCAT
+   &lt;chr&gt;      &lt;chr&gt;                   &lt;chr&gt;   &lt;chr&gt;
+ 1 ABC-01-049 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 2 ABC-01-050 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 3 ABC-01-051 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 4 ABC-01-052 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 5 ABC-01-053 NON-COMPLIANCE WITH ST… NON-CO… DISP…
+ 6 ABC-01-054 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 7 ABC-01-055 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 8 ABC-01-056 SUBJECT COMPLETED ALL … COMPLE… DISP…
+ 9 ABC-01-113 SUBJECT COMPLETED ALL … COMPLE… DISP…
+10 ABC-01-114 SUBJECT COMPLETED ALL … COMPLE… DISP…
+# ℹ 77 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-inner_join: added 3 columns (DSTERM, DSDECOD, DSCAT)
+Join DM with DS to get ARMs on DS
 
-            &gt; rows only in x  ( 0)
+datastep: columns increased from 2 to 5
 
-            &gt; rows only in y  ( 2)
+# A tibble: 87 × 5
+   USUBJID    ARM   DSTERM            DSDECOD DSCAT
+   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;
+ 1 ABC-01-049 ARM D SUBJECT COMPLETE… COMPLE… DISP…
+ 2 ABC-01-050 ARM B SUBJECT COMPLETE… COMPLE… DISP…
+ 3 ABC-01-051 ARM A SUBJECT COMPLETE… COMPLE… DISP…
+ 4 ABC-01-052 ARM C SUBJECT COMPLETE… COMPLE… DISP…
+ 5 ABC-01-053 ARM B NON-COMPLIANCE W… NON-CO… DISP…
+ 6 ABC-01-054 ARM D SUBJECT COMPLETE… COMPLE… DISP…
+ 7 ABC-01-055 ARM C SUBJECT COMPLETE… COMPLE… DISP…
+ 8 ABC-01-056 ARM A SUBJECT COMPLETE… COMPLE… DISP…
+ 9 ABC-01-113 ARM D SUBJECT COMPLETE… COMPLE… DISP…
+10 ABC-01-114 ARM B SUBJECT COMPLETE… COMPLE… DISP…
+# ℹ 77 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-            &gt; matched rows     85
-
-            &gt;                 ====
-
-            &gt; rows total       85
+Change ARM to factor to assist with sparse data
 
 Get ARM population counts
 
-count: now 4 rows and 2 columns, ungrouped
+proc_freq: input data set 85 rows and 2 columns
+           tables: ARM
+           output: long
+           view: TRUE
+           output: 1 datasets
 
-ARM A ARM B ARM C ARM D 
-   20    21    21    23 
+# A tibble: 1 × 6
+  VAR   STAT  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 ARM   CNT        20      21      21      23
 
 # A user-defined format: 2 conditions
-  Name Type                                                             Expression
-1  obj    U          x == "SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS"
-2  obj    U x == "SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS"
-                                                            Label Order
-1          Subject Completed All Visits And Protocol Requirements    NA
-2 Subject Completed All Visits But With Major Protocol Violations    NA
+  Name Type
+1  obj    U
+2  obj    U
+                                                              Expression
+1          x == "SUBJECT COMPLETED ALL VISITS AND PROTOCOL REQUIREMENTS"
+2 x == "SUBJECT COMPLETED ALL VISITS BUT WITH MAJOR PROTOCOL VIOLATIONS"
+                                                            Label
+1          Subject Completed All Visits And Protocol Requirements
+2 Subject Completed All Visits But With Major Protocol Violations
+  Order
+1    NA
+2    NA
 
 # A user-defined format: 1 conditions
-  Name Type                            Expression                          Label Order
-1  obj    U x == "NON-COMPLIANCE WITH STUDY DRUG" Non-Compliance With Study Drug    NA
+  Name Type                            Expression
+1  obj    U x == "NON-COMPLIANCE WITH STUDY DRUG"
+                           Label Order
+1 Non-Compliance With Study Drug    NA
 
 # A user-defined format: 3 conditions
-  Name Type              Expression             Label Order
-1  obj    U x == "LACK OF EFFICACY"  Lack Of Efficacy    NA
-2  obj    U   str_detect(x, "LOST") Lost To Follow Up    NA
-3  obj    U                    TRUE  Lack Of Efficacy    NA
+  Name Type              Expression
+1  obj    U x == "LACK OF EFFICACY"
+2  obj    U   str_detect(x, "LOST")
+3  obj    U                    TRUE
+              Label Order
+1  Lack Of Efficacy    NA
+2 Lost To Follow Up    NA
+3  Lack Of Efficacy    NA
 
 # A user-defined format: 3 conditions
-  Name Type           Expression                                     Label Order
-1  obj    U     x == "COMPLETED"              Subjects who Completed Study    NA
-2  obj    U x == "NONCOMPLIANCE" Subjects terminated due to non-compliance    NA
-3  obj    U         x == "OTHER"             Subjects who terminated early    NA
+  Name Type           Expression
+1  obj    U     x == "COMPLETED"
+2  obj    U x == "NONCOMPLIANCE"
+3  obj    U         x == "OTHER"
+                                      Label Order
+1              Subjects who Completed Study    NA
+2 Subjects terminated due to non-compliance    NA
+3             Subjects who terminated early    NA
+
+Create vector of final dataframe columns
+
+group
+cat
+catseq
+ARM A
+ARM B
+ARM C
+ARM D
 
 Get group counts
 
-select: dropped 3 variables (USUBJID, DSTERM, DSCAT)
+proc_freq: input data set 87 rows and 5 columns
+           tables: DSDECOD
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-group_by: 2 grouping variables (ARM, DSDECOD)
+# A tibble: 12 × 6
+   BY    VAR     CAT                  N   CNT   PCT
+   &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 ARM A DSDECOD COMPLETED           20    19 95   
+ 2 ARM A DSDECOD NON-COMPLIANCE …    20     0  0   
+ 3 ARM A DSDECOD OTHER               20     1  5   
+ 4 ARM B DSDECOD COMPLETED           21    17 81.0 
+ 5 ARM B DSDECOD NON-COMPLIANCE …    21     1  4.76
+ 6 ARM B DSDECOD OTHER               21     3 14.3 
+ 7 ARM C DSDECOD COMPLETED           21    16 76.2 
+ 8 ARM C DSDECOD NON-COMPLIANCE …    21     0  0   
+ 9 ARM C DSDECOD OTHER               21     5 23.8 
+10 ARM D DSDECOD COMPLETED           23    20 87.0 
+11 ARM D DSDECOD NON-COMPLIANCE …    23     0  0   
+12 ARM D DSDECOD OTHER               23     3 13.0 
 
-summarize: now 9 rows and 3 columns, one group variable remaining (ARM)
+datastep: columns decreased from 6 to 3
 
-ungroup: no grouping variables
+# A tibble: 12 × 3
+   BY    CAT                            CNTPCT     
+   &lt;chr&gt; &lt;chr&gt;                          &lt;chr&gt;      
+ 1 ARM A COMPLETED                      19 ( 95.0%)
+ 2 ARM A NON-COMPLIANCE WITH STUDY DRUG 0 (  0.0%) 
+ 3 ARM A OTHER                          1 (  5.0%) 
+ 4 ARM B COMPLETED                      17 ( 81.0%)
+ 5 ARM B NON-COMPLIANCE WITH STUDY DRUG 1 (  4.8%) 
+ 6 ARM B OTHER                          3 ( 14.3%) 
+ 7 ARM C COMPLETED                      16 ( 76.2%)
+ 8 ARM C NON-COMPLIANCE WITH STUDY DRUG 0 (  0.0%) 
+ 9 ARM C OTHER                          5 ( 23.8%) 
+10 ARM D COMPLETED                      20 ( 87.0%)
+11 ARM D NON-COMPLIANCE WITH STUDY DRUG 0 (  0.0%) 
+12 ARM D OTHER                          3 ( 13.0%) 
 
-pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 9x3, now 3x5]
+proc_transpose: input data set 12 rows and 3 columns
+                by: CAT
+                var: CNTPCT
+                id: BY
+                name: NAME
+                output dataset 3 rows and 6 columns
 
-transmute: dropped one variable (DSDECOD)
+# A tibble: 3 × 6
+  CAT         NAME  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMPLETED   CNTP… 19 ( 9… 17 ( 8… 16 ( 7… 20 ( 8…
+2 NON-COMPLI… CNTP… 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+3 OTHER       CNTP… 1 (  5… 3 ( 14… 5 ( 23… 3 ( 13…
 
-           new variable 'group' (character) with 3 unique values and 0% NA
-
-           new variable 'cat' (logical) with one unique value and 100% NA
-
-           new variable 'catseq' (double) with one unique value and 0% NA
-
-           converted 'ARM A' from integer to character (0 new NA)
-
-           converted 'ARM B' from integer to character (0 new NA)
-
-           converted 'ARM C' from integer to character (0 new NA)
-
-           converted 'ARM D' from integer to character (0 new NA)
+datastep: columns increased from 6 to 7
 
 # A tibble: 3 × 7
-  group         cat   catseq `ARM A`     `ARM B`     `ARM C`     `ARM D`    
-  &lt;chr&gt;         &lt;lgl&gt;  &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;      
-1 COMPLETED     NA         1 19 ( 95.0%) 17 ( 81.0%) 16 ( 76.2%) 20 ( 87.0%)
-2 OTHER         NA         1 1 (  5.0%)  3 ( 14.3%)  5 ( 23.8%)  3 ( 13.0%) 
-3 NONCOMPLIANCE NA         1 0 (  0.0%)  1 (  4.8%)  0 (  0.0%)  0 (  0.0%) 
+  group        cat   catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt;        &lt;lgl&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMPLETED    NA         1 19 ( 9… 17 ( 8… 16 ( 7…
+2 NONCOMPLIAN… NA         1 0 (  0… 1 (  4… 0 (  0…
+3 OTHER        NA         1 1 (  5… 3 ( 14… 5 ( 23…
+# ℹ 1 more variable: `ARM D` &lt;chr&gt;
 
 Pull out subjects who completed study.
 
-filter: removed 13 rows (15%), 72 rows remaining
+datastep: columns increased from 5 to 6
 
-mutate: new variable 'TERMDECOD' (character) with 2 unique values and 0% NA
+# A tibble: 74 × 6
+   USUBJID    ARM   DSTERM  DSDECOD DSCAT TERMDECOD
+   &lt;chr&gt;      &lt;fct&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    
+ 1 ABC-01-049 ARM D SUBJEC… COMPLE… DISP… Subject …
+ 2 ABC-01-050 ARM B SUBJEC… COMPLE… DISP… Subject …
+ 3 ABC-01-051 ARM A SUBJEC… COMPLE… DISP… Subject …
+ 4 ABC-01-052 ARM C SUBJEC… COMPLE… DISP… Subject …
+ 5 ABC-01-054 ARM D SUBJEC… COMPLE… DISP… Subject …
+ 6 ABC-01-055 ARM C SUBJEC… COMPLE… DISP… Subject …
+ 7 ABC-01-056 ARM A SUBJEC… COMPLE… DISP… Subject …
+ 8 ABC-01-113 ARM D SUBJEC… COMPLE… DISP… Subject …
+ 9 ABC-01-114 ARM B SUBJEC… COMPLE… DISP… Subject …
+10 ABC-02-033 ARM C SUBJEC… COMPLE… DISP… Subject …
+# ℹ 64 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-group_by: 3 grouping variables (ARM, DSDECOD, TERMDECOD)
+proc_freq: input data set 74 rows and 6 columns
+           tables: DSDECOD * TERMDECOD
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-summarize: now 5 rows and 4 columns, 2 group variables remaining (ARM, DSDECOD)
+# A tibble: 8 × 8
+  BY    VAR1   VAR2  CAT1  CAT2      N   CNT    PCT
+  &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 ARM A DSDEC… TERM… COMP… Subj…    19    19 100   
+2 ARM A DSDEC… TERM… COMP… Subj…    19     0   0   
+3 ARM B DSDEC… TERM… COMP… Subj…    17    16  94.1 
+4 ARM B DSDEC… TERM… COMP… Subj…    17     1   5.88
+5 ARM C DSDEC… TERM… COMP… Subj…    16    16 100   
+6 ARM C DSDEC… TERM… COMP… Subj…    16     0   0   
+7 ARM D DSDEC… TERM… COMP… Subj…    20    20 100   
+8 ARM D DSDEC… TERM… COMP… Subj…    20     0   0   
 
-ungroup: no grouping variables
+datastep: columns decreased from 8 to 4
 
-pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 5x4, now 2x6]
+# A tibble: 8 × 4
+  BY    CAT1      CAT2                       CNTPCT
+  &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;                      &lt;chr&gt; 
+1 ARM A COMPLETED Subject Completed All Vis… 19 ( …
+2 ARM A COMPLETED Subject Completed All Vis… 0 (  …
+3 ARM B COMPLETED Subject Completed All Vis… 16 ( …
+4 ARM B COMPLETED Subject Completed All Vis… 1 (  …
+5 ARM C COMPLETED Subject Completed All Vis… 16 ( …
+6 ARM C COMPLETED Subject Completed All Vis… 0 (  …
+7 ARM D COMPLETED Subject Completed All Vis… 20 ( …
+8 ARM D COMPLETED Subject Completed All Vis… 0 (  …
 
-transmute: dropped 2 variables (DSDECOD, TERMDECOD)
-
-           new variable 'group' (character) with one unique value and 0% NA
-
-           new variable 'cat' (character) with 2 unique values and 0% NA
-
-           new variable 'catseq' (double) with one unique value and 0% NA
-
-           converted 'ARM A' from integer to character (0 new NA)
-
-           converted 'ARM B' from integer to character (0 new NA)
-
-           converted 'ARM C' from integer to character (0 new NA)
-
-           converted 'ARM D' from integer to character (0 new NA)
+proc_transpose: input data set 8 rows and 4 columns
+                by: CAT1 CAT2
+                var: CNTPCT
+                id: BY
+                name: NAME
+                output dataset 2 rows and 7 columns
 
 # A tibble: 2 × 7
-  group     cat                                                           catseq `ARM A` `ARM B` `ARM C` `ARM D`
-  &lt;chr&gt;     &lt;chr&gt;                                                          &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
-1 COMPLETED Subject Completed All Visits And Protocol Requirements             2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
-2 COMPLETED Subject Completed All Visits But With Major Protocol Violati…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+  CAT1  CAT2  NAME  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMP… Subj… CNTP… 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
+2 COMP… Subj… CNTP… 0 (  0… 1 (  4… 0 (  0… 0 (  0…
+
+datastep: columns started with 7 and ended with 7
+
+# A tibble: 2 × 7
+  group     cat      catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt;     &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMPLETED Subject…      2 19 ( 9… 16 ( 7… 16 ( 7…
+2 COMPLETED Subject…      2 0 (  0… 1 (  4… 0 (  0…
+# ℹ 1 more variable: `ARM D` &lt;chr&gt;
 
 Pull out subjects who were non-compliant
 
-filter: removed 84 rows (99%), one row remaining
+datastep: columns increased from 5 to 6
 
-mutate: new variable 'TERMDECOD' (character) with one unique value and 0% NA
+# A tibble: 1 × 6
+  USUBJID    ARM   DSTERM   DSDECOD DSCAT TERMDECOD
+  &lt;chr&gt;      &lt;fct&gt; &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    
+1 ABC-01-053 ARM B NON-COM… NON-CO… DISP… Non-Comp…
 
-group_by: 3 grouping variables (ARM, DSDECOD, TERMDECOD)
+proc_freq: input data set 1 rows and 6 columns
+           tables: DSDECOD * TERMDECOD
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-summarize: now one row and 4 columns, 2 group variables remaining (ARM, DSDECOD)
+# A tibble: 4 × 8
+  BY    VAR1    VAR2  CAT1  CAT2      N   CNT   PCT
+  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 ARM A DSDECOD TERM… NON-… Non-…     0     0   NaN
+2 ARM B DSDECOD TERM… NON-… Non-…     1     1   100
+3 ARM C DSDECOD TERM… NON-… Non-…     0     0   NaN
+4 ARM D DSDECOD TERM… NON-… Non-…     0     0   NaN
 
-ungroup: no grouping variables
+datastep: columns decreased from 8 to 4
 
-pivot_wider: reorganized (ARM, n) into (ARM B) [was 1x4, now 1x3]
+# A tibble: 4 × 4
+  BY    CAT1                           CAT2  CNTPCT
+  &lt;chr&gt; &lt;chr&gt;                          &lt;chr&gt; &lt;chr&gt; 
+1 ARM A NON-COMPLIANCE WITH STUDY DRUG Non-… 0 (  …
+2 ARM B NON-COMPLIANCE WITH STUDY DRUG Non-… 1 (  …
+3 ARM C NON-COMPLIANCE WITH STUDY DRUG Non-… 0 (  …
+4 ARM D NON-COMPLIANCE WITH STUDY DRUG Non-… 0 (  …
 
-transmute: dropped 2 variables (DSDECOD, TERMDECOD)
-
-           new variable 'group' (character) with one unique value and 0% NA
-
-           new variable 'cat' (character) with one unique value and 0% NA
-
-           new variable 'catseq' (double) with one unique value and 0% NA
-
-           new variable 'ARM A' (character) with one unique value and 0% NA
-
-           converted 'ARM B' from integer to character (0 new NA)
-
-           new variable 'ARM C' (character) with one unique value and 0% NA
-
-           new variable 'ARM D' (character) with one unique value and 0% NA
+proc_transpose: input data set 4 rows and 4 columns
+                by: CAT1 CAT2
+                var: CNTPCT
+                id: BY
+                name: NAME
+                output dataset 1 rows and 7 columns
 
 # A tibble: 1 × 7
-  group         cat                            catseq `ARM A`    `ARM B`    `ARM C`    `ARM D`   
-  &lt;chr&gt;         &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     
-1 NONCOMPLIANCE Non-Compliance With Study Drug      2 0 (  0.0%) 1 (  4.8%) 0 (  0.0%) 0 (  0.0%)
+  CAT1  CAT2  NAME  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 NON-… Non-… CNTP… 0 (  0… 1 (  4… 0 (  0… 0 (  0…
 
-Pull out subject who terminated early
+datastep: columns started with 7 and ended with 7
 
-filter: removed 73 rows (86%), 12 rows remaining
+# A tibble: 1 × 7
+  group        cat   catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 NONCOMPLIAN… Non-…      2 0 (  0… 1 (  4… 0 (  0…
+# ℹ 1 more variable: `ARM D` &lt;chr&gt;
 
-mutate: new variable 'TERMDECOD' (character) with 2 unique values and 0% NA
+Pull out subjects who terminated early
 
-group_by: 3 grouping variables (ARM, DSDECOD, TERMDECOD)
+datastep: columns increased from 5 to 6
 
-summarize: now 6 rows and 4 columns, 2 group variables remaining (ARM, DSDECOD)
+# A tibble: 12 × 6
+   USUBJID    ARM   DSTERM  DSDECOD DSCAT TERMDECOD
+   &lt;chr&gt;      &lt;fct&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;    
+ 1 ABC-03-005 ARM C LOST O… OTHER   DISP… Lost To …
+ 2 ABC-03-008 ARM D WORSEN… OTHER   DISP… Lack Of …
+ 3 ABC-04-074 ARM C LACK O… OTHER   DISP… Lack Of …
+ 4 ABC-04-128 ARM C LOST T… OTHER   DISP… Lost To …
+ 5 ABC-06-069 ARM A PSORIA… OTHER   DISP… Lack Of …
+ 6 ABC-06-161 ARM C NON  R… OTHER   DISP… Lack Of …
+ 7 ABC-08-103 ARM B LOST T… OTHER   DISP… Lost To …
+ 8 ABC-08-105 ARM C MOTHER… OTHER   DISP… Lack Of …
+ 9 ABC-08-107 ARM D PATIEN… OTHER   DISP… Lack Of …
+10 ABC-08-108 ARM B LOST T… OTHER   DISP… Lost To …
+11 ABC-09-021 ARM B LOST T… OTHER   DISP… Lost To …
+12 ABC-09-022 ARM D LOST T… OTHER   DISP… Lost To …
 
-ungroup: no grouping variables
+proc_freq: input data set 12 rows and 6 columns
+           tables: DSDECOD * TERMDECOD
+           by: ARM
+           view: TRUE
+           output: 1 datasets
 
-pivot_wider: reorganized (ARM, n) into (ARM A, ARM B, ARM C, ARM D) [was 6x4, now 2x6]
+# A tibble: 8 × 8
+  BY    VAR1    VAR2  CAT1  CAT2      N   CNT   PCT
+  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 ARM A DSDECOD TERM… OTHER Lack…     1     1 100  
+2 ARM A DSDECOD TERM… OTHER Lost…     1     0   0  
+3 ARM B DSDECOD TERM… OTHER Lack…     3     0   0  
+4 ARM B DSDECOD TERM… OTHER Lost…     3     3 100  
+5 ARM C DSDECOD TERM… OTHER Lack…     5     3  60  
+6 ARM C DSDECOD TERM… OTHER Lost…     5     2  40  
+7 ARM D DSDECOD TERM… OTHER Lack…     3     2  66.7
+8 ARM D DSDECOD TERM… OTHER Lost…     3     1  33.3
 
-transmute: dropped 2 variables (DSDECOD, TERMDECOD)
+datastep: columns decreased from 8 to 4
 
-           new variable 'group' (character) with one unique value and 0% NA
+# A tibble: 8 × 4
+  BY    CAT1  CAT2              CNTPCT    
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;             &lt;chr&gt;     
+1 ARM A OTHER Lack Of Efficacy  1 (  5.0%)
+2 ARM A OTHER Lost To Follow Up 0 (  0.0%)
+3 ARM B OTHER Lack Of Efficacy  0 (  0.0%)
+4 ARM B OTHER Lost To Follow Up 3 ( 14.3%)
+5 ARM C OTHER Lack Of Efficacy  3 ( 14.3%)
+6 ARM C OTHER Lost To Follow Up 2 (  9.5%)
+7 ARM D OTHER Lack Of Efficacy  2 (  8.7%)
+8 ARM D OTHER Lost To Follow Up 1 (  4.3%)
 
-           new variable 'cat' (character) with 2 unique values and 0% NA
-
-           new variable 'catseq' (double) with one unique value and 0% NA
-
-           converted 'ARM A' from integer to character (0 new NA)
-
-           converted 'ARM B' from integer to character (0 new NA)
-
-           converted 'ARM C' from integer to character (0 new NA)
-
-           converted 'ARM D' from integer to character (0 new NA)
+proc_transpose: input data set 8 rows and 4 columns
+                by: CAT1 CAT2
+                var: CNTPCT
+                id: BY
+                name: NAME
+                output dataset 2 rows and 7 columns
 
 # A tibble: 2 × 7
-  group cat               catseq `ARM A`    `ARM B`    `ARM C`    `ARM D`   
-  &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;     
-1 OTHER Lack Of Efficacy       2 1 (  5.0%) 0 (  0.0%) 3 ( 14.3%) 2 (  8.7%)
-2 OTHER Lost To Follow Up      2 0 (  0.0%) 3 ( 14.3%) 2 (  9.5%) 1 (  4.3%)
+  CAT1  CAT2  NAME  `ARM A` `ARM B` `ARM C` `ARM D`
+  &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 OTHER Lack… CNTP… 1 (  5… 0 (  0… 3 ( 14… 2 (  8…
+2 OTHER Lost… CNTP… 0 (  0… 3 ( 14… 2 (  9… 1 (  4…
+
+datastep: columns started with 7 and ended with 7
+
+# A tibble: 2 × 7
+  group cat          catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 OTHER Lack Of Eff…      2 1 (  5… 0 (  0… 3 ( 14…
+2 OTHER Lost To Fol…      2 0 (  0… 3 ( 14… 2 (  9…
+# ℹ 1 more variable: `ARM D` &lt;chr&gt;
 
 Combine blocks into final data frame
 
-# A tibble: 8 × 7
-  group         cat                                                       catseq `ARM A` `ARM B` `ARM C` `ARM D`
-  &lt;chr&gt;         &lt;chr&gt;                                                      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
-1 COMPLETED     &lt;NA&gt;                                                           1 19 ( 9… 17 ( 8… 16 ( 7… 20 ( 8…
-2 COMPLETED     Subject Completed All Visits And Protocol Requirements         2 19 ( 9… 16 ( 7… 16 ( 7… 20 ( 8…
-3 COMPLETED     Subject Completed All Visits But With Major Protocol Vio…      2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-4 NONCOMPLIANCE &lt;NA&gt;                                                           1 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-5 NONCOMPLIANCE Non-Compliance With Study Drug                                 2 0 (  0… 1 (  4… 0 (  0… 0 (  0…
-6 OTHER         &lt;NA&gt;                                                           1 1 (  5… 3 ( 14… 5 ( 23… 3 ( 13…
-7 OTHER         Lack Of Efficacy                                               2 1 (  5… 0 (  0… 3 ( 14… 2 (  8…
-8 OTHER         Lost To Follow Up                                              2 0 (  0… 3 ( 14… 2 (  9… 1 (  4…
+datastep: columns increased from 7 to 8
+
+# A tibble: 8 × 8
+  group        cat   catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMPLETED    &lt;NA&gt;       1 19 ( 9… 17 ( 8… 16 ( 7…
+2 NONCOMPLIAN… &lt;NA&gt;       1 0 (  0… 1 (  4… 0 (  0…
+3 OTHER        &lt;NA&gt;       1 1 (  5… 3 ( 14… 5 ( 23…
+4 COMPLETED    Subj…      2 19 ( 9… 16 ( 7… 16 ( 7…
+5 COMPLETED    Subj…      2 0 (  0… 1 (  4… 0 (  0…
+6 NONCOMPLIAN… Non-…      2 0 (  0… 1 (  4… 0 (  0…
+7 OTHER        Lack…      2 1 (  5… 0 (  0… 3 ( 14…
+8 OTHER        Lost…      2 0 (  0… 3 ( 14… 2 (  9…
+# ℹ 2 more variables: `ARM D` &lt;chr&gt;, lblind &lt;lgl&gt;
+
+proc_sort: input data set 8 rows and 8 columns
+           by: group catseq cat
+           keep: group cat catseq ARM A ARM B ARM C ARM D lblind
+           order: a a a
+           output data set 8 rows and 8 columns
+
+# A tibble: 8 × 8
+  group        cat   catseq `ARM A` `ARM B` `ARM C`
+  &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  
+1 COMPLETED    &lt;NA&gt;       1 19 ( 9… 17 ( 8… 16 ( 7…
+2 COMPLETED    Subj…      2 19 ( 9… 16 ( 7… 16 ( 7…
+3 COMPLETED    Subj…      2 0 (  0… 1 (  4… 0 (  0…
+4 NONCOMPLIAN… &lt;NA&gt;       1 0 (  0… 1 (  4… 0 (  0…
+5 NONCOMPLIAN… Non-…      2 0 (  0… 1 (  4… 0 (  0…
+6 OTHER        &lt;NA&gt;       1 1 (  5… 3 ( 14… 5 ( 23…
+7 OTHER        Lack…      2 1 (  5… 0 (  0… 3 ( 14…
+8 OTHER        Lost…      2 0 (  0… 3 ( 14… 2 (  9…
+# ℹ 2 more variables: `ARM D` &lt;chr&gt;, lblind &lt;lgl&gt;
 
 =========================================================================
 Create and print report
 =========================================================================
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpeYEHwE/example10.pdf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpEBPgPu/example10.pdf'
 - output_type: PDF
 - units: inches
 - orientation: landscape
@@ -636,7 +865,7 @@ Create and print report
 - line size/count: 9/41
 - content: 
 # A table specification:
-- data: tibble 'final' 8 rows 7 cols
+- data: tibble 'final' 8 rows 8 cols
 - show_cols: all
 - use_attributes: all
 - width: 8.5
@@ -653,15 +882,17 @@ Create and print report
 - define: ARM B 'Drug 50mg' 
 - define: ARM C 'Drug 100mg' 
 - define: ARM D 'Competitor' 
+- define: lblind visible='FALSE' 
 
 lib_sync: synchronized data in library 'sdtm'
 
 lib_unload: library 'sdtm' unloaded
 
 =========================================================================
-Log End Time: 2022-10-09 20:51:13
-Log Elapsed Time: 0 00:00:02
+Log End Time: 2023-09-05 22:06:09.329367
+Log Elapsed Time: 0 00:00:04
 =========================================================================
+
 </code></pre>
 <p>Next: <a href="sassy-plisting.html">Example 11: Subject
 Listing</a></p>

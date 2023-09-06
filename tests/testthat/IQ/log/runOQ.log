@@ -1,5 +1,5 @@
 =========================================================================
-Log Path: c:/packages/sassy/tests/testthat/OQ/log/runOQ.log
+Log Path: c:/packages/sassy/tests/testthat/IQ/log/runOQ.log
 Program Path: C:/packages/sassy/tests/testthat/test-oq.R
 Working Directory: C:/packages/sassy
 User Name: dbosa
@@ -9,7 +9,7 @@ Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
 Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.2 reporter_1.4.1 libr_1.2.8
 fmtr_1.5.9 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-08-19 08:37:27.027594
+Log Start Time: 2023-08-16 13:36:30.032148
 =========================================================================
 
 =========================================================================
@@ -76,11 +76,11 @@ value() function check passed.
 - $test1: type U, 2 conditions
 - $test2: type S, "%5.1f"
 
-Saved format catalog to 'c:/packages/sassy/tests/testthat/OQ/output/fc.fcat'
+Saved format catalog to 'c:/packages/sassy/tests/testthat/IQ/output/fc.fcat'
 
 write.fcat() function check passed.
 
-Read format catalog from 'c:/packages/sassy/tests/testthat/OQ/output/fc.fcat'
+Read format catalog from 'c:/packages/sassy/tests/testthat/IQ/output/fc.fcat'
 
 # A format catalog: 2 formats
 - $test1: type U, 2 conditions
@@ -105,12 +105,12 @@ Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 
 # library 'tst': 3 items
 - attributes: csv not loaded
-- path: c:/packages/sassy/tests/testthat/OQ/data
+- path: c:/packages/sassy/tests/testthat/IQ/data
 - items:
   Name Extension Rows Cols    Size        LastModified
-1   AE       csv  150   27 88.3 Kb 2023-07-29 15:49:00
-2   DM       csv   87   24 45.4 Kb 2023-07-29 15:49:00
-3   DS       csv  174    9 33.9 Kb 2023-07-29 15:49:00
+1   AE       csv  150   27 88.3 Kb 2023-08-16 13:36:30
+2   DM       csv   87   24 45.4 Kb 2023-08-16 13:36:30
+3   DS       csv  174    9 33.9 Kb 2023-08-16 13:36:30
 
 libname() function check passed.
 
@@ -151,7 +151,7 @@ Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
 Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.txt'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/test.txt'
 - output_type: TXT
 - units: inches
 - orientation: landscape
@@ -168,7 +168,7 @@ Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
 Test for TXT report passed.
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.rtf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/test.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -185,7 +185,7 @@ Test for TXT report passed.
 Test for RTF report passed.
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/test.pdf'
 - output_type: PDF
 - units: inches
 - orientation: landscape
@@ -202,7 +202,7 @@ Test for RTF report passed.
 Test for PDF report passed.
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.docx'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/test.docx'
 - output_type: DOCX
 - units: inches
 - orientation: landscape
@@ -219,7 +219,7 @@ Test for PDF report passed.
 Test for DOCX report passed.
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.html'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/test.html'
 - output_type: HTML
 - units: inches
 - orientation: landscape
@@ -324,7 +324,7 @@ Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
 proc_sort() function check passed.
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/print.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/output/print.pdf'
 - output_type: PDF
 - units: inches
 - orientation: portrait
@@ -338,14 +338,14 @@ proc_sort() function check passed.
 - title 1: 'Test'
 
 proc_print: printed 1 dataset
-            file_path: c:/packages/sassy/tests/testthat/OQ/output/print.pdf
+            file_path: c:/packages/sassy/tests/testthat/IQ/output/print.pdf
             output_type: PDF
             titles: Test
             view: FALSE
 
 proc_print() function check passed.
 
-c:/packages/sassy/tests/testthat/OQ/output/print.pdf
+c:/packages/sassy/tests/testthat/IQ/output/print.pdf
 
 =========================================================================
 Preparing Report
@@ -394,18 +394,18 @@ Complete Results:
 
 Printing report
 
-Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-19
+Report path: c:/packages/sassy/tests/testthat/IQ/sassyOQ-2023-08-16
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-19.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyOQ-2023-08-16.pdf'
 - output_type: PDF
 - units: inches
-- orientation: landscape
+- orientation: portrait
 - margins: top 0.5 bottom 0.5 left 1 right 1
-- line size/count: 9/47
+- line size/count: 6.5/63
 - title 1: 'Operational Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-08-19 08:37:29 AM'
+- title 3: 'Date: 2023-08-16 13:36:33 PM'
 - content: 
 # A table specification:
 - data: data.frame 'datm' 37 rows 5 cols
@@ -413,7 +413,7 @@ Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-19
 - use_attributes: all
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpSWX9tU\file552184b0152e8.html'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp2XbZ1i\file86710617e426a.html'
 - output_type: HTML
 - units: inches
 - orientation: portrait
@@ -426,9 +426,9 @@ Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2023-08-19
 - use_attributes: all
 - title 1: 'Operational Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-08-19 08:37:29 AM'
+- title 3: 'Date: 2023-08-16 13:36:34 PM'
 
 =========================================================================
-Log End Time: 2023-08-19 08:37:29.618057
-Log Elapsed Time: 0 00:00:02
+Log End Time: 2023-08-16 13:36:34.460806
+Log Elapsed Time: 0 00:00:04
 =========================================================================

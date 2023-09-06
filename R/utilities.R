@@ -21,7 +21,7 @@ print_report <- function(path, dat, ttls) {
   tbl <- create_table(datm, header_bold = TRUE)
 
   rpt <- create_report(path, output_type = "PDF", font = "Arial",
-                       orientation = "portrait") |>
+                       orientation = "landscape") |>
     titles(ttls, bold = TRUE, font_size = 12, blank_row = "none") |>
     titles("Date: " %p% fapply(Sys.time(), "%Y-%m-%d %H:%M:%S %p")) |>
     add_content(tbl)

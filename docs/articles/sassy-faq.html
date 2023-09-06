@@ -154,6 +154,8 @@ installed?</a></li>
 sassy system?</a></li>
 <li><a href="#packages">Can’t I just install everything
 individually?</a></li>
+<li><a href="#validation">Is the <strong>sassy</strong> system
+validated?</a></li>
 </ul>
 </div>
 <div class="section level2">
@@ -165,12 +167,12 @@ individually?</a></li>
 <p><strong>Q:</strong> I don’t quite understand the concept of the
 <strong>sassy</strong> system. What is this set of packages?</p>
 <p><strong>A:</strong> The <strong>sassy</strong> package is a
-meta-package that contains five sub-packages: <a href="https://logr.r-sassy.org/" class="external-link"><strong>logr</strong></a>, <a href="https://fmtr.r-sassy.org/" class="external-link"><strong>fmtr</strong></a>, <a href="https://libr.r-sassy.org/" class="external-link"><strong>libr</strong></a>, <a href="https://reporter.r-sassy.org/" class="external-link"><strong>reporter</strong></a>, and
-<a href="https://common.r-sassy.org/" class="external-link"><strong>common</strong></a>. .
-These five packages work together as an integrated system. The system
-was written primarily to make regulatory reporting in R easier. The
-system borrows several concepts from SAS® software, and that is why it
-is called <strong>sassy</strong>.</p>
+meta-package that contains six sub-packages: <a href="https://logr.r-sassy.org/" class="external-link"><strong>logr</strong></a>, <a href="https://fmtr.r-sassy.org/" class="external-link"><strong>fmtr</strong></a>, <a href="https://libr.r-sassy.org/" class="external-link"><strong>libr</strong></a>, <a href="https://reporter.r-sassy.org/" class="external-link"><strong>reporter</strong></a>, <a href="https://common.r-sassy.org/" class="external-link"><strong>common</strong></a>, and <a href="https://procs.r-sassy.org/" class="external-link"><strong>procs</strong></a>. These
+six<br>
+packages work together as an integrated system. The system was written
+primarily to make regulatory reporting in R easier. The system borrows
+several concepts from SAS® software, and that is why it is called
+<strong>sassy</strong>.</p>
 <p><a href="#top">top</a></p>
 <hr>
 </div>
@@ -237,6 +239,22 @@ the packages independently?</p>
 just makes it more convenient, in the same way that the
 <strong>tidyverse</strong> meta-package makes it more convenient to use
 the packages in that system.</p>
+<p><a href="#top">top</a></p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="validation">Is the <strong>sassy</strong> system validated?<a class="anchor" aria-label="anchor" href="#validation"></a>
+</h3>
+<p><strong>Q:</strong> My company requires that all software be
+validated before using in production. Are the <strong>sassy</strong>
+packages validated?</p>
+<p><strong>A:</strong> Yes. The statistical functions were validated by
+comparing to SAS®. The validation documentation is <a href="https://r-sassy.org/validation/Procs_Validation.pdf" class="external-link">here</a>. In
+addition, there are Installation Qualification (IQ) and Operational
+Qualification (OQ) routines included in the <strong>sassy</strong>
+package for all sub-packages. See the <code><a href="../reference/run_iq.html">run_iq()</a></code> and
+<code><a href="../reference/run_oq.html">run_oq()</a></code> documentation for additional information on these
+routines.</p>
 <p><a href="#top">top</a></p>
 <hr>
 <!-- ### Question 1? {#q1} --><!-- **Q:** Question --><!-- **A:** Answer --><!-- [top](#top) --><!-- ****** -->
