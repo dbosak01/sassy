@@ -86,9 +86,6 @@ lib_unload(sdtm)
 # Close log
 log_close()
 
-# Print log to console
-writeLines(readLines(lgpth, encoding = "UTF-8"))
-
 # View report
 # file.show(pth)
 

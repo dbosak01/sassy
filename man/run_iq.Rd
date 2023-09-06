@@ -2,7 +2,7 @@
 % Please edit documentation in R/iq.R
 \name{run_iq}
 \alias{run_iq}
-\title{Performs Installation Qualification}
+\title{Generates an Installation Qualification Report}
 \usage{
 run_iq(location)
 }
@@ -11,7 +11,9 @@ run_iq(location)
 reports and any associated files will be placed in this directory.}
 }
 \value{
-The path to the output directory.
+The path to the output directory.  The directory
+will contain a PDF report showing a summary of the results of the IQ. After
+the function is run, review this report to ensure that all tests passed.
 }
 \description{
 The \code{run_iq} function executes an
@@ -20,6 +22,26 @@ on the currently installed \strong{sassy} packages, and generates a report
 on the results. The IQ ensures that the files in the \strong{sassy} packages
 are correct, and have not been altered.
 The results of the IQ will be placed in the supplied location.
+}
+\details{
+The \code{run_iq} function works by comparing package checksums and file
+sizes against expected values.
+
+The function first tries to determine the
+installation location of each package. If the installation location cannot
+be found, the check for that package will fail.  If the installation
+location is found, the function will open the package and capture a
+checksum and file size on the code repository.  The checksum and file
+sizes are then compared against known values. Ideally, the checksum
+value will match.  If not, the function will compare the file sizes.  If
+both the checksum and file size comparison fail, the check for that package
+will fail.  If one of them passes, the check will pass.
+
+Note that the checksum values are somewhat volatile, and can change
+from one Operating System to the next. The checksum can also change
+if the R version is upgraded. Therefore, the checksum is not a perfectly
+reliable indicator of authenticity.  It is for that reason that the
+file size is used as a backup indicator.
 }
 \examples{
 # Create a temp directory

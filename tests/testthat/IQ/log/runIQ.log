@@ -7,9 +7,9 @@ R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.2 reporter_1.4.1 libr_1.2.8
+Packages: tidylog_1.0.2 sassy_1.2.0 procs_1.0.3 reporter_1.4.1 libr_1.2.8
 fmtr_1.5.9 logr_1.3.4 common_1.0.8 testthat_3.1.10
-Log Start Time: 2023-08-19 08:36:31.572708
+Log Start Time: 2023-09-06 08:59:37.916518
 =========================================================================
 
 =========================================================================
@@ -60,7 +60,7 @@ Examine reporter package
 
 reporter source code found.
 
-reporter size check passed.
+reporter source code checksum passed.
 
 =========================================================================
 Examine procs package
@@ -94,7 +94,7 @@ Complete Results:
 15 reporter                   reporter source code found. TRUE
 16 reporter Compare checksum for reporter version v1.4.1. TRUE
 17    procs                      procs source code found. TRUE
-18    procs    Compare checksum for procs version v1.0.2. TRUE
+18    procs    Compare checksum for procs version v1.0.3. TRUE
                                   Message
 1                                        
 2                                        
@@ -111,16 +111,16 @@ Complete Results:
 13                                       
 14 Checksum failed but size check passed.
 15                                       
-16 Checksum failed but size check passed.
+16                                       
 17                                       
 18                                       
 
 Printing report
 
-Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19
+Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-09-06
 
 # A report specification: 1 pages
-- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19.pdf'
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-09-06.pdf'
 - output_type: PDF
 - units: inches
 - orientation: landscape
@@ -128,7 +128,7 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19
 - line size/count: 9/47
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-08-19 08:36:31 AM'
+- title 3: 'Date: 2023-09-06 08:59:37 AM'
 - content: 
 # A table specification:
 - data: data.frame 'datm' 18 rows 5 cols
@@ -136,7 +136,7 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19
 - use_attributes: all
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpSWX9tU\file55218668018ec.html'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpyqy93v\file2974804ba186d.html'
 - output_type: HTML
 - units: inches
 - orientation: portrait
@@ -149,9 +149,9 @@ Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2023-08-19
 - use_attributes: all
 - title 1: 'Installation Qualification Results Report'
 - title 2: 'SASSY System'
-- title 3: 'Date: 2023-08-19 08:36:31 AM'
+- title 3: 'Date: 2023-09-06 08:59:38 AM'
 
 =========================================================================
-Log End Time: 2023-08-19 08:36:31.97226
+Log End Time: 2023-09-06 08:59:38.614088
 Log Elapsed Time: 0 00:00:00
 =========================================================================

@@ -4,16 +4,38 @@
 
 
 
-#' @title Performs Installation Qualification
+#' @title Generates an Installation Qualification Report
 #' @description The \code{run_iq} function executes an
 #' installation qualification (IQ)
 #' on the currently installed \strong{sassy} packages, and generates a report
 #' on the results. The IQ ensures that the files in the \strong{sassy} packages
 #' are correct, and have not been altered.
 #' The results of the IQ will be placed in the supplied location.
+#' @details
+#' The \code{run_iq} function works by comparing package checksums and file
+#' sizes against expected values.
+#'
+#' The function first tries to determine the
+#' installation location of each package. If the installation location cannot
+#' be found, the check for that package will fail.  If the installation
+#' location is found, the function will open the package and capture a
+#' checksum and file size on the code repository.  The checksum and file
+#' sizes are then compared against known values. Ideally, the checksum
+#' value will match.  If not, the function will compare the file sizes.  If
+#' both the checksum and file size comparison fail, the check for that package
+#' will fail.  If one of them passes, the check will pass.
+#'
+#' Note that the checksum values are somewhat volatile, and can change
+#' from one Operating System to the next. The checksum can also change
+#' if the R version is upgraded. Therefore, the checksum is not a perfectly
+#' reliable indicator of authenticity.  It is for that reason that the
+#' file size is used as a backup indicator.
+#'
 #' @param location The path to the desired output directory.  The IQ
 #' reports and any associated files will be placed in this directory.
-#' @return The path to the output directory.
+#' @return The path to the output directory.  The directory
+#' will contain a PDF report showing a summary of the results of the IQ. After
+#' the function is run, review this report to ensure that all tests passed.
 #' @examples
 #' # Create a temp directory
 #' tmp <- tempdir()
@@ -144,7 +166,7 @@ libr_ck <- list("1.2.8" = c(checksum = "6bec5e1d2255ba1add47f2ce326c0a2a", size 
                 "1.2.1" = c(checksum = "2b6ecefd020a84b951ab46a40f189d94", size = ""),
                 "1.2.0" = c(checksum = "f5280880f67282ce4b3a981bca9df8f2", size = ""))
 
-reporter_ck <- list("1.4.1" = c(checksum = "836d7bc24cff2644b2ecb1fe02ade55a", size = "784514"), # "2e20b4a9614f6027e03e4044d073a96a"
+reporter_ck <- list("1.4.1" = c(checksum = "8430053e29e8a1b2c3466f8121a6dbad", size = "1348439"), # "2e20b4a9614f6027e03e4044d073a96a"
                     "1.3.9" = c(checksum = "4b96f23b7ebf73c21072ccf28aeaebf5", size = ""),
                     "1.3.8" = c(checksum = "e0eb2a9ce749d8faf5c905af06e4bfe0", size = ""),
                     "1.3.7" = c(checksum = "f302a1d656653e31af358d67666b4544", size = ""),
@@ -155,7 +177,8 @@ reporter_ck <- list("1.4.1" = c(checksum = "836d7bc24cff2644b2ecb1fe02ade55a", s
                     "1.2.9" = c(checksum = "e0cb98e3985dd3743edd33f6f1ebdc9d", size = ""),
                     "1.2.8" = c(checksum = "e5f5ce2f57dd2761e9bcb3a99fe33f84", size = ""))
 
-procs_ck <- list("1.0.2" = c(checksum = "89ea73d0a6a821ea44e00c8123d3167a", size = "145777"), # "89ea73d0a6a821ea44e00c8123d3167a"
+procs_ck <- list("1.0.3" = c(checksum = "079989cd230fb815e7a0b5a1a34c4521", size = "150483"),
+                 "1.0.2" = c(checksum = "89ea73d0a6a821ea44e00c8123d3167a", size = "145777"), # "89ea73d0a6a821ea44e00c8123d3167a"
                  "1.0.0" = c(checksum = "7f507932591ab8c62f34e557db75ad50", size = "144709"))
 
 
@@ -268,283 +291,6 @@ check_size <- function(pkg, ver, pth) {
 
 
   return(ret)
-}
-
-
-
-#' @import tools
-#' @import utils
-examine_common <- function() {
-
-  ver <- as.character(packageVersion("common"))
-
-  pth <- file.path(.libPaths()[1], "common/R/common.rdb")
-
-
-  tmplt <- data.frame(Category = "common",
-                      Description = "Common source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Common source code not found."
-    put("Common source code not found.")
-  } else {
-    put("Common source code found.")
-  }
-
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for common version v" %p% ver %p% "."
-  if (check_sum("common", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Checksum does not match expected value."
-    put("Common source code checksum failed.")
-  } else {
-    put("Common source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-}
-
-
-#' @import tools
-#' @import utils
-examine_logr <- function() {
-
-  ver <- as.character(packageVersion("logr"))
-
-  pth <- file.path(.libPaths()[1], "logr/R/logr.rdb")
-
-
-  tmplt <- data.frame(Category = "logr",
-                      Description = "logr source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "logr source code not found."
-    put("Logr source code not found.")
-  } else {
-    put("Logr source code found.")
-  }
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for logr version v" %p% ver %p% "."
-  if (check_sum("logr", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Checksum does not match expected value."
-    put("Logr source code checksum failed.")
-  } else {
-    put("Logr source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-
-}
-
-#' @import tools
-#' @import utils
-examine_fmtr <- function() {
-
-  ver <- as.character(packageVersion("fmtr"))
-
-  pth <- file.path(.libPaths()[1], "fmtr/R/fmtr.rdb")
-
-
-  tmplt <- data.frame(Category = "fmtr",
-                      Description = "fmtr source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "fmtr source code not found."
-    put("Fmtr source code not found.")
-  } else {
-    put("Fmtr source code found.")
-  }
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for fmtr version v" %p% ver %p% "."
-  if (check_sum("fmtr", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Checksum does not match expected value."
-    put("Fmtr source code checksum failed.")
-  } else {
-    put("Fmtr source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-
-}
-
-
-#' @import tools
-#' @import utils
-examine_libr <- function() {
-
-  ver <- as.character(packageVersion("libr"))
-
-  pth <- file.path(.libPaths()[1], "libr/R/libr.rdb")
-
-
-  tmplt <- data.frame(Category = "libr",
-                      Description = "libr source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "libr source code not found."
-    put("Libr source code not found.")
-  } else {
-    put("Libr source code found.")
-  }
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for libr version v" %p% ver %p% "."
-  if (check_sum("libr", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Checksum does not match expected value."
-    put("Libr source code checksum failed.")
-  } else {
-    put("Libr source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-
-}
-
-
-#' @import tools
-#' @import utils
-examine_reporter <- function() {
-
-  ver <- as.character(packageVersion("reporter"))
-
-  pth <- file.path(.libPaths()[1], "reporter/R/reporter.rdb")
-
-
-  tmplt <- data.frame(Category = "reporter",
-                      Description = "reporter source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "reporter source code not found."
-    put("Reporter source code not found.")
-  } else {
-    put("Reporter source code found.")
-  }
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for reporter version v" %p% ver %p% "."
-  if (check_sum("reporter", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "Checksum does not match expected value."
-    put("Reporter source code checksum failed.")
-  } else {
-    put("Reporter source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-
-}
-
-#' @import tools
-#' @import utils
-examine_procs <- function() {
-
-  ver <- as.character(packageVersion("procs"))
-
-  pth <- file.path(.libPaths()[1], "procs/R/procs.rdb")
-
-  tmplt <- data.frame(Category = "procs",
-                      Description = "procs source code found.",
-                      Pass = TRUE,
-                      Message = "",
-                      stringsAsFactors = FALSE)
-
-  tmp <- tmplt
-  if (!file.exists(pth)) {
-    tmp[1, "Pass"] <- FALSE
-    tmp[1, "Message"] <- "procs source code not found."
-    put("Procs source code not found.")
-  } else {
-    put("Procs source code found.")
-  }
-
-  ret <- tmp
-
-  tmp <- tmplt
-  tmp[1, "Description"] <- "Compare checksum for procs version v" %p% ver %p% "."
-  if (check_sum("procs", ver, pth) == FALSE) {
-    tmp[1, "Pass"] <- FALSE
-    if (!ver %in% names(procs_ck)) {
-      tmp[1, "Message"] <- "Package version checksum not found."
-      put("Procs version checksum not found.")
-
-    } else if (ver == max(names(procs_ck))) {
-      if (check_size("procs", ver, pth)) {
-        tmp[1, "Pass"] <- TRUE
-        tmp[1, "Message"] <- "Checksum failed but size check passed."
-        put("Procs size check passed.")
-      } else {
-        tmp[1, "Message"] <- "File size does not match expected value."
-        put("Procs source code size check failed.")
-      }
-    } else {
-      tmp[1, "Message"] <- "Checksum does not match expected value."
-      put("Procs source code checksum failed.")
-    }
-  } else {
-    put("Procs source code checksum passed.")
-  }
-
-  ret <- rbind(ret, tmp)
-
-
-  return(ret)
-
 }
 
 
