@@ -198,13 +198,13 @@ worlds!</li>
 <span>    <span class="co"># Combine treatment groups</span></span>
 <span>    <span class="co"># And distingish baseline time points</span></span>
 <span>    <span class="kw">if</span> <span class="op">(</span><span class="va">ARM</span> <span class="op">==</span> <span class="st">"ARM A"</span><span class="op">)</span> <span class="op">{</span></span>
-<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op"><a href="https://common.r-sassy.org/reference/grapes-eq-grapes.html" class="external-link">%eq%</a></span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op">%eq%</span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"A_BASE"</span></span>
 <span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>        <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"A_TRT"</span></span>
 <span>      <span class="op">}</span></span>
 <span>    <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
-<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op"><a href="https://common.r-sassy.org/reference/grapes-eq-grapes.html" class="external-link">%eq%</a></span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>      <span class="kw">if</span> <span class="op">(</span><span class="va">VSBLFL</span> <span class="op">%eq%</span> <span class="st">"Y"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>        <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"O_BASE"</span></span>
 <span>      <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>        <span class="va">GRP</span> <span class="op">&lt;-</span> <span class="st">"O_TRT"</span></span>

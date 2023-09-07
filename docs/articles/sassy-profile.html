@@ -250,7 +250,7 @@ an example of a “master and detail” type of report.</p>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Select desired columns from DM dataset"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, </span>
-<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SITEID</span>, <span class="va">SUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">RACE</span>, <span class="va">BRTHDTC</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm</span> </span>
+<span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SITEID</span>, <span class="va">SUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">RACE</span>, <span class="va">BRTHDTC</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm</span> </span>
 <span></span>
 <span></span>
 <span><span class="co"># Split dm data by subject id</span></span>
@@ -258,7 +258,7 @@ an example of a “master and detail” type of report.</p>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Select desired columns from AE dataset"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.AE</span>, </span>
-<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESTDTC</span>, <span class="va">AEENDTC</span>, <span class="va">AESTDY</span>, </span>
+<span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESTDTC</span>, <span class="va">AEENDTC</span>, <span class="va">AESTDY</span>, </span>
 <span>                  <span class="va">AEENDY</span>, <span class="va">AESOC</span>, <span class="va">AESEV</span>, <span class="va">AESER</span>, <span class="va">AEREL</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae</span></span>
 <span></span>
 <span><span class="co"># Split ae data by subject id</span></span>

@@ -33,7 +33,6 @@ Note the following about this example:
 
 ```{r eval=FALSE, echo=TRUE}    
 library(sassy)
-library(procs)
 
 # Prepare Log -------------------------------------------------------------
 
