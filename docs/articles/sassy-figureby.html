@@ -155,8 +155,9 @@ function, just like the figures in the previous example.</li>
 report and plot.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>        <span class="st">"logr.notes"</span> <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -168,37 +169,50 @@ report and plot.</li>
 <span><span class="va">pkg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Open log</span></span>
-<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example3.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">lgpth</span> <span class="op">&lt;-</span> <span class="fu">log_open</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example6.log"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># Prepare Data ------------------------------------------------------------</span></span>
+<span></span>
+<span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Create libname for csv data</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create libname for csv data"</span><span class="op">)</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Load data into workspace</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Load data into workspace"</span><span class="op">)</span></span>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span></span>
-<span><span class="va">prep</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">sdtm.VS</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span>, </span>
-<span>         <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, merge <span class="op">=</span> <span class="va">sdtm.VS</span>, merge_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span>,</span>
+<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span> <span class="op">&amp;</span></span>
+<span>                                      <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">prep</span></span>
 <span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Change VISIT to factor so it sorts properly"</span><span class="op">)</span></span>
+<span><span class="va">prep</span><span class="op">$</span><span class="va">VISIT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">prep</span><span class="op">$</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,</span>
+<span>                                       <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,</span>
+<span>                                       <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Group and summarize"</span><span class="op">)</span></span>
-<span><span class="va">final</span> <span class="op">&lt;-</span> <span class="va">prep</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>MEAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">VSORRES</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>VISIT <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">VISIT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"DAY 1"</span>, <span class="st">"WEEK 2"</span>, <span class="st">"WEEK 4"</span>,</span>
-<span>                                          <span class="st">"WEEK 6"</span>,<span class="st">"WEEK 8"</span>, <span class="st">"WEEK 12"</span>,</span>
-<span>                                          <span class="st">"WEEK 16"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_means.html" class="external-link">proc_means</a></span><span class="op">(</span><span class="va">prep</span>, </span>
+<span>           var <span class="op">=</span> <span class="va">VSORRES</span>,</span>
+<span>           class <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">ARM</span>, <span class="va">VSTEST</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span>, </span>
+<span>           options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nway</span>, <span class="va">nofreq</span>, <span class="va">notype</span><span class="op">)</span>,</span>
+<span>           stats <span class="op">=</span> <span class="va">mean</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">VISITNUM</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">VISITNUM</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span>,<span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">final</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Rename variables for clarity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">final</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">final</span><span class="op">)</span><span class="op">)</span></span>
+<span>        </span>
+<span></span>
+<span><span class="co"># Create Plots ------------------------------------------------------------</span></span>
+<span></span>
 <span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create plots and print report"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Create plot</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create plot"</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">final</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">MEAN</span>, x <span class="op">=</span> <span class="va">VISIT</span> , group <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="va">ARM</span>, color <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -206,10 +220,13 @@ report and plot.</li>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Visit"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"Value"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Construct output path</span></span>
-<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/f_vs.rtf"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define report object</span></span>
+<span><span class="co"># Create Report -----------------------------------------------------------</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Construct output path"</span><span class="op">)</span></span>
+<span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example6.rtf"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Define report object"</span><span class="op">)</span></span>
 <span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -221,13 +238,13 @@ report and plot.</li>
 <span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Write report to file system</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Write report to file system"</span><span class="op">)</span></span>
 <span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Close libname</span></span>
-<span><span class="fu">lib_close</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Close libname"</span><span class="op">)</span></span>
+<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Close log</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Close log"</span><span class="op">)</span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># View report</span></span>
@@ -248,55 +265,48 @@ report and plot.</li>
 <h2 id="log">Log<a class="anchor" aria-label="anchor" href="#log"></a>
 </h2>
 <p>Here is the log for the above program:</p>
-<pre><code>========================================================================= 
-Log Path: C:/Users/User/AppData/Local/Temp/Rtmpum5T6o/log/example3.log 
-Working Directory: C:/packages/Testing 
-User Name: User 
-R Version: 4.0.3 (2020-10-10) 
-Machine: DESKTOP-1F27OR8 x86-64 
-Operating System: Windows 10 x64 build 18363 
-Log Start Time: 2021-01-05 08:23:30 
-========================================================================= 
+<pre><code>=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpo1naKK/log/example6.log
+Program Path: C:/packages/Testing/procs/ProcsFigBy.R
+Working Directory: C:/packages/Testing/procs
+User Name: dbosa
+R Version: 4.3.1 (2023-06-16 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 ggplot2_3.4.2 procs_1.0.3 reporter_1.4.1 libr_1.2.8
+fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-06 20:23:58.614273
+=========================================================================
 
-========================================================================= 
-Prepare Data 
-========================================================================= 
+=========================================================================
+Prepare Data
+=========================================================================
 
-# library 'sdtm': 8 items
+Create libname for csv data
+
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/User/Documents/R/win-library/4.0/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
   Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.1 Kb 2020-12-27 23:21:55
-2   DA       csv 3587   18 527.8 Kb 2020-12-27 23:21:55
-3   DM       csv   87   24  45.2 Kb 2020-12-27 23:21:55
-4   DS       csv  174    9  33.7 Kb 2020-12-27 23:21:55
-5   EX       csv   84   11    26 Kb 2020-12-27 23:21:55
-6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
-7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
-8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
+1   AE       csv  150   27  88.5 Kb 2023-08-07 17:51:40
+2   DM       csv   87   24  45.5 Kb 2023-08-07 17:51:40
+3   DS       csv  174    9  34.1 Kb 2023-08-07 17:51:40
+4   EX       csv   84   11  26.4 Kb 2023-08-07 17:51:40
+5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
+6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
+7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
 
-lib_load: library 'sdtm' loaded 
+Load data into workspace
 
-Perform joins and basic filters 
+lib_load: library 'sdtm' loaded
 
-left_join: added 18 columns (STUDYID.x, DOMAIN.x, STUDYID.y, DOMAIN.y, VSSEQ, …)
+Perform joins and basic filters
 
-           &gt; rows only in x       0
+datastep: columns decreased from 24 to 8
 
-           &gt; rows only in y  (    0)
-
-           &gt; matched rows     3,358    (includes duplicates)
-
-           &gt;                 =======
-
-           &gt; rows total       3,358
-
-select: dropped 32 variables (STUDYID.x, DOMAIN.x, SUBJID, RFSTDTC, RFENDTC, …)
-
-filter: removed 246 rows (7%), 3,112 rows remaining
-
-# A tibble: 3,112 x 8
+# A tibble: 3,112 × 8
    USUBJID    ARMCD ARM   VSTESTCD VSTEST                   VSORRES VISITNUM VISIT    
    &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                      &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    
  1 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      78        0 SCREENING
@@ -309,63 +319,353 @@ filter: removed 246 rows (7%), 3,112 rows remaining
  8 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       16 WEEK 16  
  9 ABC-01-049 4     ARM D PULSE    Pulse Rate                    92        0 SCREENING
 10 ABC-01-049 4     ARM D PULSE    Pulse Rate                    84        1 DAY 1    
-# ... with 3,102 more rows
+# ℹ 3,102 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-Group and summarize 
+Change VISIT to factor so it sorts properly
 
-group_by: 6 grouping variables (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM, …)
+Group and summarize
 
-summarize: now 175 rows and 7 columns, 5 group variables remaining (ARMCD, ARM, VSTESTCD, VSTEST, VISITNUM)
+proc_means: input data set 3112 rows and 8 columns
+            class: ARM VSTEST VISITNUM VISIT
+            var: VSORRES
+            stats: mean
+            view: TRUE
+            output: 1 datasets
 
-filter (grouped): removed 35 rows (20%), 140 rows remaining
+    CLASS1                   CLASS2 CLASS3  CLASS4     VAR      MEAN
+1    ARM A Diastolic Blood Pressure      1   DAY 1 VSORRES  76.47368
+2    ARM A Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.36842
+3    ARM A Diastolic Blood Pressure     16 WEEK 16 VSORRES  77.26316
+4    ARM A Diastolic Blood Pressure      2  WEEK 2 VSORRES  77.65000
+5    ARM A Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.70000
+6    ARM A Diastolic Blood Pressure      6  WEEK 6 VSORRES  74.36842
+7    ARM A Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.05263
+8    ARM A               Pulse Rate      1   DAY 1 VSORRES  72.57895
+9    ARM A               Pulse Rate     12 WEEK 12 VSORRES  75.68421
+10   ARM A               Pulse Rate     16 WEEK 16 VSORRES  76.26316
+11   ARM A               Pulse Rate      2  WEEK 2 VSORRES  73.35000
+12   ARM A               Pulse Rate      4  WEEK 4 VSORRES  75.85000
+13   ARM A               Pulse Rate      6  WEEK 6 VSORRES  73.47368
+14   ARM A               Pulse Rate      8  WEEK 8 VSORRES  73.21053
+15   ARM A         Respiratory Rate      1   DAY 1 VSORRES  16.31579
+16   ARM A         Respiratory Rate     12 WEEK 12 VSORRES  16.42105
+17   ARM A         Respiratory Rate     16 WEEK 16 VSORRES  15.05263
+18   ARM A         Respiratory Rate      2  WEEK 2 VSORRES  15.40000
+19   ARM A         Respiratory Rate      4  WEEK 4 VSORRES  15.60000
+20   ARM A         Respiratory Rate      6  WEEK 6 VSORRES  17.15789
+21   ARM A         Respiratory Rate      8  WEEK 8 VSORRES  15.42105
+22   ARM A  Systolic Blood Pressure      1   DAY 1 VSORRES 127.52632
+23   ARM A  Systolic Blood Pressure     12 WEEK 12 VSORRES 128.31579
+24   ARM A  Systolic Blood Pressure     16 WEEK 16 VSORRES 132.05263
+25   ARM A  Systolic Blood Pressure      2  WEEK 2 VSORRES 129.45000
+26   ARM A  Systolic Blood Pressure      4  WEEK 4 VSORRES 132.25000
+27   ARM A  Systolic Blood Pressure      6  WEEK 6 VSORRES 130.05263
+28   ARM A  Systolic Blood Pressure      8  WEEK 8 VSORRES 131.00000
+29   ARM A              Temperature      1   DAY 1 VSORRES  36.52105
+30   ARM A              Temperature     12 WEEK 12 VSORRES  36.46316
+31   ARM A              Temperature     16 WEEK 16 VSORRES  36.43158
+32   ARM A              Temperature      2  WEEK 2 VSORRES  36.48947
+33   ARM A              Temperature      4  WEEK 4 VSORRES  36.37000
+34   ARM A              Temperature      6  WEEK 6 VSORRES  36.47368
+35   ARM A              Temperature      8  WEEK 8 VSORRES  36.52105
+36   ARM B Diastolic Blood Pressure      1   DAY 1 VSORRES  78.23810
+37   ARM B Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.16667
+38   ARM B Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.47059
+39   ARM B Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.15000
+40   ARM B Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.45000
+41   ARM B Diastolic Blood Pressure      6  WEEK 6 VSORRES  79.33333
+42   ARM B Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.33333
+43   ARM B               Pulse Rate      1   DAY 1 VSORRES  71.52381
+44   ARM B               Pulse Rate     12 WEEK 12 VSORRES  73.55556
+45   ARM B               Pulse Rate     16 WEEK 16 VSORRES  73.29412
+46   ARM B               Pulse Rate      2  WEEK 2 VSORRES  69.85000
+47   ARM B               Pulse Rate      4  WEEK 4 VSORRES  72.80000
+48   ARM B               Pulse Rate      6  WEEK 6 VSORRES  77.94444
+49   ARM B               Pulse Rate      8  WEEK 8 VSORRES  74.77778
+50   ARM B         Respiratory Rate      1   DAY 1 VSORRES  15.80952
+51   ARM B         Respiratory Rate     12 WEEK 12 VSORRES  15.55556
+52   ARM B         Respiratory Rate     16 WEEK 16 VSORRES  15.29412
+53   ARM B         Respiratory Rate      2  WEEK 2 VSORRES  16.45000
+54   ARM B         Respiratory Rate      4  WEEK 4 VSORRES  15.30000
+55   ARM B         Respiratory Rate      6  WEEK 6 VSORRES  15.38889
+56   ARM B         Respiratory Rate      8  WEEK 8 VSORRES  15.22222
+57   ARM B  Systolic Blood Pressure      1   DAY 1 VSORRES 127.47619
+58   ARM B  Systolic Blood Pressure     12 WEEK 12 VSORRES 129.66667
+59   ARM B  Systolic Blood Pressure     16 WEEK 16 VSORRES 128.88235
+60   ARM B  Systolic Blood Pressure      2  WEEK 2 VSORRES 124.00000
+61   ARM B  Systolic Blood Pressure      4  WEEK 4 VSORRES 126.35000
+62   ARM B  Systolic Blood Pressure      6  WEEK 6 VSORRES 128.61111
+63   ARM B  Systolic Blood Pressure      8  WEEK 8 VSORRES 126.33333
+64   ARM B              Temperature      1   DAY 1 VSORRES  36.38095
+65   ARM B              Temperature     12 WEEK 12 VSORRES  36.43333
+66   ARM B              Temperature     16 WEEK 16 VSORRES  36.26471
+67   ARM B              Temperature      2  WEEK 2 VSORRES  36.26842
+68   ARM B              Temperature      4  WEEK 4 VSORRES  36.35000
+69   ARM B              Temperature      6  WEEK 6 VSORRES  36.31667
+70   ARM B              Temperature      8  WEEK 8 VSORRES  36.38889
+71   ARM C Diastolic Blood Pressure      1   DAY 1 VSORRES  77.33333
+72   ARM C Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.75000
+73   ARM C Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.62500
+74   ARM C Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.50000
+75   ARM C Diastolic Blood Pressure      4  WEEK 4 VSORRES  76.47059
+76   ARM C Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.58824
+77   ARM C Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.52941
+78   ARM C               Pulse Rate      1   DAY 1 VSORRES  74.09524
+79   ARM C               Pulse Rate     12 WEEK 12 VSORRES  73.75000
+80   ARM C               Pulse Rate     16 WEEK 16 VSORRES  76.18750
+81   ARM C               Pulse Rate      2  WEEK 2 VSORRES  73.94444
+82   ARM C               Pulse Rate      4  WEEK 4 VSORRES  77.29412
+83   ARM C               Pulse Rate      6  WEEK 6 VSORRES  76.05882
+84   ARM C               Pulse Rate      8  WEEK 8 VSORRES  75.29412
+85   ARM C         Respiratory Rate      1   DAY 1 VSORRES  15.85714
+86   ARM C         Respiratory Rate     12 WEEK 12 VSORRES  14.93750
+87   ARM C         Respiratory Rate     16 WEEK 16 VSORRES  15.43750
+88   ARM C         Respiratory Rate      2  WEEK 2 VSORRES  15.27778
+89   ARM C         Respiratory Rate      4  WEEK 4 VSORRES  15.23529
+90   ARM C         Respiratory Rate      6  WEEK 6 VSORRES  16.11765
+91   ARM C         Respiratory Rate      8  WEEK 8 VSORRES  14.64706
+92   ARM C  Systolic Blood Pressure      1   DAY 1 VSORRES 123.90476
+93   ARM C  Systolic Blood Pressure     12 WEEK 12 VSORRES 120.06250
+94   ARM C  Systolic Blood Pressure     16 WEEK 16 VSORRES 122.62500
+95   ARM C  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.05556
+96   ARM C  Systolic Blood Pressure      4  WEEK 4 VSORRES 123.52941
+97   ARM C  Systolic Blood Pressure      6  WEEK 6 VSORRES 121.94118
+98   ARM C  Systolic Blood Pressure      8  WEEK 8 VSORRES 125.00000
+99   ARM C              Temperature      1   DAY 1 VSORRES  36.42857
+100  ARM C              Temperature     12 WEEK 12 VSORRES  36.23750
+101  ARM C              Temperature     16 WEEK 16 VSORRES  36.42500
+102  ARM C              Temperature      2  WEEK 2 VSORRES  36.57778
+103  ARM C              Temperature      4  WEEK 4 VSORRES  36.25882
+104  ARM C              Temperature      6  WEEK 6 VSORRES  36.14118
+105  ARM C              Temperature      8  WEEK 8 VSORRES  36.26471
+106  ARM D Diastolic Blood Pressure      1   DAY 1 VSORRES  76.63636
+107  ARM D Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.21053
+108  ARM D Diastolic Blood Pressure     16 WEEK 16 VSORRES  75.57143
+109  ARM D Diastolic Blood Pressure      2  WEEK 2 VSORRES  74.90909
+110  ARM D Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.04762
+111  ARM D Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.60000
+112  ARM D Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.90000
+113  ARM D               Pulse Rate      1   DAY 1 VSORRES  74.78261
+114  ARM D               Pulse Rate     12 WEEK 12 VSORRES  70.75000
+115  ARM D               Pulse Rate     16 WEEK 16 VSORRES  74.19048
+116  ARM D               Pulse Rate      2  WEEK 2 VSORRES  76.59091
+117  ARM D               Pulse Rate      4  WEEK 4 VSORRES  75.42857
+118  ARM D               Pulse Rate      6  WEEK 6 VSORRES  69.95000
+119  ARM D               Pulse Rate      8  WEEK 8 VSORRES  72.90000
+120  ARM D         Respiratory Rate      1   DAY 1 VSORRES  16.13043
+121  ARM D         Respiratory Rate     12 WEEK 12 VSORRES  15.20000
+122  ARM D         Respiratory Rate     16 WEEK 16 VSORRES  15.09524
+123  ARM D         Respiratory Rate      2  WEEK 2 VSORRES  16.36364
+124  ARM D         Respiratory Rate      4  WEEK 4 VSORRES  15.42857
+125  ARM D         Respiratory Rate      6  WEEK 6 VSORRES  15.45000
+126  ARM D         Respiratory Rate      8  WEEK 8 VSORRES  16.00000
+127  ARM D  Systolic Blood Pressure      1   DAY 1 VSORRES 127.54545
+128  ARM D  Systolic Blood Pressure     12 WEEK 12 VSORRES 124.52632
+129  ARM D  Systolic Blood Pressure     16 WEEK 16 VSORRES 129.57143
+130  ARM D  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.45455
+131  ARM D  Systolic Blood Pressure      4  WEEK 4 VSORRES 128.52381
+132  ARM D  Systolic Blood Pressure      6  WEEK 6 VSORRES 122.85000
+133  ARM D  Systolic Blood Pressure      8  WEEK 8 VSORRES 129.40000
+134  ARM D              Temperature      1   DAY 1 VSORRES  36.50435
+135  ARM D              Temperature     12 WEEK 12 VSORRES  36.35000
+136  ARM D              Temperature     16 WEEK 16 VSORRES  36.30000
+137  ARM D              Temperature      2  WEEK 2 VSORRES  36.31818
+138  ARM D              Temperature      4  WEEK 4 VSORRES  36.19524
+139  ARM D              Temperature      6  WEEK 6 VSORRES  36.32000
+140  ARM D              Temperature      8  WEEK 8 VSORRES  36.28000
 
-mutate (grouped): converted 'VISIT' from character to factor (0 new NA)
+datastep: columns started with 6 and ended with 6
 
-ungroup: no grouping variables
+    CLASS1                   CLASS2 CLASS3  CLASS4     VAR      MEAN
+1    ARM A Diastolic Blood Pressure      1   DAY 1 VSORRES  76.47368
+2    ARM A Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.36842
+3    ARM A Diastolic Blood Pressure     16 WEEK 16 VSORRES  77.26316
+4    ARM A Diastolic Blood Pressure      2  WEEK 2 VSORRES  77.65000
+5    ARM A Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.70000
+6    ARM A Diastolic Blood Pressure      6  WEEK 6 VSORRES  74.36842
+7    ARM A Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.05263
+8    ARM A               Pulse Rate      1   DAY 1 VSORRES  72.57895
+9    ARM A               Pulse Rate     12 WEEK 12 VSORRES  75.68421
+10   ARM A               Pulse Rate     16 WEEK 16 VSORRES  76.26316
+11   ARM A               Pulse Rate      2  WEEK 2 VSORRES  73.35000
+12   ARM A               Pulse Rate      4  WEEK 4 VSORRES  75.85000
+13   ARM A               Pulse Rate      6  WEEK 6 VSORRES  73.47368
+14   ARM A               Pulse Rate      8  WEEK 8 VSORRES  73.21053
+15   ARM A         Respiratory Rate      1   DAY 1 VSORRES  16.31579
+16   ARM A         Respiratory Rate     12 WEEK 12 VSORRES  16.42105
+17   ARM A         Respiratory Rate     16 WEEK 16 VSORRES  15.05263
+18   ARM A         Respiratory Rate      2  WEEK 2 VSORRES  15.40000
+19   ARM A         Respiratory Rate      4  WEEK 4 VSORRES  15.60000
+20   ARM A         Respiratory Rate      6  WEEK 6 VSORRES  17.15789
+21   ARM A         Respiratory Rate      8  WEEK 8 VSORRES  15.42105
+22   ARM A  Systolic Blood Pressure      1   DAY 1 VSORRES 127.52632
+23   ARM A  Systolic Blood Pressure     12 WEEK 12 VSORRES 128.31579
+24   ARM A  Systolic Blood Pressure     16 WEEK 16 VSORRES 132.05263
+25   ARM A  Systolic Blood Pressure      2  WEEK 2 VSORRES 129.45000
+26   ARM A  Systolic Blood Pressure      4  WEEK 4 VSORRES 132.25000
+27   ARM A  Systolic Blood Pressure      6  WEEK 6 VSORRES 130.05263
+28   ARM A  Systolic Blood Pressure      8  WEEK 8 VSORRES 131.00000
+29   ARM A              Temperature      1   DAY 1 VSORRES  36.52105
+30   ARM A              Temperature     12 WEEK 12 VSORRES  36.46316
+31   ARM A              Temperature     16 WEEK 16 VSORRES  36.43158
+32   ARM A              Temperature      2  WEEK 2 VSORRES  36.48947
+33   ARM A              Temperature      4  WEEK 4 VSORRES  36.37000
+34   ARM A              Temperature      6  WEEK 6 VSORRES  36.47368
+35   ARM A              Temperature      8  WEEK 8 VSORRES  36.52105
+36   ARM B Diastolic Blood Pressure      1   DAY 1 VSORRES  78.23810
+37   ARM B Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.16667
+38   ARM B Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.47059
+39   ARM B Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.15000
+40   ARM B Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.45000
+41   ARM B Diastolic Blood Pressure      6  WEEK 6 VSORRES  79.33333
+42   ARM B Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.33333
+43   ARM B               Pulse Rate      1   DAY 1 VSORRES  71.52381
+44   ARM B               Pulse Rate     12 WEEK 12 VSORRES  73.55556
+45   ARM B               Pulse Rate     16 WEEK 16 VSORRES  73.29412
+46   ARM B               Pulse Rate      2  WEEK 2 VSORRES  69.85000
+47   ARM B               Pulse Rate      4  WEEK 4 VSORRES  72.80000
+48   ARM B               Pulse Rate      6  WEEK 6 VSORRES  77.94444
+49   ARM B               Pulse Rate      8  WEEK 8 VSORRES  74.77778
+50   ARM B         Respiratory Rate      1   DAY 1 VSORRES  15.80952
+51   ARM B         Respiratory Rate     12 WEEK 12 VSORRES  15.55556
+52   ARM B         Respiratory Rate     16 WEEK 16 VSORRES  15.29412
+53   ARM B         Respiratory Rate      2  WEEK 2 VSORRES  16.45000
+54   ARM B         Respiratory Rate      4  WEEK 4 VSORRES  15.30000
+55   ARM B         Respiratory Rate      6  WEEK 6 VSORRES  15.38889
+56   ARM B         Respiratory Rate      8  WEEK 8 VSORRES  15.22222
+57   ARM B  Systolic Blood Pressure      1   DAY 1 VSORRES 127.47619
+58   ARM B  Systolic Blood Pressure     12 WEEK 12 VSORRES 129.66667
+59   ARM B  Systolic Blood Pressure     16 WEEK 16 VSORRES 128.88235
+60   ARM B  Systolic Blood Pressure      2  WEEK 2 VSORRES 124.00000
+61   ARM B  Systolic Blood Pressure      4  WEEK 4 VSORRES 126.35000
+62   ARM B  Systolic Blood Pressure      6  WEEK 6 VSORRES 128.61111
+63   ARM B  Systolic Blood Pressure      8  WEEK 8 VSORRES 126.33333
+64   ARM B              Temperature      1   DAY 1 VSORRES  36.38095
+65   ARM B              Temperature     12 WEEK 12 VSORRES  36.43333
+66   ARM B              Temperature     16 WEEK 16 VSORRES  36.26471
+67   ARM B              Temperature      2  WEEK 2 VSORRES  36.26842
+68   ARM B              Temperature      4  WEEK 4 VSORRES  36.35000
+69   ARM B              Temperature      6  WEEK 6 VSORRES  36.31667
+70   ARM B              Temperature      8  WEEK 8 VSORRES  36.38889
+71   ARM C Diastolic Blood Pressure      1   DAY 1 VSORRES  77.33333
+72   ARM C Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.75000
+73   ARM C Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.62500
+74   ARM C Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.50000
+75   ARM C Diastolic Blood Pressure      4  WEEK 4 VSORRES  76.47059
+76   ARM C Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.58824
+77   ARM C Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.52941
+78   ARM C               Pulse Rate      1   DAY 1 VSORRES  74.09524
+79   ARM C               Pulse Rate     12 WEEK 12 VSORRES  73.75000
+80   ARM C               Pulse Rate     16 WEEK 16 VSORRES  76.18750
+81   ARM C               Pulse Rate      2  WEEK 2 VSORRES  73.94444
+82   ARM C               Pulse Rate      4  WEEK 4 VSORRES  77.29412
+83   ARM C               Pulse Rate      6  WEEK 6 VSORRES  76.05882
+84   ARM C               Pulse Rate      8  WEEK 8 VSORRES  75.29412
+85   ARM C         Respiratory Rate      1   DAY 1 VSORRES  15.85714
+86   ARM C         Respiratory Rate     12 WEEK 12 VSORRES  14.93750
+87   ARM C         Respiratory Rate     16 WEEK 16 VSORRES  15.43750
+88   ARM C         Respiratory Rate      2  WEEK 2 VSORRES  15.27778
+89   ARM C         Respiratory Rate      4  WEEK 4 VSORRES  15.23529
+90   ARM C         Respiratory Rate      6  WEEK 6 VSORRES  16.11765
+91   ARM C         Respiratory Rate      8  WEEK 8 VSORRES  14.64706
+92   ARM C  Systolic Blood Pressure      1   DAY 1 VSORRES 123.90476
+93   ARM C  Systolic Blood Pressure     12 WEEK 12 VSORRES 120.06250
+94   ARM C  Systolic Blood Pressure     16 WEEK 16 VSORRES 122.62500
+95   ARM C  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.05556
+96   ARM C  Systolic Blood Pressure      4  WEEK 4 VSORRES 123.52941
+97   ARM C  Systolic Blood Pressure      6  WEEK 6 VSORRES 121.94118
+98   ARM C  Systolic Blood Pressure      8  WEEK 8 VSORRES 125.00000
+99   ARM C              Temperature      1   DAY 1 VSORRES  36.42857
+100  ARM C              Temperature     12 WEEK 12 VSORRES  36.23750
+101  ARM C              Temperature     16 WEEK 16 VSORRES  36.42500
+102  ARM C              Temperature      2  WEEK 2 VSORRES  36.57778
+103  ARM C              Temperature      4  WEEK 4 VSORRES  36.25882
+104  ARM C              Temperature      6  WEEK 6 VSORRES  36.14118
+105  ARM C              Temperature      8  WEEK 8 VSORRES  36.26471
+106  ARM D Diastolic Blood Pressure      1   DAY 1 VSORRES  76.63636
+107  ARM D Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.21053
+108  ARM D Diastolic Blood Pressure     16 WEEK 16 VSORRES  75.57143
+109  ARM D Diastolic Blood Pressure      2  WEEK 2 VSORRES  74.90909
+110  ARM D Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.04762
+111  ARM D Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.60000
+112  ARM D Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.90000
+113  ARM D               Pulse Rate      1   DAY 1 VSORRES  74.78261
+114  ARM D               Pulse Rate     12 WEEK 12 VSORRES  70.75000
+115  ARM D               Pulse Rate     16 WEEK 16 VSORRES  74.19048
+116  ARM D               Pulse Rate      2  WEEK 2 VSORRES  76.59091
+117  ARM D               Pulse Rate      4  WEEK 4 VSORRES  75.42857
+118  ARM D               Pulse Rate      6  WEEK 6 VSORRES  69.95000
+119  ARM D               Pulse Rate      8  WEEK 8 VSORRES  72.90000
+120  ARM D         Respiratory Rate      1   DAY 1 VSORRES  16.13043
+121  ARM D         Respiratory Rate     12 WEEK 12 VSORRES  15.20000
+122  ARM D         Respiratory Rate     16 WEEK 16 VSORRES  15.09524
+123  ARM D         Respiratory Rate      2  WEEK 2 VSORRES  16.36364
+124  ARM D         Respiratory Rate      4  WEEK 4 VSORRES  15.42857
+125  ARM D         Respiratory Rate      6  WEEK 6 VSORRES  15.45000
+126  ARM D         Respiratory Rate      8  WEEK 8 VSORRES  16.00000
+127  ARM D  Systolic Blood Pressure      1   DAY 1 VSORRES 127.54545
+128  ARM D  Systolic Blood Pressure     12 WEEK 12 VSORRES 124.52632
+129  ARM D  Systolic Blood Pressure     16 WEEK 16 VSORRES 129.57143
+130  ARM D  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.45455
+131  ARM D  Systolic Blood Pressure      4  WEEK 4 VSORRES 128.52381
+132  ARM D  Systolic Blood Pressure      6  WEEK 6 VSORRES 122.85000
+133  ARM D  Systolic Blood Pressure      8  WEEK 8 VSORRES 129.40000
+134  ARM D              Temperature      1   DAY 1 VSORRES  36.50435
+135  ARM D              Temperature     12 WEEK 12 VSORRES  36.35000
+136  ARM D              Temperature     16 WEEK 16 VSORRES  36.30000
+137  ARM D              Temperature      2  WEEK 2 VSORRES  36.31818
+138  ARM D              Temperature      4  WEEK 4 VSORRES  36.19524
+139  ARM D              Temperature      6  WEEK 6 VSORRES  36.32000
+140  ARM D              Temperature      8  WEEK 8 VSORRES  36.28000
 
-# A tibble: 140 x 7
-   ARMCD ARM   VSTESTCD VSTEST                   VISITNUM VISIT    MEAN
-   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;                       &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt;
- 1 1     ARM A DIABP    Diastolic Blood Pressure        1 DAY 1    76.5
- 2 1     ARM A DIABP    Diastolic Blood Pressure        2 WEEK 2   77.6
- 3 1     ARM A DIABP    Diastolic Blood Pressure        4 WEEK 4   78.7
- 4 1     ARM A DIABP    Diastolic Blood Pressure        6 WEEK 6   74.4
- 5 1     ARM A DIABP    Diastolic Blood Pressure        8 WEEK 8   77.1
- 6 1     ARM A DIABP    Diastolic Blood Pressure       12 WEEK 12  78.4
- 7 1     ARM A DIABP    Diastolic Blood Pressure       16 WEEK 16  77.3
- 8 1     ARM A PULSE    Pulse Rate                      1 DAY 1    72.6
- 9 1     ARM A PULSE    Pulse Rate                      2 WEEK 2   73.4
-10 1     ARM A PULSE    Pulse Rate                      4 WEEK 4   75.8
-# ... with 130 more rows
+Rename variables for clarity
 
-========================================================================= 
-Create plots and print report 
-========================================================================= 
+=========================================================================
+Create plots and print report
+=========================================================================
+
+Create plot
+
+Construct output path
+
+Define report object
+
+Write report to file system
 
 # A report specification: 5 pages
-- file_path: 'C:\Users\User\AppData\Local\Temp\Rtmpum5T6o/output/f_vs.rtf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo1naKK/output/example6.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
-- line size/count: 108/41
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 9/36
 - page by: VSTEST
 - page_header: left=Sponsor: Company right=Study: ABC
 - title 1: 'Figure 1.0'
 - title 2: 'Vital Signs Change from Baseline'
 - title 3: 'Safety Population'
 - footnote 1: 'R Program: VS_Figure.R'
-- page_footer: left=Date Produced: 05Jan21 08:23 center= right=Page [pg] of [tpg]
+- page_footer: left=Date Produced: 06Sep23 20:24 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
-- data: 140 rows, 7 cols
+- data: 140 rows, 6 cols
 - layers: 2
 - height: 4.5
 - width: 9
 
-========================================================================= 
-Log End Time: 2021-01-05 08:23:50 
-Log Elapsed Time: 0 00:00:19 
-========================================================================= 
+Close libname
+
+lib_sync: synchronized data in library 'sdtm'
+
+lib_unload: library 'sdtm' unloaded
+
+Close log
+
+=========================================================================
+Log End Time: 2023-09-06 20:24:10.852245
+Log Elapsed Time: 0 00:00:12
+=========================================================================
 </code></pre>
 <p>Next: <a href="sassy-survival.html">Example 7: Survival
 Analysis</a></p>
