@@ -32,7 +32,6 @@ just like previous examples.
 ```{r eval=FALSE, echo=TRUE}
 library(ggplot2)
 library(sassy)
-library(procs)
 
 
 # Prepare Log -------------------------------------------------------------

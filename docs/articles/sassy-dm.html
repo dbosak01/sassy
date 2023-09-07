@@ -163,7 +163,6 @@ stub column of hierarchical labels.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
 <span></span>
@@ -252,24 +251,24 @@ stub column of hierarchical labels.</li>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
 <span>          output <span class="op">=</span> <span class="va">long</span>,</span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nopercent</span>, <span class="va">nonobs</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">nopercent</span>, <span class="va">nonobs</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
 <span></span>
 <span><span class="co"># Age Summary Block -------------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create summary statistics for age"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Call means procedure to get summary statistics for age"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_means.html" class="external-link">proc_means</a></span><span class="op">(</span><span class="va">adsl</span>, var <span class="op">=</span> <span class="va">AGE</span>,</span>
-<span>           stats <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">mean</span>, <span class="va">std</span>, <span class="va">median</span>, <span class="va">q1</span>, <span class="va">q3</span>, <span class="va">min</span>, <span class="va">max</span><span class="op">)</span>,</span>
+<span><span class="fu">proc_means</span><span class="op">(</span><span class="va">adsl</span>, var <span class="op">=</span> <span class="va">AGE</span>,</span>
+<span>           stats <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">n</span>, <span class="va">mean</span>, <span class="va">std</span>, <span class="va">median</span>, <span class="va">q1</span>, <span class="va">q3</span>, <span class="va">min</span>, <span class="va">max</span><span class="op">)</span>,</span>
 <span>           by <span class="op">=</span> <span class="va">ARM</span>, </span>
-<span>           options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">notype</span>, <span class="va">nofreq</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">age_stats</span> </span>
+<span>           options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">notype</span>, <span class="va">nofreq</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">age_stats</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine stats"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">age_stats</span>, </span>
 <span>         format <span class="op">=</span> <span class="va">fc</span>,</span>
-<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/find.names.html" class="external-link">find.names</a></span><span class="op">(</span><span class="va">age_stats</span>, start <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, </span>
+<span>         drop <span class="op">=</span> <span class="fu">find.names</span><span class="op">(</span><span class="va">age_stats</span>, start <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>, </span>
 <span>         <span class="op">{</span></span>
 <span>           <span class="va">`Mean (SD)`</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">MEAN</span>, <span class="va">STD</span><span class="op">)</span></span>
 <span>           <span class="va">Median</span> <span class="op">&lt;-</span> <span class="va">MEDIAN</span></span>
@@ -280,7 +279,7 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">age_comb</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Transpose ARMs into columns"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">age_comb</span>, </span>
+<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">age_comb</span>, </span>
 <span>               var <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">age_comb</span><span class="op">)</span>,</span>
 <span>               copy <span class="op">=</span> <span class="va">VAR</span>, id <span class="op">=</span> <span class="va">BY</span>, </span>
 <span>               name <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">age_trans</span> </span>
@@ -312,7 +311,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for SEX"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get sex frequency counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">SEX</span>,</span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">SEX</span>,</span>
 <span>          by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>          options <span class="op">=</span> <span class="va">nonobs</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_freq</span> </span>
 <span></span>
@@ -321,7 +320,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">sex_freq</span>, </span>
 <span>         format <span class="op">=</span> <span class="va">fc</span>, </span>
 <span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CAT <span class="op">=</span> <span class="st">"LABEL"</span><span class="op">)</span>,</span>
-<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>, </span>
+<span>         drop <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>, </span>
 <span>         <span class="op">{</span></span>
 <span>           </span>
 <span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
@@ -329,7 +328,7 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_comb</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Transpose ARMs into columns"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">sex_comb</span>, id <span class="op">=</span> <span class="va">BY</span>, </span>
+<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">sex_comb</span>, id <span class="op">=</span> <span class="va">BY</span>, </span>
 <span>               var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
 <span>               copy <span class="op">=</span> <span class="va">VAR</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_trans</span></span>
 <span></span>
@@ -343,11 +342,11 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_cnts</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort by label"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">sex_cnts</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_cnts</span> </span>
+<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">sex_cnts</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_cnts</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get sex chisq"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">SEX</span> <span class="op">*</span> <span class="va">ARM</span><span class="op">)</span>,</span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_chisq</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">SEX</span> <span class="op">*</span> <span class="va">ARM</span><span class="op">)</span>,</span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_chisq</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine chisq statistics"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">sex_chisq</span>,</span>
@@ -370,7 +369,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Create frequency counts for RACE"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get race frequency counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">RACE</span>,</span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">RACE</span>,</span>
 <span>          by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>          options <span class="op">=</span> <span class="va">nonobs</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_freq</span> </span>
 <span></span>
@@ -379,7 +378,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">race_freq</span>, </span>
 <span>         format <span class="op">=</span> <span class="va">fc</span>, </span>
 <span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>CAT <span class="op">=</span> <span class="st">"LABEL"</span><span class="op">)</span>,</span>
-<span>         drop <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>, </span>
+<span>         drop <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>, </span>
 <span>         <span class="op">{</span></span>
 <span>           </span>
 <span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
@@ -387,7 +386,7 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_comb</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Transpose ARMs into columns"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">race_comb</span>, id <span class="op">=</span> <span class="va">BY</span>, var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
+<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">race_comb</span>, id <span class="op">=</span> <span class="va">BY</span>, var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
 <span>               copy <span class="op">=</span> <span class="va">VAR</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_trans</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Clean up"</span><span class="op">)</span></span>
@@ -401,11 +400,11 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_cnts</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort by label"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">race_cnts</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_cnts</span> </span>
+<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">race_cnts</span>, by <span class="op">=</span> <span class="va">LABEL</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_cnts</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get race chisq"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">RACE</span> <span class="op">*</span> <span class="va">ARM</span>,</span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_chisq</span> </span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">RACE</span> <span class="op">*</span> <span class="va">ARM</span>,</span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">race_chisq</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine chisq statistics"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">race_chisq</span>,</span>
@@ -426,7 +425,7 @@ stub column of hierarchical labels.</li>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get age group frequency counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>,</span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>,</span>
 <span>          table <span class="op">=</span> <span class="va">AGECAT</span>,</span>
 <span>          by <span class="op">=</span> <span class="va">ARM</span>,</span>
 <span>          options <span class="op">=</span> <span class="va">nonobs</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_freq</span></span>
@@ -434,7 +433,7 @@ stub column of hierarchical labels.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine counts and percents and assign age group factor for sorting"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">ageg_freq</span>,</span>
 <span>         format <span class="op">=</span> <span class="va">fc</span>,</span>
-<span>         keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">VAR</span>, <span class="va">LABEL</span>, <span class="va">BY</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">VAR</span>, <span class="va">LABEL</span>, <span class="va">BY</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
 <span>         <span class="op">{</span></span>
 <span>           <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span></span>
 <span>           <span class="va">LABEL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">CAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">fc</span><span class="op">$</span><span class="va">AGECAT</span><span class="op">)</span><span class="op">)</span></span>
@@ -442,10 +441,10 @@ stub column of hierarchical labels.</li>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort by age group factor"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">ageg_comb</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">LABEL</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_sort</span> </span>
+<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">ageg_comb</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY</span>, <span class="va">LABEL</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_sort</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Tranpose age group block"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">ageg_sort</span>,</span>
+<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">ageg_sort</span>,</span>
 <span>               var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
 <span>               copy <span class="op">=</span> <span class="va">VAR</span>,</span>
 <span>               id <span class="op">=</span> <span class="va">BY</span>,</span>
@@ -457,8 +456,8 @@ stub column of hierarchical labels.</li>
 <span>         <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_cnts</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ageg chisq"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">AGECAT</span> <span class="op">*</span> <span class="va">ARM</span>,</span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_chisq</span> </span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">adsl</span>, tables <span class="op">=</span> <span class="va">AGECAT</span> <span class="op">*</span> <span class="va">ARM</span>,</span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">chisq</span>, <span class="va">notable</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ageg_chisq</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine chisq statistics"</span><span class="op">)</span></span>
 <span><span class="fu">datastep</span><span class="op">(</span><span class="va">ageg_chisq</span>,</span>
@@ -504,7 +503,7 @@ stub column of hierarchical labels.</li>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Table.R"</span>,</span>
 <span>            <span class="st">"NOTE: Denominator based on number of non-missing responses."</span>,</span>
 <span>            <span class="st">"{supsc('1')}Pearson's Chi-Square tests will be used for "</span></span>
-<span>            <span class="op"><a href="https://common.r-sassy.org/reference/grapes-p-grapes.html" class="external-link">%p%</a></span> <span class="st">"Categorical variables and ANOVA tests for continuous variables."</span><span class="op">)</span> </span>
+<span>            <span class="op">%p%</span> <span class="st">"Categorical variables and ANOVA tests for continuous variables."</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"example2.rtf"</span><span class="op">)</span>, </span>
 <span>                     output_type <span class="op">=</span> <span class="st">"RTF"</span>, </span>

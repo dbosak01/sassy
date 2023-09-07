@@ -29,7 +29,6 @@ Note the following about this example:
   * The program makes extensive use of user-defined formats from the **fmtr** package.
   
 ```{r eval=FALSE, echo=TRUE}
-library(dplyr)
 library(sassy)
 
 options("logr.notes" = FALSE,
@@ -48,10 +47,10 @@ sep("Get data")
 # Get sample data path
 pth <- system.file("extdata", package = "sassy")
 
-
+put("Open data library")
 libname(sdtm, pth, "csv")
 
-
+put("Load data into environment")
 lib_load(sdtm)
 
 
@@ -68,7 +67,7 @@ labels(sdtm.DM) <- list(ARM = "Treatment Group",
                         RACE = "Race", 
                         BRTHDTC = "Birth Date",
                         ARMCD = "Treatment Code"
-                        ) |> put()
+) |> put()
 put("AE labels")
 labels(sdtm.AE) <- list(AESTDTC = "Event Start Date",
                         AEENDTC = "Event Stop Date",
@@ -110,7 +109,7 @@ armfmt <- value(condition(x == "ARM A", "Placebo"),
                 condition(x == "ARM B", "Dose 50mg"),
                 condition(x == "ARM C", "Dose 100mg"),
                 condition(x == "ARM D", "Competitor")) 
-                 
+
 
 formats(sdtm.DM) <- list(SEX = sexfmt, 
                          RACE = racefmt,
@@ -125,16 +124,18 @@ formats(sdtm.AE) <- list(AESEV = sevfmt,
 
 sep("Prepare data")
 
-dm <- sdtm.DM |> 
-  select(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC) |> put()
+put("Select desired columns from DM dataset")
+datastep(sdtm.DM, 
+         keep = v(USUBJID, ARM, SITEID, SUBJID, SEX, AGE, RACE, BRTHDTC), {}) -> dm 
+
 
 # Split dm data by subject id
 dmlst <- split(dm, factor(dm$USUBJID))
 
-
-ae <- sdtm.AE |> 
-  select(USUBJID, AESTDTC, AEENDTC, AESTDY, 
-         AEENDY, AESOC, AESEV, AESER, AEREL) |> put() 
+put("Select desired columns from AE dataset")
+datastep(sdtm.AE, 
+         keep = v(USUBJID, AESTDTC, AEENDTC, AESTDY, 
+                  AEENDY, AESOC, AESEV, AESER, AEREL), {}) -> ae
 
 # Split ae data by subject id
 aelst <- split(ae, factor(ae$USUBJID))
@@ -171,11 +172,11 @@ for (id in names(dmlst)) {
                        "06=Investigational product discontinued, 07=Transfusion performed,",
                        "88=Other"))
   }
-
+  
   # Append table content
   rpt <- rpt |>  add_content(tb1, page_break = FALSE) |> 
-          add_content(tb2)
-
+    add_content(tb2)
+  
 }
 
 put("Write out report")
@@ -212,38 +213,35 @@ Here is page 11 out of 87 pages in the output report:
 Here is most of the log from the above program:
 ```
 =========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp8cFaMB/log/example8.log
-Program Path: C:/packages/Testing/Example8.R
-Working Directory: C:/packages/Testing
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmp6lCP5X/log/example8.log
+Program Path: C:/packages/Testing/procs/ProcsPatientProfile.R
+Working Directory: C:/packages/Testing/procs
 User Name: dbosa
-R Version: 4.2.0 (2022-04-22 ucrt)
+R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
-Operating System: Windows 10 x64 build 19044
-Base Packages: stats graphics grDevices utils datasets methods base
-Other Packages: tidylog_1.0.2 magrittr_2.0.3 reporter_1.3.3 libr_1.2.3 fmtr_1.5.8
-                common_1.0.1 logr_1.3.1 sassy_1.0.7 forcats_0.5.1 stringr_1.4.0
-                dplyr_1.0.9 purrr_0.3.4 readr_2.1.2 tidyr_1.2.0 tibble_3.1.7
-                ggplot2_3.3.6 tidyverse_1.3.1 cranlogs_2.1.1 
-Log Start Time: 2022-07-21 22:31:09
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 ggplot2_3.4.2 patchwork_1.1.3 procs_1.0.3
+reporter_1.4.1 libr_1.2.8 fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.2.0
+Log Start Time: 2023-09-06 21:24:18.59308
 =========================================================================
 
 =========================================================================
 Get data
 =========================================================================
 
-# library 'sdtm': 8 items
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/reporter/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
   Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.5 Kb 2022-07-10 08:49:03
-2   DA       csv 3587   18 528.2 Kb 2022-07-10 08:49:03
-3   DM       csv   87   24  45.5 Kb 2022-07-10 08:49:03
-4   DS       csv  174    9  34.1 Kb 2022-07-10 08:49:03
-5   EX       csv   84   11  26.4 Kb 2022-07-10 08:49:03
-6   IE       csv    2   14  13.4 Kb 2022-07-10 08:49:03
-7   SV       csv  685   10  70.3 Kb 2022-07-10 08:49:03
-8   VS       csv 3358   17 467.4 Kb 2022-07-10 08:49:03
+1   AE       csv  150   27  88.5 Kb 2023-09-06 21:14:37
+2   DM       csv   87   24  45.5 Kb 2023-09-06 21:14:37
+3   DS       csv  174    9  34.1 Kb 2023-09-06 21:14:37
+4   EX       csv   84   11  26.4 Kb 2023-09-06 21:14:37
+5   IE       csv    2   14  13.4 Kb 2023-09-06 21:14:37
+6   SV       csv  685   10  70.3 Kb 2023-09-06 21:14:37
+7   VS       csv 3358   17 467.4 Kb 2023-09-06 21:14:37
 
 lib_load: library 'sdtm' loaded
 
@@ -351,7 +349,9 @@ Apply formats
 Prepare data
 =========================================================================
 
-select: dropped 16 variables (STUDYID, DOMAIN, RFSTDTC, RFENDTC, RFXSTDTC, …)
+Select desired columns from DM dataset
+
+datastep: columns decreased from 24 to 8
 
 # A tibble: 87 × 8
    USUBJID    ARM   SITEID SUBJID SEX     AGE RACE                      BRTHDTC   
@@ -366,24 +366,28 @@ select: dropped 16 variables (STUDYID, DOMAIN, RFSTDTC, RFENDTC, RFXSTDTC, …)
  8 ABC-01-056 ARM A 01     056    M        31 WHITE                     1975-05-02
  9 ABC-01-113 ARM D 01     113    M        74 WHITE                     1932-02-08
 10 ABC-01-114 ARM B 01     114    F        72 WHITE                     1934-07-09
-# … with 77 more rows
+# ℹ 77 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
-select: dropped 18 variables (STUDYID, DOMAIN, AESEQ, AETERM, AELLT, …)
+Select desired columns from AE dataset
+
+datastep: columns decreased from 27 to 9
 
 # A tibble: 150 × 9
-   USUBJID    AESTDTC    AEENDTC    AESTDY AEENDY AESOC                                           AESEV    AESER AEREL      
-   <chr>      <chr>      <chr>       <dbl>  <dbl> <chr>                                           <chr>    <chr> <chr>      
- 1 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations                                  MODERATE N     NOT RELATED
- 2 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations                                  MODERATE N     NOT RELATED
- 3 ABC-01-049 2007       2007           NA     NA Nervous system disorders                        MILD     N     NOT RELATED
- 4 ABC-01-049 2007-01-11 2007-03-13     66    127 Investigations                                  MODERATE N     NOT RELATED
- 5 ABC-01-049 2007       2007           NA     NA Musculoskeletal and connective tissue disorders MILD     N     NOT RELATED
- 6 ABC-01-050 2006-11-08 2006-11-15      7     14 Skin and subcutaneous tissue disorders          MILD     N     NOT RELATED
- 7 ABC-01-050 2006-12-17 2006-12-17     46     46 Respiratory, thoracic and mediastinal disorders MILD     N     NOT RELATED
- 8 ABC-01-051 2007-01-01 2007-01-01     61     61 Nervous system disorders                        MILD     N     NOT RELATED
- 9 ABC-01-051 2007-03-06 2007-03-09    125    128 Nervous system disorders                        MILD     N     NOT RELATED
-10 ABC-01-051 2007-11-12 2007-11-14    376    378 Nervous system disorders                        MILD     N     NOT RELATED
-# … with 140 more rows
+   USUBJID    AESTDTC    AEENDTC    AESTDY AEENDY AESOC                AESEV AESER AEREL
+   <chr>      <chr>      <chr>       <dbl>  <dbl> <chr>                <chr> <chr> <chr>
+ 1 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations       MODE… N     NOT …
+ 2 ABC-01-049 2006-12-28 2007-03-13     52    127 Investigations       MODE… N     NOT …
+ 3 ABC-01-049 2007       2007           NA     NA Nervous system diso… MILD  N     NOT …
+ 4 ABC-01-049 2007-01-11 2007-03-13     66    127 Investigations       MODE… N     NOT …
+ 5 ABC-01-049 2007       2007           NA     NA Musculoskeletal and… MILD  N     NOT …
+ 6 ABC-01-050 2006-11-08 2006-11-15      7     14 Skin and subcutaneo… MILD  N     NOT …
+ 7 ABC-01-050 2006-12-17 2006-12-17     46     46 Respiratory, thorac… MILD  N     NOT …
+ 8 ABC-01-051 2007-01-01 2007-01-01     61     61 Nervous system diso… MILD  N     NOT …
+ 9 ABC-01-051 2007-03-06 2007-03-09    125    128 Nervous system diso… MILD  N     NOT …
+10 ABC-01-051 2007-11-12 2007-11-14    376    378 Nervous system diso… MILD  N     NOT …
+# ℹ 140 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
 =========================================================================
 Create report
@@ -392,7 +396,7 @@ Create report
 Write out report
 
 # A report specification: 87 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp8cFaMB/output/example6.docx'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp6lCP5X/output/example8.docx'
 - output_type: DOCX
 - units: inches
 - orientation: landscape
@@ -419,49 +423,7 @@ Write out report
 - define: AESOC width=2 
 - define: AESTDY align='left' 
 - define: AEENDY align='left' 
-# A table specification:
-- data: tibble 'dm_sub' 1 rows 8 cols
-- show_cols: all
-- use_attributes: all
-- width: 8
-- title 1: 'Listing 1.1 Subjects Narratives of Adverse Events'
-- title 2: 'Subject: ABC-01-050'
-- define: AGE align='left' 
-# A table specification:
-- data: tibble 'ae_sub' 2 rows 9 cols
-- show_cols: all
-- use_attributes: all
-- width: 8
-- footnote 1: 'ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal'
-- footnote 2: 'ᵇAction Taken: 01=None, 02=Investigational product dose altered, 03=Medication taken, 04=Hospitalized, 05=Removed from study, 06=Investigational product discontinued, 07=Transfusion performed,88=Other'
-- spanning_header: from='AESTDY' to='AEENDY' 'Study Day' level=1 
-- define: USUBJID visible='FALSE' 
-- define: AESOC width=2 
-- define: AESTDY align='left' 
-- define: AEENDY align='left' 
- 
 ...
-
-# A table specification:
-- data: tibble 'dm_sub' 1 rows 8 cols
-- show_cols: all
-- use_attributes: all
-- width: 8
-- title 1: 'Listing 1.1 Subjects Narratives of Adverse Events'
-- title 2: 'Subject: ABC-09-140'
-- define: AGE align='left' 
-# A table specification:
-- data: tibble 'ae_sub' 2 rows 9 cols
-- show_cols: all
-- use_attributes: all
-- width: 8
-- footnote 1: 'ᵃSeverity: 01=Mild, 02=Moderate, 03=Severe, 04=Life Threatening, 05=Fatal'
-- footnote 2: 'ᵇAction Taken: 01=None, 02=Investigational product dose altered, 03=Medication taken, 04=Hospitalized, 05=Removed from study, 06=Investigational product discontinued, 07=Transfusion performed,88=Other'
-- spanning_header: from='AESTDY' to='AEENDY' 'Study Day' level=1 
-- define: USUBJID visible='FALSE' 
-- define: AESOC width=2 
-- define: AESTDY align='left' 
-- define: AEENDY align='left' 
 
 =========================================================================
 Clean up
@@ -472,8 +434,8 @@ lib_sync: synchronized data in library 'sdtm'
 lib_unload: library 'sdtm' unloaded
 
 =========================================================================
-Log End Time: 2022-07-21 22:31:15
-Log Elapsed Time: 0 00:00:05
+Log End Time: 2023-09-06 21:24:25.764916
+Log Elapsed Time: 0 00:00:07
 =========================================================================
 
 ```

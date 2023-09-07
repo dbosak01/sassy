@@ -34,7 +34,6 @@ Note the following about this example:
 
 ```{r eval=FALSE, echo=TRUE}
 library(sassy)
-library(procs)
 
 options("logr.autolog" = TRUE, 
         "logr.notes" = FALSE,

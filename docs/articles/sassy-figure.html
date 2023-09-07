@@ -161,7 +161,6 @@ figure just like previous examples.</li>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
@@ -199,7 +198,7 @@ figure just like previous examples.</li>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
 <span>    where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>,</span>
 <span>    <span class="op">{</span></span>
 <span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">AGE</span>, <span class="va">agefmt</span><span class="op">)</span></span>
@@ -207,21 +206,21 @@ figure just like previous examples.</li>
 <span>    <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm_mod</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get population counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
 <span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">SEX</span>, </span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_pop</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">SEX</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">sex_pop</span></span>
 <span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">AGECAT</span>, </span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">agecat_pop</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">AGECAT</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">agecat_pop</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Convert agecat to factor so rows will sort correctly"</span><span class="op">)</span></span>
 <span><span class="va">agecat_pop</span><span class="op">$</span><span class="va">CAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">agecat_pop</span><span class="op">$</span><span class="va">CAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">agefmt</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort agecat"</span><span class="op">)</span></span>
-<span><span class="va">agecat_pop</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span><span class="va">agecat_pop</span>, by <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span></span>
+<span><span class="va">agecat_pop</span> <span class="op">&lt;-</span>  <span class="fu">proc_sort</span><span class="op">(</span><span class="va">agecat_pop</span>, by <span class="op">=</span> <span class="va">CAT</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Create Plots ------------------------------------------------------------</span></span>

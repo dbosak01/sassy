@@ -21,7 +21,6 @@ The example also shows how to create a stub column with summary rows.
 
 ```{r eval=FALSE, echo=TRUE}
 library(sassy)
-library(procs)
 library(stringr)
 
 options("logr.autolog" = TRUE, 

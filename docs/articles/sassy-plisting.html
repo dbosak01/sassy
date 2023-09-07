@@ -164,8 +164,8 @@ subjects.</li>
 object.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Prepare Log -------------------------------------------------------------</span></span>
 <span></span>
@@ -239,12 +239,9 @@ object.</li>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">vso</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pivot vitals signs"</span><span class="op">)</span></span>
-<span><span class="va">vsot</span> <span class="op">&lt;-</span> <span class="va">vso</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">VSTESTCD</span>,</span>
-<span>              values_from <span class="op">=</span> <span class="va">VSCOMB</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span><span class="va">vso</span>, id <span class="op">=</span> <span class="va">VSTESTCD</span>, var <span class="op">=</span> <span class="va">VSCOMB</span>, </span>
+<span>               by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span>by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">VISITNUM</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">vsot</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Assign and apply formats"</span><span class="op">)</span>               </span>
@@ -359,252 +356,117 @@ above subject listing:</p>
 </h2>
 <p>Here is the log produced by the above subject listing:</p>
 <pre><code>=========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpeYEHwE/log/example11.log
-Program Path: C:/packages/Testing/example11.R
-Working Directory: C:/packages/Testing
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpkNnsUE/log/example12.log
+Program Path: C:/packages/Testing/procs/ProcsCombinedFigure.R
+Working Directory: C:/packages/Testing/procs
 User Name: dbosa
-R Version: 4.2.1 (2022-06-23 ucrt)
+R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
-Operating System: Windows 10 x64 build 19044
+Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 reporter_1.3.7 libr_1.2.6 fmtr_1.5.9 logr_1.3.3
-sassy_1.0.8 forcats_0.5.2 stringr_1.4.0 dplyr_1.0.10 purrr_0.3.4 readr_2.1.2
-tidyr_1.2.0 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.1 cranlogs_2.1.1
-common_1.0.5
-Log Start Time: 2022-10-09 19:18:43
+Packages: tidylog_1.0.2 ggplot2_3.4.2 patchwork_1.1.3 procs_1.0.3
+reporter_1.4.1 libr_1.2.8 fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-06 21:06:40.53712
 =========================================================================
-
-=========================================================================
-Prepare formats
-=========================================================================
-
-# A user-defined format: 4 conditions
-  Name Type                       Expression                     Label Order
-1  obj    U                     x == "WHITE"                     White    NA
-2  obj    U x == "BLACK OR AFRICAN AMERICAN" Black or African American    NA
-3  obj    U x == "ASIAN OR PACIFIC ISLANDER" Asian or Pacific Islander    NA
-4  obj    U                             TRUE                     Other    NA
-
-# A user-defined format: 3 conditions
-  Name Type                    Expression                  Label Order
-1  obj    U x == "NOT HISPANIC OR LATINO" Not Hispanic or Latino    NA
-2  obj    U     x == "HISPANIC OR LATINO"     Hispanic or Latino    NA
-3  obj    U                          TRUE                Unknown    NA
-
-# A user-defined format: 5 conditions
-  Name Type   Expression                      Label Order
-1  obj    U x == "ARM A"                    Placebo    NA
-2  obj    U x == "ARM B"                  Drug 50mg    NA
-3  obj    U x == "ARM C"                 Drug 100mg    NA
-4  obj    U x == "ARM D"                 Competitor    NA
-5  obj    U         TRUE Not Treated/Screen Failure    NA
-
-# A user-defined format: 4 conditions
-  Name Type         Expression     Label Order
-1  obj    U   x == "BEATS/MIN"       bpm    NA
-2  obj    U x == "BREATHS/MIN" brths/min    NA
-3  obj    U           x == "C"        °C    NA
-4  obj    U        x == "mmHg"              NA
-
-# A user-defined format: 8 conditions
-  Name Type     Expression             Label Order
-1  obj    U   x == "DAY 1"             Day 1    NA
-2  obj    U  x == "WEEK 2"            Week 2    NA
-3  obj    U  x == "WEEK 4"            Week 4    NA
-4  obj    U  x == "WEEK 6"            Week 6    NA
-5  obj    U  x == "WEEK 8"            Week 8    NA
-6  obj    U x == "WEEK 12"           Week 12    NA
-7  obj    U x == "WEEK 16"           Week 16    NA
-8  obj    U           TRUE Early Termination    NA
-
-# A format catalog: 10 formats
-- $SEX: type V, 2 elements
-- $AGE: type S, "%d Years"
-- $RACE: type U, 4 conditions
-- $WEIGHT: type S, "%6.2f kg"
-- $EAR: type V, 2 elements
-- $DOSE: type S, "%4.2fug"
-- $ETHNIC: type U, 3 conditions
-- $ARMT: type U, 5 conditions
-- $UNITS: type U, 4 conditions
-- $VISIT: type U, 8 conditions
 
 =========================================================================
 Prepare Data
 =========================================================================
 
-# library 'sdtm': 8 items
+Define data library
+
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
   Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.5 Kb 2022-09-05 10:57:47
-2   DA       csv 3587   18 528.2 Kb 2022-09-05 10:57:47
-3   DM       csv   87   24  45.5 Kb 2022-09-05 10:57:47
-4   DS       csv  174    9  34.1 Kb 2022-09-05 10:57:47
-5   EX       csv   84   11  26.4 Kb 2022-09-05 10:57:47
-6   IE       csv    2   14  13.4 Kb 2022-09-05 10:57:47
-7   SV       csv  685   10  70.3 Kb 2022-09-05 10:57:47
-8   VS       csv 3358   17 467.4 Kb 2022-09-05 10:57:47
+1   AE       csv  150   27  88.5 Kb 2023-08-07 17:51:40
+2   DM       csv   87   24  45.5 Kb 2023-08-07 17:51:40
+3   DS       csv  174    9  34.1 Kb 2023-08-07 17:51:40
+4   EX       csv   84   11  26.4 Kb 2023-08-07 17:51:40
+5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
+6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
+7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
+
+Load data into workspace
 
 lib_load: library 'sdtm' loaded
 
-Format desired vital signs
+Prepare format
 
-datastep: columns decreased from 17 to 5
+# A user-defined format: 4 conditions
+  Name Type        Expression    Label Order
+1  obj    U x &gt;= 18 &amp; x &lt;= 24 18 to 24    NA
+2  obj    U x &gt;= 25 &amp; x &lt;= 44 25 to 44    NA
+3  obj    U x &gt;= 45 &amp; x &lt;= 64 45 to 64    NA
+4  obj    U           x &gt;= 65    &gt;= 65    NA
 
-# A tibble: 2,764 × 5
-   USUBJID    VSTESTCD VSCOMB   VISITNUM VISIT  
-   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;  
- 1 ABC-01-049 DIABP    "76 "           1 DAY 1  
- 2 ABC-01-049 DIABP    "66 "           2 WEEK 2 
- 3 ABC-01-049 DIABP    "84 "           4 WEEK 4 
- 4 ABC-01-049 DIABP    "68 "           6 WEEK 6 
- 5 ABC-01-049 DIABP    "80 "           8 WEEK 8 
- 6 ABC-01-049 DIABP    "70 "          12 WEEK 12
- 7 ABC-01-049 DIABP    "70 "          16 WEEK 16
- 8 ABC-01-049 PULSE    "84 bpm"        1 DAY 1  
- 9 ABC-01-049 PULSE    "84 bpm"        2 WEEK 2 
-10 ABC-01-049 PULSE    "76 bpm"        4 WEEK 4 
-# … with 2,754 more rows
+Prepare data
+
+datastep: columns decreased from 24 to 5
+
+# A tibble: 85 × 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D &gt;= 65   
+10 ABC-01-114 F        72 ARM B &gt;= 65   
+# ℹ 75 more rows
 # ℹ Use `print(n = ...)` to see more rows
 
-Pivot vitals signs
+Convert agecat to factor it will sort correctly
 
-group_by: 3 grouping variables (USUBJID, VISITNUM, VISIT)
-
-pivot_wider: reorganized (VSTESTCD, VSCOMB) into (DIABP, PULSE, RESP, SYSBP, TEMP) [was 2764x5, now 554x8]
-
-ungroup: no grouping variables
-
-# A tibble: 554 × 8
-   USUBJID    VISITNUM VISIT   DIABP PULSE  RESP         SYSBP  TEMP  
-   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;  &lt;chr&gt; 
- 1 ABC-01-049        1 DAY 1   "76 " 84 bpm 20 brths/min "120 " 36.4°C
- 2 ABC-01-049        2 WEEK 2  "66 " 84 bpm 16 brths/min "128 " 36.6°C
- 3 ABC-01-049        4 WEEK 4  "84 " 76 bpm 16 brths/min "134 " 35.7°C
- 4 ABC-01-049        6 WEEK 6  "68 " 64 bpm 20 brths/min "100 " 36.5°C
- 5 ABC-01-049        8 WEEK 8  "80 " 84 bpm 16 brths/min "128 " 36.4°C
- 6 ABC-01-049       12 WEEK 12 "70 " 60 bpm 20 brths/min "120 " 36.6°C
- 7 ABC-01-049       16 WEEK 16 "70 " 72 bpm 18 brths/min "130 " 36.2°C
- 8 ABC-01-050        1 DAY 1   "78 " 68 bpm 18 brths/min "100 " 36.7°C
- 9 ABC-01-050        2 WEEK 2  "64 " 68 bpm 18 brths/min "110 " 36.7°C
-10 ABC-01-050        4 WEEK 4  "86 " 82 bpm 16 brths/min "128 " 36.6°C
-# … with 544 more rows
-# ℹ Use `print(n = ...)` to see more rows
-
-Assign and apply formats
-
-# A tibble: 87 × 24
-   STUDYID DOMAIN USUBJID    SUBJID RFSTDTC    RFENDTC RFXSTDTC RFXENDTC RFICDTC    RFPENDTC DTHDTC DTHFL SITEID
-   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;date&gt;     &lt;date&gt;  &lt;lgl&gt;    &lt;lgl&gt;    &lt;date&gt;     &lt;date&gt;   &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt; 
- 1 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 2 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 3 ABC     DM     ABC-01-051 051    2006-11-02 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 4 ABC     DM     ABC-01-052 052    2006-11-06 NA      NA       NA       2006-10-31 NA       NA     NA    01    
- 5 ABC     DM     ABC-01-053 053    2006-11-08 NA      NA       NA       2006-11-01 NA       NA     NA    01    
- 6 ABC     DM     ABC-01-054 054    2006-11-16 NA      NA       NA       2006-11-07 NA       NA     NA    01    
- 7 ABC     DM     ABC-01-055 055    2006-12-06 NA      NA       NA       2006-10-31 NA       NA     NA    01    
- 8 ABC     DM     ABC-01-056 056    2006-11-28 NA      NA       NA       2006-11-21 NA       NA     NA    01    
- 9 ABC     DM     ABC-01-113 113    2006-12-05 NA      NA       NA       2006-11-28 NA       NA     NA    01    
-10 ABC     DM     ABC-01-114 114    2006-12-14 NA      NA       NA       2006-12-01 NA       NA     NA    01    
-# … with 77 more rows, and 11 more variables: BRTHDTC &lt;date&gt;, AGE &lt;chr&gt;, AGEU &lt;chr&gt;, SEX &lt;chr&gt;, RACE &lt;chr&gt;,
-#   ETHNIC &lt;chr&gt;, ARMCD &lt;chr&gt;, ARM &lt;chr&gt;, ACTARMCD &lt;lgl&gt;, ACTARM &lt;lgl&gt;, COUNTRY &lt;lgl&gt;
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
-
-Prepare final data for reporting
-
-datastep: columns increased from 24 to 36
-
-# A tibble: 554 × 36
-   STUDYID DOMAIN USUBJID    SUBJID RFSTDTC    RFENDTC RFXSTDTC RFXENDTC RFICDTC    RFPENDTC DTHDTC DTHFL SITEID
-   &lt;chr&gt;   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;  &lt;date&gt;     &lt;date&gt;  &lt;lgl&gt;    &lt;lgl&gt;    &lt;date&gt;     &lt;date&gt;   &lt;lgl&gt;  &lt;lgl&gt; &lt;chr&gt; 
- 1 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 2 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 3 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 4 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 5 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 6 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 7 ABC     DM     ABC-01-049 049    2006-11-07 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 8 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25 NA       NA     NA    01    
- 9 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25 NA       NA     NA    01    
-10 ABC     DM     ABC-01-050 050    2006-11-02 NA      NA       NA       2006-10-25 NA       NA     NA    01    
-# … with 544 more rows, and 23 more variables: BRTHDTC &lt;date&gt;, AGE &lt;chr&gt;, AGEU &lt;chr&gt;, SEX &lt;chr&gt;, RACE &lt;chr&gt;,
-#   ETHNIC &lt;chr&gt;, ARMCD &lt;chr&gt;, ARM &lt;chr&gt;, ACTARMCD &lt;lgl&gt;, ACTARM &lt;lgl&gt;, COUNTRY &lt;lgl&gt;, VISITNUM &lt;dbl&gt;, VISIT &lt;chr&gt;,
-#   DIABP &lt;chr&gt;, PULSE &lt;chr&gt;, RESP &lt;chr&gt;, SYSBP &lt;chr&gt;, TEMP &lt;chr&gt;, BASELINE &lt;chr&gt;, BP &lt;chr&gt;, TREATMENT &lt;chr&gt;, PG &lt;dbl&gt;,
-#   PTCNT &lt;dbl&gt;
-# ℹ Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names
+Split by ARM
 
 =========================================================================
-Create and Print Report
+Create Plots
 =========================================================================
 
-# A report specification: 29 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpeYEHwE/example11.rtf'
+Create plot for ARM A
+
+Create plot for ARM B
+
+Create plot for ARM C
+
+Create plot for ARM D
+
+Combine 4 plots into 1 using patchwork
+
+=========================================================================
+Create and print report
+=========================================================================
+
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpkNnsUE/output/example12.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
 - margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/37
-- page_header: left=Program:C:/packages/Testing/example11.R right=Draft
-- page_footer: left=Date: 09OCT2022 19:18:50 center=Archytas right=Page [pg] of [tpg]
+- line size/count: 9/36
+- page_header: left=Sponsor: Company right=Study: ABC
+- footnote 1: 'Program: DM_Figure.R'
+- page_footer: left=Date Produced: 06Sep23 21:06 center= right=Page [pg] of [tpg]
 - content: 
-# A table specification:
-- data: tibble 'final' 554 rows 36 cols
-- show_cols: none
-- use_attributes: all
-- width: 9
-- stub: BASELINE TREATMENT 'Subject/Treatment' align='left' 
-- define: BASELINE dedupe='TRUE' 
-- define: TREATMENT 
-- define: VISIT 'Visit' 
-- define: TEMP 'Temperature' 
-- define: PULSE 'Pulse' 
-- define: RESP 'Respirations' 
-- define: BP 'Blood Pressure' 
-- define: USUBJID visible='FALSE' 
-- define: PG visible='FALSE' page_break='TRUE' 
-
-# A report specification: 29 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpeYEHwE/example11.pdf'
-- output_type: PDF
-- units: inches
-- orientation: landscape
-- margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/42
-- page_header: left=Program:C:/packages/Testing/example11.R right=Draft
-- title 1: 'Study: ABC'
-- title 2: 'Appendix 10.2.6.1.2.1'
-- title 3: 'Source: DM, VS'
-- title 4: 'Subject Listing with Vital Signs by Visit¹'
-- title 5: 'All Randomized Patients'
-- footnote 1: '¹ Baseline through completion of study or early termination.'
-- footnote 2: 'Values flagged with † were excluded from the by-visit analysis in tables showing the qualitative test results.'
-- page_footer: left=Date: 09OCT2022 19:18:50 center=Archytas right=Page [pg] of [tpg]
-- content: 
-# A table specification:
-- data: tibble 'final' 554 rows 36 cols
-- show_cols: none
-- use_attributes: all
-- width: 9
-- stub: BASELINE TREATMENT 'Subject/Treatment' align='left' 
-- define: BASELINE dedupe='TRUE' 
-- define: TREATMENT 
-- define: VISIT 'Visit' 
-- define: TEMP 'Temperature' 
-- define: PULSE 'Pulse' 
-- define: RESP 'Respirations' 
-- define: BP 'Blood Pressure' 
-- define: USUBJID visible='FALSE' 
-- define: PG visible='FALSE' page_break='TRUE' 
+# A plot specification: 
+- height: 4.5
+- width: 7
+- title 1: 'Figure 3.2'
+- title 2: 'Distribution of Subjects by Treatment Group'
 
 lib_sync: synchronized data in library 'sdtm'
 
 lib_unload: library 'sdtm' unloaded
 
 =========================================================================
-Log End Time: 2022-10-09 19:18:56
-Log Elapsed Time: 0 00:00:12
+Log End Time: 2023-09-06 21:06:43.938549
+Log Elapsed Time: 0 00:00:03
 =========================================================================
 </code></pre>
 <p>Next: <a href="sassy-pfigure.html">Example 12: Combined

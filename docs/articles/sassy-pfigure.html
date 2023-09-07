@@ -155,8 +155,8 @@ package creates combined plots.<br>
 embed patchwork images into any output type that accepts images.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -180,39 +180,35 @@ embed patchwork images into any output type that accepts images.</li>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare Data"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Define data library</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Define data library"</span><span class="op">)</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Loads data into workspace</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Load data into workspace"</span><span class="op">)</span></span>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Prepare data</span></span>
-<span><span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="va">sdtm.DM</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">datastep</span><span class="op">(</span><span class="op">{</span></span>
-<span>                     </span>
-<span>     <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span></span>
-<span>       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"18 to 24"</span></span>
-<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">44</span><span class="op">)</span></span>
-<span>       <span class="va">AGECAT</span> <span class="op">=</span> <span class="st">"25 to 44"</span></span>
-<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">64</span><span class="op">)</span></span>
-<span>       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"45 to 64"</span></span>
-<span>     <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">65</span><span class="op">)</span></span>
-<span>       <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"&gt;= 65"</span></span>
-<span>     </span>
-<span>   <span class="op">}</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare format"</span><span class="op">)</span></span>
+<span><span class="va">agefmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">24</span>, <span class="st">"18 to 24"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">44</span>, <span class="st">"25 to 44"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">64</span>, <span class="st">"45 to 64"</span><span class="op">)</span>,</span>
+<span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">65</span>, <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, </span>
+<span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
+<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>,</span>
+<span>  <span class="op">{</span></span>
+<span></span>
+<span>      <span class="va">AGECAT</span> <span class="op">=</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">AGE</span>, <span class="va">agefmt</span><span class="op">)</span></span>
+<span>    </span>
+<span>  <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm_mod</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Convert agecat to factor it will sort correctly"</span><span class="op">)</span></span>
-<span><span class="va">dm_mod</span><span class="op">$</span><span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dm_mod</span><span class="op">$</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"18 to 24"</span>, </span>
-<span>                                                  <span class="st">"25 to 44"</span>,</span>
-<span>                                                  <span class="st">"45 to 64"</span>,</span>
-<span>                                                  <span class="st">"&gt;= 65"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">dm_mod</span><span class="op">$</span><span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dm_mod</span><span class="op">$</span><span class="va">AGECAT</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">agefmt</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Split by ARM"</span><span class="op">)</span></span>
 <span><span class="va">dm_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dm_mod</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dm_mod</span><span class="op">$</span><span class="va">ARM</span><span class="op">)</span><span class="op">)</span></span>
-<span>                     </span>
+<span></span>
 <span></span>
 <span><span class="co"># Create Plots ------------------------------------------------------------</span></span>
 <span></span>
@@ -252,16 +248,16 @@ embed patchwork images into any output type that accepts images.</li>
 <span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmp</span>, <span class="st">"output/example12.rtf"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plts</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">plt</span> <span class="op">&lt;-</span> <span class="fu">create_plot</span><span class="op">(</span><span class="va">plts</span>, <span class="fl">4.5</span>, <span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Figure 3.2"</span>, <span class="st">"Distribution of Subjects by Treatment Group"</span>, </span>
 <span>         font_size <span class="op">=</span> <span class="fl">11</span>, bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Figure.R"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"RTF"</span>, font <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">plt</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"Program: DM_Figure.R"</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Date Produced: "</span>, <span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%y %H:%M"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>              right <span class="op">=</span> <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
 <span></span>
@@ -292,36 +288,70 @@ embed patchwork images into any output type that accepts images.</li>
 </h2>
 <p>Here is the log produced by the above combined plot example:</p>
 <pre><code>=========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpqsSwWj/log/example12.log
-Program Path: C:/packages/sassy/vignettes/sassy-pfigure.Rmd
-Working Directory: C:/packages/sassy/vignettes
+Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpkNnsUE/log/example12.log
+Program Path: C:/packages/Testing/procs/ProcsCombinedFigure.R
+Working Directory: C:/packages/Testing/procs
 User Name: dbosa
-R Version: 4.2.1 (2022-06-23 ucrt)
+R Version: 4.3.1 (2023-06-16 ucrt)
 Machine: SOCRATES x86-64
-Operating System: Windows 10 x64 build 19044
+Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 patchwork_1.1.2 reporter_1.3.8 libr_1.2.8 fmtr_1.5.9
-logr_1.3.3 common_1.0.5 sassy_1.0.8 forcats_0.5.2 stringr_1.4.1 dplyr_1.0.10
-purrr_0.3.5 readr_2.1.3 tidyr_1.2.1 tibble_3.1.8 ggplot2_3.3.6 tidyverse_1.3.2
-Log Start Time: 2022-11-28 17:11:15
+Packages: tidylog_1.0.2 ggplot2_3.4.2 patchwork_1.1.3 procs_1.0.3
+reporter_1.4.1 libr_1.2.8 fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
+Log Start Time: 2023-09-06 21:06:40.53712
 =========================================================================
 
 =========================================================================
 Prepare Data
 =========================================================================
 
-# library 'sdtm': 8 items
+Define data library
+
+# library 'sdtm': 7 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/AppData/Local/R/win-library/4.2/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
 - items:
+  Name Extension Rows Cols     Size        LastModified
+1   AE       csv  150   27  88.5 Kb 2023-08-07 17:51:40
+2   DM       csv   87   24  45.5 Kb 2023-08-07 17:51:40
+3   DS       csv  174    9  34.1 Kb 2023-08-07 17:51:40
+4   EX       csv   84   11  26.4 Kb 2023-08-07 17:51:40
+5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
+6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
+7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
+
+Load data into workspace
 
 lib_load: library 'sdtm' loaded
 
-select: dropped 20 variables (STUDYID, DOMAIN, SUBJID, RFSTDTC, RFENDTC, …)
+Prepare format
 
-filter: removed 2 rows (2%), 85 rows remaining
+# A user-defined format: 4 conditions
+  Name Type        Expression    Label Order
+1  obj    U x &gt;= 18 &amp; x &lt;= 24 18 to 24    NA
+2  obj    U x &gt;= 25 &amp; x &lt;= 44 25 to 44    NA
+3  obj    U x &gt;= 45 &amp; x &lt;= 64 45 to 64    NA
+4  obj    U           x &gt;= 65    &gt;= 65    NA
 
-datastep: columns increased from 4 to 5
+Prepare data
+
+datastep: columns decreased from 24 to 5
+
+# A tibble: 85 × 5
+   USUBJID    SEX     AGE ARM   AGECAT  
+   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   
+ 1 ABC-01-049 M        39 ARM D 25 to 44
+ 2 ABC-01-050 M        47 ARM B 45 to 64
+ 3 ABC-01-051 M        34 ARM A 25 to 44
+ 4 ABC-01-052 F        45 ARM C 45 to 64
+ 5 ABC-01-053 F        26 ARM B 25 to 44
+ 6 ABC-01-054 M        44 ARM D 25 to 44
+ 7 ABC-01-055 F        47 ARM C 45 to 64
+ 8 ABC-01-056 M        31 ARM A 25 to 44
+ 9 ABC-01-113 M        74 ARM D &gt;= 65   
+10 ABC-01-114 F        72 ARM B &gt;= 65   
+# ℹ 75 more rows
+# ℹ Use `print(n = ...)` to see more rows
 
 Convert agecat to factor it will sort correctly
 
@@ -346,7 +376,7 @@ Create and print report
 =========================================================================
 
 # A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpqsSwWj/output/example12.rtf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpkNnsUE/output/example12.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -354,24 +384,7 @@ Create and print report
 - line size/count: 9/36
 - page_header: left=Sponsor: Company right=Study: ABC
 - footnote 1: 'Program: DM_Figure.R'
-- page_footer: left=Date Produced: 28Nov22 17:11 center= right=Page [pg] of [tpg]
-- content: 
-# A plot specification: 
-- height: 4.5
-- width: 7
-- title 1: 'Figure 3.2'
-- title 2: 'Distribution of Subjects by Treatment Group'
-
-# A report specification: 1 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpqsSwWj/output/example12.rtf'
-- output_type: RTF
-- units: inches
-- orientation: landscape
-- margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/36
-- page_header: left=Sponsor: Company right=Study: ABC
-- footnote 1: 'Program: DM_Figure.R'
-- page_footer: left=Date Produced: 28Nov22 17:11 center= right=Page [pg] of [tpg]
+- page_footer: left=Date Produced: 06Sep23 21:06 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
 - height: 4.5
@@ -383,11 +396,9 @@ lib_sync: synchronized data in library 'sdtm'
 
 lib_unload: library 'sdtm' unloaded
 
-lib_unload: library 'sdtm' unloaded
-
 =========================================================================
-Log End Time: 2022-11-28 17:11:43
-Log Elapsed Time: 0 00:00:27
+Log End Time: 2023-09-06 21:06:43.938549
+Log Elapsed Time: 0 00:00:03
 =========================================================================
 
 </code></pre>

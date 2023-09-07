@@ -148,7 +148,6 @@ rows.</p>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-sassy.org" class="external-link">sassy</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://procs.r-sassy.org" class="external-link">procs</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://stringr.tidyverse.org" class="external-link">stringr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span><span class="st">"logr.autolog"</span> <span class="op">=</span> <span class="cn">TRUE</span>, </span>
@@ -178,11 +177,11 @@ rows.</p>
 <span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare DM data"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span><span class="op">)</span>, </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span><span class="op">)</span>, </span>
 <span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm_mod</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare DS data"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DS</span>, keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">DSTERM</span>, <span class="va">DSDECOD</span>, <span class="va">DSCAT</span><span class="op">)</span>, </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DS</span>, keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">DSTERM</span>, <span class="va">DSDECOD</span>, <span class="va">DSCAT</span><span class="op">)</span>, </span>
 <span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">DSCAT</span> <span class="op">!=</span> <span class="st">"PROTOCOL MILESTONE"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ds_mod</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Join DM with DS to get ARMs on DS"</span><span class="op">)</span> </span>
@@ -193,8 +192,8 @@ rows.</p>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get ARM population counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, output <span class="op">=</span> <span class="va">long</span>, </span>
-<span>          options <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">dm_mod</span>, tables <span class="op">=</span> <span class="va">ARM</span>, output <span class="op">=</span> <span class="va">long</span>, </span>
+<span>          options <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">nonobs</span>, <span class="va">nopercent</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">arm_pop</span></span>
 <span></span>
 <span><span class="co"># Prepare formats ---------------------------------------------------------</span></span>
 <span></span>
@@ -224,16 +223,16 @@ rows.</p>
 <span><span class="co"># Disposition Groups ------------------------------------------------------</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create vector of final dataframe columns"</span><span class="op">)</span></span>
-<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span>, <span class="va">catseq</span>, <span class="va">`ARM A`</span>, <span class="va">`ARM B`</span>, <span class="va">`ARM C`</span>, <span class="va">`ARM D`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu">v</span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span>, <span class="va">catseq</span>, <span class="va">`ARM A`</span>, <span class="va">`ARM B`</span>, <span class="va">`ARM C`</span>, <span class="va">`ARM D`</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get group counts"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span><span class="va">dmds</span>, tables <span class="op">=</span> <span class="va">DSDECOD</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT</span>, <span class="va">CNTPCT</span><span class="op">)</span>, <span class="op">{</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">dmds</span>, tables <span class="op">=</span> <span class="va">DSDECOD</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT</span>, <span class="va">CNTPCT</span><span class="op">)</span>, <span class="op">{</span></span>
 <span>    </span>
 <span>    <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span>     </span>
 <span>  <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="va">CAT</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">proc_transpose</span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="va">CAT</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>    <span class="op">{</span></span>
 <span>    </span>
@@ -252,14 +251,14 @@ rows.</p>
 <span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">complete_fmt</span><span class="op">)</span></span>
 <span>           </span>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>  <span class="fu">proc_freq</span><span class="op">(</span>tables <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
 <span>    <span class="op">{</span></span>
 <span>    </span>
 <span>      <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span>    </span>
 <span>    <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">proc_transpose</span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>    <span class="op">{</span></span>
 <span>      <span class="va">group</span> <span class="op">=</span> <span class="va">CAT1</span></span>
@@ -274,14 +273,14 @@ rows.</p>
 <span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">noncomp_fmt</span><span class="op">)</span></span>
 <span>           </span>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>  <span class="fu">proc_freq</span><span class="op">(</span>tables <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
 <span>           <span class="op">{</span></span>
 <span>             </span>
 <span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span>             </span>
 <span>           <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">proc_transpose</span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>           <span class="op">{</span></span>
 <span>             <span class="va">group</span> <span class="op">=</span> <span class="st">"NONCOMPLIANCE"</span></span>
@@ -296,14 +295,14 @@ rows.</p>
 <span>           <span class="va">TERMDECOD</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">DSTERM</span>, <span class="va">term_fmt</span><span class="op">)</span></span>
 <span>           </span>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_freq.html" class="external-link">proc_freq</a></span><span class="op">(</span>tables <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
+<span>  <span class="fu">proc_freq</span><span class="op">(</span>tables <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">DSDECOD</span> <span class="op">*</span> <span class="va">TERMDECOD</span><span class="op">)</span>, by <span class="op">=</span> <span class="va">ARM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY</span>, <span class="va">CAT1</span>, <span class="va">CAT2</span>, <span class="va">CNTPCT</span><span class="op">)</span>,</span>
 <span>           <span class="op">{</span></span>
 <span>             </span>
 <span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fmt_cnt_pct</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">arm_pop</span><span class="op">[[</span><span class="va">BY</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span>             </span>
 <span>           <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_transpose.html" class="external-link">proc_transpose</a></span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">proc_transpose</span><span class="op">(</span>var <span class="op">=</span> <span class="va">CNTPCT</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">CAT1</span>, <span class="va">CAT2</span><span class="op">)</span>, id <span class="op">=</span> <span class="va">BY</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">datastep</span><span class="op">(</span>keep <span class="op">=</span> <span class="va">cols</span>,</span>
 <span>           <span class="op">{</span></span>
 <span>             <span class="va">group</span> <span class="op">=</span> <span class="st">"OTHER"</span></span>
@@ -317,7 +316,7 @@ rows.</p>
 <span>    <span class="op">{</span></span>
 <span>      <span class="va">lblind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">cat</span><span class="op">)</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://procs.r-sassy.org/reference/proc_sort.html" class="external-link">proc_sort</a></span><span class="op">(</span>by <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">catseq</span>, <span class="va">cat</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">final</span></span>
+<span>  <span class="fu">proc_sort</span><span class="op">(</span>by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">group</span>, <span class="va">catseq</span>, <span class="va">cat</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">final</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Report ------------------------------------------------------------------</span></span>
@@ -329,7 +328,7 @@ rows.</p>
 <span>                    borders <span class="op">=</span> <span class="st">"all"</span>, width <span class="op">=</span> <span class="fl">8.5</span>, header_bold <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">column_defaults</span><span class="op">(</span>from <span class="op">=</span> <span class="va">`ARM A`</span>, to <span class="op">=</span> <span class="va">`ARM D`</span>, </span>
 <span>                  align <span class="op">=</span> <span class="st">"center"</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu"><a href="https://common.r-sassy.org/reference/v.html" class="external-link">v</a></span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span><span class="op">)</span>, <span class="st">"Completion Status"</span>, </span>
+<span>  <span class="fu">stub</span><span class="op">(</span>vars <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">group</span>, <span class="va">cat</span><span class="op">)</span>, <span class="st">"Completion Status"</span>, </span>
 <span>       style <span class="op">=</span> <span class="fu">cell_style</span><span class="op">(</span>bold <span class="op">=</span> <span class="cn">TRUE</span>, indicator <span class="op">=</span> <span class="st">"lblind"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">group</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>         format <span class="op">=</span> <span class="va">group_fmt</span><span class="op">)</span> <span class="op">|&gt;</span></span>

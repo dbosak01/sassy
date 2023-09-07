@@ -30,7 +30,6 @@ paging for both the report and plot.
 ```{r eval=FALSE, echo=TRUE}
 library(ggplot2)
 library(sassy)
-library(procs)
 
 options("logr.autolog" = TRUE,
         "logr.notes" = FALSE)
