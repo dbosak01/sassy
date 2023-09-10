@@ -85,9 +85,9 @@
 #' @keywords internal
 #' @name sassy
 #' @aliases sassy-package
+#' @import fmtr
 #' @import common
 #' @import logr
-#' @import fmtr
 #' @import libr
 #' @import reporter
 #' @import procs
@@ -97,9 +97,9 @@ NULL
 
 .onAttach <- function(...) {
 
+  do.call("library", list("fmtr"))
   do.call("library", list("common"))
   do.call("library", list("logr"))
-  do.call("library", list("fmtr"))
   do.call("library", list("libr"))
   do.call("library", list("reporter"))
   do.call("library", list("procs"))

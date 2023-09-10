@@ -1,3 +1,7 @@
+# sassy 1.2.1
+
+* Fixed bug on install.
+
 # sassy 1.2.0
 
 * Added IQ and OQ validation routines.
