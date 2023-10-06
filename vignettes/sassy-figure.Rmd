@@ -57,10 +57,6 @@ sep("Prepare Data")
 # Define data library
 libname(sdtm, dir, "csv") 
 
-# Loads data into workspace
-lib_load(sdtm)
-
-
 put("Prepare format")
 agefmt <- value(condition(x >= 18 & x <= 24, "18 to 24"),
                 condition(x >= 25 & x <= 44, "25 to 44"),
@@ -69,7 +65,7 @@ agefmt <- value(condition(x >= 18 & x <= 24, "18 to 24"),
 
 
 put("Prepare data")
-datastep(sdtm.DM, keep = v(USUBJID, SEX, AGE, ARM, AGECAT),
+datastep(sdtm$DM, keep = v(USUBJID, SEX, AGE, ARM, AGECAT),
     where = expression(ARM != "SCREEN FAILURE"),
     {
         AGECAT <- fapply(AGE, agefmt)
@@ -149,9 +145,6 @@ write_report(rpt)
 
 # Clean Up ----------------------------------------------------------------
 
-# Unload library from workspace
-lib_unload(sdtm)
-
 # Close log
 log_close()
 
@@ -206,8 +199,6 @@ Prepare Data
 5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
 6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
 7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
-
-lib_load: library 'sdtm' loaded
 
 Prepare format
 
@@ -333,8 +324,6 @@ Create and print report
 - title 2: 'Distribution of Subjects by Age Category'
 
 lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 =========================================================================
 Log End Time: 2023-09-06 18:32:32.220485

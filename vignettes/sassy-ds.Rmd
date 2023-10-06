@@ -46,15 +46,12 @@ sep("Prepare Data")
 put("Define data library")
 libname(sdtm, dir, "csv") 
 
-put("Loads data into workspace")
-lib_load(sdtm)
-
 put("Prepare DM data")
-datastep(sdtm.DM, keep = v(USUBJID, ARM), 
+datastep(sdtm$DM, keep = v(USUBJID, ARM), 
          where = expression(ARM != "SCREEN FAILURE"), {}) -> dm_mod
 
 put("Prepare DS data")
-datastep(sdtm.DS, keep = v(USUBJID, DSTERM, DSDECOD, DSCAT), 
+datastep(sdtm$DS, keep = v(USUBJID, DSTERM, DSDECOD, DSCAT), 
          where = expression(DSCAT != "PROTOCOL MILESTONE"), {}) -> ds_mod
 
 put("Join DM with DS to get ARMs on DS") 
@@ -231,9 +228,6 @@ write_report(rpt)
 
 # Clean Up ----------------------------------------------------------------
 
-# Unload library from workspace
-lib_unload(sdtm)
-
 # Close log
 log_close()
 
@@ -295,10 +289,6 @@ Define data library
 5 2023-08-07 17:51:40
 6 2023-08-07 17:51:40
 7 2023-08-07 17:51:40
-
-Loads data into workspace
-
-lib_load: library 'sdtm' loaded
 
 Prepare DM data
 
@@ -761,8 +751,6 @@ Create and print report
 - define: lblind visible='FALSE' 
 
 lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 =========================================================================
 Log End Time: 2023-09-05 22:06:09.329367

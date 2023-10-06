@@ -56,13 +56,10 @@ sep("Get Data")
 # Define data library
 libname(sdtm, pkg, "csv") 
 
-# Load library into workspace
-lib_load(sdtm) 
-
 sep("Write Report")
 
 # Define table object
-tbl <- create_table(sdtm.DM) |> 
+tbl <- create_table(sdtm$DM) |> 
   define(USUBJID, id_var = TRUE)
 
 # Construct report path
@@ -77,9 +74,6 @@ rpt <- create_report(pth, output_type = "RTF", font = "Courier") |>
 
 # Write report to file system
 write_report(rpt) 
-
-# Unload data
-lib_unload(sdtm)
 
 # Close log
 log_close()
@@ -132,8 +126,6 @@ Get Data
 7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
 8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
 
-lib_load: library 'sdtm' loaded 
-
 ========================================================================= 
 Write Report 
 ========================================================================= 
@@ -154,10 +146,6 @@ Write Report
 - show_cols: all
 - use_attributes: all
 - define: USUBJID id_var='TRUE' 
-
-lib_sync: synchronized data in library 'sdtm' 
-
-lib_unload: library 'sdtm' unloaded 
 
 ========================================================================= 
 Log End Time: 2021-01-05 08:05:17 

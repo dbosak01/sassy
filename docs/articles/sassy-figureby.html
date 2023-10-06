@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -180,11 +180,8 @@ report and plot.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Create libname for csv data"</span><span class="op">)</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pkg</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Load data into workspace"</span><span class="op">)</span></span>
-<span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span> </span>
-<span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Perform joins and basic filters"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, merge <span class="op">=</span> <span class="va">sdtm.VS</span>, merge_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span>,</span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span>, merge <span class="op">=</span> <span class="va">sdtm</span><span class="op">$</span><span class="va">VS</span>, merge_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span> <span class="op">=</span> <span class="st">"USUBJID"</span><span class="op">)</span>,</span>
 <span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARMCD</span>, <span class="va">ARM</span>, <span class="va">VSTESTCD</span>, <span class="va">VSTEST</span>, <span class="va">VSORRES</span>, <span class="va">VISITNUM</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
 <span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">VSTESTCD</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SYSBP"</span>, <span class="st">"DIABP"</span>, <span class="st">"PULSE"</span>, <span class="st">"TEMP"</span>, <span class="st">"RESP"</span><span class="op">)</span> <span class="op">&amp;</span></span>
 <span>                                      <span class="va">ARMCD</span> <span class="op">!=</span> <span class="st">"SCRNFAIL"</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">prep</span></span>
@@ -240,9 +237,6 @@ report and plot.</li>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Write report to file system"</span><span class="op">)</span></span>
 <span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Close libname"</span><span class="op">)</span></span>
-<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Close log"</span><span class="op">)</span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -296,10 +290,6 @@ Create libname for csv data
 5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
 6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
 7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
-
-Load data into workspace
-
-lib_load: library 'sdtm' loaded
 
 Perform joins and basic filters
 
@@ -654,10 +644,6 @@ Write report to file system
 - width: 9
 
 Close libname
-
-lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 Close log
 

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -174,16 +174,12 @@ an example of a “master and detail” type of report.</p>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Open data library"</span><span class="op">)</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pth</span>, <span class="st">"csv"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Load data into environment"</span><span class="op">)</span></span>
-<span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
-<span></span>
-<span></span>
 <span></span>
 <span><span class="co"># Set labels --------------------------------------------------------------</span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Set labels"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"DM labels"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ARM <span class="op">=</span> <span class="st">"Treatment Group"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ARM <span class="op">=</span> <span class="st">"Treatment Group"</span>,</span>
 <span>                        SITEID <span class="op">=</span> <span class="st">"Centre"</span>,</span>
 <span>                        SUBJID <span class="op">=</span> <span class="st">"Subject"</span>, </span>
 <span>                        SEX <span class="op">=</span> <span class="st">"Sex"</span>, </span>
@@ -193,7 +189,7 @@ an example of a “master and detail” type of report.</p>
 <span>                        ARMCD <span class="op">=</span> <span class="st">"Treatment Code"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">put</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"AE labels"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESTDTC <span class="op">=</span> <span class="st">"Event Start Date"</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/labels.html" class="external-link">labels</a></span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESTDTC <span class="op">=</span> <span class="st">"Event Start Date"</span>,</span>
 <span>                        AEENDTC <span class="op">=</span> <span class="st">"Event Stop Date"</span>,</span>
 <span>                        AESTDY <span class="op">=</span> <span class="st">"Start"</span>,</span>
 <span>                        AEENDY <span class="op">=</span> <span class="st">"End"</span>,</span>
@@ -235,11 +231,11 @@ an example of a “master and detail” type of report.</p>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"ARM D"</span>, <span class="st">"Competitor"</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span></span>
-<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="va">sexfmt</span>, </span>
+<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>SEX <span class="op">=</span> <span class="va">sexfmt</span>, </span>
 <span>                         RACE <span class="op">=</span> <span class="va">racefmt</span>,</span>
 <span>                         ARM <span class="op">=</span> <span class="va">armfmt</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm.AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESEV <span class="op">=</span> <span class="va">sevfmt</span>,</span>
+<span><span class="fu">formats</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">AE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>AESEV <span class="op">=</span> <span class="va">sevfmt</span>,</span>
 <span>                         AEREL <span class="op">=</span> <span class="va">relfmt</span>, </span>
 <span>                         AESER <span class="op">=</span> <span class="va">serfmt</span><span class="op">)</span> </span>
 <span></span>
@@ -249,7 +245,7 @@ an example of a “master and detail” type of report.</p>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Select desired columns from DM dataset"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span>, </span>
 <span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">ARM</span>, <span class="va">SITEID</span>, <span class="va">SUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">RACE</span>, <span class="va">BRTHDTC</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">dm</span> </span>
 <span></span>
 <span></span>
@@ -257,7 +253,7 @@ an example of a “master and detail” type of report.</p>
 <span><span class="va">dmlst</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/split.html" class="external-link">split</a></span><span class="op">(</span><span class="va">dm</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">dm</span><span class="op">$</span><span class="va">USUBJID</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Select desired columns from AE dataset"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.AE</span>, </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">AE</span>, </span>
 <span>         keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">AESTDTC</span>, <span class="va">AEENDTC</span>, <span class="va">AESTDY</span>, </span>
 <span>                  <span class="va">AEENDY</span>, <span class="va">AESOC</span>, <span class="va">AESEV</span>, <span class="va">AESER</span>, <span class="va">AEREL</span><span class="op">)</span>, <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">ae</span></span>
 <span></span>
@@ -312,8 +308,6 @@ an example of a “master and detail” type of report.</p>
 <span></span>
 <span><span class="fu">sep</span><span class="op">(</span><span class="st">"Clean up"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span></span>
@@ -363,8 +357,6 @@ Get data
 5   IE       csv    2   14  13.4 Kb 2023-09-06 21:14:37
 6   SV       csv  685   10  70.3 Kb 2023-09-06 21:14:37
 7   VS       csv 3358   17 467.4 Kb 2023-09-06 21:14:37
-
-lib_load: library 'sdtm' loaded
 
 =========================================================================
 Set labels
@@ -549,10 +541,6 @@ Write out report
 =========================================================================
 Clean up
 =========================================================================
-
-lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 =========================================================================
 Log End Time: 2023-09-06 21:24:25.764916

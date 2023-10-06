@@ -57,11 +57,8 @@ sep("Prepare Data")
 # Create libname for csv data
 libname(sdtm, dir, "csv", quiet = TRUE) 
 
-# Load data into workspace
-lib_load(sdtm) 
-
 put("Filter DM data")
-datastep(sdtm.DM, 
+datastep(sdtm$DM, 
          keep = v(USUBJID, ARM, ARMCD),
          where = expression(ARM != "SCREEN FAILURE"), {}) -> dm
 
@@ -74,7 +71,7 @@ put ("Create lookup for AE severity")
 sevn <- c(MILD = 1, MODERATE = 2, SEVERE = 3) |> put()
 
 put("Prepare table data")
-datastep(sdtm.AE, merge = dm, 
+datastep(sdtm$AE, merge = dm, 
          merge_by = "USUBJID",
          merge_in = v(inA, inB),
          keep = v(USUBJID, ARM, AESEV, AESEVN, AESOC, AEDECOD),
@@ -251,9 +248,6 @@ res <- write_report(rpt)
 # Clean Up ----------------------------------------------------------------
 sep("Clean Up")
 
-put("Remove library from workspace")
-lib_unload(sdtm)
-
 put("Close log")
 log_close()
 
@@ -318,8 +312,6 @@ Prepare Data
 5 2023-08-07 17:51:40
 6 2023-08-07 17:51:40
 7 2023-08-07 17:51:40
-
-lib_load: library 'sdtm' loaded
 
 Filter DM data
 
@@ -808,8 +800,6 @@ Clean Up
 Remove library from workspace
 
 lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 Close log
 

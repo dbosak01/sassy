@@ -55,12 +55,9 @@ sep("Prepare Data")
 # Create libname for csv data
 libname(sdtm, pkg, "csv") 
 
-# Load data into workspace
-lib_load(sdtm) 
-
 put("Join and prepare data")
-prep <- sdtm.DM |> 
-  left_join(sdtm.VS, by = c("USUBJID" = "USUBJID")) |> 
+prep <- sdtm$DM |> 
+  left_join(sdtm$VS, by = c("USUBJID" = "USUBJID")) |> 
   select(USUBJID, VSTESTCD, VISIT, VISITNUM, VSSTRESN, ARM, VSBLFL) |> 
   filter(VSTESTCD %in% c("PULSE", "RESP", "TEMP", "DIABP", "SYSBP"), 
          !(VISIT == "SCREENING" & VSBLFL != "Y")) |> 
@@ -165,9 +162,6 @@ rpt <- create_report(pth, output_type = "PDF", font = "Times",
 # Write report to file system  
 write_report(rpt) 
 
-# Unload data from workspace
-lib_unload(sdtm)
-
 # Close log
 log_close()
 
@@ -215,8 +209,6 @@ Prepare Data
 6   IE       csv    2   14    13 Kb 2020-12-27 23:21:55
 7   SV       csv  685   10  69.9 Kb 2020-12-27 23:21:55
 8   VS       csv 3358   17   467 Kb 2020-12-27 23:21:55
-
-lib_load: library 'sdtm' loaded 
 
 Join and prepare data 
 
@@ -361,10 +353,6 @@ mutate: converted 'VSTESTCD' from character to factor (0 new NA)
 - define: A_TRT 'After Treatment' 
 - define: O_BASE 'Baseline' 
 - define: O_TRT 'After Treatment' 
-
-lib_sync: synchronized data in library 'sdtm' 
-
-lib_unload: library 'sdtm' unloaded 
 
 ========================================================================= 
 Log End Time: 2021-01-05 08:13:49 

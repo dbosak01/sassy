@@ -53,11 +53,8 @@ sep("Prepare Data")
 put("Create libname for csv data")
 libname(sdtm, pkg, "csv") 
 
-put("Load data into workspace")
-lib_load(sdtm) 
-
 put("Perform joins and basic filters")
-datastep(sdtm.DM, merge = sdtm.VS, merge_by = c("USUBJID" = "USUBJID"),
+datastep(sdtm$DM, merge = sdtm$VS, merge_by = c("USUBJID" = "USUBJID"),
          keep = v(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT),
          where = expression(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP") &
                                       ARMCD != "SCRNFAIL"), {}) -> prep
@@ -112,9 +109,6 @@ rpt <- create_report(pth, output_type = "RTF", font = "Arial") |>
 
 put("Write report to file system")
 write_report(rpt) 
-
-put("Close libname")
-lib_unload(sdtm)
 
 put("Close log")
 log_close()
@@ -175,10 +169,6 @@ Create libname for csv data
 5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
 6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
 7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
-
-Load data into workspace
-
-lib_load: library 'sdtm' loaded
 
 Perform joins and basic filters
 
@@ -533,10 +523,6 @@ Write report to file system
 - width: 9
 
 Close libname
-
-lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 Close log
 

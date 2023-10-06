@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.1</span>
       </span>
     </div>
 
@@ -186,10 +186,6 @@ figure just like previous examples.</li>
 <span><span class="co"># Define data library</span></span>
 <span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">dir</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="co"># Loads data into workspace</span></span>
-<span><span class="fu">lib_load</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
-<span></span>
-<span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare format"</span><span class="op">)</span></span>
 <span><span class="va">agefmt</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">24</span>, <span class="st">"18 to 24"</span><span class="op">)</span>,</span>
 <span>                <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">44</span>, <span class="st">"25 to 44"</span><span class="op">)</span>,</span>
@@ -198,7 +194,7 @@ figure just like previous examples.</li>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Prepare data"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm.DM</span>, keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span>, keep <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">USUBJID</span>, <span class="va">SEX</span>, <span class="va">AGE</span>, <span class="va">ARM</span>, <span class="va">AGECAT</span><span class="op">)</span>,</span>
 <span>    where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">ARM</span> <span class="op">!=</span> <span class="st">"SCREEN FAILURE"</span><span class="op">)</span>,</span>
 <span>    <span class="op">{</span></span>
 <span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">AGE</span>, <span class="va">agefmt</span><span class="op">)</span></span>
@@ -278,9 +274,6 @@ figure just like previous examples.</li>
 <span></span>
 <span><span class="co"># Clean Up ----------------------------------------------------------------</span></span>
 <span></span>
-<span><span class="co"># Unload library from workspace</span></span>
-<span><span class="fu">lib_unload</span><span class="op">(</span><span class="va">sdtm</span><span class="op">)</span></span>
-<span></span>
 <span><span class="co"># Close log</span></span>
 <span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
@@ -330,8 +323,6 @@ Prepare Data
 5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
 6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
 7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
-
-lib_load: library 'sdtm' loaded
 
 Prepare format
 
@@ -457,8 +448,6 @@ Create and print report
 - title 2: 'Distribution of Subjects by Age Category'
 
 lib_sync: synchronized data in library 'sdtm'
-
-lib_unload: library 'sdtm' unloaded
 
 =========================================================================
 Log End Time: 2023-09-06 18:32:32.220485
