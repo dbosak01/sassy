@@ -1,3 +1,11 @@
+# sassy 1.2.2
+
+* Added oq validation for `proc_ttest()`.
+* Added example for Mean Change from Baseline.
+* Added example for Intext table.
+* Added example for Adverse Events by rows.
+* Added example for Summary of Lab Values. 
+
 # sassy 1.2.1
 
 * Fixed bug on install.

@@ -806,6 +806,28 @@ check_procs <- function(opth) {
 
   ret <- rbind(ret, tmp)
 
+
+  # Check for proc_ttest() function
+  res <- proc_ttest(dt, var = c("disp"), class = "am",
+                    options = "noprint")
+  tmp <- tmplt
+  tmp[1, "Description"] <- "proc_ttest() function works as expected."
+  if (any(round(res$Statistics$STDERR, 5) !=  c(51.00000, 17.33333,
+                                                44.11055, 53.86506)) ||
+      any(round(res$ConfLimits$UCLM, 9) !=  c(957.016441545, 217.245980649,
+                                              306.712794513, 607.490468840)) ||
+      any(round(res$TTests$PROBT, 8) !=  c(0.03264727, 0.15967144)) ||
+      any(round(res$Equality$FVAL, 8) !=  c(5.7714497))) {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "proc_ttest() function not working."
+    put("proc_ttest() function check failed.")
+  } else {
+
+    put("proc_ttest() function check passed.")
+  }
+
+  ret <- rbind(ret, tmp)
+
   # Check proc transpose
   res <- proc_transpose(dt)
   tmp <- tmplt

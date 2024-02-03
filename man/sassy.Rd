@@ -92,4 +92,12 @@ log_close()
 # View log
 # file.show(lgpth)
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://r-sassy.org}
+  \item Report bugs at \url{https://github.com/dbosak01/sassy/issues}
+}
+
+}
 \keyword{internal}

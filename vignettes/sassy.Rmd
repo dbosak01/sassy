@@ -141,6 +141,20 @@ Create a combined figure of age groups by treatment.
 </a>
 <br>
 
+* **[Example 13](sassy-chgbase.html)**: 
+Create a Mean Change from Baseline figure for laboratory value.
+<a href="sassy-chgbase.html">
+<img src="../man/images/chgbase.png" align="left" />
+</a>
+<br>
+
+* **[Example 14](sassy-ae2.html)**: 
+Creates an AE table with severity grades in rows
+<a href="sassy-ae2.html">
+<img src="../man/images/aevert.png" align="left" />
+</a>
+<br>
+
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!

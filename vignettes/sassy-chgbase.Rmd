@@ -1,0 +1,1056 @@
+---
+title: "Example 13: Mean Change From Baseline"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example 13: Mean Change From Baseline}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+The following example shows a Mean Change from Baseline chart for Hematology 
+Lab Values with supporting tables 
+for the mean value and number of patients.  The figure is accomplished using 
+the **ggplot** and **patchwork** packages, and data preparation that features
+the **procs** package.
+
+## Program
+
+Note the following about this example:
+
+  * The **[procs](https://procs.r-sassy.org)** package calculates mean values
+  and confidence intervals for each treatment group and visit.
+  * The **[ggplot2](https://CRAN.R-project.org/package=ggplot2)** package
+  can create small tables in addition to charts. 
+  * The **[patchwork](https://CRAN.R-project.org/package=patchwork)** 
+  package can combine the ggplot chart and table into a single image.   
+  * The patchwork images are dynamically added to a report object from the
+  **[reporter](https://reporter.r-sassy.org)** package.  Titles are customized
+  for each page.
+
+```{r eval=FALSE, echo=TRUE}    
+library(sassy)
+library(ggplot2)
+library(patchwork)
+
+options("logr.notes" = FALSE,
+        "logr.autolog" = TRUE,
+        "procs.print" = FALSE)
+
+# Get temp location for log and report output
+tmp <- tempdir()
+
+lf <- log_open(file.path(tmp, "example13.log"))
+
+# Get data ----------------------------------------------------------------
+
+sep("Get data")
+
+# Get sample data path
+pth <- system.file("extdata", package = "sassy")
+
+put("Open data library")
+libname(sdtm, pth, "csv")
+
+# Create Formats ----------------------------------------------------------
+
+sep("Create Formats")
+
+put("Format for visits")
+vfmt <- value(condition(x == "DAY 1", "Day 1"), 
+              condition(x == "WEEK 2", "Week 2"),
+              condition(x == "WEEK 4", "Week 4"),
+              condition(x == "WEEK 6", "Week 6"),
+              condition(x == "WEEK 12", "Week 12"),
+              as.factor = TRUE)
+
+put("Format for ARMs")
+afmt <- value(condition(x == "ARM A", "Placebo"), 
+              condition(x == "ARM B", "Drug (10mg)"), 
+              condition(x == "ARM C", "Drug (20mg)"),
+              condition(x == "ARM D", "Competitor"),
+              as.factor = TRUE)
+
+
+# Prepare data ------------------------------------------------------------
+
+sep("Prepare data")
+
+put("Pull out needed visits and columns")
+lbsub1 <- subset(sdtm$LB, VISIT %in% toupper(levels(vfmt)), 
+                v(USUBJID, VISIT, VISITNUM, LBORRES, LBCAT, LBORRESU, LBTEST, 
+                  LBTESTCD, LBBLFL)) |> put()
+
+put("Pull out baseline subset")
+lbsub2 <- subset(lbsub1, LBBLFL == 'Y', 
+                v(USUBJID, VISIT, LBORRES, LBCAT, LBTESTCD)) |> put()
+
+put("Merge and calculate change from baseline")
+datastep(lbsub1, merge = lbsub2, merge_by = v(USUBJID, LBCAT, LBTESTCD), 
+         rename = v(LBORRES.1 = LBORRES, LBORRES.2 = BLBORES, VISIT.1 = VISIT),
+         drop = VISIT.2, {
+            
+           # Convert to double
+           LBORRES.1 <- suppressWarnings(as.double(LBORRES.1))
+           
+           # Convert to double
+           LBORRES.2 <- suppressWarnings(as.double(LBORRES.2))
+          
+           # Calculate Change from baseline  
+           if (!(is.na(LBORRES.1) | is.na(LBORRES.2))) {
+             LBCHG <- LBORRES.1 - LBORRES.2
+           } else {
+             LBCHG <- NA
+           }
+
+         }) -> lbsub 
+
+put("Pull needed ARMs and columns for DM")
+dmsub <- subset(sdtm$DM, ARM != "SCREEN FAILURE", v(USUBJID, ARMCD, ARM)) |> put()
+
+put("Merge DM with LB to get subject treatments")
+datastep(lbsub, merge = dmsub, merge_by = USUBJID, 
+         where = expression(toupper(VISIT) != 'SCREENING'), 
+         {
+           VISIT <- fapply(VISIT, vfmt)
+         }) -> lbdat 
+
+
+# Prepare lab test labels -------------------------------------------------
+
+sep("Lab test labels")
+
+put("Get lookup data for lab tests")
+proc_sort(lbdat, by = v(LBTESTCD, LBTEST, LBORRESU), 
+          keep = v(LBTESTCD, LBTEST, LBORRESU), 
+          options = nodupkey) -> tcodes
+
+put("Create test label with units")
+datastep(tcodes, where = expression(is.na(LBORRESU) == FALSE),
+         keep = v(LBTESTCD, LABEL), 
+         {
+                      
+           LABEL <- paste0(LBTEST, " (", LBORRESU, ")") 
+           
+         }) -> tfmtdat 
+
+put("Create lab value lookup") 
+tfmt <- tfmtdat$LABEL
+names(tfmt) <- tfmtdat$LBTESTCD
+
+put("Apply superscripts as needed")
+tfmt <- sub("(9)", supsc('9'), tfmt, fixed = TRUE) 
+tfmt <- sub("(12)", supsc('12'), tfmt, fixed = TRUE) 
+
+
+# Calculate statistics ----------------------------------------------------
+
+sep("Calculate statistics")
+
+put("Get statistics for change from baseline")
+proc_means(lbdat, by = LBTESTCD, 
+           class = v(ARM, VISIT), 
+           var = LBCHG,
+           stats = v(n, mean, std, clm),
+           options = nway) -> datcl 
+
+put("Get statistics for mean lab value")
+proc_means(lbdat, by = LBTESTCD, 
+           class = v(ARM, VISIT), 
+           var = LBORRES,
+           stats = v(n, mean),
+           options = nway) -> datmn
+
+put("Add mean lab values to change from baseline") 
+datcl$MEANV <- datmn$MEAN
+
+put("Apply formats")
+datcl$BY <- fapply(datcl$BY, tfmt)
+datcl$CLASS1 <- fapply(datcl$CLASS1, afmt)
+
+
+# Create report -----------------------------------------------------------
+
+sep("Create report")
+
+put("Create output path")
+pth <- file.path(tmp, "output/example13.rtf") |> put()
+
+put("Create report first so content can be added dynamically")
+rpt <- create_report(pth, output_type = "RTF",
+                     font = "Arial", font_size = 10) |> 
+  page_header("Sponsor: Archytas", right = "Study: ABC") |> 
+  titles("Figure 1.0", "Mean Change From Baseline (HEMATOLOGY)", "Safety Population",
+         bold = TRUE, blank_row = "none") |> 
+  page_footer("Date: " %p% fapply(Sys.time(), "%d%b%Y %H:%M:%S"), 
+              "Confidential", "Page [pg] of [tpg]") 
+
+put("Loop through lab tests")
+for (tst in unique(datcl$BY)) {
+  
+  put("**** Lab Test: " %p% tst %p% " ****")
+  
+  put("Apply subset")
+  dat <- subset(datcl, BY == tst)
+
+  put("Create plot")
+  p <- ggplot(data = dat, aes(x = CLASS2, y = MEAN, group = CLASS1)) +
+    geom_point(aes(color = CLASS1), size = 1.5, position = position_dodge(width = 0.5)) +
+    geom_line(aes(color = CLASS1, linetype = CLASS1), position = position_dodge(width = 0.5)) + 
+    geom_errorbar(aes(x = CLASS2, ymin = LCLM, ymax = UCLM, color = CLASS1),
+                  position = position_dodge(width = 0.5)) + 
+    theme_light() + 
+    scale_linetype(guide = "none") +
+    scale_color_manual(values = c("blue", "red", "green", "purple")) +
+    theme(legend.position = "bottom", plot.title = element_text(size = 11, hjust = 0)) +
+    guides(color = guide_legend(title = "Treatment")) +
+    labs(x = 'Visit', y = '\n\nMean Change from Baseline (95% CI)') +
+    geom_hline(yintercept = 0, linetype = 'dashed')
+  
+  put("Create table for mean change/mean value")
+  t1 <- ggplot(data = dat) +
+    geom_text(aes(CLASS1, x = CLASS2, label = fapply2(MEAN, MEANV, "%4.2f", "%.2f", sep = "/"), 
+                  hjust = 0.5, vjust = 0.5), size = 8 / .pt) +
+    ggtitle("Mean Change from Baseline/Mean Value") +
+    scale_y_discrete(limits = rev) +
+    theme_bw() + 
+    theme(
+      axis.line = element_blank(),
+      panel.grid = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.y = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(color = "white"),
+      plot.title = element_text(size =10, hjust = 0, face = "bold")
+    )
+  
+  put("Create table for patient counts")
+  t2 <- ggplot(data = dat) +
+    geom_text(aes(CLASS1, x = CLASS2, label = as.character(N), 
+                  hjust = 0.5, vjust = 0.5), size = 8 / .pt) +
+    ggtitle("Number of Patients") +
+    scale_y_discrete(limits = rev) +
+    theme_bw() + 
+    theme(
+      axis.line = element_blank(),
+      panel.grid = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title.y = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(color = "white"),
+      plot.title = element_text(size = 10, hjust = 0, face = "bold")
+    )
+  
+  put("Patch together plot and tables")
+  plts <- p + t1 + t2 + plot_layout(ncol = 1, nrow = 3, 
+                                    widths = c(1, 2, 2), heights = c(8, 2, 2))
+  
+  put("Create plot content")
+  plt1 <- create_plot(plts, height = 6, width = 9) |> 
+    titles("Laboratory Test: " %p% tst, align = "left", blank_row = "below") 
+    
+  put("Add content to report")
+  rpt <- rpt |> 
+    add_content(plt1, page_break = TRUE, blank_row = "none") 
+
+}
+
+put("Write out report to file system")
+res <- write_report(rpt)
+
+
+# Clean Up ----------------------------------------------------------------
+
+sep("Clean Up")
+
+log_close()
+
+# View report
+# file.show(res$modified_path)
+
+# View log
+# file.show(lf)
+```
+
+## Output
+
+Here is an image  of the RTF report produced by the above example:
+
+<img src="../man/images/chgbase.png" align="center" />
+
+
+## Log
+
+Here is the log produced by the above mean change from baseline example:
+
+```
+=========================================================================
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpey7rzN/log/example13.log
+Program Path: C:/packages/Testing/sassytests/ControlChart.R
+Working Directory: C:/packages/Testing
+User Name: dbosa
+R Version: 4.3.2 (2023-10-31 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: tidylog_1.0.2 lubridate_1.9.2 forcats_1.0.0 stringr_1.5.0 dplyr_1.1.3
+purrr_1.0.1 readr_2.1.4 tidyr_1.3.0 tibble_3.2.1 tidyverse_2.0.0 cranlogs_2.1.1
+patchwork_1.1.3 ggplot2_3.4.4 procs_1.0.5 reporter_1.4.4 libr_1.2.9 logr_1.3.5
+fmtr_1.6.2 common_1.1.1 sassy_1.2.1
+Log Start Time: 2024-02-02 18:47:51.657929
+=========================================================================
+
+=========================================================================
+Get data
+=========================================================================
+
+Open data library
+
+# library 'sdtm': 14 items
+- attributes: csv not loaded
+- path: ./data/abc/SDTM
+- items:
+      Name Extension  Rows Cols     Size
+1       AE       csv   150   27  88.3 Kb
+2       DA       csv  3587   18   528 Kb
+3       DM       csv    87   24  45.3 Kb
+4       DS       csv   174    9  33.9 Kb
+5  DS_IHOR       csv   174    9  33.9 Kb
+6       EX       csv    84   11  26.2 Kb
+7       IE       csv     2   14  13.2 Kb
+8       LB       csv  7810   12   879 Kb
+9      LB4       csv 23607   27   5.4 Mb
+10      PE       csv  1854   17 275.7 Kb
+11      QS       csv 13316   17   1.7 Mb
+12  SUPPEX       csv   639   10  63.8 Kb
+13      SV       csv   685   10  70.1 Kb
+14      VS       csv  3358   17 467.2 Kb
+          LastModified
+1  2020-09-18 14:30:23
+2  2020-09-18 14:30:23
+3  2020-09-18 14:30:23
+4  2020-09-18 14:30:23
+5  2020-09-18 14:30:23
+6  2020-09-18 14:30:23
+7  2020-09-18 14:30:23
+8  2024-02-01 00:20:30
+9  2020-09-18 14:30:23
+10 2020-09-18 14:30:24
+11 2020-09-18 14:30:24
+12 2020-09-18 14:30:24
+13 2020-09-18 14:30:24
+14 2020-09-18 14:30:24
+
+=========================================================================
+Create Formats
+=========================================================================
+
+Format for visits
+
+# A user-defined format: 5 conditions
+- as.factor: TRUE
+  Name Type     Expression   Label Order
+1  obj    U   x == "DAY 1"   Day 1    NA
+2  obj    U  x == "WEEK 2"  Week 2    NA
+3  obj    U  x == "WEEK 4"  Week 4    NA
+4  obj    U  x == "WEEK 6"  Week 6    NA
+5  obj    U x == "WEEK 12" Week 12    NA
+
+Format for ARMs
+
+# A user-defined format: 4 conditions
+- as.factor: TRUE
+  Name Type   Expression       Label
+1  obj    U x == "ARM A"     Placebo
+2  obj    U x == "ARM B" Drug (10mg)
+3  obj    U x == "ARM C" Drug (20mg)
+4  obj    U x == "ARM D"  Competitor
+  Order
+1    NA
+2    NA
+3    NA
+4    NA
+
+=========================================================================
+Prepare data
+=========================================================================
+
+Pull out needed visits and columns
+
+# A tibble: 5,965 × 9
+   USUBJID   VISIT VISITNUM LBORRES LBCAT
+   <chr>     <chr>    <dbl> <chr>   <chr>
+ 1 ABC-01-0… DAY 1        1 0.04    HEMA…
+ 2 ABC-01-0… WEEK…        2 0.01    HEMA…
+ 3 ABC-01-0… WEEK…        6 0.06    HEMA…
+ 4 ABC-01-0… WEEK…       12 0.03    HEMA…
+ 5 ABC-01-0… DAY 1        1 0.45    HEMA…
+ 6 ABC-01-0… WEEK…        2 0.19    HEMA…
+ 7 ABC-01-0… WEEK…        6 0.63    HEMA…
+ 8 ABC-01-0… WEEK…       12 0.31    HEMA…
+ 9 ABC-01-0… DAY 1        1 0.19    HEMA…
+10 ABC-01-0… WEEK…        2 0.19    HEMA…
+# ℹ 5,955 more rows
+# ℹ 4 more variables: LBORRESU <chr>,
+#   LBTEST <chr>, LBTESTCD <chr>,
+#   LBBLFL <chr>
+# ℹ Use `print(n = ...)` to see more rows
+
+Pull out baseline subset
+
+# A tibble: 1,555 × 5
+   USUBJID   VISIT LBORRES LBCAT LBTESTCD
+   <chr>     <chr> <chr>   <chr> <chr>   
+ 1 ABC-01-0… DAY 1 0.04    HEMA… BASO    
+ 2 ABC-01-0… DAY 1 0.45    HEMA… BASOLE  
+ 3 ABC-01-0… DAY 1 0.19    HEMA… EOS     
+ 4 ABC-01-0… DAY 1 2.51    HEMA… EOSLE   
+ 5 ABC-01-0… DAY 1 42.6    HEMA… HCT     
+ 6 ABC-01-0… DAY 1 15.0    HEMA… HGB     
+ 7 ABC-01-0… DAY 1 1.91    HEMA… LYM     
+ 8 ABC-01-0… DAY 1 24.64   HEMA… LYMLE   
+ 9 ABC-01-0… DAY 1 33.2    HEMA… MCH     
+10 ABC-01-0… DAY 1 35.3    HEMA… MCHC    
+# ℹ 1,545 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Merge and calculate change from baseline
+
+datastep: columns increased from 9 to 11
+
+# A tibble: 5,965 × 11
+   USUBJID   VISIT VISITNUM LBORRES LBCAT
+   <chr>     <chr>    <dbl>   <dbl> <chr>
+ 1 ABC-01-0… WEEK…        6    0.06 HEMA…
+ 2 ABC-01-0… DAY 1        1    0.04 HEMA…
+ 3 ABC-01-0… WEEK…       12    0.03 HEMA…
+ 4 ABC-01-0… WEEK…        2    0.01 HEMA…
+ 5 ABC-01-0… WEEK…       12    0.31 HEMA…
+ 6 ABC-01-0… WEEK…        6    0.63 HEMA…
+ 7 ABC-01-0… WEEK…        2    0.19 HEMA…
+ 8 ABC-01-0… DAY 1        1    0.45 HEMA…
+ 9 ABC-01-0… WEEK…       12    0.18 HEMA…
+10 ABC-01-0… WEEK…        2    0.19 HEMA…
+# ℹ 5,955 more rows
+# ℹ 6 more variables: LBORRESU <chr>,
+#   LBTEST <chr>, LBTESTCD <chr>,
+#   LBBLFL <chr>, BLBORES <dbl>,
+#   LBCHG <dbl>
+# ℹ Use `print(n = ...)` to see more rows
+
+Pull needed ARMs and columns for DM
+
+# A tibble: 85 × 3
+   USUBJID    ARMCD ARM  
+   <chr>      <chr> <chr>
+ 1 ABC-01-049 4     ARM D
+ 2 ABC-01-050 2     ARM B
+ 3 ABC-01-051 1     ARM A
+ 4 ABC-01-052 3     ARM C
+ 5 ABC-01-053 2     ARM B
+ 6 ABC-01-054 4     ARM D
+ 7 ABC-01-055 3     ARM C
+ 8 ABC-01-056 1     ARM A
+ 9 ABC-01-113 4     ARM D
+10 ABC-01-114 2     ARM B
+# ℹ 75 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Merge DM with LB to get subject treatments
+
+datastep: columns increased from 11 to 13
+
+# A tibble: 5,965 × 13
+   USUBJID   VISIT VISITNUM LBORRES LBCAT
+   <chr>     <ord>    <dbl>   <dbl> <chr>
+ 1 ABC-01-0… Day 1        1    0.45 HEMA…
+ 2 ABC-01-0… Week…        2   51.8  HEMA…
+ 3 ABC-01-0… Week…       12    0.18 HEMA…
+ 4 ABC-01-0… Week…        2    0.19 HEMA…
+ 5 ABC-01-0… Week…        6   32.6  HEMA…
+ 6 ABC-01-0… Week…        2   33.4  HEMA…
+ 7 ABC-01-0… Day 1        1   33.2  HEMA…
+ 8 ABC-01-0… Week…       12   33.5  HEMA…
+ 9 ABC-01-0… Week…        6    0.06 HEMA…
+10 ABC-01-0… Day 1        1    0.04 HEMA…
+# ℹ 5,955 more rows
+# ℹ 8 more variables: LBORRESU <chr>,
+#   LBTEST <chr>, LBTESTCD <chr>,
+#   LBBLFL <chr>, BLBORES <dbl>,
+#   LBCHG <dbl>, ARMCD <chr>, ARM <chr>
+# ℹ Use `print(n = ...)` to see more rows
+
+=========================================================================
+Lab test labels
+=========================================================================
+
+Get lookup data for lab tests
+
+proc_sort: input data set 33 rows and 13 columns
+           by: LBTESTCD LBTEST LBORRESU
+           keep: LBTESTCD LBTEST LBORRESU
+           order: a a a
+           options: nodupkey
+           output data set 33 rows and 3 columns
+
+# A tibble: 33 × 3
+   LBTESTCD LBTEST               LBORRESU
+   <chr>    <chr>                <chr>   
+ 1 BASO     Basophils            x10(9)/L
+ 2 BASO     Basophils            <NA>    
+ 3 BASOLE   Basophils/Leukocytes %       
+ 4 EOS      Eosinophils          x10(9)/L
+ 5 EOS      Eosinophils          <NA>    
+ 6 EOSLE    Eosinophils/Leukocy… %       
+ 7 HCT      Hematocrit           %       
+ 8 HCT      Hematocrit           <NA>    
+ 9 HGB      Hemoglobin           g/dL    
+10 HGB      Hemoglobin           <NA>    
+# ℹ 23 more rows
+# ℹ Use `print(n = ...)` to see more rows
+
+Create test label with units
+
+datastep: columns decreased from 3 to 2
+
+# A tibble: 19 × 2
+   LBTESTCD LABEL                        
+   <chr>    <chr>                        
+ 1 BASO     Basophils (x10(9)/L)         
+ 2 BASOLE   Basophils/Leukocytes (%)     
+ 3 EOS      Eosinophils (x10(9)/L)       
+ 4 EOSLE    Eosinophils/Leukocytes (%)   
+ 5 HCT      Hematocrit (%)               
+ 6 HGB      Hemoglobin (g/dL)            
+ 7 LYM      Lymphocytes (x10(9)/L)       
+ 8 LYMLE    Lymphocytes/Leukocytes (%)   
+ 9 MCH      Ery. Mean Corpuscular Hemogl…
+10 MCHC     Ery. Mean Corpuscular HGB Co…
+11 MCV      Ery. Mean Corpuscular Volume…
+12 MONO     Monocytes (x10(9)/L)         
+13 MONOLE   Monocytes/Leukocytes (%)     
+14 NEUT     Neutrophils (x10(9)/L)       
+15 NEUTLE   Neutrophils/Leukocytes (%)   
+16 PLAT     Platelets (x10(9)/L)         
+17 RBC      Erythrocytes (x10(12)/L)     
+18 RDW      Erythrocytes Distribution Wi…
+19 WBC      Leukocytes (x10(9)/L)        
+
+Create lab value lookup
+
+Apply superscripts as needed
+
+=========================================================================
+Calculate statistics
+=========================================================================
+
+Get statistics for change from baseline
+
+proc_means: input data set 5965 rows and 13 columns
+            by: LBTESTCD
+            class: ARM VISIT
+            var: LBCHG
+            stats: n mean std clm
+            view: TRUE
+            output: 1 datasets
+
+   CLASS1  CLASS2     BY TYPE FREQ   VAR
+1   ARM A   Day 1   BASO    3   19 LBCHG
+2   ARM A  Week 2   BASO    3   19 LBCHG
+3   ARM A  Week 6   BASO    3   19 LBCHG
+4   ARM A Week 12   BASO    3   18 LBCHG
+5   ARM B   Day 1   BASO    3   20 LBCHG
+6   ARM B  Week 2   BASO    3   20 LBCHG
+7   ARM B  Week 6   BASO    3   18 LBCHG
+8   ARM B Week 12   BASO    3   18 LBCHG
+9   ARM C   Day 1   BASO    3   19 LBCHG
+    N          MEAN        STD
+1  19  0.000000e+00 0.00000000
+2  18 -5.555556e-03 0.04591837
+3  18 -3.888889e-03 0.04002042
+4  17 -1.294118e-02 0.02365500
+5  20  0.000000e+00 0.00000000
+6  19  7.894737e-03 0.02839776
+7  17 -4.117647e-03 0.04213947
+8  15 -9.333333e-03 0.03514595
+9  19  0.000000e+00 0.00000000
+10 17  1.352941e-02 0.02956797
+           LCLM          UCLM
+1   0.000000000  0.0000000000
+2  -0.028390224  0.0172791128
+3  -0.023790575  0.0160127976
+4  -0.025103453 -0.0007788999
+5   0.000000000  0.0000000000
+6  -0.005792545  0.0215820188
+7  -0.025783766  0.0175484714
+8  -0.028796514  0.0101298474
+9   0.000000000  0.0000000000
+10 -0.001673034  0.0287318579
+
+ [ reached 'max' / getOption("max.print") ]
+
+Get statistics for mean lab value
+
+proc_means: input data set 5965 rows and 13 columns
+            by: LBTESTCD
+            class: ARM VISIT
+            var: LBORRES
+            stats: n mean
+            view: TRUE
+            output: 1 datasets
+
+    CLASS1  CLASS2     BY TYPE FREQ
+1    ARM A   Day 1   BASO    3   19
+2    ARM A  Week 2   BASO    3   19
+3    ARM A  Week 6   BASO    3   19
+4    ARM A Week 12   BASO    3   18
+5    ARM B   Day 1   BASO    3   20
+6    ARM B  Week 2   BASO    3   20
+7    ARM B  Week 6   BASO    3   18
+8    ARM B Week 12   BASO    3   18
+9    ARM C   Day 1   BASO    3   19
+10   ARM C  Week 2   BASO    3   18
+
+        VAR  N        MEAN
+1   LBORRES 19  0.03789474
+2   LBORRES 19  0.03105263
+3   LBORRES 19  0.03473684
+4   LBORRES 18  0.02666667
+5   LBORRES 20  0.04100000
+6   LBORRES 20  0.04800000
+7   LBORRES 18  0.03333333
+8   LBORRES 16  0.03250000
+9   LBORRES 19  0.02684211
+10  LBORRES 18  0.03944444
+ [ reached 'max' / getOption("max.print")]
+
+Add mean lab values to change from baseline
+
+Apply formats
+
+=========================================================================
+Create report
+=========================================================================
+
+Create output path
+
+C:\Users\dbosa\AppData\Local\Temp\Rtmpey7rzN/output/example13.rtf
+
+Create report first so content can be added dynamically
+
+Loop through lab tests
+
+**** Lab Test: Basophils (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Basophils/Leukocytes (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Eosinophils (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Eosinophils/Leukocytes (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Hematocrit (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Hemoglobin (g/dL) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Lymphocytes (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Lymphocytes/Leukocytes (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Ery. Mean Corpuscular Hemoglobin (pg) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Ery. Mean Corpuscular HGB Concentration (g/dL) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Ery. Mean Corpuscular Volume (fL) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Monocytes (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Monocytes/Leukocytes (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Neutrophils (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Neutrophils/Leukocytes (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Platelets (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Erythrocytes (x10¹²/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Erythrocytes Distribution Width (%) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+**** Lab Test: Leukocytes (x10⁹/L) ****
+
+Apply subset
+
+Create plot
+
+Create table for mean change/mean value
+
+Create table for patient counts
+
+Patch together plot and tables
+
+Create plot content
+
+Add content to report
+
+Write out report to file system
+
+# A report specification: 19 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpey7rzN/output/example13.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/42
+- page_header: left=Sponsor: Archytas right=Study: ABC
+- title 1: 'Figure 1.0'
+- title 2: 'Mean Change From Baseline (HEMATOLOGY)'
+- title 3: 'Safety Population'
+- page_footer: left=Date: 02Feb2024 18:48:06 center=Confidential right=Page [pg] of [tpg]
+- content: 
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Basophils (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Basophils/Leukocytes (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Eosinophils (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Eosinophils/Leukocytes (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Hematocrit (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Hemoglobin (g/dL)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Lymphocytes (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Lymphocytes/Leukocytes (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Ery. Mean Corpuscular Hemoglobin (pg)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Ery. Mean Corpuscular HGB Concentration (g/dL)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Ery. Mean Corpuscular Volume (fL)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Monocytes (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Monocytes/Leukocytes (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Neutrophils (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Neutrophils/Leukocytes (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Platelets (x10⁹/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Erythrocytes (x10¹²/L)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Erythrocytes Distribution Width (%)'
+# A plot specification: 
+- height: 6
+- width: 9
+- title 1: 'Laboratory Test: Leukocytes (x10⁹/L)'
+
+=========================================================================
+Clean Up
+=========================================================================
+
+=========================================================================
+Log End Time: 2024-02-02 18:48:36.339628
+Log Elapsed Time: 0 00:00:44
+=========================================================================
+
+
+```
+
+

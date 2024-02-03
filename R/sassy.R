@@ -81,7 +81,6 @@
 #'
 #' # View log
 #' # file.show(lgpth)
-#' @docType package
 #' @keywords internal
 #' @name sassy
 #' @aliases sassy-package
@@ -91,7 +90,7 @@
 #' @import libr
 #' @import reporter
 #' @import procs
-NULL
+"_PACKAGE"
 
 
 
