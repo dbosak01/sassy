@@ -3,6 +3,8 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   sassy-ae: sassy-ae.html
+  sassy-ae2: sassy-ae2.html
+  sassy-chgbase: sassy-chgbase.html
   sassy-disclaimers: sassy-disclaimers.html
   sassy-dm: sassy-dm.html
   sassy-ds: sassy-ds.html
@@ -10,6 +12,7 @@ articles:
   sassy-figure: sassy-figure.html
   sassy-figureby: sassy-figureby.html
   sassy-forest: sassy-forest.html
+  sassy-intext: sassy-intext.html
   sassy-listing: sassy-listing.html
   sassy-pfigure: sassy-pfigure.html
   sassy-plisting: sassy-plisting.html
@@ -17,7 +20,7 @@ articles:
   sassy-survival: sassy-survival.html
   sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2023-10-06T10:43Z
+last_built: 2024-02-04T18:40Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

@@ -1,8 +1,8 @@
 ---
-title: "Example 13: AE Severity in Rows"
+title: "Example 14: AE Severity in Rows"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example 13: AE Severity in Rows}
+  %\VignetteIndexEntry{Example 14: AE Severity in Rows}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-The 13th example is similar to the Adverse Events table produced in Example 4.
+The 14th example is similar to the Adverse Events table produced in Example 4.
 In this example, however, the severity grades are shown in rows instead of columns. 
 This table is somewhat easier to read than the previous example,
 because the pages do not wrap.  
@@ -43,7 +43,7 @@ options("logr.autolog" = TRUE,
 tmp <- tempdir()
 
 # Open log
-lf <- log_open(file.path(tmp, "example13.log"))
+lf <- log_open(file.path(tmp, "example14.log"))
 
 # Get data
 dir <- system.file("extdata", package = "sassy")
@@ -272,7 +272,7 @@ tbl <- create_table(aefinal, first_row_blank = TRUE, width = 9, show_cols = "non
 
 
 put("Create report object")
-rpt <- create_report(file.path(tmp, "example13.rtf"), output_type = "RTF", 
+rpt <- create_report(file.path(tmp, "example14.rtf"), output_type = "RTF", 
                      font_size = 10, font = "Arial") |> 
   page_header(left = c("Sponsor: Company", "Protocol: ABC-123"), 
               right = c("Page [pg] of [tpg]", "Database: 2023-10-01")) |> 
@@ -832,7 +832,7 @@ Create report object
 Print report
 
 # A report specification: 24 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp4q58ap/example13.rtf'
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp4q58ap/example14.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
@@ -876,4 +876,4 @@ Log Elapsed Time: 0 00:00:07
 
 ```
 
-Next: [Example 5: Vital Signs Table](sassy-vs.html)
+Next: [Example 15: Intext Table](sassy-intext.html)

@@ -107,42 +107,42 @@ Perform survival analysis.
 <br>
 
 * **[Example 8](sassy-profile.html)**: 
-Create a patient profile report.
+Creates a patient profile report.
 <a href="sassy-profile.html">
 <img src="../man/images/profile.png" align="left" />
 </a>
 <br>
 
 * **[Example 9](sassy-forest.html)**: 
-Create a figure with a forest plot.
+Creates a figure with a forest plot.
 <a href="sassy-forest.html">
 <img src="../man/images/forest.png" align="left" />
 </a>
 <br>
 
 * **[Example 10](sassy-ds.html)**: 
-Create a subject disposition table.
+Creates a subject disposition table.
 <a href="sassy-ds.html">
 <img src="../man/images/disposition.png" align="left" />
 </a>
 <br>
 
 * **[Example 11](sassy-plisting.html)**: 
-Create a subject listing with vital signs by visit.
+Creates a subject listing with vital signs by visit.
 <a href="sassy-plisting.html">
 <img src="../man/images/plisting.png" align="left" />
 </a>
 <br>
 
 * **[Example 12](sassy-pfigure.html)**: 
-Create a combined figure of age groups by treatment.
+Creates a combined figure of age groups by treatment.
 <a href="sassy-pfigure.html">
 <img src="../man/images/pfigure.png" align="left" />
 </a>
 <br>
 
 * **[Example 13](sassy-chgbase.html)**: 
-Create a Mean Change from Baseline figure for laboratory value.
+Creates a Mean Change from Baseline figure for laboratory values.
 <a href="sassy-chgbase.html">
 <img src="../man/images/chgbase.png" align="left" />
 </a>
@@ -155,6 +155,12 @@ Creates an AE table with severity grades in rows
 </a>
 <br>
 
+* **[Example 15](sassy-intext.html)**: 
+Creates both stand-alone and "intext" versions of a demographics table. 
+<a href="sassy-intext.html">
+<img src="../man/images/example15i1.png" align="left" />
+</a>
+<br>
 
 Once you review these examples, please proceed to the package links above to
 explore the system further!
