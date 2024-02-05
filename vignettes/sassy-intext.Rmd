@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 This example produces both stand-alone and "intext" versions of a simple 
-demographics summary table. of selected variables. The stand-alone version
+demographics summary table. The stand-alone version
 is created in PDF and contains page header and footer information. Also, the 
 titles are in the body of the table.  The "intext" version is created in RTF
 and the page headers and footers have been removed.  Additionally, the titles

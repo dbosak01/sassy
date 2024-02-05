@@ -4,7 +4,7 @@
 * Added example for Mean Change from Baseline.
 * Added example for Intext table.
 * Added example for Adverse Events by rows.
-* Added example for Summary of Lab Values. 
+* Added example for Shift table of Lab Values. 
 
 # sassy 1.2.1
 

@@ -162,6 +162,14 @@ Creates both stand-alone and "intext" versions of a demographics table.
 </a>
 <br>
 
+
+* **[Example 16](sassy-shift.html)**: 
+Creates a shift table of lab values. 
+<a href="sassy-shift.html">
+<img src="../man/images/shift.png" align="left" />
+</a>
+<br>
+
 Once you review these examples, please proceed to the package links above to
 explore the system further!
 
