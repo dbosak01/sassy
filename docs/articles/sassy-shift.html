@@ -178,7 +178,8 @@ used in the pharmaceutical industry.</p>
 <span><span class="va">pth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, package <span class="op">=</span> <span class="st">"sassy"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Open data library"</span><span class="op">)</span></span>
-<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="va">pth</span>, <span class="st">"csv"</span><span class="op">)</span></span>
+<span><span class="co">#libname(sdtm, pth, "csv")</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data/abc/SDTM"</span>, <span class="st">"csv"</span><span class="op">)</span></span>
 <span></span>
 <span></span>
 <span><span class="co"># Create Formats ----------------------------------------------------------</span></span>
@@ -226,15 +227,15 @@ used in the pharmaceutical industry.</p>
 <span>         drop <span class="op">=</span> <span class="va">VISIT.2</span>, <span class="op">{</span></span>
 <span>           </span>
 <span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">LBNRIND.1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span></span>
-<span>              <span class="va">LBNRIND.1</span> <span class="op">&lt;-</span> <span class="st">"UNKNOWN"</span></span>
+<span>             </span>
+<span>             <span class="va">LBNRIND.1</span> <span class="op">&lt;-</span> <span class="st">"UNKNOWN"</span></span>
 <span>           <span class="op">}</span></span>
-<span></span>
+<span>           </span>
 <span>           <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">LBNRIND.2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span></span>
+<span>             </span>
 <span>             <span class="va">LBNRIND.2</span> <span class="op">&lt;-</span> <span class="st">"UNKNOWN"</span></span>
 <span>           <span class="op">}</span></span>
-<span></span>
+<span>           </span>
 <span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lbsub</span> </span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Pull needed ARMs and columns for DM"</span><span class="op">)</span></span>
@@ -295,62 +296,37 @@ used in the pharmaceutical industry.</p>
 <span><span class="va">lbdat</span><span class="op">$</span><span class="va">LBNRIND</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">lbdat</span><span class="op">$</span><span class="va">LBNRIND</span>, <span class="va">rfmt</span><span class="op">)</span></span>
 <span><span class="va">lbdat</span><span class="op">$</span><span class="va">BLBNRIND</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">lbdat</span><span class="op">$</span><span class="va">BLBNRIND</span>, <span class="va">rfmt</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Pull out unknown results to get correct denominator"</span><span class="op">)</span></span>
-<span><span class="va">lb_unk</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">lbdat</span>, <span class="va">LBNRIND</span> <span class="op">==</span> <span class="st">'Unknown'</span> <span class="op">|</span> <span class="va">BLBNRIND</span> <span class="op">==</span> <span class="st">'Unknown'</span><span class="op">)</span></span>
-<span><span class="va">lb_oth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">lbdat</span>, <span class="va">LBNRIND</span> <span class="op">!=</span> <span class="st">'Unknown'</span> <span class="op">&amp;</span> <span class="va">BLBNRIND</span> <span class="op">!=</span> <span class="st">'Unknown'</span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Get freqs by ARM and visit"</span><span class="op">)</span></span>
-<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">lb_oth</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">LBTESTCD</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
-<span>          tables <span class="op">=</span> <span class="va">LBNRIND</span> <span class="op">*</span> <span class="va">BLBNRIND</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_freq_oth</span></span>
+<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">lbdat</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">LBTESTCD</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
+<span>          tables <span class="op">=</span> <span class="va">LBNRIND</span> <span class="op">*</span> <span class="va">BLBNRIND</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_freq</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Combine frequencies and percents"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">lb_freq_oth</span>, </span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">lb_freq</span>, </span>
 <span>         drop <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">VAR1</span>, <span class="va">VAR2</span>, <span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>,</span>
-<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">CAT1</span> <span class="op">!=</span> <span class="st">'Unknown'</span> <span class="op">&amp;</span> <span class="va">CAT2</span> <span class="op">!=</span> <span class="st">'Unknown'</span><span class="op">)</span>,</span>
 <span>         <span class="op">{</span></span>
 <span>           <span class="kw">if</span> <span class="op">(</span><span class="va">CNT</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">{</span></span>
 <span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">CNT</span>, <span class="st">"%d"</span>, width <span class="op">=</span> <span class="fl">10</span>, justify <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> </span>
 <span>           <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
 <span>             <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply2</span><span class="op">(</span><span class="va">CNT</span>, <span class="va">PCT</span>, <span class="st">"%d"</span>, <span class="st">"(%5.1f%%)"</span><span class="op">)</span></span>
 <span>           <span class="op">}</span></span>
-<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_comb_oth</span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Get freqs by ARM and visit for unknown"</span><span class="op">)</span></span>
-<span><span class="fu">proc_freq</span><span class="op">(</span><span class="va">lb_unk</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">LBTESTCD</span>, <span class="va">VISIT</span><span class="op">)</span>,</span>
-<span>          tables <span class="op">=</span> <span class="va">LBNRIND</span> <span class="op">*</span> <span class="va">BLBNRIND</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_freq_unk</span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Format frequency for unkown"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">lb_freq_unk</span>, </span>
-<span>         drop <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">VAR1</span>, <span class="va">VAR2</span>, <span class="va">CNT</span>, <span class="va">PCT</span><span class="op">)</span>,</span>
-<span>         where <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">CAT1</span> <span class="op">==</span> <span class="st">'Unknown'</span> <span class="op">|</span> <span class="va">CAT2</span> <span class="op">==</span> <span class="st">'Unknown'</span><span class="op">)</span>,</span>
-<span>         <span class="op">{</span></span>
-<span></span>
-<span>            <span class="va">CNTPCT</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">CNT</span>, <span class="st">"%d"</span>, width <span class="op">=</span> <span class="fl">10</span>, justify <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> </span>
-<span></span>
-<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_comb_unk</span></span>
-<span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Set frequencies and rename"</span><span class="op">)</span></span>
-<span><span class="fu">datastep</span><span class="op">(</span><span class="va">lb_comb_oth</span>, set <span class="op">=</span> <span class="va">lb_comb_unk</span>, </span>
-<span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>BY1 <span class="op">=</span> <span class="st">"ARM"</span>, BY2 <span class="op">=</span> <span class="st">"TEST"</span>, </span>
-<span>                    CAT1 <span class="op">=</span> <span class="st">"RES"</span>, CAT2 <span class="op">=</span> <span class="st">"BRES"</span>,</span>
-<span>                    BY3 <span class="op">=</span> <span class="st">"VISIT"</span><span class="op">)</span>, </span>
-<span>                    <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_all</span></span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort frequencies"</span><span class="op">)</span></span>
-<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">lb_all</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">TEST</span>, <span class="va">VISIT</span>, <span class="va">RES</span>, <span class="va">BRES</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_all</span></span>
+<span>         <span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_comb</span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Transpose ARMs"</span><span class="op">)</span> </span>
-<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">lb_all</span>, id <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">ARM</span>, <span class="va">BRES</span><span class="op">)</span>, </span>
-<span>               by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">TEST</span>, <span class="va">VISIT</span>, <span class="va">RES</span><span class="op">)</span>, var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
+<span><span class="fu">proc_transpose</span><span class="op">(</span><span class="va">lb_comb</span>, id <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY1</span>, <span class="va">CAT2</span><span class="op">)</span>, copy <span class="op">=</span> <span class="va">N</span>,</span>
+<span>               by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">BY2</span>, <span class="va">BY3</span>, <span class="va">CAT1</span><span class="op">)</span>, var <span class="op">=</span> <span class="va">CNTPCT</span>,</span>
 <span>               options <span class="op">=</span> <span class="va">noname</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_final</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Apply formats"</span><span class="op">)</span></span>
-<span><span class="va">lb_final</span><span class="op">$</span><span class="va">TEST</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">lb_final</span><span class="op">$</span><span class="va">TEST</span>, <span class="va">tfmt</span><span class="op">)</span></span>
+<span><span class="va">lb_final</span><span class="op">$</span><span class="va">BY2</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">lb_final</span><span class="op">$</span><span class="va">BY2</span>, <span class="va">tfmt</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Rename variables"</span><span class="op">)</span></span>
+<span><span class="fu">datastep</span><span class="op">(</span><span class="va">lb_final</span>, </span>
+<span>         rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>BY2 <span class="op">=</span> <span class="st">"LBTEST"</span>, BY3 <span class="op">=</span> <span class="st">"VISIT"</span>, CAT1 <span class="op">=</span> <span class="st">"RIND"</span><span class="op">)</span>, </span>
+<span>         <span class="op">{</span><span class="op">}</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_final</span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Sort by lab test"</span><span class="op">)</span></span>
-<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">lb_final</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">TEST</span>, <span class="va">VISIT</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_final</span></span>
+<span><span class="fu">proc_sort</span><span class="op">(</span><span class="va">lb_final</span>, by <span class="op">=</span> <span class="fu">v</span><span class="op">(</span><span class="va">LBTEST</span>, <span class="va">VISIT</span><span class="op">)</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">lb_final</span></span>
 <span></span>
 <span></span>
 <span></span>
@@ -367,10 +343,11 @@ used in the pharmaceutical industry.</p>
 <span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="va">`ARM B.Low`</span>, <span class="va">`ARM B.Unknown`</span>, <span class="st">"Drug 10mg"</span>, n <span class="op">=</span> <span class="va">lb_pop</span><span class="op">[</span><span class="st">"ARM B"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="va">`ARM C.Low`</span>, <span class="va">`ARM C.Unknown`</span>, <span class="st">"Drug 20mg"</span>, n <span class="op">=</span> <span class="va">lb_pop</span><span class="op">[</span><span class="st">"ARM C"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">spanning_header</span><span class="op">(</span><span class="va">`ARM D.Low`</span>, <span class="va">`ARM D.Unknown`</span>, <span class="st">"Competitor"</span>, n <span class="op">=</span> <span class="va">lb_pop</span><span class="op">[</span><span class="st">"ARM D"</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">TEST</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">LBTEST</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">VISIT</span>, <span class="st">"Visit"</span>, format <span class="op">=</span> <span class="va">vfmt</span>, dedupe <span class="op">=</span> <span class="cn">TRUE</span>, align <span class="op">=</span> <span class="st">"left"</span>, </span>
 <span>         id_var <span class="op">=</span> <span class="cn">TRUE</span>, blank_after <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">RES</span>, <span class="st">""</span>, align <span class="op">=</span> <span class="st">"left"</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">N</span>, <span class="st">"n"</span>, visible <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">RIND</span>, <span class="st">""</span>, align <span class="op">=</span> <span class="st">"left"</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.Low`</span>, <span class="st">"Low"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.Normal`</span>, <span class="st">"Normal"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM A.High`</span>, <span class="st">"High"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -386,10 +363,10 @@ used in the pharmaceutical industry.</p>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Low`</span>, <span class="st">"Low"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Normal`</span>, <span class="st">"Normal"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.High`</span>, <span class="st">"High"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Unknown`</span>, <span class="st">"Unknown"</span><span class="op">)</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">`ARM D.Unknown`</span>, <span class="st">"Unknown"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span></span>
-<span><span class="fu">put</span><span class="op">(</span><span class="st">"Create report"</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="fu">put</span><span class="op">(</span><span class="st">"Create report"</span><span class="op">)</span></span>
 <span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="va">pth</span>, output_type <span class="op">=</span> <span class="st">"PDF"</span>,</span>
 <span>                     font <span class="op">=</span> <span class="st">"Courier"</span>, font_size <span class="op">=</span> <span class="fl">9</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">set_margins</span><span class="op">(</span>top <span class="op">=</span> <span class="fl">1</span>, left <span class="op">=</span> <span class="fl">1</span>, right <span class="op">=</span> <span class="fl">1</span>, bottom <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -399,15 +376,18 @@ used in the pharmaceutical industry.</p>
 <span>                        <span class="st">"TASK: CSR"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Table 4.3.1.1"</span>, <span class="st">""</span>, <span class="st">"Shift Table of Laboratory Values - Hematology"</span>, </span>
 <span>         <span class="st">"(Safety Population)"</span>, blank_row <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">page_by</span><span class="op">(</span><span class="va">TEST</span>, <span class="st">"Laboratory Value: "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">page_by</span><span class="op">(</span><span class="va">LBTEST</span>, <span class="st">"Laboratory Value: "</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">footnotes</span><span class="op">(</span><span class="st">"PROGRAM/OUTPUT: T_LABSHIFT/T_4_3_1_1_HEM"</span>, </span>
 <span>            <span class="st">"DATE (TIME): "</span> <span class="op">%p%</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="fu">fapply</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"%d%b%Y (%H:%M)"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>            columns <span class="op">=</span> <span class="fl">2</span>, borders <span class="op">=</span> <span class="st">"top"</span>, blank_row <span class="op">=</span> <span class="st">"below"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Note: Denominator for percentages is"</span>,</span>
-<span>                  <span class="st">"the number of participants at each visit"</span>,</span>
-<span>                  <span class="st">"with a valid lab test result."</span><span class="op">)</span>,</span>
+<span>  <span class="fu">footnotes</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Note 1: For N(%) of participants, percentages are calculated"</span>,</span>
+<span>                  <span class="st">"as the number of participants for each ARM at each visit"</span>,</span>
+<span>                  <span class="st">"as the denominator."</span><span class="op">)</span>,</span>
 <span>            <span class="st">"Reference: Listing 2.8.1.1, 2.8.1.2"</span>, blank_row <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
 <span></span>
 <span></span>
 <span><span class="fu">put</span><span class="op">(</span><span class="st">"Write out report to file system"</span><span class="op">)</span></span>
@@ -438,16 +418,16 @@ used in the pharmaceutical industry.</p>
 <p>Here is the log:</p>
 <pre><code>=========================================================================
 Log Path: C:/Users/dbosa/AppData/Local/Temp/RtmpaGlETW/log/example16.log
-Program Path: C:/packages/Testing/sassytests/ShiftTable.R
+Program Path: C:/packages/Testing/sassytests/ShiftTable2.R
 Working Directory: C:/packages/Testing
 User Name: dbosa
 R Version: 4.3.2 (2023-10-31 ucrt)
 Machine: SOCRATES x86-64
 Operating System: Windows 10 x64 build 22621
 Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 procs_1.0.5 reporter_1.4.3 libr_1.2.9 logr_1.3.5
-fmtr_1.6.2 common_1.1.1 sassy_1.2.1
-Log Start Time: 2024-02-05 08:37:34.703123
+Packages: tidylog_1.0.2 ggplot2_3.4.4 cranlogs_2.1.1 dplyr_1.1.3 procs_1.0.5
+reporter_1.4.3 libr_1.2.9 logr_1.3.5 fmtr_1.6.2 common_1.1.1 sassy_1.2.1
+Log Start Time: 2024-02-06 14:52:04.476925
 =========================================================================
 
 =========================================================================
@@ -460,40 +440,23 @@ Open data library
 - attributes: csv not loaded
 - path: ./data/abc/SDTM
 - items:
-      Name Extension  Rows Cols     Size
-1       AE       csv   150   27  88.3 Kb
-2       DA       csv  3587   18   528 Kb
-3       DM       csv    87   24  45.3 Kb
-4       DS       csv   174    9  33.9 Kb
-5  DS_IHOR       csv   174    9  33.9 Kb
-6       EX       csv    84   11  26.2 Kb
-7       IE       csv     2   14  13.2 Kb
-8       LB       csv  1618   24 348.2 Kb
-9      LB4       csv 23607   27   5.4 Mb
-10     LB6       csv  7810   12   879 Kb
-11     LB8       csv  2069   12 211.2 Kb
-12      PE       csv  1854   17 275.7 Kb
-13      QS       csv 13316   17   1.7 Mb
-14  SUPPEX       csv   639   10  63.8 Kb
-15      SV       csv   685   10  70.1 Kb
-16      VS       csv  3358   17 467.2 Kb
-          LastModified
-1  2020-09-18 14:30:23
-2  2020-09-18 14:30:23
-3  2020-09-18 14:30:23
-4  2020-09-18 14:30:23
-5  2020-09-18 14:30:23
-6  2020-09-18 14:30:23
-7  2020-09-18 14:30:23
-8  2024-02-03 01:29:01
-9  2020-09-18 14:30:23
-10 2024-02-01 00:20:30
-11 2024-02-02 22:42:43
-12 2020-09-18 14:30:24
-13 2020-09-18 14:30:24
-14 2020-09-18 14:30:24
-15 2020-09-18 14:30:24
-16 2020-09-18 14:30:24
+      Name Extension  Rows Cols     Size        LastModified
+1       AE       csv   150   27  88.3 Kb 2020-09-18 14:30:23
+2       DA       csv  3587   18   528 Kb 2020-09-18 14:30:23
+3       DM       csv    87   24  45.3 Kb 2020-09-18 14:30:23
+4       DS       csv   174    9  33.9 Kb 2020-09-18 14:30:23
+5  DS_IHOR       csv   174    9  33.9 Kb 2020-09-18 14:30:23
+6       EX       csv    84   11  26.2 Kb 2020-09-18 14:30:23
+7       IE       csv     2   14  13.2 Kb 2020-09-18 14:30:23
+8       LB       csv  1618   24 348.2 Kb 2024-02-03 01:29:01
+9      LB4       csv 23607   27   5.4 Mb 2020-09-18 14:30:23
+10     LB6       csv  7810   12   879 Kb 2024-02-01 00:20:30
+11     LB8       csv  2069   12 211.2 Kb 2024-02-02 22:42:43
+12      PE       csv  1854   17 275.7 Kb 2020-09-18 14:30:24
+13      QS       csv 13316   17   1.7 Mb 2020-09-18 14:30:24
+14  SUPPEX       csv   639   10  63.8 Kb 2020-09-18 14:30:24
+15      SV       csv   685   10  70.1 Kb 2020-09-18 14:30:24
+16      VS       csv  3358   17 467.2 Kb 2020-09-18 14:30:24
 
 =========================================================================
 Create Formats
@@ -536,20 +499,19 @@ Prepare data
 Pull out needed visits and columns
 
 # A tibble: 1,578 × 9
-   USUBJID  VISIT VISITNUM LBCAT LBORRESU LBTEST LBTESTCD
-   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
- 1 ABC-01-… DAY 1        1 HEMA… x10(9)/L Basop… BASO    
- 2 ABC-01-… WEEK…        2 HEMA… x10(9)/L Basop… BASO    
- 3 ABC-01-… WEEK…        6 HEMA… x10(9)/L Basop… BASO    
- 4 ABC-01-… WEEK…       12 HEMA… x10(9)/L Basop… BASO    
- 5 ABC-01-… DAY 1        1 HEMA… x10(9)/L Eosin… EOS     
- 6 ABC-01-… WEEK…        2 HEMA… x10(9)/L Eosin… EOS     
- 7 ABC-01-… WEEK…        6 HEMA… x10(9)/L Eosin… EOS     
- 8 ABC-01-… WEEK…       12 HEMA… x10(9)/L Eosin… EOS     
- 9 ABC-01-… DAY 1        1 HEMA… %        Hemat… HCT     
-10 ABC-01-… WEEK…        2 HEMA… %        Hemat… HCT     
+   USUBJID    VISIT   VISITNUM LBCAT      LBORRESU LBTEST     LBTESTCD LBBLFL LBNRIND
+   &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;  
+ 1 ABC-01-049 DAY 1          1 HEMATOLOGY x10(9)/L Basophils  BASO     Y      NORMAL 
+ 2 ABC-01-049 WEEK 2         2 HEMATOLOGY x10(9)/L Basophils  BASO     &lt;NA&gt;   NORMAL 
+ 3 ABC-01-049 WEEK 6         6 HEMATOLOGY x10(9)/L Basophils  BASO     &lt;NA&gt;   NORMAL 
+ 4 ABC-01-049 WEEK 12       12 HEMATOLOGY x10(9)/L Basophils  BASO     &lt;NA&gt;   NORMAL 
+ 5 ABC-01-049 DAY 1          1 HEMATOLOGY x10(9)/L Eosinophi… EOS      Y      NORMAL 
+ 6 ABC-01-049 WEEK 2         2 HEMATOLOGY x10(9)/L Eosinophi… EOS      &lt;NA&gt;   NORMAL 
+ 7 ABC-01-049 WEEK 6         6 HEMATOLOGY x10(9)/L Eosinophi… EOS      &lt;NA&gt;   NORMAL 
+ 8 ABC-01-049 WEEK 12       12 HEMATOLOGY x10(9)/L Eosinophi… EOS      &lt;NA&gt;   NORMAL 
+ 9 ABC-01-049 DAY 1          1 HEMATOLOGY %        Hematocrit HCT      Y      NORMAL 
+10 ABC-01-049 WEEK 2         2 HEMATOLOGY %        Hematocrit HCT      &lt;NA&gt;   NORMAL 
 # ℹ 1,568 more rows
-# ℹ 2 more variables: LBBLFL &lt;chr&gt;, LBNRIND &lt;chr&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 Pull out baseline subset
@@ -575,21 +537,19 @@ Merge and append change from baseline
 datastep: columns increased from 9 to 10
 
 # A tibble: 1,578 × 10
-   USUBJID  VISIT VISITNUM LBCAT LBORRESU LBTEST LBTESTCD
-   &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
- 1 ABC-01-… WEEK…       12 HEMA… x10(9)/L Basop… BASO    
- 2 ABC-01-… WEEK…        2 HEMA… x10(9)/L Basop… BASO    
- 3 ABC-01-… DAY 1        1 HEMA… x10(9)/L Basop… BASO    
- 4 ABC-01-… WEEK…        6 HEMA… x10(9)/L Basop… BASO    
- 5 ABC-01-… WEEK…       12 HEMA… x10(9)/L Eosin… EOS     
- 6 ABC-01-… DAY 1        1 HEMA… x10(9)/L Eosin… EOS     
- 7 ABC-01-… WEEK…        2 HEMA… x10(9)/L Eosin… EOS     
- 8 ABC-01-… WEEK…        6 HEMA… x10(9)/L Eosin… EOS     
- 9 ABC-01-… WEEK…       12 HEMA… %        Hemat… HCT     
-10 ABC-01-… WEEK…        2 HEMA… %        Hemat… HCT     
+   USUBJID    VISIT   VISITNUM LBCAT LBORRESU LBTEST LBTESTCD LBBLFL LBNRIND BLBNRIND
+   &lt;chr&gt;      &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   
+ 1 ABC-01-049 WEEK 12       12 HEMA… x10(9)/L Basop… BASO     &lt;NA&gt;   NORMAL  NORMAL  
+ 2 ABC-01-049 WEEK 2         2 HEMA… x10(9)/L Basop… BASO     &lt;NA&gt;   NORMAL  NORMAL  
+ 3 ABC-01-049 DAY 1          1 HEMA… x10(9)/L Basop… BASO     Y      NORMAL  NORMAL  
+ 4 ABC-01-049 WEEK 6         6 HEMA… x10(9)/L Basop… BASO     &lt;NA&gt;   NORMAL  NORMAL  
+ 5 ABC-01-049 WEEK 12       12 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 6 ABC-01-049 DAY 1          1 HEMA… x10(9)/L Eosin… EOS      Y      NORMAL  NORMAL  
+ 7 ABC-01-049 WEEK 2         2 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 8 ABC-01-049 WEEK 6         6 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 9 ABC-01-049 WEEK 12       12 HEMA… %        Hemat… HCT      &lt;NA&gt;   NORMAL  NORMAL  
+10 ABC-01-049 WEEK 2         2 HEMA… %        Hemat… HCT      &lt;NA&gt;   NORMAL  NORMAL  
 # ℹ 1,568 more rows
-# ℹ 3 more variables: LBBLFL &lt;chr&gt;, LBNRIND &lt;chr&gt;,
-#   BLBNRIND &lt;chr&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 Pull needed ARMs and columns for DM
@@ -615,21 +575,20 @@ Merge DM with LB to get subject treatments
 datastep: columns increased from 10 to 12
 
 # A tibble: 1,578 × 12
-   USUBJID  VISIT VISITNUM LBCAT LBORRESU LBTEST LBTESTCD
-   &lt;chr&gt;    &lt;ord&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   
- 1 ABC-01-… Week…       12 HEMA… x10(9)/L Lymph… LYM     
- 2 ABC-01-… Week…        6 HEMA… x10(9)/L Lymph… LYM     
- 3 ABC-01-… Week…        2 HEMA… x10(9)/L Lymph… LYM     
- 4 ABC-01-… Week…        6 HEMA… x10(9)/L Basop… BASO    
- 5 ABC-01-… Week…       12 HEMA… x10(9)/L Eosin… EOS     
- 6 ABC-01-… Week…       12 HEMA… g/dL     Hemog… HGB     
- 7 ABC-01-… Week…        2 HEMA… x10(9)/L Eosin… EOS     
- 8 ABC-01-… Week…        6 HEMA… x10(9)/L Eosin… EOS     
- 9 ABC-01-… Week…       12 HEMA… %        Hemat… HCT     
-10 ABC-01-… Day 1        1 HEMA… x10(9)/L Lymph… LYM     
+   USUBJID    VISIT   VISITNUM LBCAT LBORRESU LBTEST LBTESTCD LBBLFL LBNRIND BLBNRIND
+   &lt;chr&gt;      &lt;ord&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;   
+ 1 ABC-01-049 Week 12       12 HEMA… x10(9)/L Lymph… LYM      &lt;NA&gt;   NORMAL  NORMAL  
+ 2 ABC-01-049 Week 6         6 HEMA… x10(9)/L Lymph… LYM      &lt;NA&gt;   NORMAL  NORMAL  
+ 3 ABC-01-049 Week 2         2 HEMA… x10(9)/L Lymph… LYM      &lt;NA&gt;   NORMAL  NORMAL  
+ 4 ABC-01-049 Week 6         6 HEMA… x10(9)/L Basop… BASO     &lt;NA&gt;   NORMAL  NORMAL  
+ 5 ABC-01-049 Week 12       12 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 6 ABC-01-049 Week 12       12 HEMA… g/dL     Hemog… HGB      &lt;NA&gt;   NORMAL  NORMAL  
+ 7 ABC-01-049 Week 2         2 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 8 ABC-01-049 Week 6         6 HEMA… x10(9)/L Eosin… EOS      &lt;NA&gt;   NORMAL  NORMAL  
+ 9 ABC-01-049 Week 12       12 HEMA… %        Hemat… HCT      &lt;NA&gt;   NORMAL  NORMAL  
+10 ABC-01-049 Day 1          1 HEMA… x10(9)/L Lymph… LYM      Y      NORMAL  NORMAL  
 # ℹ 1,568 more rows
-# ℹ 5 more variables: LBBLFL &lt;chr&gt;, LBNRIND &lt;chr&gt;,
-#   BLBNRIND &lt;chr&gt;, ARMCD &lt;chr&gt;, ARM &lt;chr&gt;
+# ℹ 2 more variables: ARMCD &lt;chr&gt;, ARM &lt;chr&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 =========================================================================
@@ -720,137 +679,45 @@ Calculate frequencies
 
 Apply formats
 
-Pull out unknown results to get correct denominator
-
 Get freqs by ARM and visit
 
-proc_freq: input data set 1497 rows and 12 columns
+proc_freq: input data set 1578 rows and 12 columns
            tables: LBNRIND * BLBNRIND
            by: ARM LBTESTCD VISIT
            view: TRUE
            output: 1 datasets
 
 # A tibble: 1,280 × 10
-   BY1   BY2   BY3   VAR1   VAR2  CAT1  CAT2      N   CNT
-   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;chr&gt;  &lt;chr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 ARM A BASO  Day 1 LBNRI… BLBN… Low   Low      19     0
- 2 ARM A BASO  Day 1 LBNRI… BLBN… Low   Norm…    19     0
- 3 ARM A BASO  Day 1 LBNRI… BLBN… Low   High     19     0
- 4 ARM A BASO  Day 1 LBNRI… BLBN… Low   Unkn…    19     0
- 5 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Low      19     0
- 6 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Norm…    19    19
- 7 ARM A BASO  Day 1 LBNRI… BLBN… Norm… High     19     0
- 8 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Unkn…    19     0
- 9 ARM A BASO  Day 1 LBNRI… BLBN… High  Low      19     0
-10 ARM A BASO  Day 1 LBNRI… BLBN… High  Norm…    19     0
+   BY1   BY2   BY3   VAR1    VAR2     CAT1   CAT2        N   CNT   PCT
+   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;chr&gt;   &lt;chr&gt;    &lt;fct&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 ARM A BASO  Day 1 LBNRIND BLBNRIND Low    Low        19     0     0
+ 2 ARM A BASO  Day 1 LBNRIND BLBNRIND Low    Normal     19     0     0
+ 3 ARM A BASO  Day 1 LBNRIND BLBNRIND Low    High       19     0     0
+ 4 ARM A BASO  Day 1 LBNRIND BLBNRIND Low    Unknown    19     0     0
+ 5 ARM A BASO  Day 1 LBNRIND BLBNRIND Normal Low        19     0     0
+ 6 ARM A BASO  Day 1 LBNRIND BLBNRIND Normal Normal     19    19   100
+ 7 ARM A BASO  Day 1 LBNRIND BLBNRIND Normal High       19     0     0
+ 8 ARM A BASO  Day 1 LBNRIND BLBNRIND Normal Unknown    19     0     0
+ 9 ARM A BASO  Day 1 LBNRIND BLBNRIND High   Low        19     0     0
+10 ARM A BASO  Day 1 LBNRIND BLBNRIND High   Normal     19     0     0
 # ℹ 1,270 more rows
-# ℹ 1 more variable: PCT &lt;dbl&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 Combine frequencies and percents
 
 datastep: columns decreased from 10 to 7
 
-# A tibble: 720 × 7
-   BY1   BY2   BY3   CAT1   CAT2       N CNTPCT       
-   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;dbl&gt; &lt;chr&gt;        
- 1 ARM A BASO  Day 1 Low    Low       19 "0         " 
- 2 ARM A BASO  Day 1 Low    Normal    19 "0         " 
- 3 ARM A BASO  Day 1 Low    High      19 "0         " 
- 4 ARM A BASO  Day 1 Normal Low       19 "0         " 
- 5 ARM A BASO  Day 1 Normal Normal    19 "19 (100.0%)"
- 6 ARM A BASO  Day 1 Normal High      19 "0         " 
- 7 ARM A BASO  Day 1 High   Low       19 "0         " 
- 8 ARM A BASO  Day 1 High   Normal    19 "0         " 
- 9 ARM A BASO  Day 1 High   High      19 "0         " 
-10 ARM B BASO  Day 1 Low    Low       20 "0         " 
-# ℹ 710 more rows
-# ℹ Use `print(n = ...)` to see more rows
-
-Get freqs by ARM and visit for unknown
-
-proc_freq: input data set 81 rows and 12 columns
-           tables: LBNRIND * BLBNRIND
-           by: ARM LBTESTCD VISIT
-           view: TRUE
-           output: 1 datasets
-
-# A tibble: 1,280 × 10
-   BY1   BY2   BY3   VAR1   VAR2  CAT1  CAT2      N   CNT
-   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;chr&gt;  &lt;chr&gt; &lt;fct&gt; &lt;fct&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 ARM A BASO  Day 1 LBNRI… BLBN… Low   Low       0     0
- 2 ARM A BASO  Day 1 LBNRI… BLBN… Low   Norm…     0     0
- 3 ARM A BASO  Day 1 LBNRI… BLBN… Low   High      0     0
- 4 ARM A BASO  Day 1 LBNRI… BLBN… Low   Unkn…     0     0
- 5 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Low       0     0
- 6 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Norm…     0     0
- 7 ARM A BASO  Day 1 LBNRI… BLBN… Norm… High      0     0
- 8 ARM A BASO  Day 1 LBNRI… BLBN… Norm… Unkn…     0     0
- 9 ARM A BASO  Day 1 LBNRI… BLBN… High  Low       0     0
-10 ARM A BASO  Day 1 LBNRI… BLBN… High  Norm…     0     0
-# ℹ 1,270 more rows
-# ℹ 1 more variable: PCT &lt;dbl&gt;
-# ℹ Use `print(n = ...)` to see more rows
-
-Format frequency for unkown
-
-datastep: columns decreased from 10 to 7
-
-# A tibble: 560 × 7
-   BY1   BY2   BY3   CAT1    CAT2        N CNTPCT      
-   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;fct&gt;   &lt;fct&gt;   &lt;dbl&gt; &lt;chr&gt;       
- 1 ARM A BASO  Day 1 Low     Unknown     0 "0         "
- 2 ARM A BASO  Day 1 Normal  Unknown     0 "0         "
- 3 ARM A BASO  Day 1 High    Unknown     0 "0         "
- 4 ARM A BASO  Day 1 Unknown Low         0 "0         "
- 5 ARM A BASO  Day 1 Unknown Normal      0 "0         "
- 6 ARM A BASO  Day 1 Unknown High        0 "0         "
- 7 ARM A BASO  Day 1 Unknown Unknown     0 "0         "
- 8 ARM B BASO  Day 1 Low     Unknown     0 "0         "
- 9 ARM B BASO  Day 1 Normal  Unknown     0 "0         "
-10 ARM B BASO  Day 1 High    Unknown     0 "0         "
-# ℹ 550 more rows
-# ℹ Use `print(n = ...)` to see more rows
-
-Set frequencies and rename
-
-datastep: columns started with 7 and ended with 7
-
 # A tibble: 1,280 × 7
-   ARM   TEST  VISIT RES    BRES       N CNTPCT       
-   &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;fct&gt;  &lt;fct&gt;  &lt;dbl&gt; &lt;chr&gt;        
- 1 ARM A BASO  Day 1 Low    Low       19 "0         " 
- 2 ARM A BASO  Day 1 Low    Normal    19 "0         " 
- 3 ARM A BASO  Day 1 Low    High      19 "0         " 
- 4 ARM A BASO  Day 1 Normal Low       19 "0         " 
- 5 ARM A BASO  Day 1 Normal Normal    19 "19 (100.0%)"
- 6 ARM A BASO  Day 1 Normal High      19 "0         " 
- 7 ARM A BASO  Day 1 High   Low       19 "0         " 
- 8 ARM A BASO  Day 1 High   Normal    19 "0         " 
- 9 ARM A BASO  Day 1 High   High      19 "0         " 
-10 ARM B BASO  Day 1 Low    Low       20 "0         " 
-# ℹ 1,270 more rows
-# ℹ Use `print(n = ...)` to see more rows
-
-Sort frequencies
-
-proc_sort: input data set 1280 rows and 7 columns
-           by: ARM TEST VISIT RES BRES
-           keep: ARM TEST VISIT RES BRES N CNTPCT
-           order: a a a a a
-           output data set 1280 rows and 7 columns
-
-# A tibble: 1,280 × 7
-   ARM   TEST  VISIT RES    BRES        N CNTPCT       
+   BY1   BY2   BY3   CAT1   CAT2        N CNTPCT       
    &lt;chr&gt; &lt;chr&gt; &lt;ord&gt; &lt;fct&gt;  &lt;fct&gt;   &lt;dbl&gt; &lt;chr&gt;        
  1 ARM A BASO  Day 1 Low    Low        19 "0         " 
  2 ARM A BASO  Day 1 Low    Normal     19 "0         " 
  3 ARM A BASO  Day 1 Low    High       19 "0         " 
- 4 ARM A BASO  Day 1 Low    Unknown     0 "0         " 
+ 4 ARM A BASO  Day 1 Low    Unknown    19 "0         " 
  5 ARM A BASO  Day 1 Normal Low        19 "0         " 
  6 ARM A BASO  Day 1 Normal Normal     19 "19 (100.0%)"
  7 ARM A BASO  Day 1 Normal High       19 "0         " 
- 8 ARM A BASO  Day 1 Normal Unknown     0 "0         " 
+ 8 ARM A BASO  Day 1 Normal Unknown    19 "0         " 
  9 ARM A BASO  Day 1 High   Low        19 "0         " 
 10 ARM A BASO  Day 1 High   Normal     19 "0         " 
 # ℹ 1,270 more rows
@@ -859,64 +726,85 @@ proc_sort: input data set 1280 rows and 7 columns
 Transpose ARMs
 
 proc_transpose: input data set 1280 rows and 7 columns
-                by: TEST VISIT RES
+                by: BY2 BY3 CAT1
                 var: CNTPCT
-                id: ARM BRES
+                id: BY1 CAT2
+                copy: N
                 name: NAME
-                output dataset 80 rows and 19 columns
+                output dataset 80 rows and 20 columns
 
-# A tibble: 80 × 19
-   TEST  VISIT  RES   `ARM A.Low`  `ARM A.Normal`
-   &lt;chr&gt; &lt;ord&gt;  &lt;fct&gt; &lt;chr&gt;        &lt;chr&gt;         
- 1 BASO  Day 1  Low   "0         " "0         "  
- 2 EOS   Day 1  Low   "3 ( 15.8%)" "0         "  
- 3 HCT   Day 1  Low   "3 ( 15.0%)" "0         "  
- 4 HGB   Day 1  Low   "3 ( 15.0%)" "0         "  
- 5 LYM   Day 1  Low   "0         " "0         "  
- 6 BASO  Week 2 Low   "0         " "0         "  
- 7 EOS   Week 2 Low   "1 (  5.6%)" "0         "  
- 8 HCT   Week 2 Low   "1 (  5.0%)" "1 (  5.0%)"  
- 9 HGB   Week 2 Low   "1 (  5.0%)" "1 (  5.0%)"  
-10 LYM   Week 2 Low   "0         " "0         "  
+# A tibble: 80 × 20
+   BY2   BY3    CAT1      N `ARM A.Low`  `ARM A.Normal` `ARM A.High` `ARM A.Unknown`
+   &lt;chr&gt; &lt;ord&gt;  &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;          
+ 1 BASO  Day 1  Low      19 "0         " "0         "   "0         " "0         "   
+ 2 EOS   Day 1  Low      19 "3 ( 15.8%)" "0         "   "0         " "0         "   
+ 3 HCT   Day 1  Low      20 "3 ( 15.0%)" "0         "   "0         " "0         "   
+ 4 HGB   Day 1  Low      20 "3 ( 15.0%)" "0         "   "0         " "0         "   
+ 5 LYM   Day 1  Low      19 "0         " "0         "   "0         " "0         "   
+ 6 BASO  Week 2 Low      19 "0         " "0         "   "0         " "0         "   
+ 7 EOS   Week 2 Low      19 "1 (  5.3%)" "0         "   "0         " "0         "   
+ 8 HCT   Week 2 Low      20 "1 (  5.0%)" "1 (  5.0%)"   "0         " "0         "   
+ 9 HGB   Week 2 Low      20 "1 (  5.0%)" "1 (  5.0%)"   "0         " "0         "   
+10 LYM   Week 2 Low      19 "0         " "0         "   "0         " "0         "   
 # ℹ 70 more rows
-# ℹ 14 more variables: `ARM A.High` &lt;chr&gt;,
-#   `ARM A.Unknown` &lt;chr&gt;, `ARM B.Low` &lt;chr&gt;,
-#   `ARM B.Normal` &lt;chr&gt;, `ARM B.High` &lt;chr&gt;,
-#   `ARM B.Unknown` &lt;chr&gt;, `ARM C.Low` &lt;chr&gt;,
-#   `ARM C.Normal` &lt;chr&gt;, `ARM C.High` &lt;chr&gt;,
-#   `ARM C.Unknown` &lt;chr&gt;, `ARM D.Low` &lt;chr&gt;, …
+# ℹ 12 more variables: `ARM B.Low` &lt;chr&gt;, `ARM B.Normal` &lt;chr&gt;, `ARM B.High` &lt;chr&gt;,
+#   `ARM B.Unknown` &lt;chr&gt;, `ARM C.Low` &lt;chr&gt;, `ARM C.Normal` &lt;chr&gt;,
+#   `ARM C.High` &lt;chr&gt;, `ARM C.Unknown` &lt;chr&gt;, `ARM D.Low` &lt;chr&gt;,
+#   `ARM D.Normal` &lt;chr&gt;, `ARM D.High` &lt;chr&gt;, `ARM D.Unknown` &lt;chr&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 Apply formats
 
+Rename variables
+
+datastep: columns started with 20 and ended with 20
+
+# A tibble: 80 × 20
+   LBTEST   VISIT RIND      N `ARM A.Low` `ARM A.Normal` `ARM A.High` `ARM A.Unknown`
+   &lt;chr&gt;    &lt;ord&gt; &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;          
+ 1 Basophi… Day 1 Low      19 "0        … "0         "   "0         " "0         "   
+ 2 Eosinop… Day 1 Low      19 "3 ( 15.8%… "0         "   "0         " "0         "   
+ 3 Hematoc… Day 1 Low      20 "3 ( 15.0%… "0         "   "0         " "0         "   
+ 4 Hemoglo… Day 1 Low      20 "3 ( 15.0%… "0         "   "0         " "0         "   
+ 5 Lymphoc… Day 1 Low      19 "0        … "0         "   "0         " "0         "   
+ 6 Basophi… Week… Low      19 "0        … "0         "   "0         " "0         "   
+ 7 Eosinop… Week… Low      19 "1 (  5.3%… "0         "   "0         " "0         "   
+ 8 Hematoc… Week… Low      20 "1 (  5.0%… "1 (  5.0%)"   "0         " "0         "   
+ 9 Hemoglo… Week… Low      20 "1 (  5.0%… "1 (  5.0%)"   "0         " "0         "   
+10 Lymphoc… Week… Low      19 "0        … "0         "   "0         " "0         "   
+# ℹ 70 more rows
+# ℹ 12 more variables: `ARM B.Low` &lt;chr&gt;, `ARM B.Normal` &lt;chr&gt;, `ARM B.High` &lt;chr&gt;,
+#   `ARM B.Unknown` &lt;chr&gt;, `ARM C.Low` &lt;chr&gt;, `ARM C.Normal` &lt;chr&gt;,
+#   `ARM C.High` &lt;chr&gt;, `ARM C.Unknown` &lt;chr&gt;, `ARM D.Low` &lt;chr&gt;,
+#   `ARM D.Normal` &lt;chr&gt;, `ARM D.High` &lt;chr&gt;, `ARM D.Unknown` &lt;chr&gt;
+# ℹ Use `print(n = ...)` to see more rows
+
 Sort by lab test
 
-proc_sort: input data set 80 rows and 19 columns
-           by: TEST VISIT
-           keep: TEST VISIT RES ARM A.Low ARM A.Normal ARM A.High ARM A.Unknown ARM B.Low ARM B.Normal ARM B.High ARM B.Unknown ARM C.Low ARM C.Normal ARM C.High ARM C.Unknown ARM D.Low ARM D.Normal ARM D.High ARM D.Unknown
+proc_sort: input data set 80 rows and 20 columns
+           by: LBTEST VISIT
+           keep: LBTEST VISIT RIND N ARM A.Low ARM A.Normal ARM A.High ARM A.Unknown ARM B.Low ARM B.Normal ARM B.High ARM B.Unknown ARM C.Low ARM C.Normal ARM C.High ARM C.Unknown ARM D.Low ARM D.Normal ARM D.High ARM D.Unknown
            order: a a
-           output data set 80 rows and 19 columns
+           output data set 80 rows and 20 columns
 
-# A tibble: 80 × 19
-   TEST            VISIT RES   `ARM A.Low` `ARM A.Normal`
-   &lt;chr&gt;           &lt;ord&gt; &lt;fct&gt; &lt;chr&gt;       &lt;chr&gt;         
- 1 Basophils (x10… Day 1 Low   "0        … "0         "  
- 2 Basophils (x10… Day 1 Norm… "0        … "19 (100.0%)" 
- 3 Basophils (x10… Day 1 High  "0        … "0         "  
- 4 Basophils (x10… Day 1 Unkn… "0        … "0         "  
- 5 Basophils (x10… Week… Low   "0        … "0         "  
- 6 Basophils (x10… Week… Norm… "0        … "18 (100.0%)" 
- 7 Basophils (x10… Week… High  "0        … "0         "  
- 8 Basophils (x10… Week… Unkn… "0        … "0         "  
- 9 Basophils (x10… Week… Low   "0        … "0         "  
-10 Basophils (x10… Week… Norm… "0        … "18 (100.0%)" 
+# A tibble: 80 × 20
+   LBTEST   VISIT RIND      N `ARM A.Low` `ARM A.Normal` `ARM A.High` `ARM A.Unknown`
+   &lt;chr&gt;    &lt;ord&gt; &lt;fct&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;          &lt;chr&gt;        &lt;chr&gt;          
+ 1 Basophi… Day 1 Low      19 "0        … "0         "   "0         " "0         "   
+ 2 Basophi… Day 1 Norm…    19 "0        … "19 (100.0%)"  "0         " "0         "   
+ 3 Basophi… Day 1 High     19 "0        … "0         "   "0         " "0         "   
+ 4 Basophi… Day 1 Unkn…    19 "0        … "0         "   "0         " "0         "   
+ 5 Basophi… Week… Low      19 "0        … "0         "   "0         " "0         "   
+ 6 Basophi… Week… Norm…    19 "0        … "18 ( 94.7%)"  "0         " "1 (  5.3%)"   
+ 7 Basophi… Week… High     19 "0        … "0         "   "0         " "0         "   
+ 8 Basophi… Week… Unkn…    19 "0        … "0         "   "0         " "0         "   
+ 9 Basophi… Week… Low      19 "0        … "0         "   "0         " "0         "   
+10 Basophi… Week… Norm…    19 "0        … "18 ( 94.7%)"  "0         " "1 (  5.3%)"   
 # ℹ 70 more rows
-# ℹ 14 more variables: `ARM A.High` &lt;chr&gt;,
-#   `ARM A.Unknown` &lt;chr&gt;, `ARM B.Low` &lt;chr&gt;,
-#   `ARM B.Normal` &lt;chr&gt;, `ARM B.High` &lt;chr&gt;,
-#   `ARM B.Unknown` &lt;chr&gt;, `ARM C.Low` &lt;chr&gt;,
-#   `ARM C.Normal` &lt;chr&gt;, `ARM C.High` &lt;chr&gt;,
-#   `ARM C.Unknown` &lt;chr&gt;, `ARM D.Low` &lt;chr&gt;, …
+# ℹ 12 more variables: `ARM B.Low` &lt;chr&gt;, `ARM B.Normal` &lt;chr&gt;, `ARM B.High` &lt;chr&gt;,
+#   `ARM B.Unknown` &lt;chr&gt;, `ARM C.Low` &lt;chr&gt;, `ARM C.Normal` &lt;chr&gt;,
+#   `ARM C.High` &lt;chr&gt;, `ARM C.Unknown` &lt;chr&gt;, `ARM D.Low` &lt;chr&gt;,
+#   `ARM D.Normal` &lt;chr&gt;, `ARM D.High` &lt;chr&gt;, `ARM D.Unknown` &lt;chr&gt;
 # ℹ Use `print(n = ...)` to see more rows
 
 =========================================================================
@@ -927,7 +815,34 @@ Create output path
 
 C:\Users\dbosa\AppData\Local\Temp\RtmpaGlETW/output/example16.pdf
 
-Create report
+# A table specification:
+- data: tibble 'lb_final' 80 rows 20 cols
+- show_cols: all
+- use_attributes: all
+- spanning_header: from='ARM A.Low' to='ARM A.Unknown' 'Placebo' level=1 
+- spanning_header: from='ARM B.Low' to='ARM B.Unknown' 'Drug 10mg' level=1 
+- spanning_header: from='ARM C.Low' to='ARM C.Unknown' 'Drug 20mg' level=1 
+- spanning_header: from='ARM D.Low' to='ARM D.Unknown' 'Competitor' level=1 
+- define: LBTEST visible='FALSE' 
+- define: VISIT 'Visit' align='left' id_var='TRUE' dedupe='TRUE' 
+- define: N visible='FALSE' 
+- define: RIND '' align='left' id_var='TRUE' 
+- define: ARM A.Low 'Low' 
+- define: ARM A.Normal 'Normal' 
+- define: ARM A.High 'High' 
+- define: ARM A.Unknown 'Unknown' 
+- define: ARM B.Low 'Low' 
+- define: ARM B.Normal 'Normal' 
+- define: ARM B.High 'High' 
+- define: ARM B.Unknown 'Unknown' 
+- define: ARM C.Low 'Low' page_wrap='TRUE' 
+- define: ARM C.Normal 'Normal' 
+- define: ARM C.High 'High' 
+- define: ARM C.Unknown 'Unknown' 
+- define: ARM D.Low 'Low' 
+- define: ARM D.Normal 'Normal' 
+- define: ARM D.High 'High' 
+- define: ARM D.Unknown 'Unknown' 
 
 Write out report to file system
 
@@ -938,28 +853,29 @@ Write out report to file system
 - orientation: landscape
 - margins: top 1 bottom 0.5 left 1 right 1
 - line size/count: 9/46
-- page by: TEST
+- page by: LBTEST
 - page_header: left=Protocol: ABC 12345-678, DRUG/INDICATION: Consultopan, TLF Version: Final Database Lock (03FEB2024) right=(Page [pg] of [tpg]), DATABASE VERSION: 01FEB2024, TASK: CSR
 - title 1: 'Table 4.3.1.1'
 - title 2: ''
 - title 3: 'Shift Table of Laboratory Values - Hematology'
 - title 4: '(Safety Population)'
 - footnote 1: 'PROGRAM/OUTPUT: T_LABSHIFT/T_4_3_1_1_HEM'
-- footnote 2: 'DATE (TIME): 05FEB2024 (08:37)'
-- footnote 3: 'Note: Denominator for percentages is the number of participants at each visit with a valid lab test result.'
+- footnote 2: 'DATE (TIME): 06FEB2024 (14:52)'
+- footnote 3: 'Note 1: For N(%) of participants, percentages are calculated as the number of participants for each ARM at each visit as the denominator.'
 - footnote 4: 'Reference: Listing 2.8.1.1, 2.8.1.2'
 - content: 
 # A table specification:
-- data: tibble 'lb_final' 80 rows 19 cols
+- data: tibble 'lb_final' 80 rows 20 cols
 - show_cols: all
 - use_attributes: all
 - spanning_header: from='ARM A.Low' to='ARM A.Unknown' 'Placebo' level=1 
 - spanning_header: from='ARM B.Low' to='ARM B.Unknown' 'Drug 10mg' level=1 
 - spanning_header: from='ARM C.Low' to='ARM C.Unknown' 'Drug 20mg' level=1 
 - spanning_header: from='ARM D.Low' to='ARM D.Unknown' 'Competitor' level=1 
-- define: TEST visible='FALSE' 
+- define: LBTEST visible='FALSE' 
 - define: VISIT 'Visit' align='left' id_var='TRUE' dedupe='TRUE' 
-- define: RES '' align='left' id_var='TRUE' 
+- define: N visible='FALSE' 
+- define: RIND '' align='left' id_var='TRUE' 
 - define: ARM A.Low 'Low' 
 - define: ARM A.Normal 'Normal' 
 - define: ARM A.High 'High' 
@@ -982,8 +898,8 @@ Clean Up
 =========================================================================
 
 =========================================================================
-Log End Time: 2024-02-05 08:37:50.094811
-Log Elapsed Time: 0 00:00:15
+Log End Time: 2024-02-06 14:52:16.546017
+Log Elapsed Time: 0 00:00:12
 =========================================================================
 
 </code></pre>
