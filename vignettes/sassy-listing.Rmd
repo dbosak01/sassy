@@ -15,8 +15,7 @@ knitr::opts_chunk$set(
 ```
 Here is an example of a simple listing using the **sassy** system of 
 functions.  The data used for these examples is included in the **sassy**
-package, and also available for download 
-<a href="https://github.com/dbosak01/sassy/blob/master/inst/extdata/sassy_data.zip">here</a>.  
+package, and can be retrieved using the `system.file()` function as shown below.  
 
 ## Program
 
