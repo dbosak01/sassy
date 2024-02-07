@@ -1,4 +1,4 @@
-# sassy 1.2.2
+# sassy 1.2.3
 
 * Added oq validation for `proc_ttest()`.
 * Added example for Mean Change from Baseline.
