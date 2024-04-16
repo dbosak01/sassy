@@ -21,7 +21,8 @@ data libraries, formats and format catalogs, data dictionaries, a data step,
 a traceable log, and a reporting package with a variety of printable report types.
 
 The core of the **sassy** system is the **procs** package.  This package contains 
-replications of several SAS® procedures: `proc_freq()`, `proc_means()`,
+replications of several SAS® procedures: `proc_freq()`, `proc_means()`, 
+`proc_ttest()`, `proc_reg()`,
 `proc_transpose()`, and `proc_sort()`. Combined with the `datastep()` function
 from the **libr** package, you can write code in R that very much resembles
 what you would write in SAS®. These functions provide a higher-level programming

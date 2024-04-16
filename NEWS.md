@@ -1,3 +1,9 @@
+# sassy 1.2.4
+
+* Added oq validation for `proc_reg()`.
+* Updated required versions.
+
+
 # sassy 1.2.3
 
 * Added oq validation for `proc_ttest()`.

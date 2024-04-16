@@ -1,7 +1,7 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for Everyone
-Version: 1.2.3
+Version: 1.2.4
 Author: David J. Bosak
 Maintainer: David Bosak <dbosak01@gmail.com>
 Description: A meta-package that aims to make 'R' easier for everyone, 
@@ -14,7 +14,7 @@ Description: A meta-package that aims to make 'R' easier for everyone,
 License: CC0
 Encoding: UTF-8
 Depends: R (>= 3.6.0)
-URL: https://r-sassy.org
+URL: https://r-sassy.org, https://github.com/dbosak01/sassy
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 
     testthat (>= 3.0.0),
@@ -23,12 +23,12 @@ Suggests:
     tidylog,
     magrittr,
     covr
-Imports: fmtr(>= 1.6.2),
-         common(>= 1.1.0),
-         logr(>= 1.3.4), 
-         libr(>= 1.2.8),
-         reporter(>= 1.4.3), 
-         procs(>= 1.0.4),
+Imports: fmtr(>= 1.6.3),
+         common(>= 1.1.3),
+         logr(>= 1.3.7), 
+         libr(>= 1.3.2),
+         reporter(>= 1.4.4), 
+         procs(>= 1.0.6),
          datasets,
          tools, 
          utils

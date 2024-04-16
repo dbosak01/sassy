@@ -167,7 +167,7 @@ test_that("OQ-09: check_procs() works as expected.", {
   res <- check_procs(pth)
 
   res
-  expect_equal(nrow(res), 6)
+  expect_equal(nrow(res), 7)
   expect(all(res$Pass == TRUE), TRUE)
 
 })

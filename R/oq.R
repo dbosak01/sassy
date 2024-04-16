@@ -828,6 +828,24 @@ check_procs <- function(opth) {
 
   ret <- rbind(ret, tmp)
 
+  # Check for proc_reg() function
+  res <- proc_reg(dt, model = "mpg = disp",
+                    options = "noprint")
+  tmp <- tmplt
+  tmp[1, "Description"] <- "proc_reg() function works as expected."
+  if (any(round(res$RMSE, 8) !=  0.86251743) ||
+      any(round(res$Intercept, 6) !=  23.631007) ||
+      any(round(res$disp, 8) !=  -0.01267212)) {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "proc_reg() function not working."
+    put("proc_reg() function check failed.")
+  } else {
+
+    put("proc_reg() function check passed.")
+  }
+
+  ret <- rbind(ret, tmp)
+
   # Check proc transpose
   res <- proc_transpose(dt)
   tmp <- tmplt
