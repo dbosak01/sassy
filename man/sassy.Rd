@@ -58,13 +58,10 @@ sep("Get Data")
 # Define data library
 libname(sdtm, pkg, "csv") \%>\% put()
 
-# Load library into workspace
-lib_load(sdtm)
-
 sep("Write Report")
 
 # Define table object
-tbl <- create_table(sdtm.DM) \%>\%
+tbl <- create_table(sdtm$DM) \%>\%
   define(USUBJID, id_var = TRUE)
 
 # Construct report path
@@ -79,9 +76,6 @@ rpt <- create_report(pth, output_type = "RTF", font = "Courier") \%>\%
 
 # Write report to file system
 write_report(rpt) \%>\% put()
-
-# Unload data
-lib_unload(sdtm)
 
 # Close log
 log_close()
