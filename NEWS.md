@@ -1,3 +1,8 @@
+# sassy 1.2.5
+
+* Updated required versions.
+* Updated demographics table example.
+
 # sassy 1.2.4
 
 * Added oq validation for `proc_reg()`.
