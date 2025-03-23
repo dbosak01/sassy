@@ -1,90 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://sassy.r-sassy.org/404.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-ae.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-ae2.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-chgbase.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-disclaimers.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-dm.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-ds.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-faq.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-figure.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-figureby.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-forest.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-intext.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-listing.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-pfigure.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-plisting.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-profile.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-shift.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-survival.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy-vs.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/articles/sassy.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/reference/run_iq.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/reference/run_oq.html</loc>
-  </url>
-  <url>
-    <loc>https://sassy.r-sassy.org/reference/sassy.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://sassy.r-sassy.org/404.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/index.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-ae.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-ae2.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-chgbase.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-disclaimers.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-dm.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-ds.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-faq.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-figure.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-figureby.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-forest.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-intext.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-listing.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-pfigure.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-plisting.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-profile.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-shift.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-survival.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy-vs.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/articles/sassy.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/authors.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/index.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/LICENSE.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/news/index.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/reference/index.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/reference/run_iq.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/reference/run_oq.html</loc></url>
+<url><loc>https://sassy.r-sassy.org/reference/sassy.html</loc></url>
 </urlset>
+
