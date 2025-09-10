@@ -1,4 +1,4 @@
-pandoc: '3.2'
+pandoc: '3.4'
 pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
@@ -19,9 +19,10 @@ articles:
   sassy-profile: sassy-profile.html
   sassy-shift: sassy-shift.html
   sassy-survival: sassy-survival.html
+  sassy-training: sassy-training.html
   sassy-vs: sassy-vs.html
   sassy: sassy.html
-last_built: 2025-03-23T00:55Z
+last_built: 2025-09-10T00:24Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

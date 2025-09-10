@@ -1,0 +1,56 @@
+---
+title: "Papers and Training"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Papers and Training}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Some information on the **sassy** packages exist outside the system documentation.
+Here are some links to those external sources.
+
+## Papers
+
+Below is a list of papers covering various aspects of the **sassy** system:
+
+  * [Why SASSY?](https://pharmasug.org/proceedings/2025/AP/PharmaSUG-2025-AP-263.pdf), 2025
+  * [Replicating SAS Reports in R: The REPORTER Package](https://sesug.org/proceedings/sesug_2024_SAAG/PresentationSummaries/Papers/113_Final_PDF.pdf), 2024
+  * [Examining the R datastep() Function](https://www.lexjansen.com/sesug/2024/111_Final_PDF.pdf), 2024
+  * [Replicating SAS® Procedures in R with the PROCS Package](https://pharmasug.org/proceedings/2024/AP/PharmaSUG-2024-AP-295.pdf), 2024
+  * [An Overview of the SASSY System](https://www.lexjansen.com/wuss/2023/WUSS-2023-Paper-185.pdf), 2023
+
+
+## SASSY Training
+
+The following training videos can help get you up to speed on the **sassy** system:
+
+  * [Logr Package Overview](https://www.youtube.com/watch?v=o20fT6IOBVs&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=1)
+  * [Introduction to Data Libraries in R](https://www.youtube.com/watch?v=uHo8J9LR1xo&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=6)
+  * [Introduction to Reporter](https://www.youtube.com/watch?v=PuqQFqOrFXQ&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=4)
+  * [Creating a Format Catalog from Data](https://www.youtube.com/watch?v=n_E5Y2BgmYk&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=2)
+  * [Overview of the proc_reg() Function](https://www.youtube.com/watch?v=DK4kCYgNjfA&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=3)
+  * [How to Run a Batch Job in R](https://www.youtube.com/watch?v=0SnOYyS7x8k&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=5)
+
+
+## R Training 
+
+If you know nothing about R, these videos can give you the basics:
+
+  * [01.00 Introduction to R](https://www.youtube.com/watch?v=WLSW8-f12Ls&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY)
+  * [01.01 IDE Setup](https://www.youtube.com/watch?v=s7Gifa0-UuE&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=2)
+  * [01.02 Vectors](https://www.youtube.com/watch?v=B_Ie6PZpspE&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=3)
+  * [01.03 Lists](https://www.youtube.com/watch?v=8i0TPtkFdxc&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=4)
+  * [01.04 Factors](https://www.youtube.com/watch?v=PZENOrdCwtY&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=5)
+  * [01.05 Data Frames](https://www.youtube.com/watch?v=k7Y75L1W6sU&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=6)
+  * [01.06 Tibbles](https://www.youtube.com/watch?v=MVtzrakotqk&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=7)
+  * [01.07 Operators in R](https://www.youtube.com/watch?v=TCwHVsfVbyc&list=PL7K0QSiaKSb7KSAJvbbjrAVxvi707OiAY&index=8)
+  
+

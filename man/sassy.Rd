@@ -89,7 +89,7 @@ log_close()
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://r-sassy.org}
+  \item \url{https://sassy.r-sassy.org}
   \item \url{https://github.com/dbosak01/sassy}
   \item Report bugs at \url{https://github.com/dbosak01/sassy/issues}
 }

@@ -28,6 +28,7 @@ on the links below to navigate to the full question and answer content.
 * [Do I need a background in SAS® to use the sassy system?](#background)
 * [Can't I just install everything individually?](#packages)
 * [Is the **sassy** system validated?](#validation)
+* [Is there any training available for the **sassy** system?](#training)
 
 ## Content
 
@@ -137,6 +138,27 @@ for additional information on these routines.
 [top](#top) 
 
 ******
+
+### Is there any training available for the **sassy** system?? {#training}
+
+**Q:** I'd like to get some more structured training on the SASSY packages.  Is there
+a training course?
+
+**A:** Yes.  There is a video training course on YouTube.  Please refer
+to [this page](https://sassy.r-sassy.org/articles/sassy-training.html) for 
+links to each of the training videos.  
+
+The author of the **sassy** packages is also available for instructor-led
+training.  For more information, please contact the package author/maintainer
+via email.  
+
+
+
+[top](#top) 
+
+******
+
+
 
 <!-- ### Question 1? {#q1} -->
 

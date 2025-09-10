@@ -88,10 +88,21 @@ to turn to is the [r-sassy](https://sassy.r-sassy.org) web site.
 This web site offers many examples, and full
 documentation on every function.  
 
+If you would like to read some more about the **sassy** packages before committing
+to anything, you can find a list of papers [here](https://sassy.r-sassy.org/articles/sassy-training.html).
+
+If you want training on the **sassy** system, there is a video course on YouTube.
+You can find links to the training videos [here](https://sassy.r-sassy.org/articles/sassy-training.html).
+
 If you want to look at the code for the **sassy** package, visit the
 github page [here](https://github.com/dbosak01/sassy).
 
 If you encounter a bug or have a feature request, please submit an issue 
 [here](https://github.com/dbosak01/sassy/issues).
+
+
+
+
+
 
 
