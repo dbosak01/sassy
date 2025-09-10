@@ -1,9 +1,12 @@
 Package: sassy
 Type: Package
 Title: Makes 'R' Easier for Everyone
-Version: 1.2.7
-Author: David J. Bosak
+Version: 1.2.8
 Maintainer: David Bosak <dbosak01@gmail.com>
+Authors@R: person(given = "David",
+                  family = "Bosak",
+                  role = c("aut", "cre"),
+                  email = "dbosak01@gmail.com")
 Description: A meta-package that aims to make 'R' easier for everyone, 
     especially programmers who have a background in 'SAS®' software.
     This set of packages brings many useful concepts to 'R', including
@@ -13,7 +16,7 @@ Description: A meta-package that aims to make 'R' easier for everyone,
     like 'PROC FREQ', 'PROC MEANS', and 'PROC REG'.
 License: CC0
 Encoding: UTF-8
-Depends: R (>= 3.6.0)
+Depends: R (>= 4.1.0)
 URL: https://sassy.r-sassy.org, https://github.com/dbosak01/sassy
 BugReports: https://github.com/dbosak01/sassy/issues
 Suggests: 

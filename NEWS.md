@@ -1,4 +1,4 @@
-# sassy 1.2.7
+# sassy 1.2.8
 
 * Updated required versions.
 * Added page for papers and training videos.
