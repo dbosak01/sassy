@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Some information on the **sassy** packages exist outside the system documentation.
+Some information on the **sassy** packages exists outside the system documentation.
 Here are some links to those external sources.
 
 ## Papers
