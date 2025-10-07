@@ -199,7 +199,7 @@ log_close()
 
 Here is page 11 out of 87 pages in the output report:
 
-<img src="../man/images/profile.png"/>
+<img src="../man/images/profile.png" alt="Patient Profile example listing"/>
 
 
 ## Log

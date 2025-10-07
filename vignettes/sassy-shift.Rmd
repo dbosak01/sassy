@@ -273,7 +273,7 @@ log_close()
 
 Here is the output report:
 
-<img src="../man/images/shift.png" align="center" />
+<img src="../man/images/shift.png" align="center"  alt="Shift table example image"/>
 
 
 ## Log

@@ -315,7 +315,7 @@ log_close()
 
 Here is the first page of the output report:
 
-<img src="../man/images/aevert.png" align="center" />
+<img src="../man/images/aevert.png" align="center" alt="AE Severity example image" />
 
 
 ## Log

@@ -363,13 +363,13 @@ log_close()
 
 Here is the stand-alone report:
 
-<img src="../man/images/example15s1.png" align="center" />
-<img src="../man/images/example15s2.png" align="center" />
+<img src="../man/images/example15s1.png" align="center" alt="Standard report 1" />
+<img src="../man/images/example15s2.png" align="center" alt="Standard report 2" />
 
 Here is the "intext" report:
 
-<img src="../man/images/example15i1.png" align="center" />
-<img src="../man/images/example15i2.png" align="center" />
+<img src="../man/images/example15i1.png" align="center" alt="Intext report 1" />
+<img src="../man/images/example15i2.png" align="center" alt="Intext report 2" />
 
 
 ## Log

@@ -218,7 +218,7 @@ log_close()
 Here is an image of the first page of the RTF report produced by the
 above subject listing:
 
-<img src="../man/images/plisting.png" align="center" />
+<img src="../man/images/plisting.png" align="center"  alt="Submit listing example image"/>
 
 
 ## Log

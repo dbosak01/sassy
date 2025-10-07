@@ -264,9 +264,9 @@ log_close()
 
 Here are the first three pages of the output report:
 
-<img src="../man/images/ae1.png" align="center" />
-<img src="../man/images/ae2.png" align="center" />
-<img src="../man/images/ae3.png" align="center" />
+<img src="../man/images/ae1.png" align="center" alt="AE example image page 1"/>
+<img src="../man/images/ae2.png" align="center" alt="AE example image page 2" />
+<img src="../man/images/ae3.png" align="center" alt="AE example image page 3"/>
 
 
 ## Log

@@ -157,11 +157,11 @@ log_close()
 
 Here are the three pages of the report:
 
-<img src="../man/images/dm_fig1.png" align="center" />
+<img src="../man/images/dm_fig1.png" align="center" alt="Figure example image 1" />
 
-<img src="../man/images/dm_fig2.png" align="center" />
+<img src="../man/images/dm_fig2.png" align="center" alt="Figure example image 2" />
 
-<img src="../man/images/dm_fig3.png" align="center" />
+<img src="../man/images/dm_fig3.png" align="center" alt="Figure example image 3" />
 
 
 ## Log

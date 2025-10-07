@@ -241,7 +241,7 @@ log_close()
 
 Here is the output report:
 
-<img src="../man/images/disposition.png" align="center" />
+<img src="../man/images/disposition.png" align="center" alt="Disposition example image" />
 
 
 ## Log

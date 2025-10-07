@@ -61,105 +61,105 @@ The following examples are provided on this site:
 * **[Example 1](sassy-listing.html)**: 
 Creates a simple data listing and log
 <a href="sassy-listing.html">
- <img src="../man/images/listing.png" align="left" />
+ <img src="../man/images/listing.png" align="left" alt="Listing example image" />
  </a>
 <br>
 
 * **[Example 2](sassy-dm.html)**: 
 Creates a table of demographic characteristics  
 <a href="sassy-dm.html">
-<img src="../man/images/dm.png" align="left" />
+<img src="../man/images/dm.png" align="left" alt="Demographics example image" />
 </a>
 <br>
 
 * **[Example 3](sassy-figure.html)**: 
 Creates a simple figure
 <a href="sassy-figure.html">
-<img src="../man/images/dm_fig1.png" align="left" />
+<img src="../man/images/dm_fig1.png" align="left" alt="Figure example image"/>
 </a>
 <br>
 
 * **[Example 4](sassy-ae.html)**: 
 Creates an AE table with a page wrap
 <a href="sassy-ae.html">
-<img src="../man/images/ae1.png" align="left" />
+<img src="../man/images/ae1.png" align="left" alt="AE example image" />
 </a>
 <br>
 
 * **[Example 5](sassy-vs.html)**: 
 Creates a table of vital signs statistics
 <a href="sassy-vs.html">
-<img src="../man/images/vital_signs.png" align="left" />
+<img src="../man/images/vital_signs.png" align="left" alt="Vital signs example image" />
 </a>
 <br>
 
 * **[Example 6](sassy-figureby.html)**: 
 Creates a figure with a by-group
 <a href="sassy-figureby.html">
-<img src="../man/images/vs_pg1.png" align="left" />
+<img src="../man/images/vs_pg1.png" align="left" alt="Figure by example image" />
 </a>
 <br>
 
 * **[Example 7](sassy-survival.html)**: 
 Perform survival analysis.
 <a href="sassy-survival.html">
-<img src="../man/images/survival2.png" align="left" />
+<img src="../man/images/survival2.png" align="left" alt="Survival analysis example image" />
 </a>
 <br>
 
 * **[Example 8](sassy-profile.html)**: 
 Creates a patient profile report.
 <a href="sassy-profile.html">
-<img src="../man/images/profile.png" align="left" />
+<img src="../man/images/profile.png" align="left" alt="Patient profile example image" />
 </a>
 <br>
 
 * **[Example 9](sassy-forest.html)**: 
 Creates a figure with a forest plot.
 <a href="sassy-forest.html">
-<img src="../man/images/forest.png" align="left" />
+<img src="../man/images/forest.png" align="left" alt="Forest plot example image" />
 </a>
 <br>
 
 * **[Example 10](sassy-ds.html)**: 
 Creates a subject disposition table.
 <a href="sassy-ds.html">
-<img src="../man/images/disposition.png" align="left" />
+<img src="../man/images/disposition.png" align="left" alt="Disposition example image" />
 </a>
 <br>
 
 * **[Example 11](sassy-plisting.html)**: 
 Creates a subject listing with vital signs by visit.
 <a href="sassy-plisting.html">
-<img src="../man/images/plisting.png" align="left" />
+<img src="../man/images/plisting.png" align="left" alt="Subject listing example image" />
 </a>
 <br>
 
 * **[Example 12](sassy-pfigure.html)**: 
 Creates a combined figure of age groups by treatment.
 <a href="sassy-pfigure.html">
-<img src="../man/images/pfigure.png" align="left" />
+<img src="../man/images/pfigure.png" align="left" alt="Patchwork figure example image" />
 </a>
 <br>
 
 * **[Example 13](sassy-chgbase.html)**: 
 Creates a Mean Change from Baseline figure for laboratory values.
 <a href="sassy-chgbase.html">
-<img src="../man/images/chgbase.png" align="left" />
+<img src="../man/images/chgbase.png" align="left" alt="Change from baseline example image" />
 </a>
 <br>
 
 * **[Example 14](sassy-ae2.html)**: 
 Creates an AE table with severity grades in rows
 <a href="sassy-ae2.html">
-<img src="../man/images/aevert.png" align="left" />
+<img src="../man/images/aevert.png" align="left" alt="AE Severity example image" />
 </a>
 <br>
 
 * **[Example 15](sassy-intext.html)**: 
 Creates both stand-alone and "intext" versions of a demographics table. 
 <a href="sassy-intext.html">
-<img src="../man/images/example15i1.png" align="left" />
+<img src="../man/images/example15i1.png" align="left" alt="Intext Demographics example image" />
 </a>
 <br>
 
@@ -167,7 +167,7 @@ Creates both stand-alone and "intext" versions of a demographics table.
 * **[Example 16](sassy-shift.html)**: 
 Creates a shift table of lab values. 
 <a href="sassy-shift.html">
-<img src="../man/images/shift.png" align="left" />
+<img src="../man/images/shift.png" align="left" alt="Shift table example image" />
 </a>
 <br>
 

@@ -125,11 +125,11 @@ log_close()
 
 And here are the first three pages of the report:
 
-<img src="../man/images/vs_pg1.png" align="center" />
+<img src="../man/images/vs_pg1.png" align="center" alt="Figure by example image 1" />
 
-<img src="../man/images/vs_pg2.png" align="center" />
+<img src="../man/images/vs_pg2.png" align="center" alt="Figure by example image 2" />
 
-<img src="../man/images/vs_pg3.png" align="center" />
+<img src="../man/images/vs_pg3.png" align="center" alt="Figure by example image 3" />
 
 
 ## Log

@@ -148,7 +148,7 @@ log_close()
 
 Here is an image  of the RTF report produced by the above example:
 
-<img src="../man/images/pfigure.png" align="center" />
+<img src="../man/images/pfigure.png" align="center"  alt="Patchwork figure example image" />
 
 
 ## Log

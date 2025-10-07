@@ -439,8 +439,8 @@ log_close()
 
 Here is the report produced by the sample program above:
 
-<img src="../man/images/survival1.png"/>
-<img src="../man/images/survival2.png"/>
+<img src="../man/images/survival1.png" alt="Survival example image 1"/>
+<img src="../man/images/survival2.png" alt="Survival example image 2"/>
 
 
 ## Log

@@ -1,3 +1,8 @@
+# sassy 1.2.9
+
+* Fixes to test cases.
+* Fixes to documentation.
+
 # sassy 1.2.8
 
 * Updated required versions.
