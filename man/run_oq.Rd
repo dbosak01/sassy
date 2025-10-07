@@ -58,8 +58,8 @@ and \code{copy.attributes}.
 }
 \item{\strong{procs}: All the major functions of the package are
 executed and tested against expected results: \code{proc_freq},
-\code{proc_means}, \code{proc_transpose}, \code{proc_sort}, and
-\code{proc_print}.
+\code{proc_means}, \code{proc_reg}, \code{proc_transpose},
+\code{proc_sort}, and \code{proc_print}.
 }
 }
 }

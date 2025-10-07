@@ -39,7 +39,7 @@ data and a creating a format catalog
 libname, generate a data dictionary, and simulate a data step
 * **[reporter](https://reporter.r-sassy.org)**: A reporting package with easy 
 layout capabilities and the 
-ability to write reports in TXT, RTF, PDF, and DOCX file formats
+ability to write reports in TXT, RTF, PDF, HTML, and DOCX file formats
 * **[common](https://common.r-sassy.org)**: A set of utility functions
 shared across the **sassy** family of packages, and often 
 useful in their own right. 
