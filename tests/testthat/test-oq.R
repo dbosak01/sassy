@@ -72,7 +72,7 @@ test_that("OQ-03: check_packages() works as expected.", {
   res <- check_packages()
 
   expect_equal(nrow(res), 6)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -87,7 +87,7 @@ test_that("OQ-04: check_common() works as expected.", {
   res <- check_common()
 
   expect_equal(nrow(res), 7)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -108,7 +108,7 @@ test_that("OQ-05: check_fmtr() works as expected.", {
   res <- check_fmtr(pth)
 
   expect_equal(nrow(res), 6)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -123,7 +123,7 @@ test_that("OQ-06: check_logr() works as expected.", {
   res <- check_logr(pth)
 
   expect_equal(nrow(res), 1)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -137,7 +137,7 @@ test_that("OQ-07: check_libr() works as expected.", {
   res <- check_libr(pth)
 
   expect_equal(nrow(res), 6)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -152,7 +152,7 @@ test_that("OQ-08: check_reporter() works as expected.", {
   res <- check_reporter(pth)
 
   expect_equal(nrow(res), 5)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -168,7 +168,7 @@ test_that("OQ-09: check_procs() works as expected.", {
 
   res
   expect_equal(nrow(res), 7)
-  expect(all(res$Pass == TRUE), TRUE)
+  expect_true(all(res$Pass == TRUE))
 
 })
 
@@ -192,4 +192,3 @@ test_that("OQ-10: run_oq() works as expected.", {
   }
 
 })
-
