@@ -47,6 +47,12 @@ utils::globalVariables(c("hello", "goodbye", "x", "tst", "mpg"))
 #' \code{proc_means}, \code{proc_reg}, \code{proc_transpose},
 #' \code{proc_sort}, and \code{proc_print}.
 #' }
+#' \item{\strong{macro}: A sample macro program embedded in the \strong{sassy}
+#' package is executed using the \code{msource} function.  A generated code
+#' file is emitted and sent to the output directory.  Macro variables and
+#' R variables set during pre-processing and execution phases are tested against
+#' expected values.  Several of the macro language commands are exercised.
+#' }
 #' }
 #'
 #' @param location The path to the desired output directory.  The IQ
@@ -123,6 +129,9 @@ run_oq <- function(location) {
 
     sep("Checks for procs package")
     ret <- rbind(ret, check_procs(opth))
+
+    sep("Checks for macro package")
+    ret <- rbind(ret, check_macro(opth))
 
   } else {
 
@@ -235,6 +244,16 @@ check_packages <- function() {
 
   ret <- rbind(ret, tmp)
 
+  # Check for macro package
+  res <- system.file(package = "macro")
+  tmp <- tmplt
+  tmp[1, "Description"] <- "Check for macro package installation."
+  if (res == "") {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "macro package not found."
+  }
+
+  ret <- rbind(ret, tmp)
   return(ret)
 
 }
@@ -896,4 +915,68 @@ check_procs <- function(opth) {
 
   return(ret)
 }
+
+#' @import macro
+check_macro <- function(lpth) {
+
+  tmplt <- data.frame(Category = "macro",
+                      Description = "Macro output file created.",
+                      Pass = TRUE,
+                      Message = "",
+                      stringsAsFactors = FALSE)
+
+  # Get sample program path
+  pkg <- system.file("extdata", package = "sassy")
+  pth <- file.path(pkg, "macro.R")
+  pth2 <- file.path(lpth, "macro_out.R")
+
+  ne <- new.env()
+  res <- msource(pth, pth2, envir = ne)
+
+  tmp <- tmplt
+  tmp[1, "Description"] <- "msource() function works as expected."
+  if (file.exists(pth2) == FALSE) {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "Macro output file failed to create at " %p% pth2
+    put("msource() function check failed.")
+  } else {
+    put(paste0("Output file generated at '", pth2, "'"))
+    put("msource() function check passed.")
+  }
+
+  ret <- tmp
+
+  tmp <- tmplt
+  tmp[1, "Description"] <- "macro pre-processing works as expected."
+  if (symget("a") != "1" | symget("b") != "2") {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "Macro pre-processing failed to initialize values properly."
+    put("macro pre-processing check failed.")
+  } else {
+    put(paste("value of 'a' is ", symget("a")))
+    put(paste("value of 'b' is ", symget("b")))
+    put("macro pre-processing check passed.")
+  }
+
+  ret <- rbind(ret, tmp)
+
+  tmp <- tmplt
+  tmp[1, "Description"] <- "macro execution works as expected."
+  if (ne$x != TRUE | ne$y != 3) {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "Macro execution failed to initialize values properly."
+    put("macro execution check failed.")
+  } else {
+    put(paste("value of 'x' is ", ne$x))
+    put(paste("value of 'x' is ", ne$y))
+    put("macro execution check passed.")
+  }
+
+  ret <- rbind(ret, tmp)
+
+
+  return(ret)
+
+}
+
 

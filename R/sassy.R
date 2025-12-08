@@ -24,6 +24,7 @@
 #'   \item {\code{\link[common]{common}}: A set of utility functions
 #'   shared across the \strong{sassy} family of packages.}
 #'   \item {\code{\link[procs]{procs}}: A package to simulate frequently used SAS® procedures.}
+#'   \item {\code{\link[macro]{macro}}: A macro language for R.}
 #' }
 #' @examples
 #' #########################################################
@@ -84,6 +85,7 @@
 #' @import libr
 #' @import reporter
 #' @import procs
+#' @import macro
 "_PACKAGE"
 
 
@@ -96,6 +98,7 @@
   do.call("library", list("libr"))
   do.call("library", list("reporter"))
   do.call("library", list("procs"))
+  do.call("library", list("macro"))
 
 }
 

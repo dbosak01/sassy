@@ -46,6 +46,8 @@ useful in their own right.
 * **[procs](https://procs.r-sassy.org)**: A set of functions that simulate
 SAS® procedures.  Package includes simulations of PROC FREQ, PROC MEANS,
 PROC TRANSPOSE, PROC SORT, and PROC PRINT.
+* **[macro](https://macro.r-sassy.org)**: A macro language for R that allows
+easy, text-based meta-programming. 
 
 The above links will take you into the respective packages for a deep
 dive on their capabilities.  

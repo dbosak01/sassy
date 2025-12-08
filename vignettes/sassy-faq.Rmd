@@ -37,14 +37,15 @@ on the links below to navigate to the full question and answer content.
 **Q:** I don't quite understand the concept of the **sassy** system. 
 What is this set of packages?
 
-**A:** The **sassy** package is a meta-package that contains six 
+**A:** The **sassy** package is a meta-package that contains seven 
 sub-packages: [**logr**](https://logr.r-sassy.org/), 
 [**fmtr**](https://fmtr.r-sassy.org/), 
 [**libr**](https://libr.r-sassy.org/), 
 [**reporter**](https://reporter.r-sassy.org/), 
-[**common**](https://common.r-sassy.org/), and 
-[**procs**](https://procs.r-sassy.org/). 
-These six  
+[**common**](https://common.r-sassy.org/),  
+[**procs**](https://procs.r-sassy.org/), and 
+[**macro**](https://macro.r-sassy.org/). 
+These seven  
 packages work together as an integrated system.  The system 
 was written primarily to make regulatory reporting in R easier.  The system
 borrows several concepts from SAS® software, and that is why it is called

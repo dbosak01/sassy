@@ -35,6 +35,7 @@ The following training videos can help get you up to speed on the **sassy** syst
   * [Logr Package Overview](https://www.youtube.com/watch?v=o20fT6IOBVs&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=1)
   * [Introduction to Data Libraries in R](https://www.youtube.com/watch?v=uHo8J9LR1xo&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=6)
   * [Introduction to Reporter](https://www.youtube.com/watch?v=PuqQFqOrFXQ&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=4)
+  * [Introduction to the Common Package](https://www.youtube.com/watch?v=scy3jmIU6UY&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=7)
   * [Creating a Format Catalog from Data](https://www.youtube.com/watch?v=n_E5Y2BgmYk&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=2)
   * [Overview of the proc_reg() Function](https://www.youtube.com/watch?v=DK4kCYgNjfA&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=3)
   * [How to Run a Batch Job in R](https://www.youtube.com/watch?v=0SnOYyS7x8k&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=5)

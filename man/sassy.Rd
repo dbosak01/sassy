@@ -32,6 +32,7 @@ and apply formats to a data frame or vector.}
   \item {\code{\link[common]{common}}: A set of utility functions
   shared across the \strong{sassy} family of packages.}
   \item {\code{\link[procs]{procs}}: A package to simulate frequently used SAS® procedures.}
+  \item {\code{\link[macro]{macro}}: A macro language for R.}
 }
 }
 

@@ -61,6 +61,12 @@ executed and tested against expected results: \code{proc_freq},
 \code{proc_means}, \code{proc_reg}, \code{proc_transpose},
 \code{proc_sort}, and \code{proc_print}.
 }
+\item{\strong{macro}: A sample macro program embedded in the \strong{sassy}
+package is executed using the \code{msource} function.  A generated code
+file is emitted and sent to the output directory.  Macro variables and
+R variables set during pre-processing and execution phases are tested against
+expected values.  Several of the macro language commands are exercised.
+}
 }
 }
 \examples{

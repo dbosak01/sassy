@@ -1,0 +1,86 @@
+=========================================================================
+Log Path: c:/packages/sassy/tests/testthat/IQ/log/runIQ.log
+Program Path: C:/packages/sassy/tests/testthat/test-iq.R
+Working Directory: C:/packages/sassy
+User Name: dbosa
+R Version: 4.4.3 (2025-02-28 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 26100
+Base Packages: stats graphics grDevices utils datasets methods base
+Other Packages: tidylog_1.1.0 macro_0.1.5 procs_1.0.7 reporter_1.4.4 libr_1.3.9
+logr_1.3.9 fmtr_1.7.0 common_1.1.4 sassy_1.3.0 testthat_3.3.1
+Log Start Time: 2025-12-08 14:01:46.408348
+=========================================================================
+
+=========================================================================
+Initialization results
+=========================================================================
+
+  Category                              Description Pass Message
+1    sassy                    System Initialization TRUE        
+2    sassy     Check for logr package installation. TRUE        
+3    sassy     Check for fmtr package installation. TRUE        
+4    sassy   Check for common package installation. TRUE        
+5    sassy     Check for libr package installation. TRUE        
+6    sassy Check for reporter package installation. TRUE        
+7    sassy    Check for procs package installation. TRUE        
+8    sassy    Check for macro package installation. TRUE        
+9     logr                        Test log created. TRUE        
+
+=========================================================================
+Preparing Report
+=========================================================================
+
+Complete Results:
+
+  Category                              Description Pass Message
+1    sassy                    System Initialization TRUE        
+2    sassy     Check for logr package installation. TRUE        
+3    sassy     Check for fmtr package installation. TRUE        
+4    sassy   Check for common package installation. TRUE        
+5    sassy     Check for libr package installation. TRUE        
+6    sassy Check for reporter package installation. TRUE        
+7    sassy    Check for procs package installation. TRUE        
+8    sassy    Check for macro package installation. TRUE        
+9     logr                        Test log created. TRUE        
+
+Printing report
+
+Report path: c:/packages/sassy/tests/testthat/IQ/sassyIQ-2025-12-08
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/IQ/sassyIQ-2025-12-08.pdf'
+- output_type: PDF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/47
+- title 1: 'Installation Qualification Results Report'
+- title 2: 'SASSY System'
+- title 3: 'Date: 2025-12-08 14:01:46 PM'
+- content: 
+# A table specification:
+- data: data.frame 'datm' 9 rows 5 cols
+- show_cols: all
+- use_attributes: all
+
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\RtmpwzwnqL\file161cf4b25590.html'
+- output_type: HTML
+- units: inches
+- orientation: portrait
+- margins: top 0.5 bottom 0.5 left 0.5 right 0.5
+- line size/count: 999999/6307685
+- content: 
+# A table specification:
+- data: data.frame 'datm' 9 rows 5 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Installation Qualification Results Report'
+- title 2: 'SASSY System'
+- title 3: 'Date: 2025-12-08 14:01:57 PM'
+
+=========================================================================
+Log End Time: 2025-12-08 14:02:20.218961
+Log Elapsed Time: 0 00:00:33
+=========================================================================

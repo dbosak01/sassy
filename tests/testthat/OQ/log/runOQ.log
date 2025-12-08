@@ -1,0 +1,508 @@
+=========================================================================
+Log Path: c:/packages/sassy/tests/testthat/OQ/log/runOQ.log
+Program Path: C:/packages/sassy/tests/testthat/test-oq.R
+Working Directory: C:/packages/sassy
+User Name: dbosa
+R Version: 4.4.3 (2025-02-28 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 26100
+Base Packages: stats graphics grDevices utils datasets methods base
+Other Packages: tidylog_1.1.0 sassy_1.3.0 macro_0.1.5 procs_1.0.7
+reporter_1.4.4 logr_1.3.9 fmtr_1.7.0 testthat_3.3.1 libr_1.3.9 common_1.1.4
+Log Start Time: 2025-12-08 15:08:16.567244
+=========================================================================
+
+=========================================================================
+Initialization results
+=========================================================================
+
+  Category                              Description Pass Message
+1    sassy                    System Initialization TRUE        
+2    sassy     Check for logr package installation. TRUE        
+3    sassy     Check for fmtr package installation. TRUE        
+4    sassy   Check for common package installation. TRUE        
+5    sassy     Check for libr package installation. TRUE        
+6    sassy Check for reporter package installation. TRUE        
+7    sassy    Check for procs package installation. TRUE        
+8    sassy    Check for macro package installation. TRUE        
+9     logr                        Test log created. TRUE        
+
+=========================================================================
+Package Checks
+=========================================================================
+
+=========================================================================
+Checks for common package
+=========================================================================
+
+v() function check passed.
+
+sort() function check passed.
+
+label() function check passed.
+
+roundup() function check passed.
+
+Sys.path() function check passed.
+
+find.names() function check passed.
+
+copy.attributes() function check passed.
+
+=========================================================================
+Checks for fmtr package
+=========================================================================
+
+Source dataset:
+
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+
+fapply() function check passed.
+
+fdata() function check passed.
+
+# A user-defined format: 2 conditions
+  Name Type Expression Label Order
+1  obj    U     x > 21     H    NA
+2  obj    U    x <= 21     L    NA
+
+value() function check passed.
+
+# A format catalog: 2 formats
+- $test1: type U, 2 conditions
+- $test2: type S, "%5.1f"
+
+Saved format catalog to 'c:/packages/sassy/tests/testthat/OQ/output/fc.fcat'
+
+write.fcat() function check passed.
+
+Read format catalog from 'c:/packages/sassy/tests/testthat/OQ/output/fc.fcat'
+
+# A format catalog: 2 formats
+- $test1: type U, 2 conditions
+- $test2: type S, "%5.1f"
+
+read.fcat() function check passed.
+
+format catalog formats check passed.
+
+=========================================================================
+Checks for libr package
+=========================================================================
+
+Source dataset:
+
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+
+# library 'tst': 3 items
+- attributes: csv not loaded
+- path: c:/packages/sassy/tests/testthat/OQ/data
+- items:
+  Name Extension Rows Cols    Size        LastModified
+1   AE       csv  150   27 88.6 Kb 2025-12-08 15:00:33
+2   DM       csv   87   24 45.7 Kb 2025-12-08 15:00:33
+3   DS       csv  174    9 34.2 Kb 2025-12-08 15:00:33
+
+libname() function check passed.
+
+libname() dataset check passed.
+
+lib_add: added data to library 'tst': dt
+
+lib_add() function check passed.
+
+lib_remove: removed data from library 'tst': dt
+
+lib_remove() function check passed.
+
+dictionary() function check passed.
+
+datastep: columns increased from 11 to 12
+
+   mpg cyl disp  hp drat    wt  qsec vs am gear carb cat
+1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4   L
+2 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4   L
+3 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1   H
+4 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1   H
+5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2   L
+
+datastep() function check passed.
+
+=========================================================================
+Checks for reporter package
+=========================================================================
+
+Source dataset:
+
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.txt'
+- output_type: TXT
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 108/45
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test title'
+- footnote 1: 'Test footnotes'
+
+Test for TXT report passed.
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.rtf'
+- output_type: RTF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/42
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test title'
+- footnote 1: 'Test footnotes'
+
+Test for RTF report passed.
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.pdf'
+- output_type: PDF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/47
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test title'
+- footnote 1: 'Test footnotes'
+
+Test for PDF report passed.
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.docx'
+- output_type: DOCX
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/43
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test title'
+- footnote 1: 'Test footnotes'
+
+Test for DOCX report passed.
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/test.html'
+- output_type: HTML
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/47
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test title'
+- footnote 1: 'Test footnotes'
+
+Test for HTML report passed.
+
+=========================================================================
+Checks for procs package
+=========================================================================
+
+Source dataset:
+
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+
+proc_freq: input data set 5 rows and 11 columns
+           tables: cyl gear cyl * gear
+           view: FALSE
+           output: 3 datasets
+
+$cyl
+  VAR CAT N CNT PCT
+1 cyl   4 5   1  20
+2 cyl   6 5   3  60
+3 cyl   8 5   1  20
+
+$gear
+   VAR CAT N CNT PCT
+1 gear   3 5   2  40
+2 gear   4 5   3  60
+
+$comb
+  VAR1 VAR2 CAT1 CAT2 N CNT PCT
+1  cyl gear    4    3 5   0   0
+2  cyl gear    4    4 5   1  20
+3  cyl gear    6    3 5   1  20
+4  cyl gear    6    4 5   2  40
+5  cyl gear    8    3 5   1  20
+6  cyl gear    8    4 5   0   0
+
+
+proc_freq() function check passed.
+
+proc_means: input data set 5 rows and 11 columns
+            var: cyl gear
+            stats: n mean std min max
+            view: FALSE
+            output: 1 datasets
+
+  TYPE FREQ  VAR N MEAN       STD MIN MAX
+1    0    5  cyl 5  6.0 1.4142136   4   8
+2    0    5 gear 5  3.6 0.5477226   3   4
+
+proc_means() function check passed.
+
+proc_ttest: input data set 5 rows and 11 columns
+            class: am
+            var: disp
+            view: FALSE
+            output: 4 datasets
+
+$Statistics
+   VAR      CLASS        METHOD  N     MEAN      STD   STDERR MIN MAX
+1 disp          0          <NA>  2 309.0000 72.12489 51.00000 258 360
+2 disp          1          <NA>  3 142.6667 30.02221 17.33333 108 160
+3 disp Diff (1-2)        Pooled NA 166.3333       NA 44.11055  NA  NA
+4 disp Diff (1-2) Satterthwaite NA 166.3333       NA 53.86506  NA  NA
+
+$ConfLimits
+   VAR      CLASS        METHOD     MEAN       LCLM     UCLM      STD  LCLMSTD
+1 disp          0          <NA> 309.0000 -339.01644 957.0164 72.12489 32.17846
+2 disp          1          <NA> 142.6667   68.08735 217.2460 30.02221 15.63131
+3 disp Diff (1-2)        Pooled 166.3333   25.95387 306.7128       NA       NA
+4 disp Diff (1-2) Satterthwaite 166.3333 -274.82380 607.4905       NA       NA
+    UCLMSTD
+1 2301.5168
+2  188.6816
+3        NA
+4        NA
+
+$TTests
+   VAR        METHOD VARIANCES       DF        T      PROBT
+1 disp        Pooled     Equal 3.000000 3.770829 0.03264727
+2 disp Satterthwaite   Unequal 1.236118 3.087964 0.15967144
+
+$Equality
+   VAR   METHOD NDF DDF    FVAL     PROBF
+1 disp Folded F   1   2 5.77145 0.2764597
+
+
+proc_ttest() function check passed.
+
+proc_reg: input data set 5 rows and 11 columns
+            model: mpg = disp
+            view: FALSE
+            output: 1 datasets
+
+   MODEL  TYPE DEPVAR      RMSE Intercept        disp mpg
+1 MODEL1 PARMS    mpg 0.8625174  23.63101 -0.01267212  -1
+
+proc_reg() function check passed.
+
+proc_transpose: input data set 5 rows and 11 columns
+                name: NAME
+                output dataset 11 rows and 6 columns
+
+   NAME   COL1    COL2   COL3    COL4   COL5
+1   mpg  21.00  21.000  22.80  21.400  18.70
+2   cyl   6.00   6.000   4.00   6.000   8.00
+3  disp 160.00 160.000 108.00 258.000 360.00
+4    hp 110.00 110.000  93.00 110.000 175.00
+5  drat   3.90   3.900   3.85   3.080   3.15
+6    wt   2.62   2.875   2.32   3.215   3.44
+7  qsec  16.46  17.020  18.61  19.440  17.02
+8    vs   0.00   0.000   1.00   1.000   0.00
+9    am   1.00   1.000   1.00   0.000   0.00
+10 gear   4.00   4.000   4.00   3.000   3.00
+11 carb   4.00   4.000   1.00   1.000   2.00
+
+proc_transpose() function check passed.
+
+proc_sort: input data set 5 rows and 11 columns
+           by: mpg
+           keep: mpg cyl disp hp drat wt qsec vs am gear carb
+           order: a
+           output data set 5 rows and 11 columns
+
+                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+
+proc_sort() function check passed.
+
+# A report specification: 1 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/output/print.pdf'
+- output_type: PDF
+- units: inches
+- orientation: portrait
+- margins: top 1 bottom 1 left 1 right 1
+- line size/count: 6.5/70
+- content: 
+# A table specification:
+- data: data.frame 'dt' 5 rows 11 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Test'
+
+proc_print: printed 1 dataset
+            file_path: c:/packages/sassy/tests/testthat/OQ/output/print.pdf
+            output_type: PDF
+            titles: Test
+            view: FALSE
+
+proc_print() function check passed.
+
+c:/packages/sassy/tests/testthat/OQ/output/print.pdf
+
+=========================================================================
+Checks for macro package
+=========================================================================
+
+Output file generated at
+'c:/packages/sassy/tests/testthat/OQ/output/macro_out.R'
+
+msource() function check passed.
+
+value of 'a' is 1
+
+value of 'b' is 2
+
+macro pre-processing check passed.
+
+value of 'x' is TRUE
+
+value of 'x' is 3
+
+macro execution check passed.
+
+=========================================================================
+Preparing Report
+=========================================================================
+
+Complete Results:
+
+   Category                                   Description Pass Message
+1     sassy                         System Initialization TRUE        
+2     sassy          Check for logr package installation. TRUE        
+3     sassy          Check for fmtr package installation. TRUE        
+4     sassy        Check for common package installation. TRUE        
+5     sassy          Check for libr package installation. TRUE        
+6     sassy      Check for reporter package installation. TRUE        
+7     sassy         Check for procs package installation. TRUE        
+8     sassy         Check for macro package installation. TRUE        
+9      logr                             Test log created. TRUE        
+10   common               v() function works as expected. TRUE        
+11   common            sort() function works as expected. TRUE        
+12   common          labels() function works as expected. TRUE        
+13   common         roundup() function works as expected. TRUE        
+14   common        Sys.path() function works as expected. TRUE        
+15   common      find.names() function works as expected. TRUE        
+16   common copy.attributes() function works as expected. TRUE        
+17     fmtr          fapply() function works as expected. TRUE        
+18     fmtr           fdata() function works as expected. TRUE        
+19     fmtr        user defined format works as expected. TRUE        
+20     fmtr      write.fcat() function works as expected. TRUE        
+21     fmtr       read.fcat() function works as expected. TRUE        
+22     fmtr       format catalog usage works as expected. TRUE        
+23     libr                libname() created as expected. TRUE        
+24     libr                     libname() datasets found. TRUE        
+25     libr         lib_add() function works as expected. TRUE        
+26     libr      lib_remove() function works as expected. TRUE        
+27     libr      dictionary() function works as expected. TRUE        
+28     libr        datastep() function works as expected. TRUE        
+29 reporter                 Test TXT created as expected. TRUE        
+30 reporter                 Test RTF created as expected. TRUE        
+31 reporter                 Test PDF created as expected. TRUE        
+32 reporter                Test DOCX created as expected. TRUE        
+33 reporter                Test HTML created as expected. TRUE        
+34    procs       proc_freq() function works as expected. TRUE        
+35    procs      proc_means() function works as expected. TRUE        
+36    procs      proc_ttest() function works as expected. TRUE        
+37    procs        proc_reg() function works as expected. TRUE        
+38    procs  proc_transpose() function works as expected. TRUE        
+39    procs       proc_sort() function works as expected. TRUE        
+40    procs      proc_print() function works as expected. TRUE        
+41    macro         msource() function works as expected. TRUE        
+42    macro       macro pre-processing works as expected. TRUE        
+43    macro            macro execution works as expected. TRUE        
+
+Printing report
+
+Report path: c:/packages/sassy/tests/testthat/OQ/sassyOQ-2025-12-08
+
+# A report specification: 2 pages
+- file_path: 'c:/packages/sassy/tests/testthat/OQ/sassyOQ-2025-12-08.pdf'
+- output_type: PDF
+- units: inches
+- orientation: landscape
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/47
+- title 1: 'Operational Qualification Results Report'
+- title 2: 'SASSY System'
+- title 3: 'Date: 2025-12-08 15:08:34 PM'
+- content: 
+# A table specification:
+- data: data.frame 'datm' 43 rows 5 cols
+- show_cols: all
+- use_attributes: all
+
+# A report specification: 1 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmp6t7Dvh\file1a485b21412c.html'
+- output_type: HTML
+- units: inches
+- orientation: portrait
+- margins: top 0.5 bottom 0.5 left 0.5 right 0.5
+- line size/count: 999999/6307685
+- content: 
+# A table specification:
+- data: data.frame 'datm' 43 rows 5 cols
+- show_cols: all
+- use_attributes: all
+- title 1: 'Operational Qualification Results Report'
+- title 2: 'SASSY System'
+- title 3: 'Date: 2025-12-08 15:08:36 PM'
+
+=========================================================================
+Log End Time: 2025-12-08 15:08:38.331775
+Log Elapsed Time: 0 00:00:21
+=========================================================================
