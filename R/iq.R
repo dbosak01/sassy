@@ -371,8 +371,8 @@ get_names <- function(pkg) {
     ret <- names(reporter_ck)
   else if (pkg == "procs")
     ret <- names(procs_ck)
-  else if (pkg == "macro")
-    ret <- names(macro_ck)
+  # else if (pkg == "macro")
+  #   ret <- names(macro_ck)
 
 
   return(ret)

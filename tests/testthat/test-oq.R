@@ -71,7 +71,7 @@ test_that("OQ-03: check_packages() works as expected.", {
 
   res <- check_packages()
 
-  expect_equal(nrow(res), 6)
+  expect_equal(nrow(res), 7)
   expect_true(all(res$Pass == TRUE))
 
 })
@@ -183,7 +183,7 @@ test_that("OQ-10: check_macro() works as expected.", {
   res <- check_macro(pth)
 
   res
-  expect_equal(nrow(res), 7)
+  expect_equal(nrow(res), 3)
   expect_true(all(res$Pass == TRUE))
 
 })
