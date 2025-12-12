@@ -73,6 +73,14 @@ will, however, have a similar feel.  Overall, you will find
 programming with the **sassy** system much more comfortable than programming
 in **Base R** or **tidyverse** alone.
 
+### Introductory Videos
+
+Here is a video discussing stability of the packages that comprise the 
+**sassy** system:
+
+[![Sassy System Stability](https://img.youtube.com/vi/JK6JNf-FjGY/0.jpg)](https://www.youtube.com/watch?v=JK6JNf-FjGY)
+
+
 ### Next Steps
 
 Next, you should read the [Get started](https://sassy.r-sassy.org/articles/sassy.html)

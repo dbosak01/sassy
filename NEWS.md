@@ -3,6 +3,7 @@
 * Added **macro** package.
 * Added Introduction videos to home page.
 * Updated IQ/OQ validation procedures.
+* Improved Figure-By example.
 
 # sassy 1.2.9
 

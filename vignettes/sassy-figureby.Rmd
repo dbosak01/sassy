@@ -24,18 +24,18 @@ Note the following about this example:
 * The plot is created as a single plot with no by-groups
 * The plot is added to the report with the `add_content()` function, just
 like the figures in the previous example.
-* The `page_by()` function on the `create_report()` statement generates the 
+* The `page_by()` function on the `create_plot()` statement generates the 
 paging for both the report and plot.
     
 ```{r eval=FALSE, echo=TRUE}
-library(ggplot2)
 library(sassy)
+library(ggplot2)
 
 options("logr.autolog" = TRUE,
         "logr.notes" = FALSE)
 
 # Get path to temp directory
-tmp <- tempdir() 
+tmp <- tempdir()
 
 # Get path to sample data
 pkg <- system.file("extdata", package = "sassy")
@@ -43,72 +43,112 @@ pkg <- system.file("extdata", package = "sassy")
 # Open log
 lgpth <- log_open(file.path(tmp, "example6.log"))
 
-
 # Prepare Data ------------------------------------------------------------
-
-
 
 sep("Prepare Data")
 
-put("Create libname for csv data")
-libname(sdtm, pkg, "csv") 
-
-put("Perform joins and basic filters")
-datastep(sdtm$DM, merge = sdtm$VS, merge_by = c("USUBJID" = "USUBJID"),
-         keep = v(USUBJID, ARMCD, ARM, VSTESTCD, VSTEST, VSORRES, VISITNUM, VISIT),
-         where = expression(VSTESTCD %in% c("SYSBP", "DIABP", "PULSE", "TEMP", "RESP") &
-                                      ARMCD != "SCRNFAIL"), {}) -> prep
-
-put("Change VISIT to factor so it sorts properly")
-prep$VISIT <- factor(prep$VISIT, levels = c("DAY 1", "WEEK 2", "WEEK 4",
-                                       "WEEK 6","WEEK 8", "WEEK 12",
-                                       "WEEK 16"))
-put("Group and summarize")
-proc_means(prep, 
-           var = VSORRES,
-           class = v(ARM, VSTEST, VISITNUM, VISIT), 
-           options = v(nway, nofreq, notype),
-           stats = mean) |> 
-  datastep(where = expression(VISITNUM > 0 & VISITNUM < 20),{}) -> final
-
-put("Rename variables for clarity")
-names(final) <- toupper(labels(final))
-        
-
-# Create Plots ------------------------------------------------------------
+put("Load data files")
+libname(dat, pkg, "csv", filter = c("DM", "VS"))
 
 
+put("Prepare factor levels")
+visit_levels <- c("SCREENING", "DAY 1",   "WEEK 2",  "WEEK 4",  "WEEK 6",
+                  "WEEK 8",  "WEEK 12", "WEEK 16") |> put()
 
-sep("Create plots and print report")
+arm_levels <- c("ARM A", "ARM B") |> put()
 
-put("Create plot")
-p <- final |> 
-  ggplot(mapping = aes(y = MEAN, x = VISIT , group = ARM)) + 
-  geom_point(aes(shape = ARM, color = ARM)) + 
-  geom_line(aes(linetype = ARM, color = ARM)) +
-  scale_x_discrete(name = "Visit") +
-  scale_y_continuous(name = "Value")
+test_codes <- c("SYSBP", "DIABP", "PULSE", "RESP") |> put()
+
+put("Prepare data for analysis")
+datastep(dat$DM, merge = dat$VS, merge_by = v(STUDYID, USUBJID),
+         keep = v(STUDYID, USUBJID, ARM, VISIT, VSTESTCD, VSORRES),
+         merge_in = v(inDM, inVS),
+         where = expression(VISIT != "END OF STUDY EARLY TERMINATION" &
+                            ARM %in% c("ARM A", "ARM B") &
+                            VSTESTCD %in% test_codes
+                            ),
+         {
+
+           # Assign factors to VISIT and ARM
+           VISIT <- factor(VISIT, levels = visit_levels)
+           ARM <- factor(ARM, levels = arm_levels)
+           VSTESTCD <- factor(VSTESTCD, levels = test_codes)
+
+           if (!inDM & inVS) {
+             delete()
+           }
+
+         }) -> vitals
 
 
-# Create Report -----------------------------------------------------------
+# Create Plot -------------------------------------------------------------
 
-put("Construct output path")
-pth <- file.path(tmp, "output/example6.rtf")
+sep("Create Plot")
 
-put("Define report object")
-rpt <- create_report(pth, output_type = "RTF", font = "Arial") |> 
-  set_margins(top = 1, bottom = 1) |> 
-  page_header("Sponsor: Company", "Study: ABC") |> 
-  page_by(VSTEST, "Vital Sign: ", blank_row = "none") |> 
-  titles("Figure 1.0", "Vital Signs Change from Baseline", 
-         "Safety Population", bold = TRUE) |> 
-  add_content(create_plot(p, 4.5, 9)) |> 
-  footnotes("R Program: VS_Figure.R") |> 
-  page_footer(paste0("Date Produced: ", fapply(Sys.time(), "%d%b%y %H:%M")), 
-              right = "Page [pg] of [tpg]")
+put("Assign Colors")
+arm_cols <- c("ARM B" = "#1f77b4", "ARM A" = "#2f2f2f")
+
+put("Define Boxplot")
+p_box <- ggplot2::ggplot(
+  vitals,
+  ggplot2::aes(x = VISIT, y = VSORRES, fill = ARM, colour = ARM)
+) +
+  ggplot2::geom_boxplot(
+    position = ggplot2::position_dodge(width = 0.75),
+    width = 0.6,
+    outlier.size = 0.7,
+    alpha = 0.9
+  ) +
+  ggplot2::scale_fill_manual(values = arm_cols) +
+  ggplot2::scale_colour_manual(values = arm_cols) +
+  ggplot2::labs(
+    x = NULL,
+    y = "Lab Value",
+    fill = NULL,
+    colour = NULL
+  ) +
+  ggplot2::theme_bw(base_size = 10) +
+  ggplot2::theme(
+    legend.position = "bottom",
+    panel.grid.major.x = ggplot2::element_blank(),
+    plot.title = ggplot2::element_text(face = "bold", hjust = 0),
+    plot.caption = ggplot2::element_text(hjust = 0)
+  )
+
+put("Create format for lab codes")
+lbfmt <- value(condition(x == "SYSBP", "Systolic Blood Pressure (mmHg)"),
+               condition(x == "DIABP", "Diastolic Blood Pressure (mmHg)"),
+               condition(x == "PULSE", "Pulse (bpm)"),
+               condition(x == "RESP", "Respirations (bpm)"))
+
+
+# Report ------------------------------------------------------------------
+
+sep("Report")
+
+put("Create plot object definition")
+plt <- create_plot(p_box, height = 4, width = 7, borders = "outside") |>
+  titles("Figure 10. Box Plot: Median and Interquartile Range of Vital Signs by Treatment Arm",
+         bold = TRUE, font_size = 12, align = "left") |>
+  page_by(VSTESTCD, label = "Lab Test: ", format = lbfmt, blank_row = "none") |>
+  footnotes(
+    "Source: example6.rtf. {version$version.string}",
+    "Note: Boxes span the interquartile range (25th to 75th percentile); horizontal line = median;",
+    "whiskers = 1.5×IQR; individual outliers are those beyond this range.",
+    font_size = 9, italics = TRUE, blank_row = "none"
+  )
+
+put("Create report output path")
+pth <- file.path(tempdir(), "example6.rtf")
+
+put("Create report")
+rpt <- create_report(pth, font = "Arial", font_size = 10, output_type = "RTF") |>
+  page_header("Sponsor: Company", right = "Study: ABC", blank_row = "below") |>
+  add_content(plt) |>
+  page_footer("Date Produced: {fapply(Sys.Date(), 'date7')}", right = "Page [pg] of [tpg]")
 
 put("Write report to file system")
-write_report(rpt) 
+write_report(rpt)
 
 put("Close log")
 log_close()
@@ -118,18 +158,17 @@ log_close()
 
 # View log
 # file.show(lgpth)
+
 ```
 
 
 ## Output 
 
-And here are the first three pages of the report:
+And here are the first two pages of the report:
 
 <img src="../man/images/vs_pg1.png" align="center" alt="Figure by example image 1" />
 
 <img src="../man/images/vs_pg2.png" align="center" alt="Figure by example image 2" />
-
-<img src="../man/images/vs_pg3.png" align="center" alt="Figure by example image 3" />
 
 
 ## Log
@@ -138,398 +177,129 @@ Here is the log for the above program:
 
 ```
 =========================================================================
-Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpo1naKK/log/example6.log
-Program Path: C:/packages/Testing/procs/ProcsFigBy.R
-Working Directory: C:/packages/Testing/procs
+Log Path: C:/Users/dbosa/AppData/Local/Temp/Rtmpq0yZA5/log/example6.log
+Program Path: C:/Studies/Testing1/P6b.R
+Working Directory: C:/Studies/Testing1
 User Name: dbosa
-R Version: 4.3.1 (2023-06-16 ucrt)
+R Version: 4.4.3 (2025-02-28 ucrt)
 Machine: SOCRATES x86-64
-Operating System: Windows 10 x64 build 22621
-Base Packages: stats graphics grDevices utils datasets methods base Other
-Packages: tidylog_1.0.2 ggplot2_3.4.2 procs_1.0.3 reporter_1.4.1 libr_1.2.8
-fmtr_1.5.9 logr_1.3.4 common_1.0.8 sassy_1.1.0
-Log Start Time: 2023-09-06 20:23:58.614273
+Operating System: Windows 10 x64 build 26100
+Base Packages: stats graphics grDevices utils datasets methods base
+Other Packages: tidylog_1.1.0 ggplot2_3.5.1 procs_1.0.7 reporter_1.4.5
+libr_1.3.9 logr_1.3.9 fmtr_1.7.0 common_1.1.4 sassy_1.2.9
+Log Start Time: 2025-12-12 14:27:32.328372
 =========================================================================
 
 =========================================================================
 Prepare Data
 =========================================================================
 
-Create libname for csv data
+Load data files
 
-# library 'sdtm': 7 items
+# library 'dat': 2 items
 - attributes: csv not loaded
-- path: C:/Users/dbosa/AppData/Local/R/win-library/4.3/sassy/extdata
+- path: C:/Users/dbosa/AppData/Local/R/win-library/4.4/sassy/extdata
 - items:
   Name Extension Rows Cols     Size        LastModified
-1   AE       csv  150   27  88.5 Kb 2023-08-07 17:51:40
-2   DM       csv   87   24  45.5 Kb 2023-08-07 17:51:40
-3   DS       csv  174    9  34.1 Kb 2023-08-07 17:51:40
-4   EX       csv   84   11  26.4 Kb 2023-08-07 17:51:40
-5   IE       csv    2   14  13.4 Kb 2023-08-07 17:51:40
-6   SV       csv  685   10  70.3 Kb 2023-08-07 17:51:40
-7   VS       csv 3358   17 467.4 Kb 2023-08-07 17:51:40
+1   DM       csv   87   24  45.8 Kb 2025-12-12 08:37:33
+2   VS       csv 3358   17 467.7 Kb 2025-12-12 08:37:33
 
-Perform joins and basic filters
+Prepare factor levels
 
-datastep: columns decreased from 24 to 8
+SCREENING
+DAY 1
+WEEK 2
+WEEK 4
+WEEK 6
+WEEK 8
+WEEK 12
+WEEK 16
 
-# A tibble: 3,112 × 8
-   USUBJID    ARMCD ARM   VSTESTCD VSTEST                   VSORRES VISITNUM VISIT    
-   <chr>      <chr> <chr> <chr>    <chr>                      <dbl>    <dbl> <chr>    
- 1 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      78        0 SCREENING
- 2 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      76        1 DAY 1    
- 3 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      66        2 WEEK 2   
- 4 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      84        4 WEEK 4   
- 5 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      68        6 WEEK 6   
- 6 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      80        8 WEEK 8   
- 7 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       12 WEEK 12  
- 8 ABC-01-049 4     ARM D DIABP    Diastolic Blood Pressure      70       16 WEEK 16  
- 9 ABC-01-049 4     ARM D PULSE    Pulse Rate                    92        0 SCREENING
-10 ABC-01-049 4     ARM D PULSE    Pulse Rate                    84        1 DAY 1    
-# ℹ 3,102 more rows
+ARM A
+ARM B
+
+SYSBP
+DIABP
+PULSE
+RESP
+
+Prepare data for analysis
+
+datastep: columns decreased from 24 to 6
+
+# A tibble: 1,231 × 6
+   STUDYID USUBJID    ARM   VISIT     VSTESTCD VSORRES
+   <chr>   <chr>      <fct> <fct>     <fct>      <dbl>
+ 1 ABC     ABC-01-050 ARM B SCREENING DIABP         80
+ 2 ABC     ABC-01-050 ARM B DAY 1     DIABP         78
+ 3 ABC     ABC-01-050 ARM B WEEK 2    DIABP         64
+ 4 ABC     ABC-01-050 ARM B WEEK 4    DIABP         86
+ 5 ABC     ABC-01-050 ARM B WEEK 6    DIABP         70
+ 6 ABC     ABC-01-050 ARM B WEEK 8    DIABP         80
+ 7 ABC     ABC-01-050 ARM B WEEK 12   DIABP         64
+ 8 ABC     ABC-01-050 ARM B WEEK 16   DIABP         82
+ 9 ABC     ABC-01-050 ARM B SCREENING PULSE         76
+10 ABC     ABC-01-050 ARM B DAY 1     PULSE         68
+# ℹ 1,221 more rows
 # ℹ Use `print(n = ...)` to see more rows
 
-Change VISIT to factor so it sorts properly
-
-Group and summarize
-
-proc_means: input data set 3112 rows and 8 columns
-            class: ARM VSTEST VISITNUM VISIT
-            var: VSORRES
-            stats: mean
-            view: TRUE
-            output: 1 datasets
-
-    CLASS1                   CLASS2 CLASS3  CLASS4     VAR      MEAN
-1    ARM A Diastolic Blood Pressure      1   DAY 1 VSORRES  76.47368
-2    ARM A Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.36842
-3    ARM A Diastolic Blood Pressure     16 WEEK 16 VSORRES  77.26316
-4    ARM A Diastolic Blood Pressure      2  WEEK 2 VSORRES  77.65000
-5    ARM A Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.70000
-6    ARM A Diastolic Blood Pressure      6  WEEK 6 VSORRES  74.36842
-7    ARM A Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.05263
-8    ARM A               Pulse Rate      1   DAY 1 VSORRES  72.57895
-9    ARM A               Pulse Rate     12 WEEK 12 VSORRES  75.68421
-10   ARM A               Pulse Rate     16 WEEK 16 VSORRES  76.26316
-11   ARM A               Pulse Rate      2  WEEK 2 VSORRES  73.35000
-12   ARM A               Pulse Rate      4  WEEK 4 VSORRES  75.85000
-13   ARM A               Pulse Rate      6  WEEK 6 VSORRES  73.47368
-14   ARM A               Pulse Rate      8  WEEK 8 VSORRES  73.21053
-15   ARM A         Respiratory Rate      1   DAY 1 VSORRES  16.31579
-16   ARM A         Respiratory Rate     12 WEEK 12 VSORRES  16.42105
-17   ARM A         Respiratory Rate     16 WEEK 16 VSORRES  15.05263
-18   ARM A         Respiratory Rate      2  WEEK 2 VSORRES  15.40000
-19   ARM A         Respiratory Rate      4  WEEK 4 VSORRES  15.60000
-20   ARM A         Respiratory Rate      6  WEEK 6 VSORRES  17.15789
-21   ARM A         Respiratory Rate      8  WEEK 8 VSORRES  15.42105
-22   ARM A  Systolic Blood Pressure      1   DAY 1 VSORRES 127.52632
-23   ARM A  Systolic Blood Pressure     12 WEEK 12 VSORRES 128.31579
-24   ARM A  Systolic Blood Pressure     16 WEEK 16 VSORRES 132.05263
-25   ARM A  Systolic Blood Pressure      2  WEEK 2 VSORRES 129.45000
-26   ARM A  Systolic Blood Pressure      4  WEEK 4 VSORRES 132.25000
-27   ARM A  Systolic Blood Pressure      6  WEEK 6 VSORRES 130.05263
-28   ARM A  Systolic Blood Pressure      8  WEEK 8 VSORRES 131.00000
-29   ARM A              Temperature      1   DAY 1 VSORRES  36.52105
-30   ARM A              Temperature     12 WEEK 12 VSORRES  36.46316
-31   ARM A              Temperature     16 WEEK 16 VSORRES  36.43158
-32   ARM A              Temperature      2  WEEK 2 VSORRES  36.48947
-33   ARM A              Temperature      4  WEEK 4 VSORRES  36.37000
-34   ARM A              Temperature      6  WEEK 6 VSORRES  36.47368
-35   ARM A              Temperature      8  WEEK 8 VSORRES  36.52105
-36   ARM B Diastolic Blood Pressure      1   DAY 1 VSORRES  78.23810
-37   ARM B Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.16667
-38   ARM B Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.47059
-39   ARM B Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.15000
-40   ARM B Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.45000
-41   ARM B Diastolic Blood Pressure      6  WEEK 6 VSORRES  79.33333
-42   ARM B Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.33333
-43   ARM B               Pulse Rate      1   DAY 1 VSORRES  71.52381
-44   ARM B               Pulse Rate     12 WEEK 12 VSORRES  73.55556
-45   ARM B               Pulse Rate     16 WEEK 16 VSORRES  73.29412
-46   ARM B               Pulse Rate      2  WEEK 2 VSORRES  69.85000
-47   ARM B               Pulse Rate      4  WEEK 4 VSORRES  72.80000
-48   ARM B               Pulse Rate      6  WEEK 6 VSORRES  77.94444
-49   ARM B               Pulse Rate      8  WEEK 8 VSORRES  74.77778
-50   ARM B         Respiratory Rate      1   DAY 1 VSORRES  15.80952
-51   ARM B         Respiratory Rate     12 WEEK 12 VSORRES  15.55556
-52   ARM B         Respiratory Rate     16 WEEK 16 VSORRES  15.29412
-53   ARM B         Respiratory Rate      2  WEEK 2 VSORRES  16.45000
-54   ARM B         Respiratory Rate      4  WEEK 4 VSORRES  15.30000
-55   ARM B         Respiratory Rate      6  WEEK 6 VSORRES  15.38889
-56   ARM B         Respiratory Rate      8  WEEK 8 VSORRES  15.22222
-57   ARM B  Systolic Blood Pressure      1   DAY 1 VSORRES 127.47619
-58   ARM B  Systolic Blood Pressure     12 WEEK 12 VSORRES 129.66667
-59   ARM B  Systolic Blood Pressure     16 WEEK 16 VSORRES 128.88235
-60   ARM B  Systolic Blood Pressure      2  WEEK 2 VSORRES 124.00000
-61   ARM B  Systolic Blood Pressure      4  WEEK 4 VSORRES 126.35000
-62   ARM B  Systolic Blood Pressure      6  WEEK 6 VSORRES 128.61111
-63   ARM B  Systolic Blood Pressure      8  WEEK 8 VSORRES 126.33333
-64   ARM B              Temperature      1   DAY 1 VSORRES  36.38095
-65   ARM B              Temperature     12 WEEK 12 VSORRES  36.43333
-66   ARM B              Temperature     16 WEEK 16 VSORRES  36.26471
-67   ARM B              Temperature      2  WEEK 2 VSORRES  36.26842
-68   ARM B              Temperature      4  WEEK 4 VSORRES  36.35000
-69   ARM B              Temperature      6  WEEK 6 VSORRES  36.31667
-70   ARM B              Temperature      8  WEEK 8 VSORRES  36.38889
-71   ARM C Diastolic Blood Pressure      1   DAY 1 VSORRES  77.33333
-72   ARM C Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.75000
-73   ARM C Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.62500
-74   ARM C Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.50000
-75   ARM C Diastolic Blood Pressure      4  WEEK 4 VSORRES  76.47059
-76   ARM C Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.58824
-77   ARM C Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.52941
-78   ARM C               Pulse Rate      1   DAY 1 VSORRES  74.09524
-79   ARM C               Pulse Rate     12 WEEK 12 VSORRES  73.75000
-80   ARM C               Pulse Rate     16 WEEK 16 VSORRES  76.18750
-81   ARM C               Pulse Rate      2  WEEK 2 VSORRES  73.94444
-82   ARM C               Pulse Rate      4  WEEK 4 VSORRES  77.29412
-83   ARM C               Pulse Rate      6  WEEK 6 VSORRES  76.05882
-84   ARM C               Pulse Rate      8  WEEK 8 VSORRES  75.29412
-85   ARM C         Respiratory Rate      1   DAY 1 VSORRES  15.85714
-86   ARM C         Respiratory Rate     12 WEEK 12 VSORRES  14.93750
-87   ARM C         Respiratory Rate     16 WEEK 16 VSORRES  15.43750
-88   ARM C         Respiratory Rate      2  WEEK 2 VSORRES  15.27778
-89   ARM C         Respiratory Rate      4  WEEK 4 VSORRES  15.23529
-90   ARM C         Respiratory Rate      6  WEEK 6 VSORRES  16.11765
-91   ARM C         Respiratory Rate      8  WEEK 8 VSORRES  14.64706
-92   ARM C  Systolic Blood Pressure      1   DAY 1 VSORRES 123.90476
-93   ARM C  Systolic Blood Pressure     12 WEEK 12 VSORRES 120.06250
-94   ARM C  Systolic Blood Pressure     16 WEEK 16 VSORRES 122.62500
-95   ARM C  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.05556
-96   ARM C  Systolic Blood Pressure      4  WEEK 4 VSORRES 123.52941
-97   ARM C  Systolic Blood Pressure      6  WEEK 6 VSORRES 121.94118
-98   ARM C  Systolic Blood Pressure      8  WEEK 8 VSORRES 125.00000
-99   ARM C              Temperature      1   DAY 1 VSORRES  36.42857
-100  ARM C              Temperature     12 WEEK 12 VSORRES  36.23750
-101  ARM C              Temperature     16 WEEK 16 VSORRES  36.42500
-102  ARM C              Temperature      2  WEEK 2 VSORRES  36.57778
-103  ARM C              Temperature      4  WEEK 4 VSORRES  36.25882
-104  ARM C              Temperature      6  WEEK 6 VSORRES  36.14118
-105  ARM C              Temperature      8  WEEK 8 VSORRES  36.26471
-106  ARM D Diastolic Blood Pressure      1   DAY 1 VSORRES  76.63636
-107  ARM D Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.21053
-108  ARM D Diastolic Blood Pressure     16 WEEK 16 VSORRES  75.57143
-109  ARM D Diastolic Blood Pressure      2  WEEK 2 VSORRES  74.90909
-110  ARM D Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.04762
-111  ARM D Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.60000
-112  ARM D Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.90000
-113  ARM D               Pulse Rate      1   DAY 1 VSORRES  74.78261
-114  ARM D               Pulse Rate     12 WEEK 12 VSORRES  70.75000
-115  ARM D               Pulse Rate     16 WEEK 16 VSORRES  74.19048
-116  ARM D               Pulse Rate      2  WEEK 2 VSORRES  76.59091
-117  ARM D               Pulse Rate      4  WEEK 4 VSORRES  75.42857
-118  ARM D               Pulse Rate      6  WEEK 6 VSORRES  69.95000
-119  ARM D               Pulse Rate      8  WEEK 8 VSORRES  72.90000
-120  ARM D         Respiratory Rate      1   DAY 1 VSORRES  16.13043
-121  ARM D         Respiratory Rate     12 WEEK 12 VSORRES  15.20000
-122  ARM D         Respiratory Rate     16 WEEK 16 VSORRES  15.09524
-123  ARM D         Respiratory Rate      2  WEEK 2 VSORRES  16.36364
-124  ARM D         Respiratory Rate      4  WEEK 4 VSORRES  15.42857
-125  ARM D         Respiratory Rate      6  WEEK 6 VSORRES  15.45000
-126  ARM D         Respiratory Rate      8  WEEK 8 VSORRES  16.00000
-127  ARM D  Systolic Blood Pressure      1   DAY 1 VSORRES 127.54545
-128  ARM D  Systolic Blood Pressure     12 WEEK 12 VSORRES 124.52632
-129  ARM D  Systolic Blood Pressure     16 WEEK 16 VSORRES 129.57143
-130  ARM D  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.45455
-131  ARM D  Systolic Blood Pressure      4  WEEK 4 VSORRES 128.52381
-132  ARM D  Systolic Blood Pressure      6  WEEK 6 VSORRES 122.85000
-133  ARM D  Systolic Blood Pressure      8  WEEK 8 VSORRES 129.40000
-134  ARM D              Temperature      1   DAY 1 VSORRES  36.50435
-135  ARM D              Temperature     12 WEEK 12 VSORRES  36.35000
-136  ARM D              Temperature     16 WEEK 16 VSORRES  36.30000
-137  ARM D              Temperature      2  WEEK 2 VSORRES  36.31818
-138  ARM D              Temperature      4  WEEK 4 VSORRES  36.19524
-139  ARM D              Temperature      6  WEEK 6 VSORRES  36.32000
-140  ARM D              Temperature      8  WEEK 8 VSORRES  36.28000
-
-datastep: columns started with 6 and ended with 6
-
-    CLASS1                   CLASS2 CLASS3  CLASS4     VAR      MEAN
-1    ARM A Diastolic Blood Pressure      1   DAY 1 VSORRES  76.47368
-2    ARM A Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.36842
-3    ARM A Diastolic Blood Pressure     16 WEEK 16 VSORRES  77.26316
-4    ARM A Diastolic Blood Pressure      2  WEEK 2 VSORRES  77.65000
-5    ARM A Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.70000
-6    ARM A Diastolic Blood Pressure      6  WEEK 6 VSORRES  74.36842
-7    ARM A Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.05263
-8    ARM A               Pulse Rate      1   DAY 1 VSORRES  72.57895
-9    ARM A               Pulse Rate     12 WEEK 12 VSORRES  75.68421
-10   ARM A               Pulse Rate     16 WEEK 16 VSORRES  76.26316
-11   ARM A               Pulse Rate      2  WEEK 2 VSORRES  73.35000
-12   ARM A               Pulse Rate      4  WEEK 4 VSORRES  75.85000
-13   ARM A               Pulse Rate      6  WEEK 6 VSORRES  73.47368
-14   ARM A               Pulse Rate      8  WEEK 8 VSORRES  73.21053
-15   ARM A         Respiratory Rate      1   DAY 1 VSORRES  16.31579
-16   ARM A         Respiratory Rate     12 WEEK 12 VSORRES  16.42105
-17   ARM A         Respiratory Rate     16 WEEK 16 VSORRES  15.05263
-18   ARM A         Respiratory Rate      2  WEEK 2 VSORRES  15.40000
-19   ARM A         Respiratory Rate      4  WEEK 4 VSORRES  15.60000
-20   ARM A         Respiratory Rate      6  WEEK 6 VSORRES  17.15789
-21   ARM A         Respiratory Rate      8  WEEK 8 VSORRES  15.42105
-22   ARM A  Systolic Blood Pressure      1   DAY 1 VSORRES 127.52632
-23   ARM A  Systolic Blood Pressure     12 WEEK 12 VSORRES 128.31579
-24   ARM A  Systolic Blood Pressure     16 WEEK 16 VSORRES 132.05263
-25   ARM A  Systolic Blood Pressure      2  WEEK 2 VSORRES 129.45000
-26   ARM A  Systolic Blood Pressure      4  WEEK 4 VSORRES 132.25000
-27   ARM A  Systolic Blood Pressure      6  WEEK 6 VSORRES 130.05263
-28   ARM A  Systolic Blood Pressure      8  WEEK 8 VSORRES 131.00000
-29   ARM A              Temperature      1   DAY 1 VSORRES  36.52105
-30   ARM A              Temperature     12 WEEK 12 VSORRES  36.46316
-31   ARM A              Temperature     16 WEEK 16 VSORRES  36.43158
-32   ARM A              Temperature      2  WEEK 2 VSORRES  36.48947
-33   ARM A              Temperature      4  WEEK 4 VSORRES  36.37000
-34   ARM A              Temperature      6  WEEK 6 VSORRES  36.47368
-35   ARM A              Temperature      8  WEEK 8 VSORRES  36.52105
-36   ARM B Diastolic Blood Pressure      1   DAY 1 VSORRES  78.23810
-37   ARM B Diastolic Blood Pressure     12 WEEK 12 VSORRES  78.16667
-38   ARM B Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.47059
-39   ARM B Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.15000
-40   ARM B Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.45000
-41   ARM B Diastolic Blood Pressure      6  WEEK 6 VSORRES  79.33333
-42   ARM B Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.33333
-43   ARM B               Pulse Rate      1   DAY 1 VSORRES  71.52381
-44   ARM B               Pulse Rate     12 WEEK 12 VSORRES  73.55556
-45   ARM B               Pulse Rate     16 WEEK 16 VSORRES  73.29412
-46   ARM B               Pulse Rate      2  WEEK 2 VSORRES  69.85000
-47   ARM B               Pulse Rate      4  WEEK 4 VSORRES  72.80000
-48   ARM B               Pulse Rate      6  WEEK 6 VSORRES  77.94444
-49   ARM B               Pulse Rate      8  WEEK 8 VSORRES  74.77778
-50   ARM B         Respiratory Rate      1   DAY 1 VSORRES  15.80952
-51   ARM B         Respiratory Rate     12 WEEK 12 VSORRES  15.55556
-52   ARM B         Respiratory Rate     16 WEEK 16 VSORRES  15.29412
-53   ARM B         Respiratory Rate      2  WEEK 2 VSORRES  16.45000
-54   ARM B         Respiratory Rate      4  WEEK 4 VSORRES  15.30000
-55   ARM B         Respiratory Rate      6  WEEK 6 VSORRES  15.38889
-56   ARM B         Respiratory Rate      8  WEEK 8 VSORRES  15.22222
-57   ARM B  Systolic Blood Pressure      1   DAY 1 VSORRES 127.47619
-58   ARM B  Systolic Blood Pressure     12 WEEK 12 VSORRES 129.66667
-59   ARM B  Systolic Blood Pressure     16 WEEK 16 VSORRES 128.88235
-60   ARM B  Systolic Blood Pressure      2  WEEK 2 VSORRES 124.00000
-61   ARM B  Systolic Blood Pressure      4  WEEK 4 VSORRES 126.35000
-62   ARM B  Systolic Blood Pressure      6  WEEK 6 VSORRES 128.61111
-63   ARM B  Systolic Blood Pressure      8  WEEK 8 VSORRES 126.33333
-64   ARM B              Temperature      1   DAY 1 VSORRES  36.38095
-65   ARM B              Temperature     12 WEEK 12 VSORRES  36.43333
-66   ARM B              Temperature     16 WEEK 16 VSORRES  36.26471
-67   ARM B              Temperature      2  WEEK 2 VSORRES  36.26842
-68   ARM B              Temperature      4  WEEK 4 VSORRES  36.35000
-69   ARM B              Temperature      6  WEEK 6 VSORRES  36.31667
-70   ARM B              Temperature      8  WEEK 8 VSORRES  36.38889
-71   ARM C Diastolic Blood Pressure      1   DAY 1 VSORRES  77.33333
-72   ARM C Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.75000
-73   ARM C Diastolic Blood Pressure     16 WEEK 16 VSORRES  78.62500
-74   ARM C Diastolic Blood Pressure      2  WEEK 2 VSORRES  76.50000
-75   ARM C Diastolic Blood Pressure      4  WEEK 4 VSORRES  76.47059
-76   ARM C Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.58824
-77   ARM C Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.52941
-78   ARM C               Pulse Rate      1   DAY 1 VSORRES  74.09524
-79   ARM C               Pulse Rate     12 WEEK 12 VSORRES  73.75000
-80   ARM C               Pulse Rate     16 WEEK 16 VSORRES  76.18750
-81   ARM C               Pulse Rate      2  WEEK 2 VSORRES  73.94444
-82   ARM C               Pulse Rate      4  WEEK 4 VSORRES  77.29412
-83   ARM C               Pulse Rate      6  WEEK 6 VSORRES  76.05882
-84   ARM C               Pulse Rate      8  WEEK 8 VSORRES  75.29412
-85   ARM C         Respiratory Rate      1   DAY 1 VSORRES  15.85714
-86   ARM C         Respiratory Rate     12 WEEK 12 VSORRES  14.93750
-87   ARM C         Respiratory Rate     16 WEEK 16 VSORRES  15.43750
-88   ARM C         Respiratory Rate      2  WEEK 2 VSORRES  15.27778
-89   ARM C         Respiratory Rate      4  WEEK 4 VSORRES  15.23529
-90   ARM C         Respiratory Rate      6  WEEK 6 VSORRES  16.11765
-91   ARM C         Respiratory Rate      8  WEEK 8 VSORRES  14.64706
-92   ARM C  Systolic Blood Pressure      1   DAY 1 VSORRES 123.90476
-93   ARM C  Systolic Blood Pressure     12 WEEK 12 VSORRES 120.06250
-94   ARM C  Systolic Blood Pressure     16 WEEK 16 VSORRES 122.62500
-95   ARM C  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.05556
-96   ARM C  Systolic Blood Pressure      4  WEEK 4 VSORRES 123.52941
-97   ARM C  Systolic Blood Pressure      6  WEEK 6 VSORRES 121.94118
-98   ARM C  Systolic Blood Pressure      8  WEEK 8 VSORRES 125.00000
-99   ARM C              Temperature      1   DAY 1 VSORRES  36.42857
-100  ARM C              Temperature     12 WEEK 12 VSORRES  36.23750
-101  ARM C              Temperature     16 WEEK 16 VSORRES  36.42500
-102  ARM C              Temperature      2  WEEK 2 VSORRES  36.57778
-103  ARM C              Temperature      4  WEEK 4 VSORRES  36.25882
-104  ARM C              Temperature      6  WEEK 6 VSORRES  36.14118
-105  ARM C              Temperature      8  WEEK 8 VSORRES  36.26471
-106  ARM D Diastolic Blood Pressure      1   DAY 1 VSORRES  76.63636
-107  ARM D Diastolic Blood Pressure     12 WEEK 12 VSORRES  75.21053
-108  ARM D Diastolic Blood Pressure     16 WEEK 16 VSORRES  75.57143
-109  ARM D Diastolic Blood Pressure      2  WEEK 2 VSORRES  74.90909
-110  ARM D Diastolic Blood Pressure      4  WEEK 4 VSORRES  78.04762
-111  ARM D Diastolic Blood Pressure      6  WEEK 6 VSORRES  76.60000
-112  ARM D Diastolic Blood Pressure      8  WEEK 8 VSORRES  77.90000
-113  ARM D               Pulse Rate      1   DAY 1 VSORRES  74.78261
-114  ARM D               Pulse Rate     12 WEEK 12 VSORRES  70.75000
-115  ARM D               Pulse Rate     16 WEEK 16 VSORRES  74.19048
-116  ARM D               Pulse Rate      2  WEEK 2 VSORRES  76.59091
-117  ARM D               Pulse Rate      4  WEEK 4 VSORRES  75.42857
-118  ARM D               Pulse Rate      6  WEEK 6 VSORRES  69.95000
-119  ARM D               Pulse Rate      8  WEEK 8 VSORRES  72.90000
-120  ARM D         Respiratory Rate      1   DAY 1 VSORRES  16.13043
-121  ARM D         Respiratory Rate     12 WEEK 12 VSORRES  15.20000
-122  ARM D         Respiratory Rate     16 WEEK 16 VSORRES  15.09524
-123  ARM D         Respiratory Rate      2  WEEK 2 VSORRES  16.36364
-124  ARM D         Respiratory Rate      4  WEEK 4 VSORRES  15.42857
-125  ARM D         Respiratory Rate      6  WEEK 6 VSORRES  15.45000
-126  ARM D         Respiratory Rate      8  WEEK 8 VSORRES  16.00000
-127  ARM D  Systolic Blood Pressure      1   DAY 1 VSORRES 127.54545
-128  ARM D  Systolic Blood Pressure     12 WEEK 12 VSORRES 124.52632
-129  ARM D  Systolic Blood Pressure     16 WEEK 16 VSORRES 129.57143
-130  ARM D  Systolic Blood Pressure      2  WEEK 2 VSORRES 123.45455
-131  ARM D  Systolic Blood Pressure      4  WEEK 4 VSORRES 128.52381
-132  ARM D  Systolic Blood Pressure      6  WEEK 6 VSORRES 122.85000
-133  ARM D  Systolic Blood Pressure      8  WEEK 8 VSORRES 129.40000
-134  ARM D              Temperature      1   DAY 1 VSORRES  36.50435
-135  ARM D              Temperature     12 WEEK 12 VSORRES  36.35000
-136  ARM D              Temperature     16 WEEK 16 VSORRES  36.30000
-137  ARM D              Temperature      2  WEEK 2 VSORRES  36.31818
-138  ARM D              Temperature      4  WEEK 4 VSORRES  36.19524
-139  ARM D              Temperature      6  WEEK 6 VSORRES  36.32000
-140  ARM D              Temperature      8  WEEK 8 VSORRES  36.28000
-
-Rename variables for clarity
-
 =========================================================================
-Create plots and print report
+Create Plot
 =========================================================================
 
-Create plot
+Assign Colors
 
-Construct output path
+Define Boxplot
 
-Define report object
+Create format for lab codes
+
+# A user-defined format: 4 conditions
+  Name Type   Expression                           Label Order
+1  obj    U x == "SYSBP"  Systolic Blood Pressure (mmHg)    NA
+2  obj    U x == "DIABP" Diastolic Blood Pressure (mmHg)    NA
+3  obj    U x == "PULSE"                     Pulse (bpm)    NA
+4  obj    U  x == "RESP"              Respirations (bpm)    NA
+
+=========================================================================
+Report
+=========================================================================
+
+Create plot object definition
+
+Create report output path
+
+Create report
 
 Write report to file system
 
-# A report specification: 5 pages
-- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpo1naKK/output/example6.rtf'
+# A report specification: 4 pages
+- file_path: 'C:\Users\dbosa\AppData\Local\Temp\Rtmpq0yZA5/example6.rtf'
 - output_type: RTF
 - units: inches
 - orientation: landscape
-- margins: top 1 bottom 1 left 1 right 1
-- line size/count: 9/36
-- page by: VSTEST
+- margins: top 0.5 bottom 0.5 left 1 right 1
+- line size/count: 9/42
 - page_header: left=Sponsor: Company right=Study: ABC
-- title 1: 'Figure 1.0'
-- title 2: 'Vital Signs Change from Baseline'
-- title 3: 'Safety Population'
-- footnote 1: 'R Program: VS_Figure.R'
-- page_footer: left=Date Produced: 06Sep23 20:24 center= right=Page [pg] of [tpg]
+- page_footer: left=Date Produced: 12DEC25 center= right=Page [pg] of [tpg]
 - content: 
 # A plot specification: 
-- data: 140 rows, 6 cols
-- layers: 2
-- height: 4.5
-- width: 9
-
-Close libname
+- data: 1231 rows, 6 cols
+- layers: 1
+- height: 4
+- width: 7
+- page by: VSTESTCD
+- title 1: 'Figure 10. Box Plot: Median and Interquartile Range of Vital Signs by Treatment Arm'
+- footnote 1: 'Source: example6.rtf. R version 4.4.3 (2025-02-28 ucrt)'
+- footnote 2: 'Note: Boxes span the interquartile range (25th to 75th percentile); horizontal line = median;'
+- footnote 3: 'whiskers = 1.5×IQR; individual outliers are those beyond this range.'
 
 Close log
 
 =========================================================================
-Log End Time: 2023-09-06 20:24:10.852245
-Log Elapsed Time: 0 00:00:12
+Log End Time: 2025-12-12 14:27:40.667776
+Log Elapsed Time: 0 00:00:08
 =========================================================================
+
 
 ```
 
