@@ -1,7 +1,8 @@
 # sassy 1.3.0
 
+* Updated required versions.
 * Added **macro** package.
-* Added Introduction videos to home page.
+* Added Introductory videos section to home page.
 * Updated IQ/OQ validation procedures.
 * Improved Figure-By example.
 

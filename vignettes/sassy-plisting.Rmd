@@ -207,7 +207,6 @@ res2 <- write_report(rpt, output_type = "PDF")
 
 # Clean Up ----------------------------------------------------------------
 
-lib_unload(sdtm)
 
 log_close()
 
