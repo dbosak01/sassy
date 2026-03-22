@@ -45,7 +45,7 @@ sub-packages: [**logr**](https://logr.r-sassy.org/),
 [**common**](https://common.r-sassy.org/),  
 [**procs**](https://procs.r-sassy.org/), and 
 [**macro**](https://macro.r-sassy.org/). 
-These seven  
+These seven 
 packages work together as an integrated system.  The system 
 was written primarily to make regulatory reporting in R easier.  The system
 borrows several concepts from SAS® software, and that is why it is called

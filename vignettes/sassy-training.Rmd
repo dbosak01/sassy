@@ -22,6 +22,8 @@ Here are some links to those external sources.
 Below is a list of papers covering various aspects of the **sassy** system:
 
   * [Why SASSY?](https://pharmasug.org/proceedings/2025/AP/PharmaSUG-2025-AP-263.pdf), 2025
+  * [Reproducing the "BEST" Format in R](https://www.lexjansen.com/sesug/2025/49_Final_PDF.pdf), 2025
+  * [How to Create a Spreadsheet-driven Batch Job Using R and SASSY ](https://www.lexjansen.com/sesug/2025/97_Final_PDF.pdf), 2025
   * [Replicating SAS Reports in R: The REPORTER Package](https://sesug.org/proceedings/sesug_2024_SAAG/PresentationSummaries/Papers/113_Final_PDF.pdf), 2024
   * [Examining the R datastep() Function](https://www.lexjansen.com/sesug/2024/111_Final_PDF.pdf), 2024
   * [Replicating SAS® Procedures in R with the PROCS Package](https://pharmasug.org/proceedings/2024/AP/PharmaSUG-2024-AP-295.pdf), 2024
@@ -39,6 +41,8 @@ The following training videos can help get you up to speed on the **sassy** syst
   * [Creating a Format Catalog from Data](https://www.youtube.com/watch?v=n_E5Y2BgmYk&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=2)
   * [Overview of the proc_reg() Function](https://www.youtube.com/watch?v=DK4kCYgNjfA&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=3)
   * [How to Run a Batch Job in R](https://www.youtube.com/watch?v=0SnOYyS7x8k&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=5)
+  * [SASSY System Stability](https://www.youtube.com/watch?v=JK6JNf-FjGY&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=8)
+  * [Introduction to the Macro R Package](https://www.youtube.com/watch?v=UBEkCRRMboU&list=PL7K0QSiaKSb6WA6479ma0uMZjEPYDjpWZ&index=9)
 
 
 ## R Training 
