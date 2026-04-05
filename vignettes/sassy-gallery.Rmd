@@ -1,0 +1,146 @@
+---
+title: "Program Gallery"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Program Gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The **sassy** package is a meta-package that aims to make R easier for
+everyone, especially people with a background in SAS®.
+The package brings several useful SAS® concepts to R, including
+data libraries, formats and format catalogs, data dictionaries, a data step,
+a traceable log, and a reporting package with a variety of printable report types.
+
+### Examples
+
+Before taking a deep dive into the **sassy** package documentation, please
+look at some examples. These examples will give you a feel for the overall
+flow of a **sassy**-enhanced program, and allow you to see how the functions 
+work together.
+
+* **[Example 1](https://gallery.r-sassy.org/articles/sassy-listing.html)**: 
+Creates a simple data listing and log
+<a href="https://gallery.r-sassy.org/articles/sassy-listing.html">
+ <img src="../man/images/listing.png" align="left" alt="Listing example image" />
+ </a>
+<br>
+
+* **[Example 2](https://gallery.r-sassy.org/articles/sassy-dm.html)**: 
+Creates a table of demographic characteristics  
+<a href="https://gallery.r-sassy.org/articles/sassy-dm.html">
+<img src="../man/images/dm.png" align="left" alt="Demographics example image" />
+</a>
+<br>
+
+* **[Example 3](https://gallery.r-sassy.org/articles/sassy-figure.html)**: 
+Creates a simple figure
+<a href="https://gallery.r-sassy.org/articles/sassy-figure.html">
+<img src="../man/images/dm_fig1.png" align="left" alt="Figure example image"/>
+</a>
+<br>
+
+* **[Example 4](https://gallery.r-sassy.org/articles/sassy-ae.html)**: 
+Creates an AE table with a page wrap
+<a href="https://gallery.r-sassy.org/articles/sassy-ae.html">
+<img src="../man/images/ae1.png" align="left" alt="AE example image" />
+</a>
+<br>
+
+* **[Example 5](https://gallery.r-sassy.org/articles/sassy-vs.html)**: 
+Creates a table of vital signs statistics
+<a href="https://gallery.r-sassy.org/articles/sassy-vs.html">
+<img src="../man/images/vital_signs.png" align="left" alt="Vital signs example image" />
+</a>
+<br>
+
+* **[Example 6](https://gallery.r-sassy.org/articles/sassy-figureby.html)**: 
+Creates a figure with a by-group
+<a href="https://gallery.r-sassy.org/articles/sassy-figureby.html">
+<img src="../man/images/vs_pg1.png" align="left" alt="Figure by example image" />
+</a>
+<br>
+
+* **[Example 7](https://gallery.r-sassy.org/articles/sassy-survival.html)**: 
+Perform survival analysis.
+<a href="https://gallery.r-sassy.org/articles/sassy-survival.html">
+<img src="../man/images/survival2.png" align="left" alt="Survival analysis example image" />
+</a>
+<br>
+
+* **[Example 8](https://gallery.r-sassy.org/articles/sassy-profile.html)**: 
+Creates a patient profile report.
+<a href="https://gallery.r-sassy.org/articles/sassy-profile.html">
+<img src="../man/images/profile.png" align="left" alt="Patient profile example image" />
+</a>
+<br>
+
+* **[Example 9](https://gallery.r-sassy.org/articles/sassy-forest.html)**: 
+Creates a figure with a forest plot.
+<a href="https://gallery.r-sassy.org/articles/sassy-forest.html">
+<img src="../man/images/forest.png" align="left" alt="Forest plot example image" />
+</a>
+<br>
+
+* **[Example 10](https://gallery.r-sassy.org/articles/sassy-ds.html)**: 
+Creates a subject disposition table.
+<a href="https://gallery.r-sassy.org/articles/sassy-ds.html">
+<img src="../man/images/disposition.png" align="left" alt="Disposition example image" />
+</a>
+<br>
+
+* **[Example 11](https://gallery.r-sassy.org/articles/sassy-plisting.html)**: 
+Creates a subject listing with vital signs by visit.
+<a href="https://gallery.r-sassy.org/articles/sassy-plisting.html">
+<img src="../man/images/plisting.png" align="left" alt="Subject listing example image" />
+</a>
+<br>
+
+* **[Example 12](https://gallery.r-sassy.org/articles/sassy-pfigure.html)**: 
+Creates a combined figure of age groups by treatment.
+<a href="https://gallery.r-sassy.org/articles/sassy-pfigure.html">
+<img src="../man/images/pfigure.png" align="left" alt="Patchwork figure example image" />
+</a>
+<br>
+
+* **[Example 13](https://gallery.r-sassy.org/articles/sassy-chgbase.html)**: 
+Creates a Mean Change from Baseline figure for laboratory values.
+<a href="https://gallery.r-sassy.org/articles/sassy-chgbase.html">
+<img src="../man/images/chgbase.png" align="left" alt="Change from baseline example image" />
+</a>
+<br>
+
+* **[Example 14](https://gallery.r-sassy.org/articles/sassy-ae2.html)**: 
+Creates an AE table with severity grades in rows
+<a href="https://gallery.r-sassy.org/articles/sassy-ae2.html">
+<img src="../man/images/aevert.png" align="left" alt="AE Severity example image" />
+</a>
+<br>
+
+* **[Example 15](https://gallery.r-sassy.org/articles/sassy-intext.html)**: 
+Creates both stand-alone and "intext" versions of a demographics table. 
+<a href="https://gallery.r-sassy.org/articles/sassy-intext.html">
+<img src="../man/images/example15i1.png" align="left" alt="Intext Demographics example image" />
+</a>
+<br>
+
+
+* **[Example 16](https://gallery.r-sassy.org/articles/sassy-shift.html)**: 
+Creates a shift table of lab values. 
+<a href="https://gallery.r-sassy.org/articles/sassy-shift.html">
+<img src="../man/images/shift.png" align="left" alt="Shift table example image" />
+</a>
+<br>
+
+Once you review these examples, please proceed to the package links above to
+explore the system further!
+
+

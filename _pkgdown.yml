@@ -4,22 +4,7 @@ articles:
 - title: Examples
   navbar: ~
   contents:
-  - sassy-listing
-  - sassy-dm
-  - sassy-figure
-  - sassy-ae
-  - sassy-vs
-  - sassy-figureby
-  - sassy-survival
-  - sassy-profile
-  - sassy-forest
-  - sassy-ds
-  - sassy-plisting
-  - sassy-pfigure
-  - sassy-chgbase
-  - sassy-ae2
-  - sassy-intext
-  - sassy-shift
+  - sassy-gallery
   - sassy-training
   - sassy-disclaimers
   - sassy-faq

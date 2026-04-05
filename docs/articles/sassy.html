@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sassy</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -56,52 +56,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/sassy-listing.html">Example 1: Listing</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-dm.html">Example 2: Demographics Table</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-figure.html">Example 3: Figures</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-ae.html">Example 4: Adverse Events Table</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-vs.html">Example 5: Vital Signs Table</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-figureby.html">Example 6: Figure with By Group</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-survival.html">Example 7: Survival Analysis</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-profile.html">Example 8: Patient Profile</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-forest.html">Example 9: Forest Plot</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-ds.html">Example 10: Disposition Table</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-plisting.html">Example 11: Subject Listing</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-pfigure.html">Example 12: Combined Figure</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-chgbase.html">Example 13: Mean Change From Baseline</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-ae2.html">Example 14: AE Severity in Rows</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-intext.html">Example 15: Intext Table</a>
-    </li>
-    <li>
-      <a href="../articles/sassy-shift.html">Example 16: Shift Table</a>
+      <a href="../articles/sassy-gallery.html">Program Gallery</a>
     </li>
     <li>
       <a href="../articles/sassy-training.html">Papers and Training</a>
@@ -152,28 +107,26 @@
 
     
     
-<p>The <strong>sassy</strong> package is a meta-package that aims to
-make R easier for everyone, especially people with a background in SAS®.
-The package brings several useful SAS® concepts to R, including data
-libraries, formats and format catalogs, data dictionaries, a data step,
-a traceable log, and a reporting package with a variety of printable
-report types.</p>
-<p>The core of the <strong>sassy</strong> system is the
-<strong>procs</strong> package. This package contains replications of
-several SAS® procedures: <code>proc_freq()</code>,
-<code>proc_means()</code>, <code>proc_ttest()</code>,
-<code>proc_reg()</code>, <code>proc_transpose()</code>, and
-<code>proc_sort()</code>. Combined with the <code>datastep()</code>
-function from the <strong>libr</strong> package, you can write code in R
-that very much resembles what you would write in SAS®. These functions
-provide a higher-level programming interface than is typically found in
-R, and can therefore make your analysis more efficient and
-productive.</p>
-<div class="section level3">
-<h3 id="included-packages">Included Packages<a class="anchor" aria-label="anchor" href="#included-packages"></a>
-</h3>
-<p>The <strong>sassy</strong> meta-package contains the following
-packages:</p>
+<p>The <strong>sassy</strong> system is a coherent and well-designed
+ecosystem for managing and reporting on data in R. The system was
+developed in the context of creating statistical reports in the
+pharmaceutical industry. However, the functions are generalized such
+that they can be used in any vertical. The goal of the system is to make
+R capable of producing any kind of output that can be produced in
+SAS®.</p>
+<p>The <strong>sassy</strong> system includes eight R packages. While
+the packages can be installed and used individually, they were designed
+to complement each other. The following sections provide a brief
+overview of the system.</p>
+<p>Note that the <strong>sassy</strong> system of packages was written
+independently, and the authors have no association with, approval of, or
+endorsement by SAS Institute® or Posit®.</p>
+<div class="section level2">
+<h2 id="included-packages">Included Packages<a class="anchor" aria-label="anchor" href="#included-packages"></a>
+</h2>
+<p>The <strong>sassy</strong> package itself is a meta-package that
+contains the following packages. Each of these packages contribute a
+needed area of functionality missing from R:</p>
 <ul>
 <li>
 <strong><a href="https://logr.r-sassy.org" class="external-link">logr</a></strong>:
@@ -187,6 +140,11 @@ catalog</li>
 you the ability to define a libname, generate a data dictionary, and
 simulate a data step</li>
 <li>
+<strong><a href="https://procs.r-sassy.org" class="external-link">procs</a></strong>: A
+set of functions that simulate SAS® procedures. Package includes
+simulations of PROC FREQ, PROC MEANS, PROC TTEST, PROC TRANSPOSE, PROC
+SORT, and more.</li>
+<li>
 <strong><a href="https://reporter.r-sassy.org" class="external-link">reporter</a></strong>: A reporting
 package with easy layout capabilities and the ability to write reports
 in TXT, RTF, PDF, HTML, and DOCX file formats</li>
@@ -195,81 +153,403 @@ in TXT, RTF, PDF, HTML, and DOCX file formats</li>
 set of utility functions shared across the <strong>sassy</strong> family
 of packages, and often useful in their own right.</li>
 <li>
-<strong><a href="https://procs.r-sassy.org" class="external-link">procs</a></strong>: A
-set of functions that simulate SAS® procedures. Package includes
-simulations of PROC FREQ, PROC MEANS, PROC TRANSPOSE, PROC SORT, and
-PROC PRINT.</li>
-<li>
 <strong><a href="https://macro.r-sassy.org" class="external-link">macro</a></strong>: A
 macro language for R that allows easy, text-based meta-programming.</li>
 </ul>
-<p>The above links will take you into the respective packages for a deep
-dive on their capabilities.</p>
+<p>Each of the packages is self-contained, and can be used in isolation.
+However, when used together, the packages work together to create an
+integrated and productive user experience.</p>
+</div>
+<div class="section level2">
+<h2 id="how-to-use">How to Use<a class="anchor" aria-label="anchor" href="#how-to-use"></a>
+</h2>
+<p>Let’s first get a basic understanding of how to use each package
+individually.</p>
+<div class="section level3">
+<h3 id="create-a-log">Create a Log<a class="anchor" aria-label="anchor" href="#create-a-log"></a>
+</h3>
+<p>Programmers coming from SAS are usually surprised to find there is no
+automatic logging in R. The <strong>logr</strong> package was written to
+provide a simple logging system that anyone can use.</p>
+<p>There are three steps to creating a log:</p>
+<ol style="list-style-type: decimal">
+<li>Open the log</li>
+<li>Write to the log</li>
+<li>Close the log</li>
+</ol>
+<p>Below is a minimal example that illustrates how to create a log with
+the <strong>logr</strong> package. The <code>put()</code> function
+writes any R object to the log, similar to a SAS %put statement:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open the log</span></span>
+<span><span class="fu">log_open</span><span class="op">(</span><span class="st">"Example1.log"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Write to the log</span></span>
+<span><span class="fu">put</span><span class="op">(</span><span class="st">"Here is something to send to the log."</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Close the log</span></span>
+<span><span class="fu">log_close</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The generated log looks like this:</p>
+<pre><code>=========================================================================
+Log Path: ./log/Example1.log
+Working Directory: C:/Projects/Archytas/WUSS/Code
+User Name: dbosa
+R Version: 4.3.1 (2023-06-16 ucrt)
+Machine: SOCRATES x86-64
+Operating System: Windows 10 x64 build 22621
+Base Packages: stats graphics grDevices utils datasets methods base Other
+Packages: procs_1.0.3 reporter_1.4.2 libr_1.2.8 logr_1.3.4 fmtr_1.6.0
+common_1.0.9 sassy_1.2.1
+Log Start Time: 2023-10-01 00:20:10.31621
+=========================================================================
+
+Here is something to send to the log.
+
+NOTE: Log Print Time:  2023-10-01 00:20:10.491874
+NOTE: Elapsed Time: 0.174062013626099 secs
+
+=========================================================================
+Log End Time: 2023-10-01 00:20:11.291764
+Log Elapsed Time: 0 00:00:00
+=========================================================================</code></pre>
+<p>For a complete explanation of the capabilities of the
+<strong>logr</strong> package, see the <a href="https://logr.r-sassy.org" class="external-link">logr</a> documentation site.</p>
 </div>
 <div class="section level3">
-<h3 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+<h3 id="create-a-libname">Create a Libname<a class="anchor" aria-label="anchor" href="#create-a-libname"></a>
 </h3>
-<p>Before taking a deep dive into the <strong>sassy</strong> package
-documentation, please look at some examples. These examples will give
-you a feel for the overall flow of a <strong>sassy</strong>-enhanced
-program, and allow you to see how the functions work together.</p>
-<p>The following examples are provided on this site:</p>
+<p>The <strong>sassy</strong> system provides a <code>libname()</code>
+function that is quite similar to a SAS® libname statement. The function
+will import a set of related datasets from a specified directory, and
+assign a name to the entire set. The following code imports a set of
+related csv files and assigns them to the name “sdtm”:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define library </span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data"</span>, <span class="st">"csv"</span><span class="op">)</span> </span></code></pre></div>
+<p>Once the datasets have been imported, the libname can be accessed
+using R list syntax. That means the datasets are now available from the
+libname using the dollar sign ($). In <strong>RStudio®</strong>, it
+looks like this:</p>
+<p><img src="../man/images/sassy1.png" alt="Libname image"></p>
+<p>The <strong>libr</strong> package not only allows you to easily
+access a directory of datasets. It also allows you to add, remove, and
+edit datasets in the library. The <code>libname()</code> function can
+import SAS datasets, CSV files, R data files, Excel files, and more. See
+the <a href="https://libr.r-sassy.org" class="external-link">libr</a> documentation for
+additional information.</p>
+</div>
+<div class="section level3">
+<h3 id="data-formatting">Data Formatting<a class="anchor" aria-label="anchor" href="#data-formatting"></a>
+</h3>
+<p>The idea of a <em>format</em> is another foundational concept in SAS
+software. In R, formatting is spread over many functions. The
+<strong>fmtr</strong> package aims to consolidate and simplify
+formatting in R, and make it more similar to the way you work with
+formats in SAS. The package contains functions to create a user-defined
+format, apply formats to vectors and data frames, and create format
+catalogs.</p>
+<p>The following example shows you how to create a user-defined format,
+and apply it to a column of data. Notice that the <code>value()</code>
+function is similar to the statements inside a SAS PROC FORMAT
+procedure, and that the <code>fapply()</code> function is defined in a
+way that is reminiscent of a SAS data step <code>put()</code>
+function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Create libname</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data"</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Copy DM dataset</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span></span>
+<span></span>
+<span><span class="co"># Create user-defined format</span></span>
+<span><span class="va">fmt_sex</span> <span class="op">&lt;-</span> <span class="fu">value</span><span class="op">(</span><span class="fu">condition</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="st">"Missing"</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"M"</span>, <span class="st">"Male"</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">condition</span><span class="op">(</span><span class="va">x</span> <span class="op">==</span> <span class="st">"F"</span>, <span class="st">"Female"</span><span class="op">)</span>,</span>
+<span>                       <span class="fu">condition</span><span class="op">(</span><span class="cn">TRUE</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create a new column of formatted values</span></span>
+<span><span class="va">dat</span><span class="op">$</span><span class="va">SEXF</span> <span class="op">&lt;-</span> <span class="fu">fapply</span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">SEX</span>, <span class="va">fmt_sex</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># View a few rows of data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dat</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"SEX"</span>, <span class="st">"SEXF"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># # A tibble: 5 x 3</span></span>
+<span><span class="co">#   USUBJID    SEX   SEXF  </span></span>
+<span><span class="co">#   &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt; </span></span>
+<span><span class="co"># 1 ABC-01-049 M     Male  </span></span>
+<span><span class="co"># 2 ABC-01-050 M     Male  </span></span>
+<span><span class="co"># 3 ABC-01-051 M     Male  </span></span>
+<span><span class="co"># 4 ABC-01-052 F     Female</span></span>
+<span><span class="co"># 5 ABC-01-053 F     Female</span></span></code></pre></div>
+<p>The <code>value()</code> and <code>fapply()</code> functions are a
+small part of the very capable <strong>fmtr</strong> package. See the <a href="https://fmtr.r-sassy.org" class="external-link">fmtr</a> documentation for a complete
+list of functions.</p>
+</div>
+<div class="section level3">
+<h3 id="perform-a-datastep">Perform a Datastep<a class="anchor" aria-label="anchor" href="#perform-a-datastep"></a>
+</h3>
+<p>In SAS, the data step is the go-to procedure for manipulating data.
+The data step provides row-by-row processing of a dataset. In R,
+however, data processing is typically done column-by-column. This change
+in orientation is difficult for SAS programmers to adjust to. Also,
+there are some types of processing that are easy to do in a data step,
+but are quite difficult to do with column-wise processing.</p>
+<p>For these reasons, the <strong>sassy</strong> system offers a
+<code>datastep()</code> function. It is part of the
+<strong>libr</strong> package. The <code>datastep()</code> function
+simulates the most basic functionality of a SAS data step. Like a SAS
+data step, it allows you to reference data.frame variables unquoted, and
+to make up variables on the fly. It also provides basic data shaping
+parameters like keep, drop, rename, and retain. The example below
+demonstrates a simple data step that performs age categorization on the
+sdtm.DM dataset.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#Create libname</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data"</span>, <span class="st">"csv"</span><span class="op">)</span> </span>
+<span></span>
+<span></span>
+<span><span class="co"># Perform data step</span></span>
+<span><span class="va">dm_mod</span> <span class="op">&lt;-</span> <span class="fu">datastep</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span>, keep <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"USUBJID"</span>, <span class="st">"AGE"</span>, <span class="st">"AGECAT"</span><span class="op">)</span>, <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">18</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">24</span><span class="op">)</span></span>
+<span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"18 to 24"</span></span>
+<span>    <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">44</span><span class="op">)</span></span>
+<span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"25 to 44"</span></span>
+<span>    <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">45</span> <span class="op">&amp;</span> <span class="va">AGE</span> <span class="op">&lt;=</span> <span class="fl">64</span><span class="op">)</span></span>
+<span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"45 to 64"</span></span>
+<span>    <span class="kw">else</span> <span class="kw">if</span> <span class="op">(</span><span class="va">AGE</span> <span class="op">&gt;=</span> <span class="fl">65</span><span class="op">)</span></span>
+<span>        <span class="va">AGECAT</span> <span class="op">&lt;-</span> <span class="st">"&gt;= 65"</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Print dm_mod to console</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dm_mod</span><span class="op">)</span></span>
+<span><span class="co"># # A tibble: 87 x 3</span></span>
+<span><span class="co">#    USUBJID      AGE AGECAT  </span></span>
+<span><span class="co">#    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   </span></span>
+<span><span class="co">#  1 ABC-01-049    39 25 to 44</span></span>
+<span><span class="co">#  2 ABC-01-050    47 45 to 64</span></span>
+<span><span class="co">#  3 ABC-01-051    34 25 to 44</span></span>
+<span><span class="co">#  4 ABC-01-052    45 45 to 64</span></span>
+<span><span class="co">#  5 ABC-01-053    26 25 to 44</span></span>
+<span><span class="co">#  6 ABC-01-054    44 25 to 44</span></span>
+<span><span class="co">#  7 ABC-01-055    47 45 to 64</span></span>
+<span><span class="co">#  8 ABC-01-056    31 25 to 44</span></span>
+<span><span class="co">#  9 ABC-01-113    74 &gt;= 65   </span></span>
+<span><span class="co"># 10 ABC-01-114    72 &gt;= 65   </span></span>
+<span><span class="co"># # ... with 77 more rows</span></span></code></pre></div>
+<p>The <code>datastep()</code> function, like the <code>libname()</code>
+function, is one of several powerful functions in the
+<strong>libr</strong> package. See the <a href="https://libr.r-sassy.org" class="external-link">libr</a> documentation for additional
+examples and extended discussion.</p>
+</div>
+<div class="section level3">
+<h3 id="generate-statistics">Generate Statistics<a class="anchor" aria-label="anchor" href="#generate-statistics"></a>
+</h3>
+<p>One of the most frustrating things about working with R is that the
+statistics don’t always match SAS. It is not that the R statistics are
+wrong. It is that R functions often have different default settings or
+different algorithms, which lead to different results. Both tools are
+correct. But they are correct in different ways.</p>
+<p>The <strong>procs</strong> package was developed to give you an easy
+way to produce statistics in R that match SAS. The statistical functions
+in the package include <code>proc_freq()</code>,
+<code>proc_means()</code>, <code>proc_ttest()</code>, and
+<code>proc_reg()</code>. For convenience, the package also includes
+<code>proc_sort()</code>, <code>proc_transpose()</code>, and
+<code>proc_print()</code>. Collectively, these functions represent the
+core of the <strong>sassy</strong> system.</p>
+<p>Let us look at an example. In this example, we will generate
+frequencies and means on some variables in the DM dataset, combine them
+into a single list, and print everything to the viewer:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define data library</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data"</span>, <span class="st">"csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate Frequencies</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu">proc_freq</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span>, </span>
+<span>                 tables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ARM"</span>, <span class="st">"SEX"</span>, <span class="st">"SEX * ARM"</span><span class="op">)</span>,</span>
+<span>                 output <span class="op">=</span> <span class="st">"report"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Generate Means and append to Frequencies</span></span>
+<span><span class="va">res</span><span class="op">[[</span><span class="st">"AGE"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">proc_means</span><span class="op">(</span><span class="va">dat</span>, var <span class="op">=</span> <span class="st">"AGE"</span>, </span>
+<span>                           class <span class="op">=</span> <span class="st">"ARM"</span>, </span>
+<span>                           output <span class="op">=</span> <span class="st">"report"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Print everything to viewer</span></span>
+<span><span class="fu">proc_print</span><span class="op">(</span><span class="va">res</span>, titles <span class="op">=</span> <span class="st">"Analysis of Demographics Dataset"</span><span class="op">)</span></span></code></pre></div>
+<p>When working in RStudio, the above code will send the following to
+the viewer:</p>
+<p><img src="../man/images/sassy3.png" alt="Reporter example"></p>
+<p>Note that you may also print the report to a file. Use the
+“file_path” and “output_type” parameters to specify where to print the
+report and what type of report to create. See the <a href="https://procs.r-sassy.org" class="external-link">procs</a> package documentation for
+additional information.</p>
+</div>
+<div class="section level3">
+<h3 id="write-a-report">Write a Report<a class="anchor" aria-label="anchor" href="#write-a-report"></a>
+</h3>
+<p>If you want to create an HTML report in R, there are many packages to
+choose from. For paged file formats such as text, RTF, DOCX, and PDF,
+however, options are much more limited. The <strong>reporter</strong>
+package provides easy page-based reporting with a choice of output
+types. It is currently the closest R package to matching the
+capabilities of SAS PROC REPORT and ODS. There are four steps to
+creating a <strong>reporter</strong> report:</p>
+<ol style="list-style-type: decimal">
+<li>Create report content</li>
+<li>Create report</li>
+<li>Add content to report</li>
+<li>Write the report</li>
+</ol>
+<p>Below is an example of a simple data listing using the
+<strong>libr</strong> and <strong>reporter</strong> packages. Observe
+that the <strong>reporter</strong> package will automatically set column
+widths, wrap pages, and put page breaks at the appropriate locations. If
+you want to override the automatic settings, you can use the
+<code>define()</code> function. Also note the ability to set an ID
+variable that is repeated on every page:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Define data library</span></span>
+<span><span class="fu">libname</span><span class="op">(</span><span class="va">sdtm</span>, <span class="st">"./data"</span>, <span class="st">"csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create report content</span></span>
+<span><span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu">create_table</span><span class="op">(</span><span class="va">sdtm</span><span class="op">$</span><span class="va">DM</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">RACE</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">ETHNIC</span>, width <span class="op">=</span> <span class="fl">2.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">define</span><span class="op">(</span><span class="va">USUBJID</span>, id_var <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Create report and add content</span></span>
+<span><span class="va">rpt</span> <span class="op">&lt;-</span> <span class="fu">create_report</span><span class="op">(</span><span class="st">"./output/example.pdf"</span>, font <span class="op">=</span> <span class="st">"Courier"</span>, </span>
+<span>                     output_type <span class="op">=</span> <span class="st">"PDF"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">page_header</span><span class="op">(</span><span class="st">"Sponsor: Company"</span>, <span class="st">"Study: ABC"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">titles</span><span class="op">(</span><span class="st">"Listing 1.0"</span>, <span class="st">"Sample Demographics Data"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">add_content</span><span class="op">(</span><span class="va">tbl</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">page_footer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"CONFIDENTIAL"</span>, <span class="st">"Page [pg] of [tpg]"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Write out the report</span></span>
+<span><span class="fu">write_report</span><span class="op">(</span><span class="va">rpt</span><span class="op">)</span></span></code></pre></div>
+<p>Here is the first page of the report created by the above example
+code:</p>
+<p><img src="../man/images/sassy2.png" alt="Reporter example"></p>
+<p>See the <a href="https://reporter.r-sassy.org" class="external-link">reporter</a>
+documentation site for more examples and complete function
+documentation.</p>
+</div>
+<div class="section level3">
+<h3 id="useful-utilities">Useful Utilities<a class="anchor" aria-label="anchor" href="#useful-utilities"></a>
+</h3>
+<p>The above packages comprise the main body of the sassy system. In
+addition, there is a package of utility functions called
+<strong>common</strong>. The functions in this package perform useful
+tasks that are not easily done using Base R. Here is a list of functions
+in the package and a short explanation of each:</p>
 <ul>
-<li><p><strong><a href="sassy-listing.html">Example 1</a></strong>:
-Creates a simple data listing and log <a href="sassy-listing.html">
-<img src="../man/images/listing.png" align="left" alt="Listing example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-dm.html">Example 2</a></strong>: Creates a
-table of demographic characteristics<br><a href="sassy-dm.html">
-<img src="../man/images/dm.png" align="left" alt="Demographics example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-figure.html">Example 3</a></strong>:
-Creates a simple figure <a href="sassy-figure.html">
-<img src="../man/images/dm_fig1.png" align="left" alt="Figure example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-ae.html">Example 4</a></strong>: Creates
-an AE table with a page wrap <a href="sassy-ae.html">
-<img src="../man/images/ae1.png" align="left" alt="AE example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-vs.html">Example 5</a></strong>: Creates a
-table of vital signs statistics <a href="sassy-vs.html">
-<img src="../man/images/vital_signs.png" align="left" alt="Vital signs example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-figureby.html">Example 6</a></strong>:
-Creates a figure with a by-group <a href="sassy-figureby.html">
-<img src="../man/images/vs_pg1.png" align="left" alt="Figure by example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-survival.html">Example 7</a></strong>:
-Perform survival analysis. <a href="sassy-survival.html">
-<img src="../man/images/survival2.png" align="left" alt="Survival analysis example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-profile.html">Example 8</a></strong>:
-Creates a patient profile report. <a href="sassy-profile.html">
-<img src="../man/images/profile.png" align="left" alt="Patient profile example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-forest.html">Example 9</a></strong>:
-Creates a figure with a forest plot. <a href="sassy-forest.html">
-<img src="../man/images/forest.png" align="left" alt="Forest plot example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-ds.html">Example 10</a></strong>: Creates
-a subject disposition table. <a href="sassy-ds.html">
-<img src="../man/images/disposition.png" align="left" alt="Disposition example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-plisting.html">Example 11</a></strong>:
-Creates a subject listing with vital signs by visit.
-<a href="sassy-plisting.html">
-<img src="../man/images/plisting.png" align="left" alt="Subject listing example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-pfigure.html">Example 12</a></strong>:
-Creates a combined figure of age groups by treatment.
-<a href="sassy-pfigure.html">
-<img src="../man/images/pfigure.png" align="left" alt="Patchwork figure example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-chgbase.html">Example 13</a></strong>:
-Creates a Mean Change from Baseline figure for laboratory values.
-<a href="sassy-chgbase.html">
-<img src="../man/images/chgbase.png" align="left" alt="Change from baseline example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-ae2.html">Example 14</a></strong>: Creates
-an AE table with severity grades in rows <a href="sassy-ae2.html">
-<img src="../man/images/aevert.png" align="left" alt="AE Severity example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-intext.html">Example 15</a></strong>:
-Creates both stand-alone and “intext” versions of a demographics table.
-<a href="sassy-intext.html">
-<img src="../man/images/example15i1.png" align="left" alt="Intext Demographics example image"></a> <br></p></li>
-<li><p><strong><a href="sassy-shift.html">Example 16</a></strong>:
-Creates a shift table of lab values. <a href="sassy-shift.html">
-<img src="../man/images/shift.png" align="left" alt="Shift table example image"></a> <br></p></li>
+<li>
+<code>v()</code>: A generalized NSE quoting function.</li>
+<li>
+<code>sort.data.frame()</code>: An overload to the sort function for
+data frames.</li>
+<li>
+<code>labels.data.frame()</code>: An overload to the labels function
+for data frames.</li>
+<li>
+<code>%p%</code>: An infix operator for the paste0() function.</li>
+<li>
+<code>%eq%</code>: An enhanced equality operator.</li>
+<li>
+<code>Sys.path()</code>: A function to return the path of the
+currently running program.</li>
+<li>
+<code>roundup()</code>: A rounding function that matches SAS®
+rounding.</li>
+<li>
+<code>file.find()</code>: A function to search for a file on the
+file system.</li>
+<li>
+<code>dir.find()</code>: A function to search for a directory on the
+file system.</li>
+<li>
+<code>find.names()</code>: A function to search for variable names
+on a data.frame.</li>
+<li>
+<code>copy.attributes()</code>: A function to copy column attributes
+from one data frame to another.</li>
+<li>
+<code>supsc()</code>: A function to get UTF-8 superscript
+characters.</li>
+<li>
+<code>subsc()</code>: A function to get UTF-8 subscript
+characters.</li>
+<li>
+<code>symbol()</code>: A function to lookup UTF-8 symbols.</li>
+<li>
+<code>spaces()</code>: A function to create a string of blank
+spaces.</li>
+<li>
+<code>changed()</code>: A function to identify changed values in a
+vector or data frame.</li>
 </ul>
-<p>Once you review these examples, please proceed to the package links
-above to explore the system further!</p>
+<p>For more information, see the <a href="https://common.r-sassy.org" class="external-link">common</a> package documentation.</p>
+</div>
+<div class="section level3">
+<h3 id="write-a-macro">Write a Macro<a class="anchor" aria-label="anchor" href="#write-a-macro"></a>
+</h3>
+<p>The <strong>sassy</strong> system also contains a macro language. It
+is contained in a package called <strong>macro</strong>, and mimics the
+basic functionality of the SAS macro language. The macro commands are
+contained inside R code comments, but otherwise resemble SAS macro
+functions. Here is a simple example:</p>
+<pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://sassy.r-sassy.org">sassy</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#%let x &lt;- 1</span></span>
+<span></span>
+<span><span class="co">#%if (&amp;x == 1)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"x is one!"</span><span class="op">)</span></span>
+<span><span class="co">#%else</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"x is something else!"</span><span class="op">)</span></span>
+<span><span class="co">#%end</span></span></code></pre>
+<p>As shown above, the R macro language supports macro variable
+assignments and macro conditions. It also supports do loops, include,
+user-defined macro functions, and several built-in macro functions. See
+the <a href="https://macro.r-sassy.org" class="external-link">macro</a> documentation for a
+complete explanation of this interesting package.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a>
+</h2>
+<p>The <strong>sassy</strong> system is validated. For the
+<strong>procs</strong> package, all functions have been compared to SAS.
+The validation documentation is <a href="https://r-sassy.org/validation/Procs_Validation.pdf" class="external-link">here</a></p>
+<p>In addition, there are IQ and OQ validation routines built into the
+<strong>sassy</strong> package itself. These routines can be used for
+on-site qualification of the packages in your local environment. See the
+<code><a href="../reference/run_iq.html">run_iq()</a></code> and <code><a href="../reference/run_oq.html">run_oq()</a></code> documentation in the
+<strong>sassy</strong> package.</p>
+</div>
+<div class="section level2">
+<h2 id="next-steps">Next Steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h2>
+<p>To explore the <strong>sassy</strong> system further, please see the
+following vignettes:</p>
+<ul>
+<li>
+<a href="sassy-gallery.html">Program Gallery</a>: A collection of
+sample programs written using the <strong>sassy</strong> system.</li>
+<li>
+<a href="sassy-training.html">Papers and Training</a>: Papers and
+training videos on different aspects of the ecosystem.</li>
+</ul>
 </div>
   </div>
 

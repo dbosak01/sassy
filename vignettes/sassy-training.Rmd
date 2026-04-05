@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 Some information on the **sassy** packages exists outside the system documentation.
-Here are some links to those external sources.
+Here are links to those external resources.
 
 ## Papers
 
@@ -30,7 +30,7 @@ Below is a list of papers covering various aspects of the **sassy** system:
   * [An Overview of the SASSY System](https://www.lexjansen.com/wuss/2023/WUSS-2023-Paper-185.pdf), 2023
 
 
-## SASSY Training
+## Training Videos
 
 The following training videos can help get you up to speed on the **sassy** system:
 

@@ -1,3 +1,9 @@
+# sassy 1.3.1
+
+* Updated required versions.
+* Added overview vignette.
+* Moved examples to gallery site to reduce package size.
+
 # sassy 1.3.0
 
 * Updated required versions.
