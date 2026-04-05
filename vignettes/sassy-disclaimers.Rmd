@@ -26,11 +26,14 @@ generalized enough that they can be used in any vertical.
 
 Note that the **sassy** meta-package and sub-packages were written 
 independently, and the authors have no association
-with, approval of, or endorsement by SAS® Institute or RStudio®. 
+with, approval of, or endorsement by SAS® Institute or Posit®. 
 
 ### Not for Big Data
+
 Also note that the **sassy** family of packages is intended to be used with small and 
 medium-sized data sets.  It is not recommended for big data, as big data
 requires very careful control over which data is or is not loaded into memory.
-The **sassy** packages, on the other hand, tend to load all data into memory 
-indiscriminately.
+That is to say, if you are dealing with more than 10 million records, 
+**sassy** is not the best choice.  Suggest you investigate packages 
+that were specifically designed for handling such scenarios.
+

@@ -15,15 +15,9 @@ knitr::opts_chunk$set(
 ```
 
 The **sassy** system is a coherent and well-designed 
-ecosystem for managing and reporting on data in R.  The system was developed in the 
-context of creating statistical reports in the pharmaceutical industry. 
-However, the functions are generalized such that they can be used in any 
-vertical. The goal of the system is to make R capable of producing any kind
-of output that can be produced in SAS®.
-
-The **sassy** system includes eight R packages.  While the packages 
-can be installed and used individually, they were designed to complement 
-each other. The following sections provide a brief overview of the system.
+ecosystem for managing and reporting on data in R. The goal of the system 
+is to make R capable of producing any kind of output that can be 
+produced in SAS®. The system includes eight R packages. 
 
 ## Included Packages
 
