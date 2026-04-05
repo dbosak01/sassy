@@ -14,18 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **sassy** package is a meta-package that aims to make R easier for
-everyone, especially people with a background in SAS®.
-The package brings several useful SAS® concepts to R, including
-data libraries, formats and format catalogs, data dictionaries, a data step,
-a traceable log, and a reporting package with a variety of printable report types.
-
-### Examples
-
-Before taking a deep dive into the **sassy** package documentation, please
-look at some examples. These examples will give you a feel for the overall
-flow of a **sassy**-enhanced program, and allow you to see how the functions 
-work together.
+To understand the system better, let's look at some examples. These examples 
+will give you a feel for the overall flow of a **sassy**-enhanced program, 
+and allow you to see how the functions work together.
 
 * **[Example 1](https://gallery.r-sassy.org/articles/sassy-listing.html)**: 
 Creates a simple data listing and log

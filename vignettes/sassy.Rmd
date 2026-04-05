@@ -25,10 +25,6 @@ The **sassy** system includes eight R packages.  While the packages
 can be installed and used individually, they were designed to complement 
 each other. The following sections provide a brief overview of the system.
 
-Note that the **sassy** system of packages was written independently, 
-and the authors have no association with, approval of, or endorsement by 
-SAS Institute® or Posit®.
-
 ## Included Packages
 
 The **sassy** package itself is a meta-package that contains the following packages.
@@ -53,7 +49,7 @@ useful in their own right.
 easy, text-based meta-programming. 
 
 Each of the packages is self-contained, and can be used in isolation. 
-However, when used together, the packages work 
+However, when used collectively, the packages work 
 together to create an integrated and productive user experience.
 
 ## How to Use
