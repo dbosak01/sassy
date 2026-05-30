@@ -39,3 +39,5 @@
 ^vignettes/sassy-shift\.html$
 ^vignettes/sassy-survival\.html$
 ^vignettes/sassy-vs\.html$
+^\.positai$
+^\.claude$

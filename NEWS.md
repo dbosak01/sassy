@@ -1,3 +1,7 @@
+# sassy 1.3.2
+
+* Updated required versions.
+
 # sassy 1.3.1
 
 * Updated required versions.
