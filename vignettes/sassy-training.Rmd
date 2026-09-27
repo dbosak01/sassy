@@ -22,12 +22,12 @@ Here are links to those external resources.
 Below is a list of papers covering various aspects of the **sassy** system:
 
   * [Why SASSY?](https://pharmasug.org/proceedings/2025/AP/PharmaSUG-2025-AP-263.pdf), 2025
-  * [Reproducing the "BEST" Format in R](https://www.lexjansen.com/sesug/2025/49_Final_PDF.pdf), 2025
-  * [How to Create a Spreadsheet-driven Batch Job Using R and SASSY ](https://www.lexjansen.com/sesug/2025/97_Final_PDF.pdf), 2025
+  * [Reproducing the "BEST" Format in R](https://www.r-sassy.org/papers/SESUG%202025%20Paper_FCS-49.pdf), 2025
+  * [How to Create a Spreadsheet-driven Batch Job Using R and SASSY ](https://www.r-sassy.org/papers/SESUG%202025%20Paper_VR-97.pdf), 2025
   * [Replicating SAS Reports in R: The REPORTER Package](https://sesug.org/proceedings/sesug_2024_SAAG/PresentationSummaries/Papers/113_Final_PDF.pdf), 2024
-  * [Examining the R datastep() Function](https://www.lexjansen.com/sesug/2024/111_Final_PDF.pdf), 2024
+  * [Examining the R datastep() Function](https://www.r-sassy.org/papers/SESUG%202024%20Paper%20111%20-%20Datastep.pdf), 2024
   * [Replicating SAS® Procedures in R with the PROCS Package](https://pharmasug.org/proceedings/2024/AP/PharmaSUG-2024-AP-295.pdf), 2024
-  * [An Overview of the SASSY System](https://www.lexjansen.com/wuss/2023/WUSS-2023-Paper-185.pdf), 2023
+  * [An Overview of the SASSY System](https://www.r-sassy.org/papers/WUSS_2023_Paper_185.pdf), 2023
 
 
 ## Training Videos

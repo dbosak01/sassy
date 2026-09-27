@@ -99,5 +99,10 @@ Useful links:
 \author{
 \strong{Maintainer}: David Bosak \email{dbosak01@gmail.com}
 
+Authors:
+\itemize{
+  \item David Bosak \email{dbosak01@gmail.com}
+}
+
 }
 \keyword{internal}

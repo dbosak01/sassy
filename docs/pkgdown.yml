@@ -1,5 +1,5 @@
-pandoc: 3.8.3
-pkgdown: 2.1.0
+pandoc: '3.10'
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   sassy-disclaimers: sassy-disclaimers.html
@@ -7,7 +7,7 @@ articles:
   sassy-gallery: sassy-gallery.html
   sassy-training: sassy-training.html
   sassy: sassy.html
-last_built: 2026-05-30T02:07Z
+last_built: 2026-09-27T13:12Z
 urls:
   reference: https://sassy.r-sassy.org/reference
   article: https://sassy.r-sassy.org/articles

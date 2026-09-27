@@ -396,7 +396,7 @@ explanation of this interesting package.
 
 The **sassy** system is validated.  For the **procs** package, all functions 
 have been compared to SAS.  The validation documentation is
-[here](https://r-sassy.org/validation/Procs_Validation.pdf)
+[here](https://r-sassy.org/validation/Procs_Validation.pdf).
 
 In addition, there are IQ and OQ validation routines built into 
 the **sassy** package itself. These routines can be used for on-site 

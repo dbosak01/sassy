@@ -1,3 +1,9 @@
+# sassy 1.3.3
+
+* Fixed links to papers.
+* Added more sample data.
+* Updated required versions.
+
 # sassy 1.3.2
 
 * Updated required versions.
