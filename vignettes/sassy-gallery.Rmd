@@ -131,6 +131,21 @@ Creates a shift table of lab values.
 </a>
 <br>
 
+* **[Example 17](https://gallery.r-sassy.org/articles/sassy-macro.html)**: 
+Creates a change from baseline table using SASSY Macro. 
+<a href="https://gallery.r-sassy.org/articles/sassy-macro.html">
+<img src="../man/images/macro1.png" align="left" alt="Change from baseline image" />
+</a>
+<br>
+
+
+* **[Example 18](https://gallery.r-sassy.org/articles/sassy-simsun.html)**: 
+Creates a demographics table in Chinese. 
+<a href="https://gallery.r-sassy.org/articles/sassy-simsun.html">
+<img src="../man/images/dm_simsun.png" align="left" alt="Chinese font example image" />
+</a>
+<br>
+
 Once you review these examples, please proceed to the package links above to
 explore the system further!
 
