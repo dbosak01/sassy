@@ -3,6 +3,9 @@
 * Fixed links to papers.
 * Added more sample data.
 * Updated required versions.
+* Added macro example.
+* Added Chinese font example.
+* Added index to gallery page.
 
 # sassy 1.3.2
 
