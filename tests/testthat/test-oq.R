@@ -1,4 +1,4 @@
-base_path <- "c:/packages/sassy/tests/testthat"
+base_path <- file.path(getwd(), "tests/testthat")
 data_dir <- base_path
 
 base_path <- tempdir()
@@ -167,7 +167,7 @@ test_that("OQ-09: check_procs() works as expected.", {
   res <- check_procs(pth)
 
   res
-  expect_equal(nrow(res), 7)
+  expect_equal(nrow(res), 8)
   expect_true(all(res$Pass == TRUE))
 
 })

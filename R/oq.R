@@ -865,6 +865,25 @@ check_procs <- function(opth) {
 
   ret <- rbind(ret, tmp)
 
+  # Check for proc_glm() function
+  res <- proc_glm(dt, model = "mpg = disp",
+                  options = "noprint")
+  tmp <- tmplt
+  tmp[1, "Description"] <- "proc_glm() function works as expected."
+  if (any(round(res$SS[1], 6) !=  2.231809) ||
+      any(round(res$SS[2], 6) !=  6.456191) ||
+      any(round(res$SS[3], 6) !=  6.456191) ||
+      any(round(res$PROBF[3], 8) != 0.06022237)) {
+    tmp[1, "Pass"] <- FALSE
+    tmp[1, "Message"] <- "proc_glm() function not working."
+    put("proc_glm() function check failed.")
+  } else {
+
+    put("proc_glm() function check passed.")
+  }
+
+  ret <- rbind(ret, tmp)
+
   # Check proc transpose
   res <- proc_transpose(dt)
   tmp <- tmplt

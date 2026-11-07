@@ -1,6 +1,6 @@
 %PDF-1.7
 %‚„œ”
-1 0 obj<</Type /Catalog /Pages 5 0 R>>
+1 0 obj<</Type /Catalog /Pages 6 0 R>>
 endobj
 2 0 obj<</Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding>>
 endobj
@@ -8,11 +8,13 @@ endobj
 endobj
 4 0 obj<</Type /Font /Subtype /Type1 /BaseFont /Helvetica-Oblique /Encoding /WinAnsiEncoding>>
 endobj
-5 0 obj<</Type /Pages /Kids [6 0 R] /Count 1 /MediaBox [0 0 612 792]>>
+5 0 obj<</Type /Font /Subtype /Type1 /BaseFont /Helvetica-BoldOblique /Encoding /WinAnsiEncoding>>
 endobj
-6 0 obj<</Type /Page /Parent 5 0 R /Contents 7 0 R /Resources <</Font <</F1 2 0 R /F2 3 0 R /F3 4 0 R>> /ProcSet [/PDF /Text]>>>>
+6 0 obj<</Type /Pages /Kids [7 0 R] /Count 1 /MediaBox [0 0 612 792]>>
 endobj
-7 0 obj<</Length 3548>>
+7 0 obj<</Type /Page /Parent 6 0 R /Contents 8 0 R /Resources <</Font <</F1 2 0 R /F2 3 0 R /F3 4 0 R /F4 5 0 R>> /ProcSet [/PDF /Text]>>>>
+endobj
+8 0 obj<</Length 3548>>
 stream
 BT /F1 8 Tf 100 Tz 293.588 715 Td <54657374>Tj ET
 BT /F1 8 Tf 100 Tz 187.191 691.5 Td <6d7067>Tj ET
@@ -90,21 +92,22 @@ BT /F1 8 Tf 100 Tz 413.393 642.25 Td <32>Tj ET
 181.9351 638.25 m 420.0649 638.25 l S
 endstream
 endobj
-8 0 obj<</Producer (reporter v1.4.4) /Author (dbosa) /Title () /Subject () /Creator (R version 4.4.3 (2025-02-28 ucrt)) /Keywords ()
- /CreationDate (D:20251208150832-05'00') /ModDate (D:20251208150832-05'00')>>
+9 0 obj<</Producer (reporter v1.5.0) /Author (dbosa) /Title () /Subject () /Creator (R version 4.6.1 (2026-06-24 ucrt)) /Keywords ()
+ /CreationDate (D:20261107101827-05'00') /ModDate (D:20261107101827-05'00')>>
 endobj
 xref
-0 9
+0 10
 0000000000 65535 f 
 0000000015 00000 n 
 0000000061 00000 n 
 0000000155 00000 n 
 0000000254 00000 n 
 0000000356 00000 n 
-0000000434 00000 n 
-0000000571 00000 n 
-0000004167 00000 n 
-trailer <</Size 9 /Root 1 0 R /Info 8 0 R>>
+0000000462 00000 n 
+0000000540 00000 n 
+0000000687 00000 n 
+0000004283 00000 n 
+trailer <</Size 10 /Root 1 0 R /Info 9 0 R>>
 startxref
-4385
+4501
 %%EOF
