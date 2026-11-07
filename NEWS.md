@@ -6,6 +6,7 @@
 * Added macro example.
 * Added Chinese font example.
 * Added index to gallery page.
+* Added waterfall plot.
 
 # sassy 1.3.2
 

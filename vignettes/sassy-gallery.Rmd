@@ -38,6 +38,7 @@ and allow you to see how the functions work together.
 * [Example 16: Shift table](#shift)
 * [Example 17: Macro program](#macro)
 * [Example 18: Chinese font](#simsun)
+* [Example 19: Waterfall plot](#waterfall)
 
 ## Gallery
 
@@ -188,4 +189,11 @@ Creates a demographics table in Chinese.
 [top](#top)
 
 
+### [Example 19](https://gallery.r-sassy.org/articles/sassy-waterfall.html) {#waterfall}  
+Creates a waterfall plot. 
+<a href="https://gallery.r-sassy.org/articles/sassy-waterfall.html">
+<img src="../man/images/waterfall.png" align="left" alt="Waterfall plot example image" />
+</a>
+<br>
+[top](#top)
 
