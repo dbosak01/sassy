@@ -1,4 +1,4 @@
-# sassy 1.3.3
+# sassy 1.3.4
 
 * Fixed links to papers.
 * Added more sample data.
