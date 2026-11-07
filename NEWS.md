@@ -7,6 +7,7 @@
 * Added Chinese font example.
 * Added index to gallery page.
 * Added waterfall plot.
+* Update OQ for proc_glm().
 
 # sassy 1.3.2
 
